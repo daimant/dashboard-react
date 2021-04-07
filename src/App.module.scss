@@ -1,0 +1,13 @@
+.container {
+  flex-direction: column;
+}
+
+Header * {
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  div {
+    padding: .5rem;
+  }
+}

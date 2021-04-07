@@ -1,16 +1,17 @@
 import React from 'react';
-import './App.css';
-
-export interface Interface {
-  
-}
+import classes from './App.module.scss';
+import Widgets from "./Components/Widgets/Widgets";
+import Filters from "./Components/Filters/Filters";
+import Navbar from "./Components/Navbar/Navbar";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Привет</h1>
+    <div className={classes.container}>
+      <header>
+        <Navbar/>
+        <Filters/>
       </header>
+      <Widgets/>
     </div>
   );
 }

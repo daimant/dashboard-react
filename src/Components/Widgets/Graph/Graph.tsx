@@ -1,11 +1,14 @@
 import React from "react";
+import "./Graph.module.scss";
 
-const Graph = () => {
+interface Props {}
+
+const Graph: React.FC<Props> = props => {
   return (
     <div>
-      Filters
+      Graph
     </div>
-  );
+  )
 };
 
 export default Graph;

@@ -1,11 +1,14 @@
 import React from "react";
+import "./TableLeft.module.scss";
 
-const TableLeft = () => {
+interface Props {}
+
+const TableLeft: React.FC<Props> = props => {
   return (
     <div>
-      Filters
+      Table Left
     </div>
-  );
+  )
 };
 
 export default TableLeft;
