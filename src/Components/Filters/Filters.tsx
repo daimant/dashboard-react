@@ -3,17 +3,31 @@ import classes from "./Filters.module.scss";
 import Datepicker from "./Filter-components/Datepicker";
 import FilterCheckBox from "./Filter-components/FilterCheckBox";
 
-interface Props {}
+interface Props {
+}
+
+const propsFilterOrgStructure = {
+  title:'Оргструктура'
+};
+const propsFilterDocuments = {
+  title:'Договор/КА'
+};
+const propsFilterValues = {
+  title:'Значения'
+};
+const propsFilterView = {
+  title:'Вид'
+};
 
 const Filters: React.FC<Props> = props => {
   return (
     <div className={classes.filters}>
-      <FilterCheckBox/>
+      <FilterCheckBox title={propsFilterOrgStructure.title}/>
       <Datepicker/>
       <Datepicker/>
-      <Datepicker/>
-      <Datepicker/>
-      <Datepicker/>
+      <FilterCheckBox title={propsFilterDocuments.title}/>
+      <FilterCheckBox title={propsFilterValues.title}/>
+      <FilterCheckBox title={propsFilterView.title}/>
     </div>
   )
 };

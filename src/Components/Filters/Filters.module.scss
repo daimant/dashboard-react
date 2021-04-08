@@ -1,3 +1,11 @@
 .filters {
   justify-content: space-around;
+  vertical-align: bottom;
+
+  div {
+    //margin: 0;
+    padding: 0;
+  }
+
+  margin: .5rem;
 }
