@@ -43,7 +43,6 @@
     "eject": "react-scripts eject",
     "JSONserver": "json-server --watch -p 4000 db.json",
     "dev": "concurrently \"react-scripts start\" \"json-server --watch -p 4000 db.json\""
-
   },
   "eslintConfig": {
     "extends": [

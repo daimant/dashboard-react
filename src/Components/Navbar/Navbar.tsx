@@ -28,9 +28,9 @@ const Navbar: React.FC<Props> = props => {
   };
 
   return (
-    <div className={classes.navbar}>
+    <div className={`${classes.navbar} ${classes.ai}`}>
       <div>
-        <img src={logo} alt=""/>
+        <img src={logo} loading='lazy' alt=""/>
       </div>
       <div>
         <h1>Ключевые показатели эффективности</h1>
