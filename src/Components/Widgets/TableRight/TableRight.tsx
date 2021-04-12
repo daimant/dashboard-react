@@ -30,7 +30,7 @@ const TableRight: React.FC<Props> = props => {
   return (
     <div className={classes.table_right}>
       <TableContainer component={Paper}>
-        <Table size="small" aria-label="a dense table">
+        <Table size="small" aria-label="a dense table" style={{margin: '0 .5rem'}}>
           <TableBody>
             {rows.map((row) => (
               <TableRow key={row.name}>

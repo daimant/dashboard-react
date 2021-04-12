@@ -44,7 +44,7 @@ const MenuProps = {
 
 const FilterMenuMulChBox: React.FC<Props> = props => {
   const classes = useStyles();
-  const [personName, setPersonName] = React.useState<string[]>([]);
+  const [personName, setPersonName] = React.useState<string[]>([props.data[0]]);
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setPersonName(event.target.value as string[]);
