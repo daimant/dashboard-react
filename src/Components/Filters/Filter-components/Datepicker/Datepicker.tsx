@@ -5,7 +5,6 @@ import DateFnsUtils from '@date-io/date-fns';
 import {ru} from 'date-fns/locale'
 import {
   MuiPickersUtilsProvider,
-  // KeyboardTimePicker,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 

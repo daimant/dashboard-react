@@ -164,8 +164,8 @@ const rows: TableLeftElement[] = [
 const TableLeft: React.FC<Props> = props => {
   return (
     <div className={classes.table_left}>
-      <TableContainer component={Paper} >
-        <Table size="small" aria-label="a dense table" style={{margin: '0 .2rem'}}>
+      <TableContainer component={Paper} className={classes.tableContainer}>
+        <Table size="small" aria-label="a dense table" className={classes.table}>
           <TableHead>
             <TableRow>
               <TableCell className={classes.cell}>{cols[0]}</TableCell>

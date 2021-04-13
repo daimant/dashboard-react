@@ -25,14 +25,14 @@ const Graph: React.FC<Props> = (props) => {
   const parsedGraphData:object[] = GraphSelector(props.data);
 
   return (
-    <div className={classes.widgets}>
-      <ResponsiveContainer className={classes.widget_graph}>
+    <div className={classes.graphs}>
+      <ResponsiveContainer>
         <AreaChart
           width={500}
           height={400}
           data={parsedGraphData}
           margin={{
-            top: 10,
+            top: 20,
             right: 30,
             left: 0,
             bottom: 0,

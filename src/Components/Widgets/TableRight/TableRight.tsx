@@ -21,7 +21,7 @@ const rows: TableRightElement[] = [
   {name: 'Удовлетворенность клиентов', value: '99%'},
   {name: 'Рентабельность', value: '100%'},
   {name: 'ROIC', value: '100%'},
-  {name: 'Производительность труда', value: '100 K|P'},
+  {name: 'Производительность труда', value: '100K|P'},
   {name: 'KPI', value: '100%'},
 ];
 
@@ -29,11 +29,11 @@ const rows: TableRightElement[] = [
 const TableRight: React.FC<Props> = props => {
   return (
     <div className={classes.table_right}>
-      <TableContainer component={Paper}>
-        <Table size="small" aria-label="a dense table" style={{margin: '0 .5rem'}}>
+      <TableContainer component={Paper} className={classes.tableContainer}>
+        <Table size="small" aria-label="a dense table" className={classes.table}>
           <TableBody>
             {rows.map((row) => (
-              <TableRow key={row.name}>
+              <TableRow key={row.name} >
                 <TableCell component="th" scope="row" className={classes.cell}>
                   {row.name}
                 </TableCell>

@@ -2,10 +2,15 @@
   flex-direction: column;
 }
 
-Header * {
+Header {
+  height: 20vh;
+
+  * {
+
   display: flex;
   text-align: center;
   div {
     padding: .5rem;
+  }
   }
 }

@@ -6,7 +6,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import ListItemText from '@material-ui/core/ListItemText';
 import Select from '@material-ui/core/Select';
-// import classes from './FilterMenuMulChBox.module.scss';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 
 
@@ -14,22 +13,15 @@ interface Props {
   title: string,
   data: string[],
 }
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     formControl: {
-      margin: theme.spacing(1),
-      minWidth: '20vh',
-      maxWidth: '20vh',
+      minWidth: '15vw',
+      maxWidth: '15vw',
     },
-    chips: {
-      display: 'flex',
-      flexWrap: 'wrap',
-    },
-    chip: {
-      margin: 2,
-    },
-    noLabel: {
-      marginTop: theme.spacing(3),
+    formContainer: {
+      marginTop: '1.3rem',
     },
   }),
 );
@@ -51,7 +43,7 @@ const FilterMenuMulChBox: React.FC<Props> = props => {
   };
 
   return (
-    <div style={{marginTop: "1.3rem"}}>
+    <div className={classes.formContainer}>
       <FormControl className={classes.formControl}>
         <InputLabel id="demo-mutiple-checkbox-label" shrink={true}>{props.title}</InputLabel>
         <Select
