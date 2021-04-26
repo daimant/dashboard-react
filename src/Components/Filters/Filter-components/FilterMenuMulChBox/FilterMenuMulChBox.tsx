@@ -7,6 +7,7 @@ import FormControl from '@material-ui/core/FormControl';
 import ListItemText from '@material-ui/core/ListItemText';
 import Select from '@material-ui/core/Select';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
+import classess from './FilterMenuMulChBox.module.scss'
 
 
 interface Props {
@@ -57,7 +58,7 @@ const FilterMenuMulChBox: React.FC<Props> = props => {
           MenuProps={MenuProps}
         >
           {props.data.map((name) => (
-            <MenuItem key={name} value={name}>
+            <MenuItem key={name} value={name} className={classess.menuChkBox}>
               <Checkbox checked={personName.indexOf(name) > -1}/>
               <ListItemText primary={name}/>
             </MenuItem>

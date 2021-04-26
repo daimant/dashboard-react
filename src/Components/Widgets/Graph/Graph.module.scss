@@ -2,7 +2,12 @@
   width: 40vw;
   height: 20vh;
   background: #FFFFFF;
-  border-radius: 5px;
+  border-radius: 5px; //переделать везде на rem
   margin: 1rem;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+p {
+  padding-top: .5rem;
+  text-align: center;
 }

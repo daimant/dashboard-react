@@ -44,7 +44,7 @@ import TableRight from "./TableRight/TableRight";
 //     uv: 3490,
 //   },
 // ];
-const sc1 = {
+const sc = [{
   "title": "Зарегистрировано обращений, шт",
   "x": [
     "21.01",
@@ -82,8 +82,7 @@ const sc1 = {
     99,
     99
   ]
-};
-const sc2 = {
+}, {
   "title": "Выполнено ЗНО, шт",
   "x": [
     "21.01",
@@ -120,9 +119,7 @@ const sc2 = {
     90,
     92,
     90
-  ]
-}
-const sc3 = {
+  ]}, {
   "title": "SLA, %",
   "x": [
     "21.01",
@@ -160,7 +157,7 @@ const sc3 = {
     91,
     96
   ]
-}
+}];
 
 
 const Widgets: React.FC = () => {
@@ -168,9 +165,9 @@ const Widgets: React.FC = () => {
     <main>
       <TableLeft/>
       <div>
-        <Graph data={sc1}/>
-        <Graph data={sc2}/>
-        <Graph data={sc3}/>
+        {sc.map((g,i) =>
+          <Graph data={g} key={i}/>
+        )}
       </div>
       <TableRight/>
     </main>

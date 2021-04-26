@@ -20,7 +20,7 @@ export const widgetsAPI = {
   getGraph: (number: number) => {
     return instance
       .get(
-        `sc${number}`
+        `sc/${number}`
       )
       .then((response: Res) => response.data);
   },
@@ -48,5 +48,3 @@ export const widgetsAPI = {
   //     .then((response) => response.data);
   // },
 };
-
-// &sort_direction=desc &sort=rate
