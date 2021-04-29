@@ -1,15 +1,11 @@
 import React from "react";
 import {connect} from "react-redux";
 import {} from "../Redux/widgets-reducer";
-import {} from "../Redux/selectors";
+import {getInf, getKPK, getSC} from "../Redux/selectors";
 import Widgets from "./Widgets";
+import {MapStateProps, RootState} from "../Common/Types";
 
-
-interface StateWidgets {
-
-}
-
-class WidgetsContainer extends React.Component {
+class WidgetsContainer extends React.Component<MapStateProps> {
   componentDidMount() {
     // if (!this.props.serviceData.length) {
     //   const { currentPage } = this.props;
@@ -21,15 +17,21 @@ class WidgetsContainer extends React.Component {
   //   this.props.requestServices(pageNumber);
   // };
   render() {
+    // console.log('widgets container', this.props)
     return (
-      <Widgets/>
+      <Widgets
+        kpk={this.props.kpk}
+        sc={this.props.sc}
+        inf={this.props.inf}
+      />
     );
   }
 }
 
-const mapStateToProps = (state: StateWidgets) => ({
-  // serviceData: getService(state),
-
+const mapState = (state: RootState) => ({
+  kpk: getKPK(state),
+  sc: getSC(state),
+  inf: getInf(state),
 });
 
-export default connect(mapStateToProps, {})(WidgetsContainer);
+export default connect(mapState, {})(WidgetsContainer);

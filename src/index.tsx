@@ -1,19 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
-import App from './App';
+import AppContainer from './AppContainer';
 import reportWebVitals from './reportWebVitals';
 import store from "./Components/Redux/store";
 import {Provider} from "react-redux";
 
-
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App/>
+      <AppContainer/>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
 
-reportWebVitals();
+// reportWebVitals();

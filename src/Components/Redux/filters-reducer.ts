@@ -1,7 +1,14 @@
-let initialStore:[] = [];
+interface ActionElements {
+  type: string,
+  data?: [],
+}
 
-const filtersReducer = (state = initialStore, action: string) => {
-  // if (action) console.log(action);
+let initialState: object = {
+  isFetchingFilters: false,
+  data: [],
+};
+
+const filtersReducer = (state = initialState, action: ActionElements) => {
   return state;
 };
 

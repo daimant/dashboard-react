@@ -27,9 +27,9 @@ class WidgetsContainer extends React.Component {
   }
 }
 
-const mapStateToProps = (state: StateWidgets) => ({
+const mapState = (state: StateWidgets) => ({
   // serviceData: getService(state),
 
 });
 
-export default connect(mapStateToProps, {})(WidgetsContainer);
+export default connect(mapState, {})(WidgetsContainer);

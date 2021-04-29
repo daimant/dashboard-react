@@ -1,18 +1,16 @@
-import { applyMiddleware, combineReducers, createStore } from "redux";
-// import navigationsReducer from "./navigations-reducer";
-// import thunkMiddleware from "redux-thunk";
+import {applyMiddleware, combineReducers, createStore} from "redux";
 import widgetsReducer from "./widgets-reducer";
 import filtersReducer from "./filters-reducer";
 import thunkMiddleware from "redux-thunk";
 
-
 let reducers = combineReducers({
-  widgetsData: widgetsReducer,
-  filtersData: filtersReducer,
-  // favoritesData: filtersReducer,
+  filters: filtersReducer,
+  widgets: widgetsReducer,
 });
 
 const store = createStore(reducers, applyMiddleware(thunkMiddleware));
-// const store = createStore(reducers, applyMiddleware(thunkMiddleware));
+
+// export type RootState = ReturnType<typeof store.getState>
+// export type AppDispatch = typeof store.dispatch
 
 export default store;

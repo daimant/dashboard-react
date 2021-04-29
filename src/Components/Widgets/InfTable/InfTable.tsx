@@ -5,28 +5,11 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import classes from "./TableRight.module.scss";
+import classes from "./InfTable.module.scss";
+import {InfTableProps} from "../../Common/Types";
 
-interface Props {
-}
-
-interface TableRightElement {
-  name: string;
-  value: string;
-}
-
-const rows: TableRightElement[] = [
-  {name: 'Чистая прибыль', value: '100М'},
-  {name: 'EBITDA', value: '100М'},
-  {name: 'Удовлетворенность клиентов', value: '99%'},
-  {name: 'Рентабельность', value: '100%'},
-  {name: 'ROIC', value: '100%'},
-  {name: 'Производительность труда', value: '100K|P'},
-  {name: 'KPI', value: '100%'},
-];
-
-
-const TableRight: React.FC<Props> = props => {
+const InfTable: React.FC<InfTableProps> = ({inf: rows}) => {
+  // console.log('right-table', rows)
   return (
     <div className={classes.table_right}>
       <TableContainer component={Paper} className={classes.tableContainer}>
@@ -47,4 +30,4 @@ const TableRight: React.FC<Props> = props => {
   )
 };
 
-export default TableRight;
+export default InfTable;
