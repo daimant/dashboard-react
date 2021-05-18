@@ -3,9 +3,9 @@ import {connect} from "react-redux";
 import {} from "../Redux/widgets-reducer";
 import {getInf, getKPK, getSC} from "../Redux/selectors";
 import Widgets from "./Widgets";
-import {MapStateProps, RootState} from "../Common/Types";
+import {WidgetsStateProps, RootState} from "../Common/Types";
 
-class WidgetsContainer extends React.Component<MapStateProps> {
+class WidgetsContainer extends React.Component<WidgetsStateProps> {
   componentDidMount() {
     // if (!this.props.serviceData.length) {
     //   const { currentPage } = this.props;
@@ -34,4 +34,5 @@ const mapState = (state: RootState) => ({
   inf: getInf(state),
 });
 
-export default connect(mapState, {})(WidgetsContainer);
+// @ts-ignore
+export default connect<WidgetsStateProps, {},{}>(mapState, {})(WidgetsContainer);

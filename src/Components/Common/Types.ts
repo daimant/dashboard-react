@@ -1,6 +1,6 @@
 // widgets container
 
-export interface MapStateProps {
+export interface WidgetsStateProps {
   kpk: WidgetsKPKElements,
   sc: WidgetsGraphElements[],
   inf: InfTableElements[],
@@ -8,7 +8,11 @@ export interface MapStateProps {
 
 export interface RootState {
   widgets: {
-    data: MapStateProps
+    data: WidgetsStateProps
+  }
+  filters: {
+    isFetchingFilters: boolean,
+    data: [],
   }
 }
 

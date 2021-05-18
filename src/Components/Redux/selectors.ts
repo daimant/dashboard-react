@@ -1,4 +1,4 @@
-// import {GraphSelectorElement} from "../Common/Types";
+import {RootState} from "../Common/Types";
 
 export const getKPK = (state: any) => {
   const {kpk} = state.widgets.data;
@@ -12,10 +12,10 @@ export const getKPK = (state: any) => {
     parsedKPK.push(curr);
   }
 
-  // console.log('selector', parsedKPK);
+  // console.log('selector', {cols: state.widgets.data.kpk.name_col, kpk: parsedKPK});
   return {cols: state.widgets.data.kpk.name_col, kpk: parsedKPK};
 };
-export const getSC = (state: any) => {
+export const getSC = (state: RootState) => {
 
   for (let point of state.widgets.data.sc) {
     let min = Infinity;

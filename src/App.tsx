@@ -8,9 +8,9 @@ function App() {
   return (
       <div className={classes.container}>
         <header>
-          <Navbar/>
-          <FiltersContainer/>
+          <Navbar/>          <FiltersContainer/>
         </header>
+        {/*// @ts-ignore*/}
         <WidgetsContainer/>
       </div>
   );
