@@ -9,13 +9,13 @@ const SET_WIDGETS = "SET_WIDGETS";
 
 let initialState: object = {
   isFetchingWidgets: false,
-  // data: {
-  //   kpk: widgetsAPI.getLeftTable(),
-  //   sc1: widgetsAPI.getGraph(1),
-  //   sc2: widgetsAPI.getGraph(2),
-  //   sc3: widgetsAPI.getGraph(3),
-  //   inf: widgetsAPI.getRightTable(),
-  // },
+  api: {
+    kpk: widgetsAPI.getLeftTable(),
+    sc1: widgetsAPI.getGraph(1),
+    sc2: widgetsAPI.getGraph(2),
+    sc3: widgetsAPI.getGraph(3),
+    // inf: widgetsAPI.getRightTable(),
+  },
   data: {
     "kpk": {
       "name_col": [

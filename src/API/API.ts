@@ -5,28 +5,43 @@ interface Res {
 }
 
 const instance = axios.create({
-  baseURL: "http://localhost:4000/",
+  baseURL: "http://10.248.40.236:7755/api/",
+  // baseURL: "http://localhost:4000/",
 });
+
+const payload = {
+  org_oid: '281586771165316',
+  st_date: '2021-03-01',
+  fn_date: '2021-03-30',
+  ktl: {
+    ka_atr: 'ka', // or mct
+    ktl_oid: '281586771165316',
+  },
+  val: 'percent',
+}
 
 export const widgetsAPI = {
   getLeftTable: () => {
     return instance
-      .get(
-        `kpk`
+      .post(
+        `kpk`, payload
       )
-      .then((response: Res) => response.data);
+      .then(async (response: Res) => {
+        console.log('api',response)
+      });
+      //.then(async (response: Res) => await response.data);
 
   },
   getGraph: (number: number) => {
     return instance
-      .get(
-        `sc/${number}`
+      .post(
+        `sc/${number}`, payload
       )
       .then((response: Res) => response.data);
   },
   getRightTable: () => {
     return instance
-      .get(
+      .post(
         `inf`
       )
       .then((response: Res) => response.data);

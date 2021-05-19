@@ -1,6 +1,8 @@
 import {RootState} from "../Common/Types";
 
 export const getKPK = (state: any) => {
+  //console.log('selector',JSON.stringify(state.widgets.api.kpk))
+  //console.log('selector',state.widgets.api.kpk)
   const {kpk} = state.widgets.data;
   const parsedKPK = [];
   for (let i = 0; i < kpk.data.length; i++) {
