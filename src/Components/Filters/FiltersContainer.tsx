@@ -6,20 +6,13 @@ import Filters from "./Filters";
 
 
 interface StateWidgets {
-
 }
 
 class WidgetsContainer extends React.Component {
   componentDidMount() {
-    // if (!this.props.serviceData.length) {
-    //   const { currentPage } = this.props;
-    //   this.props.requestServices(currentPage);
-    // }
+
   }
 
-  // onPageChanged = (pageNumber) => {
-  //   this.props.requestServices(pageNumber);
-  // };
   render() {
     return (
       <Filters/>
@@ -27,9 +20,6 @@ class WidgetsContainer extends React.Component {
   }
 }
 
-const mapState = (state: StateWidgets) => ({
-  // serviceData: getService(state),
-
-});
+const mapState = (state: StateWidgets) => ({});
 
 export default connect(mapState, {})(WidgetsContainer);

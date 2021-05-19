@@ -9,17 +9,6 @@ const instance = axios.create({
   baseURL: "http://localhost:4000/",
 });
 
-const payload = {
-  org_oid: '281586771165316',
-  st_date: '2021-03-01',
-  fn_date: '2021-03-30',
-  ktl: {
-    ka_atr: 'ka', // or mct
-    ktl_oid: '281586771165316',
-  },
-  val: 'percent',
-};
-
 export const widgetsAPI = {
   getKPK: () => {
     return instance
@@ -43,3 +32,11 @@ export const widgetsAPI = {
       .then((response: Res) => response.data);
   },
 };
+export const filtersAPI = {
+  getORG: () => {
+    return instance
+      .post(
+        ''
+      )
+  }
+}
