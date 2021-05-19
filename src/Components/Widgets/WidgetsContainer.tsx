@@ -1,23 +1,20 @@
-import React from "react";
+import React, {Component} from "react";
 import {connect} from "react-redux";
-import {} from "../Redux/widgets-reducer";
-import {getInf, getKPK, getSC} from "../Redux/selectors";
+import {requestWidgets} from "../Redux/widgets-reducer";
+import {selectInf, selectKPK, selectSC} from "../Redux/selectors";
 import Widgets from "./Widgets";
 import {WidgetsStateProps, RootState} from "../Common/Types";
 
-class WidgetsContainer extends React.Component<WidgetsStateProps> {
+class WidgetsContainer extends Component<WidgetsStateProps> {
   componentDidMount() {
-    // if (!this.props.serviceData.length) {
-    //   const { currentPage } = this.props;
-    //   this.props.requestServices(currentPage);
+    // if (!this.props.kpk) {
+    // const { currentPage } = this.props;
+    // @ts-ignore
+    this.props.requestWidgets();
     // }
   }
 
-  // onPageChanged = (pageNumber) => {
-  //   this.props.requestServices(pageNumber);
-  // };
   render() {
-    // console.log('widgets container', this.props)
     return (
       <Widgets
         kpk={this.props.kpk}
@@ -29,10 +26,10 @@ class WidgetsContainer extends React.Component<WidgetsStateProps> {
 }
 
 const mapState = (state: RootState) => ({
-  kpk: getKPK(state),
-  sc: getSC(state),
-  inf: getInf(state),
+  kpk: selectKPK(state),
+  sc: selectSC(state),
+  inf: selectInf(state),
 });
 
 // @ts-ignore
-export default connect<WidgetsStateProps, {},{}>(mapState, {})(WidgetsContainer);
+export default connect<WidgetsStateProps, {}, {}>(mapState, {requestWidgets})(WidgetsContainer);

@@ -4,12 +4,11 @@ export interface WidgetsStateProps {
   kpk: WidgetsKPKElements,
   sc: WidgetsGraphElements[],
   inf: InfTableElements[],
+  isFetchingWidgets: boolean,
 }
 
 export interface RootState {
-  widgets: {
-    data: WidgetsStateProps
-  }
+  widgets: WidgetsStateProps,
   filters: {
     isFetchingFilters: boolean,
     data: [],
@@ -25,7 +24,12 @@ export interface WidgetsPropsElements {
 }
 
 interface WidgetsKPKElements {
-  cols: string[],
+  data: object[];
+  cols: [
+    string,
+    string,
+    string
+  ],
   kpk: KPKTableElements[]
 }
 

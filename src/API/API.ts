@@ -5,8 +5,8 @@ interface Res {
 }
 
 const instance = axios.create({
-  baseURL: "http://10.248.40.236:7755/api/",
-  // baseURL: "http://localhost:4000/",
+  // baseURL: "http://10.248.40.236:7755/api/",
+  baseURL: "http://localhost:4000/",
 });
 
 const payload = {
@@ -18,48 +18,28 @@ const payload = {
     ktl_oid: '281586771165316',
   },
   val: 'percent',
-}
+};
 
 export const widgetsAPI = {
-  getLeftTable: () => {
+  getKPK: () => {
     return instance
-      .post(
-        `kpk`, payload
-      )
-      .then(async (response: Res) => {
-        console.log('api',response)
-      });
-      //.then(async (response: Res) => await response.data);
-
-  },
-  getGraph: (number: number) => {
-    return instance
-      .post(
-        `sc/${number}`, payload
+      .get(
+        `kpk`
       )
       .then((response: Res) => response.data);
   },
-  getRightTable: () => {
+  getSC: (number: number) => {
+    return instance
+      .get(
+        `sc/${number}`
+      )
+      .then((response: Res) => response.data);
+  },
+  getINF: () => {
     return instance
       .post(
         `inf`
       )
       .then((response: Res) => response.data);
   },
-  // getSortServices: (type, countSort = 0) => {
-  //   return instance
-  //     .get(
-  //       `instrumentsList?instrument_type_code=cms&page=1&sort_direction=${
-  //         countSort % 2 ? "asc" : "desc"
-  //       }&sort=${type}`
-  //     )
-  //     .then((response) => response.data);
-  // },
-  // getNextPage: (currentPage, sortDirect, sortType) => {
-  //   return instance
-  //     .get(
-  //       `instrumentsList?instrument_type_code=cms&page=${currentPage}&sort_direction=${sortDirect}&sort=${sortType}`
-  //     )
-  //     .then((response) => response.data);
-  // },
 };

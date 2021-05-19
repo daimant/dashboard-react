@@ -6,13 +6,14 @@ import FiltersContainer from "./Components/Filters/FiltersContainer";
 
 function App() {
   return (
-      <div className={classes.container}>
-        <header>
-          <Navbar/>          <FiltersContainer/>
-        </header>
-        {/*// @ts-ignore*/}
-        <WidgetsContainer/>
-      </div>
+    <div className={classes.container}>
+      <header>
+        <Navbar/>
+        <FiltersContainer/>
+      </header>
+      {/*// @ts-ignore*/}
+      <WidgetsContainer/>
+    </div>
   );
 }
 

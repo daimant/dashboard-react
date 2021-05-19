@@ -6,12 +6,9 @@ import InfTable from "./InfTable/InfTable";
 import {WidgetsGraphElements, WidgetsPropsElements} from "../Common/Types";
 
 const Widgets: React.FC<WidgetsPropsElements> = ({kpk, sc, inf}) => {
-  // console.log('widgets', 'kpk', kpk)
-  // console.log('widgets', 'sc', sc)
-  // console.log('widgets', 'inf', inf)
   return (
     <main>
-      <KPKTable kpk={kpk}/>
+      {kpk.data ? <KPKTable kpk={kpk}/> : <div>loading data</div>}
       <div>
         {sc.map((graph: WidgetsGraphElements, i: number) =>
           <Graph sc={graph} key={i}/>

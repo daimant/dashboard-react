@@ -10,8 +10,7 @@ import classes from "./KPKTable.module.scss";
 import {KPKTablePropsElements} from "../../Common/Types";
 
 const KPKTable: React.FC<KPKTablePropsElements> = ({kpk}) => {
-  const {cols, kpk: rows} = kpk;
-  // console.log('table-left', rows, cols)
+  const {cols, data: rows} = kpk;
   return (
     <div className={classes.table_left}>
       <TableContainer component={Paper} className={classes.tableContainer}>
@@ -25,12 +24,21 @@ const KPKTable: React.FC<KPKTablePropsElements> = ({kpk}) => {
           </TableHead>
           <TableBody>
             {rows.map((row) => (
-              <TableRow key={row['КПК']}>
+              // @ts-ignore
+              <TableRow key={row[cols[0]]}>
                 <TableCell component="th" scope="row" className={classes.cell}>
-                  {row['КПК']}
+                  {  // @ts-ignore
+                    row[cols[0]]
+                  }
                 </TableCell>
-                <TableCell align="right" className={classes.cell}>{row.Период}</TableCell>
-                <TableCell align="right" className={classes.cell}>{row.Сегодня}</TableCell>
+                <TableCell align="right" className={classes.cell}>{
+                  // @ts-ignore
+                  row[cols[1]]
+                }</TableCell>
+                <TableCell align="right" className={classes.cell}>{
+                  // @ts-ignore
+                  row[cols[2]]
+                }</TableCell>
               </TableRow>
             ))}
           </TableBody>
