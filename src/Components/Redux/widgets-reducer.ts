@@ -8,7 +8,7 @@ interface ActionElements {
 const SET_KPK = "SET_KPK";
 
 let initialState: object = {
-  isFetchingWidgets: false,
+  isFetchingWidgets: true,
   kpk: {},
   sc: [
     {
@@ -268,8 +268,9 @@ let initialState: object = {
 
 const widgetsReducer = (state = initialState, action: any) => {
   switch (action.type) {
-    case SET_KPK:
-      return {...state, kpk: action.kpk};
+    case SET_KPK: {
+      return {...state, kpk: action.kpk, isFetchingWidgets: false}
+    }
     default:
       return state;
   }

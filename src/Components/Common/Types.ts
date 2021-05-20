@@ -20,7 +20,8 @@ export interface RootState {
 export interface WidgetsPropsElements {
   kpk: WidgetsKPKElements,
   sc: WidgetsGraphElements[],
-  inf: InfTableElements[]
+  inf: InfTableElements[],
+  isFetchingWidgets: boolean,
 }
 
 interface WidgetsKPKElements {
@@ -76,17 +77,10 @@ export interface GraphElements {
   v: number,
 }
 
-// selectors
+//filters
 
-// export interface GraphSelectorElement {
-//   widgets: {
-//     data: {
-//       kpk: {
-//         name_col: [],
-//         data: string[]
-//       },
-//       sc: object[],
-//       inf: [],
-//     }
-//   }
-// }
+export interface RenderTree {
+  oid: string;
+  name: string;
+  children?: RenderTree[];
+}

@@ -4,11 +4,14 @@ import KPKTable from "./KPKTable/KPKTable";
 import Graph from "./Graph/Graph";
 import InfTable from "./InfTable/InfTable";
 import {WidgetsGraphElements, WidgetsPropsElements} from "../Common/Types";
+import {Preloader} from "../Common/Preloader";
 
-const Widgets: React.FC<WidgetsPropsElements> = ({kpk, sc, inf}) => {
+const Widgets: React.FC<WidgetsPropsElements> = ({kpk, sc, inf, isFetchingWidgets}) => {
+  if (isFetchingWidgets) return <Preloader/>;
+
   return (
     <main>
-      {kpk.data ? <KPKTable kpk={kpk}/> : <div>loading data</div>}
+      <KPKTable kpk={kpk}/>
       <div>
         {sc.map((graph: WidgetsGraphElements, i: number) =>
           <Graph sc={graph} key={i}/>

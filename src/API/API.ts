@@ -12,31 +12,24 @@ const instance = axios.create({
 export const widgetsAPI = {
   getKPK: () => {
     return instance
-      .get(
-        `kpk`
-      )
+      .get(`kpk`)
       .then((response: Res) => response.data);
   },
   getSC: (number: number) => {
     return instance
-      .get(
-        `sc/${number}`
-      )
+      .get(`sc/${number}`)
       .then((response: Res) => response.data);
   },
   getINF: () => {
     return instance
-      .post(
-        `inf`
-      )
+      .post(`inf`)
       .then((response: Res) => response.data);
   },
 };
 export const filtersAPI = {
-  getORG: () => {
+  getOrg: () => {
     return instance
-      .post(
-        ''
-      )
+      .get('sprav_org_all_281586771165316')
+      .then((response: Res) => response.data);
   }
 }

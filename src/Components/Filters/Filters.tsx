@@ -1,8 +1,11 @@
 import React from "react";
 import classes from "./Filters.module.scss";
 import Datepicker from "./Filter-components/Datepicker/Datepicker";
-import FilterMenuMulChBox from "./Filter-components/FilterMenuMulChBox/FilterMenuMulChBox";
+import MenuMulChBox from "./Filter-components/MenuMulChBox/MenuMulChBox";
 import {subMonths} from "date-fns";
+import {Preloader} from "../Common/Preloader";
+import MenuTreeList from "./Filter-components/MenuTreeList/MenuTreeList";
+import {RenderTree} from "../Common/Types";
 
 interface Props {
   title: string,
@@ -16,14 +19,9 @@ interface DateProps {
   date: any
 }
 
-const propsFilterOrgStructure: Props = {
-  title: 'Оргструктура',
-  data: ["ООО ОСК ИнфоТранс",
-    "РЦС Восточно-Сибирской ж.д.", "РЦС Горьковской ж.д.", "РЦС Дальневосточной ж.д.", "РЦС Забайкальской ж.д.",
-    "РЦС Западно-Сибирской ж.д.", "РЦС Красноярской ж.д.", "РЦС Куйбышевской ж.д.", "РЦС Октябрьской и Калининградской ж.д.",
-    "РЦС Приволжской ж.д.", "РЦС Свердловской ж.д.", "РЦС Северной ж.д.", "РЦС Северо-Кавказской ж.д.", "РЦС ЦА и Московской ж.д.",
-    "РЦС Юго-Восточной ж.д.", "РЦС Южно-Уральской ж.д."]
-};
+// const org_list_old: RenderTree =
+
+
 const propsStartDate: DateProps = {
   title: 'Начальная дата',
   date: subMonths(new Date(), 1),
@@ -49,15 +47,18 @@ const propsFilterView = {
   initData: ["Все данные", "Таблица с услугами", "График 1", "График 2", "График 3", "Таблица с показателми компании"]
 };
 
-const Filters: React.FC = () => { // !!!!! any
+const Filters: React.FC<any> = ({org_list, isFetchingFilters, org_oid, org_name, fn_date, st_date, ktl, val}) => {
+  if (isFetchingFilters) return <Preloader/>;
+
   return (
     <div className={classes.filters}>
-      <FilterMenuMulChBox {...propsFilterOrgStructure}/>
+      {/*// @ts-ignore*/}
+      <MenuTreeList org_list={org_list}/>
       <Datepicker {...propsStartDate}/>
       <Datepicker {...propsEndDate}/>
-      <FilterMenuMulChBox {...propsFilterDocuments}/>
-      <FilterMenuMulChBox {...propsFilterValues}/>
-      <FilterMenuMulChBox {...propsFilterView}/>
+      <MenuMulChBox {...propsFilterDocuments}/>
+      <MenuMulChBox {...propsFilterValues}/>
+      <MenuMulChBox {...propsFilterView}/>
     </div>
   )
 };
