@@ -2,12 +2,13 @@ import React from "react";
 import {connect} from "react-redux";
 import {} from "../Redux/widgets-reducer";
 import Filters from "./Filters";
-import {requestOrg} from "../Redux/filters-reducer";
+import {requestOrg, requestWidgetsFromFilters} from "../Redux/filters-reducer";
 import {
   selectFnDate,
   selectIsFetchingFilters,
   selectKTL,
-  selectOrgList, selectOrgName,
+  selectOrgList,
+  selectOrgName,
   selectOrgOid,
   selectStDate, selectVal
 } from "../Redux/selectors";
@@ -15,7 +16,9 @@ import {
 class WidgetsContainer extends React.Component<any> {
   componentDidMount() {
     //@ts-ignore
-    this.props.requestOrg()
+    if (!this.props.org_list.oid)
+    //@ts-ignore
+      this.props.requestOrg()
   }
 
   render() {
@@ -30,6 +33,7 @@ class WidgetsContainer extends React.Component<any> {
         st_date={this.props.st_date}
         ktl={this.props.ktl}
         val={this.props.val}
+        requestWidgetsFromFilters={this.props.requestWidgetsFromFilters}
       />
     );
   }
@@ -46,4 +50,4 @@ const mapState = (state: any) => ({
   val: selectVal(state),
 });
 
-export default connect(mapState, {requestOrg})(WidgetsContainer);
+export default connect(mapState, {requestOrg, requestWidgetsFromFilters})(WidgetsContainer);

@@ -9,7 +9,6 @@ class WidgetsContainer extends Component<WidgetsStateProps> {
   componentDidMount() {
     // @ts-ignore
     this.props.requestWidgets();
-
   }
 
   render() {

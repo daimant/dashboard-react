@@ -41,4 +41,9 @@ export const requestOrg = () => async (dispatch: any) => {
   dispatch(setOrg(response));
 };
 
+export const requestWidgetsFromFilters = (oid: string = '281586771165316') => async (dispatch: any) => {
+  const response = await widgetsAPI.getKPK(oid);
+  dispatch(setKPK(response));
+};
+
 export default filtersReducer;

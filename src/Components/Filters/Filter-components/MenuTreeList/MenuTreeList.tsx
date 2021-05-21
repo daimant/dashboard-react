@@ -11,16 +11,16 @@ import {RenderTree} from "../../../Common/Types";
 const useStyles = makeStyles({
   root: {
     margin: '.5rem',
-    // height: ,
-    // flexGrow: 1,
-    // maxWidth: 400,
   },
 });
 
-
-const MenuTreeList: React.FC<any> = ({org_list}) => {
-  // console.log(org_list); //не убирать - без него ломается
+const MenuTreeList: React.FC<any> = ({org_list, requestWidgetsFromFilters}) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [selected, setSelected] = React.useState<string[]>([]);
+
+  const handleSelect = (event: React.ChangeEvent<{}>, nodeIds: string[]) => {
+    setSelected(nodeIds);
+  };
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -28,12 +28,13 @@ const MenuTreeList: React.FC<any> = ({org_list}) => {
 
   const handleClose = () => {
     setAnchorEl(null);
+    requestWidgetsFromFilters(selected)
   };
 
   const classes = useStyles();
 
   const renderTree = (nodes: RenderTree) => (
-    <TreeItem key={nodes.oid} nodeId={nodes.oid} label={nodes.name}>
+    <TreeItem key={+nodes.oid} nodeId={nodes.oid} label={nodes.name}>
       {Array.isArray(nodes.children) ? nodes.children.map((node) => renderTree(node)) : null}
     </TreeItem>
   );
@@ -41,7 +42,7 @@ const MenuTreeList: React.FC<any> = ({org_list}) => {
   return (
     <div>
       <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-        Open Menu
+        Оргструктура
       </Button>
       <Menu
         id="simple-menu"
@@ -53,8 +54,9 @@ const MenuTreeList: React.FC<any> = ({org_list}) => {
         <TreeView
           className={classes.root}
           defaultCollapseIcon={<ExpandMoreIcon/>}
-          defaultExpanded={['root']}
+          defaultExpanded={['281586771165316']}
           defaultExpandIcon={<ChevronRightIcon/>}
+          onNodeSelect={handleSelect}
         >
           {renderTree(org_list)}
         </TreeView>

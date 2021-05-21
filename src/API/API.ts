@@ -10,7 +10,7 @@ const instance = axios.create({
 });
 
 export const widgetsAPI = {
-  getKPK: () => {
+  getKPK: (oid: string = '281586771165316') => {
     return instance
       .get(`kpk`)
       .then((response: Res) => response.data);

@@ -47,13 +47,13 @@ const propsFilterView = {
   initData: ["Все данные", "Таблица с услугами", "График 1", "График 2", "График 3", "Таблица с показателми компании"]
 };
 
-const Filters: React.FC<any> = ({org_list, isFetchingFilters, org_oid, org_name, fn_date, st_date, ktl, val}) => {
+const Filters: React.FC<any> = ({org_list, isFetchingFilters, org_oid, org_name, fn_date, st_date, ktl, val, requestWidgetsFromFilters}) => {
   if (isFetchingFilters) return <Preloader/>;
 
   return (
     <div className={classes.filters}>
       {/*// @ts-ignore*/}
-      <MenuTreeList org_list={org_list}/>
+      <MenuTreeList org_list={org_list} requestWidgetsFromFilters={requestWidgetsFromFilters}/>
       <Datepicker {...propsStartDate}/>
       <Datepicker {...propsEndDate}/>
       <MenuMulChBox {...propsFilterDocuments}/>

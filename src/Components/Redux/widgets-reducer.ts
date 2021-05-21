@@ -278,8 +278,8 @@ const widgetsReducer = (state = initialState, action: any) => {
 
 export const setKPK = (kpk: any) => ({type: SET_KPK, kpk});
 
-export const requestWidgets = () => async (dispatch: any) => {
-  const response = await widgetsAPI.getKPK(); // переделать
+export const requestWidgets = (oid: string = '281586771165316') => async (dispatch: any) => {
+  const response = await widgetsAPI.getKPK(oid); // переделать
   dispatch(setKPK(response));
 };
 

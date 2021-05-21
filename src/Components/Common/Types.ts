@@ -78,7 +78,6 @@ export interface GraphElements {
 }
 
 //filters
-
 export interface RenderTree {
   oid: string;
   name: string;

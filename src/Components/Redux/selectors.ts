@@ -59,38 +59,35 @@ export const selectOrgList = (state: any) => {
   const example = {
     id: '281586771165316',
     name: "ООО ОСК ИнфоТранс",
-    children: [
-      {
-        id: '1',
-        name: 'Операционный департамент',
-      },
-      {
-        id: '3',
-        name: "Сектор внутреннего контроля",
-        children: [
-          {
-            id: '4',
-            name: 'Сектор внутреннего контроля',
-          },
-        ],
-      },
-    ],
   };
-  const orgList: { name: string, oid: number, parent: number}[] = state.filters.org_list;
-  if (!orgList.length) return example;
+  const orgList: { name: string, oid: string, parent: string}[] = state.filters.org_list;
+  if (!orgList[0]) return orgList;
+  // @ts-ignore
+  if (orgList.children && orgList.children.length) {
+
+    // @ts-ignore
+    return orgList;
+  }
   const orgPosition = new Map(orgList.map((el, i) => [el['oid'], i]));
+
 
   for (let i = orgList.length - 1; i > 0; i--) {
     const parentInList = orgPosition.get(orgList[i].parent);
     // @ts-ignore
     if (!orgList[parentInList]['children']) orgList[parentInList]['children'] = [];
     // @ts-ignore
-
     orgList[parentInList]['children'] = [...orgList[parentInList]['children'], orgList[i]]
   }
-  // console.log(orgList, orgPosition)
 
+  for (let org of orgList) {
+    // @ts-ignore
+    org.oid += '';
+    // @ts-ignore
+    org.parent += '';
+
+  }
   // @ts-ignore
+  state.filters.org_list = orgList[0]
   return orgList[0];
 };
 export const selectIsFetchingFilters = (state: any) => state.filters.isFetchingFilters;
