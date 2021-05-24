@@ -108,3 +108,5 @@ export const selectStDate = (state: any) => state.filters.st_date;
 export const selectFnDate = (state: any) => state.filters.fn_date;
 export const selectKTL = (state: any) => state.filters.ktl;
 export const selectVal = (state: any) => state.filters.val;
+export const selectPerList = (state: any) => state.filters.per_list;
+

@@ -10,9 +10,156 @@ interface ActionElements {
 const SET_ORG = "SET_ORG";
 const SET_DATE = "SET_DATE";
 
+const createPeriodTree = (st: Date, end: Date) => {
+  const staticTree = {
+    name: 'Период',
+    oid: "root",
+    children: [
+      {
+        name: '2020',
+        oid: '0',
+        children: [
+          {
+            name: '01',
+            oid: '2',
+            children: [
+              {
+                name: '01',
+                oid: '8',
+                children: []
+              },
+              {
+                name: '02',
+                oid: '9',
+                children: []
+              },
+              {
+                name: '03',
+                oid: '10',
+                children: []
+              },
+            ]
+          },
+          {
+            name: '02',
+            oid: '3',
+            children: [
+              {
+                name: '04',
+                oid: '11',
+                children: []
+              },
+              {
+                name: '05',
+                oid: '12',
+                children: []
+              },
+              {
+                name: '06',
+                oid: '13',
+                children: []
+              },
+            ]
+          },
+          {
+            name: '03',
+            oid: '4',
+            children: [
+              {
+                name: '07',
+                oid: '14',
+                children: []
+              },
+              {
+                name: '08',
+                oid: '15',
+                children: []
+              },
+              {
+                name: '09',
+                oid: '16',
+                children: []
+              },
+            ]
+          },
+          {
+            name: '04',
+            oid: '5',
+            children: [
+              {
+                name: '10',
+                oid: '17',
+                children: []
+              },
+              {
+                name: '11',
+                oid: '18',
+                children: []
+              },
+              {
+                name: '12',
+                oid: '19',
+                children: []
+              },
+            ]
+          }
+        ]
+      },
+      {
+        name: '2021',
+        oid: '1',
+        children: [
+          {
+            name: '01',
+            oid: '6',
+            children: [
+              {
+                name: '01',
+                oid: '20',
+                children: []
+              },
+              {
+                name: '02',
+                oid: '21',
+                children: []
+              },
+              {
+                name: '03',
+                oid: '22',
+                children: []
+              },
+            ]
+          },
+          {
+            name: '02',
+            oid: '7',
+            children: [
+              {
+                name: '04',
+                oid: '23',
+                children: []
+              },
+              {
+                name: '05',
+                oid: '24',
+                children: []
+              },
+            ]
+          }
+        ]
+      },
+    ]
+  };
+
+  const dynamicTree = []
+  // console.log(st, end, staticTree)
+  // for (let)
+  return staticTree
+}
 
 let initialState: object = {
   org_list: [],
+  per_list: createPeriodTree(new Date(2020, 0, 1), new Date(Date.now())),
   isFetchingFilters: true,
   org_oid: '281586771165316',
   org_name: "ООО ОСК ИнфоТранс",

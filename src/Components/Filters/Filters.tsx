@@ -50,17 +50,20 @@ const Filters: React.FC<any> = ({
                                   ktl,
                                   val,
                                   requestWidgetsFromFilters,
-                                  setDate}) => {
+                                  setDate,
+                                  per_list}) => {
   if (isFetchingFilters) return <Preloader/>;
 
   return (
     <div className={classes.filters}>
       {/*// @ts-ignore*/}
-      <MenuTreeList org_list={org_list} requestWidgetsFromFilters={requestWidgetsFromFilters}/>
+      <MenuTreeList treeList={org_list} title={'Оргструктура'} requestWidgetsFromFilters={requestWidgetsFromFilters}/>
       {/*// @ts-ignore*/}
-      <Datepicker date={st_date} title={'Начальная дата'} setDate={setDate}/>
+      <MenuTreeList treeList={per_list} title={'Период'} requestWidgetsFromFilters={requestWidgetsFromFilters}/>
       {/*// @ts-ignore*/}
-      <Datepicker date={fn_date} title={'Конечная дата'} setDate={setDate}/>
+      {/*<Datepicker date={st_date} title={'Начальная дата'} setDate={setDate}/>*/}
+      {/*// @ts-ignore*/}
+      {/*<Datepicker date={fn_date} title={'Конечная дата'} setDate={setDate}/>*/}
       <MenuMulChBox {...propsFilterDocuments}/>
       <MenuMulChBox {...propsFilterValues}/>
       <MenuMulChBox {...propsFilterView}/>

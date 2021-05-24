@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   },
 });
 
-const MenuTreeList: React.FC<any> = ({org_list, requestWidgetsFromFilters}) => {
+const MenuTreeList: React.FC<any> = ({treeList, title, requestWidgetsFromFilters}) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selected, setSelected] = React.useState<string[]>([]);
 
@@ -28,7 +28,7 @@ const MenuTreeList: React.FC<any> = ({org_list, requestWidgetsFromFilters}) => {
 
   const handleClose = () => {
     setAnchorEl(null);
-    requestWidgetsFromFilters(selected)
+    requestWidgetsFromFilters(selected); //переделать
   };
 
   const classes = useStyles();
@@ -42,7 +42,7 @@ const MenuTreeList: React.FC<any> = ({org_list, requestWidgetsFromFilters}) => {
   return (
     <div>
       <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-        Оргструктура
+        {title}
       </Button>
       <Menu
         id="simple-menu"
@@ -54,11 +54,11 @@ const MenuTreeList: React.FC<any> = ({org_list, requestWidgetsFromFilters}) => {
         <TreeView
           className={classes.root}
           defaultCollapseIcon={<ExpandMoreIcon/>}
-          defaultExpanded={['281586771165316']}
+          defaultExpanded={[treeList.name]}
           defaultExpandIcon={<ChevronRightIcon/>}
           onNodeSelect={handleSelect}
         >
-          {renderTree(org_list)}
+          {renderTree(treeList)}
         </TreeView>
       </Menu>
     </div>
