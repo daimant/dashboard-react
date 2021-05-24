@@ -9,9 +9,8 @@ import classes from "./InfTable.module.scss";
 import {InfTableProps} from "../../Common/Types";
 
 const InfTable: React.FC<InfTableProps> = ({inf: rows}) => {
-  // console.log('right-table', rows)
   return (
-    <div className={classes.table_right}>
+    <div className={classes.infTable}>
       <TableContainer component={Paper} className={classes.tableContainer}>
         <Table size="small" aria-label="a dense table" className={classes.table}>
           <TableBody>

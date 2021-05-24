@@ -13,7 +13,7 @@ const KPKTable: React.FC<KPKTablePropsElements> = ({kpk}) => {
   const {cols, data: rows} = kpk;
 
   return (
-    <div className={classes.table_left}>
+    <div className={classes.kpkTable}>
       <TableContainer component={Paper} className={classes.tableContainer}>
         <Table size="small" aria-label="a dense table" className={classes.table}>
           <TableHead>
@@ -27,11 +27,10 @@ const KPKTable: React.FC<KPKTablePropsElements> = ({kpk}) => {
             {rows.map((row) => (
               // @ts-ignore
               <TableRow key={row[cols[1]]}>
-                <TableCell component="th" scope="row" className={classes.cell}>
-                  {  // @ts-ignore
-                    row[cols[0]]
-                  }
-                </TableCell>
+                <TableCell component="th" scope="row" className={classes.cell}>{
+                  // @ts-ignore
+                  row[cols[0]]
+                }</TableCell>
                 <TableCell align="right" className={classes.cell}>{
                   // @ts-ignore
                   row[cols[1]]
