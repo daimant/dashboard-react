@@ -5,6 +5,7 @@ export interface WidgetsStateProps {
   sc: WidgetsGraphElements[],
   inf: InfTableElements[],
   isFetchingWidgets: boolean,
+  srv_oid: number,
 }
 
 export interface RootState {

@@ -19,17 +19,10 @@ interface DateProps {
   date: any
 }
 
-// const org_list_old: RenderTree =
-
-
-const propsStartDate: DateProps = {
+const propsStartDate = {
   title: 'Начальная дата',
   date: subMonths(new Date(), 1),
   // date: Date.now() - 30 * 24 * 60 * 60 * 1000,
-};
-const propsEndDate = {
-  title: 'Конечная дата',
-  date: new Date(Date.now()),
 };
 const propsFilterDocuments: Props = {
   title: 'Договор/КА',
@@ -47,15 +40,27 @@ const propsFilterView = {
   initData: ["Все данные", "Таблица с услугами", "График 1", "График 2", "График 3", "Таблица с показателми компании"]
 };
 
-const Filters: React.FC<any> = ({org_list, isFetchingFilters, org_oid, org_name, fn_date, st_date, ktl, val, requestWidgetsFromFilters}) => {
+const Filters: React.FC<any> = ({
+                                  org_list,
+                                  isFetchingFilters,
+                                  org_oid,
+                                  org_name,
+                                  fn_date,
+                                  st_date,
+                                  ktl,
+                                  val,
+                                  requestWidgetsFromFilters,
+                                  setDate}) => {
   if (isFetchingFilters) return <Preloader/>;
 
   return (
     <div className={classes.filters}>
       {/*// @ts-ignore*/}
       <MenuTreeList org_list={org_list} requestWidgetsFromFilters={requestWidgetsFromFilters}/>
-      <Datepicker {...propsStartDate}/>
-      <Datepicker {...propsEndDate}/>
+      {/*// @ts-ignore*/}
+      <Datepicker date={st_date} title={'Начальная дата'} setDate={setDate}/>
+      {/*// @ts-ignore*/}
+      <Datepicker date={fn_date} title={'Конечная дата'} setDate={setDate}/>
       <MenuMulChBox {...propsFilterDocuments}/>
       <MenuMulChBox {...propsFilterValues}/>
       <MenuMulChBox {...propsFilterView}/>

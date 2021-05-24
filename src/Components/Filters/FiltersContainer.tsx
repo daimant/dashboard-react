@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {} from "../Redux/widgets-reducer";
 import Filters from "./Filters";
-import {requestOrg, requestWidgetsFromFilters} from "../Redux/filters-reducer";
+import {requestOrg, requestWidgetsFromFilters, setDate} from "../Redux/filters-reducer";
 import {
   selectFnDate,
   selectIsFetchingFilters,
@@ -34,6 +34,7 @@ class WidgetsContainer extends React.Component<any> {
         ktl={this.props.ktl}
         val={this.props.val}
         requestWidgetsFromFilters={this.props.requestWidgetsFromFilters}
+        setDate={this.props.setDate}
       />
     );
   }
@@ -50,4 +51,4 @@ const mapState = (state: any) => ({
   val: selectVal(state),
 });
 
-export default connect(mapState, {requestOrg, requestWidgetsFromFilters})(WidgetsContainer);
+export default connect(mapState, {requestOrg, requestWidgetsFromFilters, setDate})(WidgetsContainer);

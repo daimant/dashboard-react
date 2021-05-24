@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import {requestWidgets} from "../Redux/widgets-reducer";
-import {selectInf, selectIsFetchingWidgets, selectKPK, selectSC} from "../Redux/selectors";
+import {selectFilters, selectInf, selectIsFetchingWidgets, selectKPK, selectSC} from "../Redux/selectors";
 import Widgets from "./Widgets";
 import {WidgetsStateProps, RootState} from "../Common/Types";
 
@@ -28,6 +28,7 @@ const mapState = (state: RootState) => ({
   sc: selectSC(state),
   inf: selectInf(state),
   isFetchingWidgets: selectIsFetchingWidgets(state),
+  filters: selectFilters(state),
 });
 
 // @ts-ignore

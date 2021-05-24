@@ -9,17 +9,17 @@ import {
 } from '@material-ui/pickers';
 
 interface Props {
-  title: string,
-  date: any,
+    title: string,
+    date: any,
 }
 
-const Datepicker: React.FC<Props> = props => {
-  const [selectedDate, setSelectedDate] = React.useState<Date | null>(
-    new Date(props.date),
-  );
+// @ts-ignore
+const Datepicker: React.FC<Props> = ({title, date, setDate}) => {
+  const [selectedDate, setSelectedDate] = React.useState<Date | null>(date);
 
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
+    setDate(selectedDate, title)
   };
 
   return (
@@ -31,8 +31,8 @@ const Datepicker: React.FC<Props> = props => {
             variant="inline"
             format="dd MMMM yyyy"
             margin="normal"
-            id={`${props.title}-date-picker-inline`}
-            label="Date picker inline"
+            id={title}
+            label={title}
             value={selectedDate}
             onChange={handleDateChange}
             KeyboardButtonProps={{

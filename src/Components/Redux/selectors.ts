@@ -22,7 +22,7 @@ export const selectKPK = (state: any) => {
 
   return {cols: state.widgets.kpk.name_col, data: parsedKPK};
 };
-export const selectSC = (state: RootState) => {
+export const selectSC = (state: any) => {
   if (!state.widgets.sc) return {};
 
   for (let point of state.widgets.sc) {
@@ -52,7 +52,8 @@ export const selectInf = (state: any) => {
   }
   return parsedInf;
 };
-export const selectIsFetchingWidgets = (state: RootState) => state.widgets.isFetchingWidgets;
+export const selectIsFetchingWidgets = (state: any) => state.widgets.isFetchingWidgets;
+export const selectFilters = (state: any) => state.widgets.srv_oid;
 
 //filters
 export const selectOrgList = (state: any) => {
@@ -60,11 +61,10 @@ export const selectOrgList = (state: any) => {
     id: '281586771165316',
     name: "ООО ОСК ИнфоТранс",
   };
-  const orgList: { name: string, oid: string, parent: string}[] = state.filters.org_list;
+  const orgList: { name: string, oid: string, parent: string }[] = state.filters.org_list;
   if (!orgList[0]) return orgList;
   // @ts-ignore
   if (orgList.children && orgList.children.length) {
-
     // @ts-ignore
     return orgList;
   }

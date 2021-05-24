@@ -8,7 +8,6 @@ interface ActionElements {
 const SET_KPK = "SET_KPK";
 
 let initialState: object = {
-  isFetchingWidgets: true,
   kpk: {},
   sc: [
     {
@@ -264,6 +263,8 @@ let initialState: object = {
       "100%"
     ]
   ],
+  isFetchingWidgets: true,
+  srv_oid: 0,
 };
 
 const widgetsReducer = (state = initialState, action: any) => {
