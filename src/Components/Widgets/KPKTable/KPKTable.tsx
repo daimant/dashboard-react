@@ -18,7 +18,7 @@ const KPKTable: React.FC<KPKTablePropsElements> = ({kpk}) => {
         <Table size="small" aria-label="a dense table" className={classes.table}>
           <TableHead>
             <TableRow>
-              <TableCell className={classes.cell}>{cols[0]}</TableCell>
+              <TableCell className={classes.cell}>{cols[1]}</TableCell>
               <TableCell align="right" className={classes.cell}>{cols[2]}</TableCell>
               <TableCell align="right" className={classes.cell}>{cols[3]}</TableCell>
             </TableRow>
@@ -29,15 +29,15 @@ const KPKTable: React.FC<KPKTablePropsElements> = ({kpk}) => {
               <TableRow key={row[cols[1]]}>
                 <TableCell component="th" scope="row" className={classes.cell}>{
                   // @ts-ignore
-                  row[cols[0]]
-                }</TableCell>
-                <TableCell align="right" className={classes.cell}>{
-                  // @ts-ignore
                   row[cols[1]]
                 }</TableCell>
                 <TableCell align="right" className={classes.cell}>{
                   // @ts-ignore
                   row[cols[2]]
+                }</TableCell>
+                <TableCell align="right" className={classes.cell}>{
+                  // @ts-ignore
+                  row[cols[3]]
                 }</TableCell>
               </TableRow>
             ))}
