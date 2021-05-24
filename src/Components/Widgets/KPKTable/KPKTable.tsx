@@ -11,6 +11,7 @@ import {KPKTablePropsElements} from "../../Common/Types";
 
 const KPKTable: React.FC<KPKTablePropsElements> = ({kpk}) => {
   const {cols, data: rows} = kpk;
+
   return (
     <div className={classes.table_left}>
       <TableContainer component={Paper} className={classes.tableContainer}>
@@ -18,14 +19,14 @@ const KPKTable: React.FC<KPKTablePropsElements> = ({kpk}) => {
           <TableHead>
             <TableRow>
               <TableCell className={classes.cell}>{cols[0]}</TableCell>
-              <TableCell align="right" className={classes.cell}>{cols[1]}</TableCell>
               <TableCell align="right" className={classes.cell}>{cols[2]}</TableCell>
+              <TableCell align="right" className={classes.cell}>{cols[3]}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.map((row) => (
               // @ts-ignore
-              <TableRow key={row[cols[0]]}>
+              <TableRow key={row[cols[1]]}>
                 <TableCell component="th" scope="row" className={classes.cell}>
                   {  // @ts-ignore
                     row[cols[0]]

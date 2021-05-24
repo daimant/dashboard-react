@@ -7,15 +7,26 @@ export const selectKPK = (state: any) => {
   if (!kpk.data) return {};
 
   const parsedKPK = [];
+  // идем по строкам сервисов
   for (let i = 0; i < kpk.data.length; i++) {
     const currObj: any = {};
 
+    // идем по элеентам в строках
     for (let j = 0; j < kpk.name_col.length; j++) {
-      let currVal = kpk.data[i][j].replace(/,/, ".");
+      //пропускаем оид в каждой строке
+      if (j === 0)
+        currObj[kpk.name_col[j]] = kpk.data[i][j];
+      else {
+        //конвертируем в стринг значения для построения таблицы кпк
+        if (typeof kpk.data[i][j] === 'number')
+          kpk.data[i][j] += '';
 
-      currObj[kpk.name_col[j]] = +currVal
-        ? Math.trunc(+currVal)
-        : currVal;
+        let currVal = kpk.data[i][j].replace(/,/, ".");
+
+        currObj[kpk.name_col[j]] = +currVal
+          ? Math.trunc(+currVal)
+          : currVal;
+      }
     }
     parsedKPK.push(currObj);
   }
