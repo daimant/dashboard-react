@@ -1,13 +1,15 @@
 .graphs {
+  box-shadow: 0 0 1.6rem rgba(0, 0, 0, 0.1);
+  border-radius: .4rem;
   width: 40vw;
   height: 20vh;
   background: #FFFFFF;
-  border-radius: 5px; //переделать везде на rem
-  margin: 1rem;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  margin: 1rem .5rem;
+  font-size: 1.7vh;
 }
 
-p {
-  padding-top: .5rem;
+.title {
+  font-size: 3vh;
+  padding-top: .5vh;
   text-align: center;
 }

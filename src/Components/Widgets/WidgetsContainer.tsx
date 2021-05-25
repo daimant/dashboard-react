@@ -1,7 +1,15 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import {requestWidgets} from "../Redux/widgets-reducer";
-import {selectFilters, selectInf, selectIsFetchingWidgets, selectKPK, selectSC} from "../Redux/selectors";
+import {
+  selectHeightDisplay,
+  // selectFilters,
+  selectInf,
+  selectIsFetchingWidgets,
+  selectKPK,
+  selectKPKTitle,
+  selectSC
+} from "../Redux/selectors";
 import Widgets from "./Widgets";
 import {WidgetsStateProps, RootState} from "../Common/Types";
 
@@ -18,6 +26,8 @@ class WidgetsContainer extends Component<WidgetsStateProps> {
         sc={this.props.sc}
         inf={this.props.inf}
         isFetchingWidgets={this.props.isFetchingWidgets}
+        kpkTitle={this.props.kpkTitle}
+        heightDisplay={this.props.heightDisplay}
       />
     );
   }
@@ -28,7 +38,9 @@ const mapState = (state: RootState) => ({
   sc: selectSC(state),
   inf: selectInf(state),
   isFetchingWidgets: selectIsFetchingWidgets(state),
-  filters: selectFilters(state),
+  // filters: selectFilters(state),
+  kpkTitle: selectKPKTitle(state),
+  heightDisplay:selectHeightDisplay(state),
 });
 
 // @ts-ignore

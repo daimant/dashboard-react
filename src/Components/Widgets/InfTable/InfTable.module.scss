@@ -1,11 +1,13 @@
 .infTable {
-  border-radius: 5px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 1.6rem rgba(0, 0, 0, 0.1);
+  border-radius: .4rem;
   width: 25vw;
+  margin: .5rem;
+
 
   .cell {
     padding: 0 0;
-    line-height: 8.5vh;
+    line-height: 10vh;
     font-size: 3vh;
     border-bottom: none;
     text-align: center;
@@ -17,10 +19,17 @@
 
   .table {
     th {
-      line-height: 1.7rem;
+      line-height: 2rem;
     }
+    //td {
+    //  line-height: 2rem;
+    //}
+    //tr {
+    //  line-height: 4rem;
+    //}
 
-    margin: 0 .5rem;
+
+    //margin: 0 .5rem;
   }
 
   .tableContainer {

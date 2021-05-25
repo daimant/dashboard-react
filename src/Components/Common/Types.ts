@@ -5,7 +5,8 @@ export interface WidgetsStateProps {
   sc: WidgetsGraphElements[]
   inf: InfTableElements[]
   isFetchingWidgets: boolean
-  srv_oid: number
+  kpkTitle: string
+  heightDisplay: number
 }
 
 export interface RootState {
@@ -23,10 +24,12 @@ export interface WidgetsPropsElements {
   sc: WidgetsGraphElements[]
   inf: InfTableElements[]
   isFetchingWidgets: boolean
+  kpkTitle: string
+  heightDisplay: number
 }
 
 interface WidgetsKPKElements {
-  data: object[];
+  data: object[]
   cols: [
     number,
     string,
@@ -51,21 +54,22 @@ export interface InfTableProps {
 }
 
 export interface InfTableElements {
-  name: string;
-  value: string;
+  name: string
+  value: string
 }
 
 // kpk table
 
 export interface KPKTablePropsElements {
   kpk: WidgetsKPKElements
+  title: string
 }
 
 export interface KPKTableElements {
-  Сервис_oid: number;
-  Сервис: string;
-  Период: string;
-  Сегодня: string;
+  Сервис_oid: number
+  Сервис: string
+  Период: string
+  Сегодня: string
 }
 
 // graph
@@ -73,6 +77,7 @@ export interface KPKTableElements {
 export interface GraphProps {
   key: number
   sc: WidgetsGraphElements
+  heightDisplay: number
 }
 
 export interface GraphElements {
@@ -82,7 +87,7 @@ export interface GraphElements {
 
 //filters
 export interface RenderTree {
-  oid: string;
-  name: string;
-  children?: RenderTree[];
+  oid: string
+  name: string
+  children?: RenderTree[]
 }

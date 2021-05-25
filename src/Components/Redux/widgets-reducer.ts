@@ -256,7 +256,7 @@ let initialState: object = {
     ],
     [
       "Производительность труда",
-      "100 K|P"
+      "100K|P"
     ],
     [
       "KPI",
@@ -264,13 +264,14 @@ let initialState: object = {
     ]
   ],
   isFetchingWidgets: true,
-  srv_oid: 0,
+  srvOid: 0,
 };
 
 const widgetsReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case SET_KPK: {
-      return {...state, kpk: action.kpk, isFetchingWidgets: false}
+      const kpk = {data: action.kpk.data, nameCol: action.kpk.name_col};
+      return {...state, kpk, isFetchingWidgets: false}
     }
     default:
       return state;

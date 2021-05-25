@@ -1,7 +1,8 @@
 .kpkTable {
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
+  box-shadow: 0 0 1.6rem rgba(0, 0, 0, 0.1);
+  border-radius: .4rem;
   width: 30vw;
+  margin: .5rem;
 
   .cell {
     border-bottom: none;
@@ -14,9 +15,10 @@
     box-shadow: none;
     box-sizing: content-box;
   }
+}
 
-  h2 {
-    text-align: center;
-    padding: .7vh;
-  }
+.title {
+  text-align: center;
+  padding: .7vh;
+  font-size: 3vh;
 }

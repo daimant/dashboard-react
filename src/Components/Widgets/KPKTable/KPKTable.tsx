@@ -9,15 +9,13 @@ import Paper from '@material-ui/core/Paper';
 import classes from "./KPKTable.module.scss";
 import {KPKTablePropsElements} from "../../Common/Types";
 
-const KPKTable: React.FC<KPKTablePropsElements> = ({kpk}) => {
+const KPKTable: React.FC<KPKTablePropsElements> = ({kpk, title}) => {
   const {cols, data: rows} = kpk;
-
-  const title = "ООО ОСК ИнфоТранс"
 
   return (
     <div className={classes.kpkTable}>
       <TableContainer component={Paper} className={classes.tableContainer}>
-        <h2 className={classes.title}>{title}</h2>
+        <p className={classes.title}>{title}</p>
         <Table size="small" aria-label="a dense table" className={classes.table}>
           <TableHead>
             <TableRow>
