@@ -6,6 +6,7 @@ interface ActionElements {
 }
 
 const SET_KPK = "SET_KPK";
+const SET_IS_FETCHING_WIDGETS = "SET_IS_FETCHING_WIDGETS";
 
 let initialState: object = {
   kpk: {},
@@ -273,17 +274,22 @@ const widgetsReducer = (state = initialState, action: any) => {
       const kpk = {data: action.kpk.data, nameCol: action.kpk.name_col};
       return {...state, kpk, isFetchingWidgets: false}
     }
+
+    case SET_IS_FETCHING_WIDGETS:
+      return {...state, isFetchingWidgets: true};
+
     default:
       return state;
   }
 };
 
 export const setKPK = (kpk: any) => ({type: SET_KPK, kpk});
+export const setIsFetchingWidgets = () => ({type: SET_IS_FETCHING_WIDGETS});
 
 export const requestWidgets = (oid: string = '281586771165316') => async (dispatch: any) => {
-  const response = await widgetsAPI.getKPK(oid); // переделать
+  dispatch(setIsFetchingWidgets());
+  const response = await widgetsAPI.getKPK(oid);
   dispatch(setKPK(response));
 };
-
 
 export default widgetsReducer;

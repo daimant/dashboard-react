@@ -1,5 +1,5 @@
 import {filtersAPI, widgetsAPI} from "../../API/API";
-import {setKPK} from "./widgets-reducer";
+import {setIsFetchingWidgets, setKPK} from "./widgets-reducer";
 import {subMonths} from "date-fns";
 import {selectNameOrg} from "./selectors";
 
@@ -187,7 +187,6 @@ let initialState: object = {
 const filtersReducer = (state = initialState, action: ActionElements) => {
   switch (action.type) {
     case SET_ORG:
-      // localStorage.setItem('filters', state.filters)
       return {...state, orgList: action.orgList.data, isFetchingFilters: false};
 
     case SET_PERIOD:
@@ -210,11 +209,12 @@ export const setPeriod = (per: string) => ({type: SET_PERIOD, per});
 export const changeOrg = (oid: string) => ({type: CHANGE_ORG, oid});
 
 export const requestOrg = () => async (dispatch: any) => {
-  const response = await filtersAPI.getOrg(); // переделать
+  const response = await filtersAPI.getOrg();
   dispatch(setOrg(response));
 };
 
 export const requestWidgetsFromFilters = (oid: string = '281586771165316') => async (dispatch: any) => {
+  dispatch(setIsFetchingWidgets());
   const response = await widgetsAPI.getKPK(oid);
   dispatch(changeOrg(oid));
   dispatch(setKPK(response));
