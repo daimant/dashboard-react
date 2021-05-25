@@ -12,10 +12,10 @@ export const selectKPK = (state: any) => {
     const currObj: any = {};
 
     // идем по элеентам в строках
-    for (let j = 0; j < kpk.name_col.length; j++) {
+    for (let j = 0; j < kpk.nameCol.length; j++) {
       //пропускаем оид в каждой строке
       if (j === 0)
-        currObj[kpk.name_col[j]] = kpk.data[i][j];
+        currObj[kpk.nameCol[j]] = kpk.data[i][j];
       else {
         //конвертируем в стринг значения для построения таблицы кпк
         if (typeof kpk.data[i][j] === 'number')
@@ -23,7 +23,7 @@ export const selectKPK = (state: any) => {
 
         let currVal = kpk.data[i][j].replace(/,/, ".");
 
-        currObj[kpk.name_col[j]] = +currVal
+        currObj[kpk.nameCol[j]] = +currVal
           ? Math.trunc(+currVal)
           : currVal;
       }
@@ -31,7 +31,7 @@ export const selectKPK = (state: any) => {
     parsedKPK.push(currObj);
   }
 
-  return {cols: state.widgets.kpk.name_col, data: parsedKPK};
+  return {cols: state.widgets.kpk.nameCol, data: parsedKPK};
 };
 export const selectSC = (state: any) => {
   if (!state.widgets.sc) return {};
@@ -64,7 +64,9 @@ export const selectInf = (state: any) => {
   return parsedInf;
 };
 export const selectIsFetchingWidgets = (state: any) => state.widgets.isFetchingWidgets;
-export const selectFilters = (state: any) => state.widgets.srv_oid;
+// export const selectFilters = (state: any) => state.widgets.srvOid; // ебанина какая-то
+export const selectKPKTitle = (state: any) => state.filters.orgName;
+export const selectHeightDisplay = (state: any) => state.filters.heightDisplay;
 
 //filters
 export const selectOrgList = (state: any) => {
@@ -72,41 +74,42 @@ export const selectOrgList = (state: any) => {
     id: '281586771165316',
     name: "ООО ОСК ИнфоТранс",
   };
-  const orgList: { name: string, oid: string, parent: string }[] = state.filters.org_list;
-  if (!orgList[0]) return orgList;
+  const currOrgList: { name: string, oid: string, parent: string }[] = state.filters.orgList;
+  if (!currOrgList[0]) return currOrgList;
   // @ts-ignore
-  if (orgList.children && orgList.children.length) {
+  if (currOrgList.children && currOrgList.children.length) {
     // @ts-ignore
-    return orgList;
+    return currOrgList;
   }
-  const orgPosition = new Map(orgList.map((el, i) => [el['oid'], i]));
+  const orgPosition = new Map(currOrgList.map((el, i) => [el['oid'], i]));
 
-
-  for (let i = orgList.length - 1; i > 0; i--) {
-    const parentInList = orgPosition.get(orgList[i].parent);
+  for (let i = currOrgList.length - 1; i > 0; i--) {
+    state.filters.orgMapList.set(currOrgList[i].oid + '', currOrgList[i].name);
+    const parentInList = orgPosition.get(currOrgList[i].parent);
     // @ts-ignore
-    if (!orgList[parentInList]['children']) orgList[parentInList]['children'] = [];
+    if (!currOrgList[parentInList]['children']) currOrgList[parentInList]['children'] = [];
     // @ts-ignore
-    orgList[parentInList]['children'] = [...orgList[parentInList]['children'], orgList[i]]
+    currOrgList[parentInList]['children'] = [...currOrgList[parentInList]['children'], currOrgList[i]]
   }
 
-  for (let org of orgList) {
+  for (let org of currOrgList) {
     // @ts-ignore
     org.oid += '';
     // @ts-ignore
     org.parent += '';
-
   }
   // @ts-ignore
-  state.filters.org_list = orgList[0]
-  return orgList[0];
+  state.filters.orgList = currOrgList[0];
+  return currOrgList[0];
 };
 export const selectIsFetchingFilters = (state: any) => state.filters.isFetchingFilters;
-export const selectOrgOid = (state: any) => state.filters.org_oid;
-export const selectOrgName = (state: any) => state.filters.org_name;
-export const selectStDate = (state: any) => state.filters.st_date;
-export const selectFnDate = (state: any) => state.filters.fn_date;
+export const selectOrgOid = (state: any) => state.filters.orgOid;
+export const selectOrgName = (state: any) => state.filters.orgName;
+// export const selectStDate = (state: any) => state.filters.stDate;
+// export const selectFnDate = (state: any) => state.filters.fnDate;
 export const selectKTL = (state: any) => state.filters.ktl;
 export const selectVal = (state: any) => state.filters.val;
-export const selectPerList = (state: any) => state.filters.per_list;
+export const selectPerList = (state: any) => state.filters.perList;
 
+// filters-reducer
+export const selectNameOrg = (state: any, oid: string) => state.orgMapList.get(oid);

@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   },
 });
 
-const MenuTreeList: React.FC<any> = ({treeList, title, requestWidgetsFromFilters}) => {
+const MenuTreeList: React.FC<any> = ({treeList, title, requestWidgetsFromFilters, setPeriod}) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selected, setSelected] = React.useState<string[]>([]);
 
@@ -28,14 +28,20 @@ const MenuTreeList: React.FC<any> = ({treeList, title, requestWidgetsFromFilters
 
   const handleClose = () => {
     setAnchorEl(null);
-    requestWidgetsFromFilters(selected); //переделать
+    if (title === "Оргструктура")
+      requestWidgetsFromFilters(selected);
+    else setPeriod(selected);
   };
 
   const classes = useStyles();
 
   const renderTree = (nodes: RenderTree) => (
     <TreeItem key={+nodes.oid} nodeId={nodes.oid} label={nodes.name}>
-      {Array.isArray(nodes.children) ? nodes.children.map((node) => renderTree(node)) : null}
+      {
+        Array.isArray(nodes.children)
+          ? nodes.children.map((node) => renderTree(node))
+          : null
+      }
     </TreeItem>
   );
 

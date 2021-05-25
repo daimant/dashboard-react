@@ -1,14 +1,21 @@
 import {filtersAPI, widgetsAPI} from "../../API/API";
 import {setKPK} from "./widgets-reducer";
 import {subMonths} from "date-fns";
+import {selectNameOrg} from "./selectors";
 
 interface ActionElements {
-  type: string,
-  data?: [],
+  type: string
+  orgList: {
+    data: []
+  }
+  oid: string
+  per: string
+  point?: string
 }
 
 const SET_ORG = "SET_ORG";
-const SET_DATE = "SET_DATE";
+const SET_PERIOD = "SET_PERIOD";
+const CHANGE_ORG = "CHANGE_ORG";
 
 const createPeriodTree = (st: Date, end: Date) => {
   const staticTree = {
@@ -158,42 +165,49 @@ const createPeriodTree = (st: Date, end: Date) => {
 }
 
 let initialState: object = {
-  org_list: [],
-  per_list: createPeriodTree(new Date(2020, 0, 1), new Date(Date.now())),
+  orgList: [],
+  orgMapList: new Map([['281586771165316',"ООО ОСК ИнфоТранс"]]),
+  perList: createPeriodTree(new Date(2020, 0, 1), new Date(Date.now())),
   isFetchingFilters: true,
-  org_oid: '281586771165316',
-  org_name: "ООО ОСК ИнфоТранс",
-  period: "2021-03",
-  period_type: "m", // "q" "y"
-  fn_date: new Date().toISOString().slice(0, 10), // удалить
-  st_date: subMonths(new Date(), 1).toISOString().slice(0, 10), // удалить
+  orgOid: localStorage.getItem('orgOid') || '281586771165316',
+  orgName: localStorage.getItem('orgName') || "ООО ОСК ИнфоТранс",
+  period: localStorage.getItem('period') || "2021-03",
+  periodType: "m", // "q" "y" нужен ли
+  periodName: "3 кв 2021",
+  // fnDate: new Date().toISOString().slice(0, 10), // удалить
+  // stDate: subMonths(new Date(), 1).toISOString().slice(0, 10), // удалить
   ktl: {
-    ka_atr: 'ka', // or mct
-    ktl_oid: '281586771165316',
+    kaAtr: 'ka', // or mct
+    ktlOid: '281586771165316',
   },
   val: 'percent',
+  heightDisplay: window.innerHeight,
 };
-
 
 const filtersReducer = (state = initialState, action: ActionElements) => {
   switch (action.type) {
     case SET_ORG:
-      //@ts-ignore
-      return {...state, org_list: action.org_list.data, isFetchingFilters: false};
+      // localStorage.setItem('filters', state.filters)
+      return {...state, orgList: action.orgList.data, isFetchingFilters: false};
 
-    case SET_DATE:
-      //@ts-ignore
-      if (action.point === 'Начальная дата') return {...state, st_date: action.date};
-      //@ts-ignore
-      else return {...state, fn_date: action.date};
+    case SET_PERIOD:
+      localStorage.setItem('period', action.per);
+      return {...state, fnDate: action.per};
+
+    case CHANGE_ORG:
+      const newName = selectNameOrg(state, action.oid);
+      localStorage.setItem('orgOid', action.oid);
+      localStorage.setItem('orgName', newName);
+      return newName ? {...state, orgName: newName, orgOid: action.oid} : {...state};
 
     default:
       return state;
   }
 };
 
-export const setOrg = (org_list: any) => ({type: SET_ORG, org_list});
-export const setDate = (date: string, point: string) => ({type: SET_DATE, date, point})
+export const setOrg = (orgList: any) => ({type: SET_ORG, orgList});
+export const setPeriod = (per: string) => ({type: SET_PERIOD, per});
+export const changeOrg = (oid: string) => ({type: CHANGE_ORG, oid});
 
 export const requestOrg = () => async (dispatch: any) => {
   const response = await filtersAPI.getOrg(); // переделать
@@ -202,6 +216,7 @@ export const requestOrg = () => async (dispatch: any) => {
 
 export const requestWidgetsFromFilters = (oid: string = '281586771165316') => async (dispatch: any) => {
   const response = await widgetsAPI.getKPK(oid);
+  dispatch(changeOrg(oid));
   dispatch(setKPK(response));
 };
 

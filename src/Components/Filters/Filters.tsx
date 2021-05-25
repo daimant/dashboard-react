@@ -41,29 +41,36 @@ const propsFilterView = {
 };
 
 const Filters: React.FC<any> = ({
-                                  org_list,
+                                  orgList,
                                   isFetchingFilters,
-                                  org_oid,
-                                  org_name,
-                                  fn_date,
-                                  st_date,
+                                  orgOid,
+                                  orgName,
+                                  // fnDate,
+                                  // stDate,
                                   ktl,
                                   val,
                                   requestWidgetsFromFilters,
-                                  setDate,
-                                  per_list}) => {
+                                  setPeriod,
+                                  perList
+                                }) => {
   if (isFetchingFilters) return <Preloader/>;
 
   return (
     <div className={classes.filters}>
       {/*// @ts-ignore*/}
-      <MenuTreeList treeList={org_list} title={'Оргструктура'} requestWidgetsFromFilters={requestWidgetsFromFilters}/>
+      <MenuTreeList treeList={orgList}
+                    title={'Оргструктура'}
+                    requestWidgetsFromFilters={requestWidgetsFromFilters}
+                    setPeriod={setPeriod}/>
       {/*// @ts-ignore*/}
-      <MenuTreeList treeList={per_list} title={'Период'} requestWidgetsFromFilters={requestWidgetsFromFilters}/>
+      <MenuTreeList treeList={perList}
+                    title={'Период'}
+                    requestWidgetsFromFilters={requestWidgetsFromFilters}
+                    setPeriod={setPeriod}/>
       {/*// @ts-ignore*/}
-      {/*<Datepicker date={st_date} title={'Начальная дата'} setDate={setDate}/>*/}
+      {/*<Datepicker date={stDate} title={'Начальная дата'} setDate={setDate}/>*/}
       {/*// @ts-ignore*/}
-      {/*<Datepicker date={fn_date} title={'Конечная дата'} setDate={setDate}/>*/}
+      {/*<Datepicker date={fnDate} title={'Конечная дата'} setDate={setDate}/>*/}
       <MenuMulChBox {...propsFilterDocuments}/>
       <MenuMulChBox {...propsFilterValues}/>
       <MenuMulChBox {...propsFilterView}/>
