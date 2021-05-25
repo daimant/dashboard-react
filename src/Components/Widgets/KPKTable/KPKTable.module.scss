@@ -3,19 +3,20 @@
   border-radius: 5px;
   width: 30vw;
 
-
   .cell {
     border-bottom: none;
-    font-size: 1.2vh;
-    padding: .7vh ;
-    line-height: 1.8vh;
-  }
-
-  .table {
-    margin: 0 .5vh;
+    font-size: 1.7vh;
+    padding: .7vh;
+    line-height: 2vh;
   }
 
   .tableContainer {
     box-shadow: none;
+    box-sizing: content-box;
+  }
+
+  h2 {
+    text-align: center;
+    padding: .7vh;
   }
 }

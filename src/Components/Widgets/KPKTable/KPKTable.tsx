@@ -12,9 +12,12 @@ import {KPKTablePropsElements} from "../../Common/Types";
 const KPKTable: React.FC<KPKTablePropsElements> = ({kpk}) => {
   const {cols, data: rows} = kpk;
 
+  const title = "ООО ОСК ИнфоТранс"
+
   return (
     <div className={classes.kpkTable}>
       <TableContainer component={Paper} className={classes.tableContainer}>
+        <h2 className={classes.title}>{title}</h2>
         <Table size="small" aria-label="a dense table" className={classes.table}>
           <TableHead>
             <TableRow>
