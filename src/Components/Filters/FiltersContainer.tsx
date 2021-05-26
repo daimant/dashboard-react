@@ -9,7 +9,7 @@ import {
   selectKTL,
   selectOrgList,
   selectOrgName,
-  selectOrgOid,
+  selectOrgOid, selectPeriod, selectPeriodType,
   selectPerList,
   selectVal
 } from "../Redux/selectors";
@@ -37,6 +37,8 @@ class WidgetsContainer extends React.Component<any> {
         requestWidgetsFromFilters={this.props.requestWidgetsFromFilters}
         setPeriod={this.props.setPeriod}
         perList={this.props.perList}
+        period={this.props.period}
+        periodType={this.props.periodType}
       />
     );
   }
@@ -52,6 +54,8 @@ const mapState = (state: any) => ({
   ktl: selectKTL(state),
   val: selectVal(state),
   perList: selectPerList(state),
+  period: selectPeriod(state),
+  periodType: selectPeriodType(state),
 });
 
 export default connect(mapState, {requestOrg, requestWidgetsFromFilters, setPeriod})(WidgetsContainer);

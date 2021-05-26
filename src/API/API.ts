@@ -8,14 +8,14 @@ const instance = axios.create({
 });
 
 export const widgetsAPI = {
-  getKPK: (oid: string = '281586771165316') => {
+  getKPK: (oid: string, period: string, period_type: string) => {
     return instance
       .get(`kpk`)
       // .post(`kpk`, { // prod mode
       //   "org_oid": +oid,
       //   "srv_oid" : 0,
-      //   "period": "2021-03",
-      //   "period_type": "m" // "q" "y"
+      //   "period": period,
+      //   "period_type": period_type,
       //   "ktl": {
       //     "ka_atr": "ka", // or mct 
       //     "ktl_oid": 281586771165316,

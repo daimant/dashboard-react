@@ -1,8 +1,8 @@
 import {widgetsAPI} from "../../API/API";
 
-interface ActionElements {
+interface TypeActionWidgets {
   type: string,
-  data?: [],
+  kpk: {data: object, name_col: object},
 }
 
 const SET_KPK = "SET_KPK";
@@ -268,7 +268,7 @@ let initialState: object = {
   srvOid: 0,
 };
 
-const widgetsReducer = (state = initialState, action: any) => {
+const widgetsReducer = (state = initialState, action: TypeActionWidgets) => {
   switch (action.type) {
     case SET_KPK: {
       const kpk = {data: action.kpk.data, nameCol: action.kpk.name_col};
@@ -286,9 +286,9 @@ const widgetsReducer = (state = initialState, action: any) => {
 export const setKPK = (kpk: any) => ({type: SET_KPK, kpk});
 export const setIsFetchingWidgets = () => ({type: SET_IS_FETCHING_WIDGETS});
 
-export const requestWidgets = (oid: string = '281586771165316') => async (dispatch: any) => {
+export const requestWidgets = (oid: string, period: string, periodType: string) => async (dispatch: any) => {
   dispatch(setIsFetchingWidgets());
-  const response = await widgetsAPI.getKPK(oid);
+  const response = await widgetsAPI.getKPK(oid, period, periodType);
   dispatch(setKPK(response));
 };
 

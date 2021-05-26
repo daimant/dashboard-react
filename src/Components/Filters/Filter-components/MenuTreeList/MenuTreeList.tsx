@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   },
 });
 
-const MenuTreeList: React.FC<any> = ({treeList, title, requestWidgetsFromFilters, setPeriod}) => {
+const MenuTreeList: React.FC<any> = ({treeList, title, requestWidgetsFromFilters, setPeriod, period, periodType}) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selected, setSelected] = React.useState<string[]>([]);
 
@@ -29,7 +29,7 @@ const MenuTreeList: React.FC<any> = ({treeList, title, requestWidgetsFromFilters
   const handleClose = () => {
     setAnchorEl(null);
     if (title === "Оргструктура")
-      requestWidgetsFromFilters(selected);
+      requestWidgetsFromFilters(selected, period, periodType);
     else setPeriod(selected);
   };
 
@@ -57,6 +57,7 @@ const MenuTreeList: React.FC<any> = ({treeList, title, requestWidgetsFromFilters
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
+        <Button>применить</Button>
         <TreeView
           className={classes.root}
           defaultCollapseIcon={<ExpandMoreIcon/>}

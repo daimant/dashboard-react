@@ -7,7 +7,7 @@ import {
   selectInf,
   selectIsFetchingWidgets,
   selectKPK,
-  selectKPKTitle,
+  selectKPKTitle, selectOrgOid, selectPeriod, selectPeriodType,
   selectSC
 } from "../Redux/selectors";
 import Widgets from "./Widgets";
@@ -16,7 +16,7 @@ import {WidgetsStateProps, RootState} from "../Common/Types";
 class WidgetsContainer extends Component<WidgetsStateProps> {
   componentDidMount() {
     // @ts-ignore
-    this.props.requestWidgets();
+    this.props.requestWidgets(this.props.orgOid, this.props.period, this.props.periodType);
   }
 
   render() {
@@ -38,9 +38,11 @@ const mapState = (state: RootState) => ({
   sc: selectSC(state),
   inf: selectInf(state),
   isFetchingWidgets: selectIsFetchingWidgets(state),
-  // filters: selectFilters(state),
-  kpkTitle: selectKPKTitle(state),
   heightDisplay:selectHeightDisplay(state),
+  kpkTitle: selectKPKTitle(state),
+  orgOid: selectOrgOid(state),
+  period: selectPeriod(state),
+  periodType: selectPeriodType(state),
 });
 
 // @ts-ignore

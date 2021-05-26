@@ -65,15 +65,9 @@ export const selectInf = (state: any) => {
 };
 export const selectIsFetchingWidgets = (state: any) => state.widgets.isFetchingWidgets;
 // export const selectFilters = (state: any) => state.widgets.srvOid; // ебанина какая-то
-export const selectKPKTitle = (state: any) => state.filters.orgName;
-export const selectHeightDisplay = (state: any) => state.filters.heightDisplay;
 
 //filters
 export const selectOrgList = (state: any) => {
-  const example = {
-    id: '281586771165316',
-    name: "ООО ОСК ИнфоТранс",
-  };
   const currOrgList: { name: string, oid: string, parent: string }[] = state.filters.orgList;
   if (!currOrgList[0]) return currOrgList;
   // @ts-ignore
@@ -110,6 +104,10 @@ export const selectOrgName = (state: any) => state.filters.orgName;
 export const selectKTL = (state: any) => state.filters.ktl;
 export const selectVal = (state: any) => state.filters.val;
 export const selectPerList = (state: any) => state.filters.perList;
+export const selectKPKTitle = (state: any) => state.filters.orgName;
+export const selectHeightDisplay = (state: any) => state.filters.heightDisplay;
+export const selectPeriod = (state: any) => state.filters.period;
+export const selectPeriodType = (state: any) => state.filters.periodType;
 
 // filters-reducer
 export const selectNameOrg = (state: any, oid: string) => state.orgMapList.get(oid);

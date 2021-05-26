@@ -17,7 +17,7 @@ const Graph: React.FC<GraphProps> = ({sc, heightDisplay}) => {
           margin={{
             top: 10,
             right: 30,
-            left: -20,
+            left: heightDisplay < 900 ? -20 : -15,
             bottom: heightDisplay < 900 ? 25 : 45,
           }}
         >

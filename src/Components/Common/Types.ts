@@ -7,6 +7,9 @@ export interface WidgetsStateProps {
   isFetchingWidgets: boolean
   kpkTitle: string
   heightDisplay: number
+  orgOid: string
+  period: string
+  periodType: string
 }
 
 export interface RootState {

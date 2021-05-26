@@ -1,30 +1,10 @@
 import React from "react";
 import classes from "./Filters.module.scss";
-import Datepicker from "./Filter-components/Datepicker/Datepicker";
 import MenuMulChBox from "./Filter-components/MenuMulChBox/MenuMulChBox";
-import {subMonths} from "date-fns";
 import {Preloader} from "../Common/Preloader";
 import MenuTreeList from "./Filter-components/MenuTreeList/MenuTreeList";
-import {RenderTree} from "../Common/Types";
 
-interface Props {
-  title: string,
-  data: string[],
-  initData?: string[],
-  initValue?: string,
-}
-
-interface DateProps {
-  title: string,
-  date: any
-}
-
-const propsStartDate = {
-  title: 'Начальная дата',
-  date: subMonths(new Date(), 1),
-  // date: Date.now() - 30 * 24 * 60 * 60 * 1000,
-};
-const propsFilterDocuments: Props = {
+const propsFilterDocuments = {
   title: 'Договор/КА',
   data: ["РЖД ОАО", "РЖД Центральная дирекция инфраструктуры", "РЖД-Технологии ООО", "РЖД-Медицина г. Великие Луки ЧУЗ"],
   initData: ["РЖД ОАО"]
@@ -51,7 +31,7 @@ const Filters: React.FC<any> = ({
                                   val,
                                   requestWidgetsFromFilters,
                                   setPeriod,
-                                  perList
+                                  perList, period, periodType
                                 }) => {
   if (isFetchingFilters) return <Preloader/>;
 
@@ -61,12 +41,16 @@ const Filters: React.FC<any> = ({
       <MenuTreeList treeList={orgList}
                     title={'Оргструктура'}
                     requestWidgetsFromFilters={requestWidgetsFromFilters}
-                    setPeriod={setPeriod}/>
+                    setPeriod={setPeriod}
+                    period={period}
+                    periodType={periodType}/>
       {/*// @ts-ignore*/}
       <MenuTreeList treeList={perList}
                     title={'Период'}
                     requestWidgetsFromFilters={requestWidgetsFromFilters}
-                    setPeriod={setPeriod}/>
+                    setPeriod={setPeriod}
+                    period={period}
+                    periodType={periodType}/>
       {/*// @ts-ignore*/}
       {/*<Datepicker date={stDate} title={'Начальная дата'} setDate={setDate}/>*/}
       {/*// @ts-ignore*/}
