@@ -13,7 +13,7 @@ export const widgetsAPI = {
       .get(`kpk`)
       // .post(`kpk`, { // prod mode
       //   "org_oid": +oid,
-      //   "srv_oid" : 0,
+      //   "srv_oid" : 0, // в графиках не надо
       //   "period": period,
       //   "period_type": period_type,
       //   "ktl": {

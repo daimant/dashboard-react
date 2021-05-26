@@ -3,6 +3,8 @@ import classes from "./Filters.module.scss";
 import MenuMulChBox from "./Filter-components/MenuMulChBox/MenuMulChBox";
 import {Preloader} from "../Common/Preloader";
 import MenuTreeList from "./Filter-components/MenuTreeList/MenuTreeList";
+import ModalMenuTreeList from "./Filter-components/ModalMenuTreeList/ModalMenuTreeList";
+import DialogSelect from "./Filter-components/ModalMenuTreeList/ModalMenuTreeList";
 
 const propsFilterDocuments = {
   title: 'Договор/КА',
@@ -25,8 +27,6 @@ const Filters: React.FC<any> = ({
                                   isFetchingFilters,
                                   orgOid,
                                   orgName,
-                                  // fnDate,
-                                  // stDate,
                                   ktl,
                                   val,
                                   requestWidgetsFromFilters,
@@ -51,10 +51,6 @@ const Filters: React.FC<any> = ({
                     setPeriod={setPeriod}
                     period={period}
                     periodType={periodType}/>
-      {/*// @ts-ignore*/}
-      {/*<Datepicker date={stDate} title={'Начальная дата'} setDate={setDate}/>*/}
-      {/*// @ts-ignore*/}
-      {/*<Datepicker date={fnDate} title={'Конечная дата'} setDate={setDate}/>*/}
       <MenuMulChBox {...propsFilterDocuments}/>
       <MenuMulChBox {...propsFilterValues}/>
       <MenuMulChBox {...propsFilterView}/>

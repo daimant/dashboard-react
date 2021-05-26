@@ -1,17 +1,10 @@
 import React from "react";
 import {connect} from "react-redux";
-import {} from "../Redux/widgets-reducer";
 import Filters from "./Filters";
 import {requestOrg, requestWidgetsFromFilters, setPeriod} from "../Redux/filters-reducer";
 import {
-  // selectFnDate, selectStDate,
-  selectIsFetchingFilters,
-  selectKTL,
-  selectOrgList,
-  selectOrgName,
-  selectOrgOid, selectPeriod, selectPeriodType,
-  selectPerList,
-  selectVal
+  selectIsFetchingFilters, selectKTL, selectOrgList, selectOrgName, selectOrgOid, selectPeriod, selectPeriodType,
+  selectPerList, selectVal
 } from "../Redux/selectors";
 
 class WidgetsContainer extends React.Component<any> {
@@ -30,8 +23,6 @@ class WidgetsContainer extends React.Component<any> {
         isFetchingFilters={this.props.isFetchingFilters}
         orgOid={this.props.orgOid}
         orgName={this.props.orgName}
-        // fnDate={this.props.fnDate}
-        // stDate={this.props.stDate}
         ktl={this.props.ktl}
         val={this.props.val}
         requestWidgetsFromFilters={this.props.requestWidgetsFromFilters}
@@ -49,8 +40,6 @@ const mapState = (state: any) => ({
   isFetchingFilters: selectIsFetchingFilters(state),
   orgOid: selectOrgOid(state),
   orgName: selectOrgName(state),
-  // fnDate: selectStDate(state),
-  // stDate: selectFnDate(state),
   ktl: selectKTL(state),
   val: selectVal(state),
   perList: selectPerList(state),

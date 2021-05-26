@@ -3,9 +3,9 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import {makeStyles} from '@material-ui/core/styles';
 import TreeView from '@material-ui/lab/TreeView';
+import TreeItem from '@material-ui/lab/TreeItem';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import TreeItem from '@material-ui/lab/TreeItem';
 import {RenderTree} from "../../../Common/Types";
 
 const useStyles = makeStyles({
@@ -28,6 +28,9 @@ const MenuTreeList: React.FC<any> = ({treeList, title, requestWidgetsFromFilters
 
   const handleClose = () => {
     setAnchorEl(null);
+
+    if (typeof selected !== "string") return;
+
     if (title === "Оргструктура")
       requestWidgetsFromFilters(selected, period, periodType);
     else setPeriod(selected);
@@ -36,7 +39,7 @@ const MenuTreeList: React.FC<any> = ({treeList, title, requestWidgetsFromFilters
   const classes = useStyles();
 
   const renderTree = (nodes: RenderTree) => (
-    <TreeItem key={+nodes.oid} nodeId={nodes.oid} label={nodes.name}>
+    <TreeItem key={nodes.oid} nodeId={nodes.oid} label={nodes.name}>
       {
         Array.isArray(nodes.children)
           ? nodes.children.map((node) => renderTree(node))
@@ -68,6 +71,7 @@ const MenuTreeList: React.FC<any> = ({treeList, title, requestWidgetsFromFilters
           {renderTree(treeList)}
         </TreeView>
       </Menu>
+
     </div>
   );
 };
