@@ -3,14 +3,12 @@
 }
 
 Header {
-  //height: 20vh;
-
   * {
+    display: flex;
+    text-align: center;
 
-  display: flex;
-  text-align: center;
-  div {
-    padding: .5rem;
-  }
+    div {
+      padding: .5rem;
+    }
   }
 }

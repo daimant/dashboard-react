@@ -99,15 +99,13 @@ export const selectOrgList = (state: any) => {
 export const selectIsFetchingFilters = (state: any) => state.filters.isFetchingFilters;
 export const selectOrgOid = (state: any) => state.filters.orgOid;
 export const selectOrgName = (state: any) => state.filters.orgName;
-// export const selectStDate = (state: any) => state.filters.stDate;
-// export const selectFnDate = (state: any) => state.filters.fnDate;
 export const selectKTL = (state: any) => state.filters.ktl;
 export const selectVal = (state: any) => state.filters.val;
 export const selectPerList = (state: any) => state.filters.perList;
-export const selectKPKTitle = (state: any) => state.filters.orgName;
 export const selectHeightDisplay = (state: any) => state.filters.heightDisplay;
 export const selectPeriod = (state: any) => state.filters.period;
 export const selectPeriodType = (state: any) => state.filters.periodType;
+export const selectSelectedFilters = (state: any) => state.filters.selectedFilters;
 
 // filters-reducer
 export const selectNameOrg = (state: any, oid: string) => state.orgMapList.get(oid);

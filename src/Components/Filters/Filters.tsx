@@ -3,8 +3,6 @@ import classes from "./Filters.module.scss";
 import MenuMulChBox from "./Filter-components/MenuMulChBox/MenuMulChBox";
 import {Preloader} from "../Common/Preloader";
 import MenuTreeList from "./Filter-components/MenuTreeList/MenuTreeList";
-import ModalMenuTreeList from "./Filter-components/ModalMenuTreeList/ModalMenuTreeList";
-import DialogSelect from "./Filter-components/ModalMenuTreeList/ModalMenuTreeList";
 
 const propsFilterDocuments = {
   title: 'Договор/КА',
@@ -23,34 +21,32 @@ const propsFilterView = {
 };
 
 const Filters: React.FC<any> = ({
-                                  orgList,
-                                  isFetchingFilters,
-                                  orgOid,
-                                  orgName,
-                                  ktl,
-                                  val,
-                                  requestWidgetsFromFilters,
-                                  setPeriod,
-                                  perList, period, periodType
+                                  orgList, isFetchingFilters, orgOid, orgName, ktl, val, requestWidgetsFromFilters,
+                                  setPeriod, setOrgOid, perList, period, periodType, selectedFilters
                                 }) => {
   if (isFetchingFilters) return <Preloader/>;
+
+  const acceptFilters = () => {
+    requestWidgetsFromFilters(orgOid, period, periodType);
+  };
 
   return (
     <div className={classes.filters}>
       {/*// @ts-ignore*/}
+      <button className={classes.btn} onClick={acceptFilters} >пименить фильтры</button>
       <MenuTreeList treeList={orgList}
                     title={'Оргструктура'}
-                    requestWidgetsFromFilters={requestWidgetsFromFilters}
-                    setPeriod={setPeriod}
+                    setter={setOrgOid}
                     period={period}
-                    periodType={periodType}/>
+                    periodType={periodType}
+      />
       {/*// @ts-ignore*/}
       <MenuTreeList treeList={perList}
                     title={'Период'}
-                    requestWidgetsFromFilters={requestWidgetsFromFilters}
-                    setPeriod={setPeriod}
+                    setter={setPeriod}
                     period={period}
-                    periodType={periodType}/>
+                    periodType={periodType}
+      />
       <MenuMulChBox {...propsFilterDocuments}/>
       <MenuMulChBox {...propsFilterValues}/>
       <MenuMulChBox {...propsFilterView}/>

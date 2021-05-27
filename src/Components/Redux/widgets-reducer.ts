@@ -1,8 +1,11 @@
 import {widgetsAPI} from "../../API/API";
 
 interface TypeActionWidgets {
-  type: string,
-  kpk: {data: object, name_col: object},
+  type: string
+  kpk: {
+    data: object,
+    name_col: object
+  }
 }
 
 const SET_KPK = "SET_KPK";
@@ -270,10 +273,9 @@ let initialState: object = {
 
 const widgetsReducer = (state = initialState, action: TypeActionWidgets) => {
   switch (action.type) {
-    case SET_KPK: {
+    case SET_KPK:
       const kpk = {data: action.kpk.data, nameCol: action.kpk.name_col};
-      return {...state, kpk, isFetchingWidgets: false}
-    }
+      return {...state, kpk, isFetchingWidgets: false};
 
     case SET_IS_FETCHING_WIDGETS:
       return {...state, isFetchingWidgets: true};

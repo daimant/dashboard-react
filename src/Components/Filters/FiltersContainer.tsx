@@ -1,17 +1,15 @@
 import React from "react";
 import {connect} from "react-redux";
 import Filters from "./Filters";
-import {requestOrg, requestWidgetsFromFilters, setPeriod} from "../Redux/filters-reducer";
+import {requestOrg, requestWidgetsFromFilters, setOrgOid, setPeriod} from "../Redux/filters-reducer";
 import {
   selectIsFetchingFilters, selectKTL, selectOrgList, selectOrgName, selectOrgOid, selectPeriod, selectPeriodType,
-  selectPerList, selectVal
+  selectPerList, selectSelectedFilters, selectVal
 } from "../Redux/selectors";
 
 class WidgetsContainer extends React.Component<any> {
   componentDidMount() {
-    //@ts-ignore
     if (!this.props.orgList.oid)
-    //@ts-ignore
       this.props.requestOrg()
   }
 
@@ -25,11 +23,14 @@ class WidgetsContainer extends React.Component<any> {
         orgName={this.props.orgName}
         ktl={this.props.ktl}
         val={this.props.val}
-        requestWidgetsFromFilters={this.props.requestWidgetsFromFilters}
-        setPeriod={this.props.setPeriod}
         perList={this.props.perList}
         period={this.props.period}
         periodType={this.props.periodType}
+        selectedFilters={this.props.selectedFilters}
+
+        requestWidgetsFromFilters={this.props.requestWidgetsFromFilters}
+        setPeriod={this.props.setPeriod}
+        setOrgOid={this.props.setOrgOid}
       />
     );
   }
@@ -45,6 +46,7 @@ const mapState = (state: any) => ({
   perList: selectPerList(state),
   period: selectPeriod(state),
   periodType: selectPeriodType(state),
+  selectedFilters: selectSelectedFilters(state),
 });
 
-export default connect(mapState, {requestOrg, requestWidgetsFromFilters, setPeriod})(WidgetsContainer);
+export default connect(mapState, {requestOrg, requestWidgetsFromFilters, setPeriod, setOrgOid})(WidgetsContainer);

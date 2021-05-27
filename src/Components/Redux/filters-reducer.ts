@@ -10,11 +10,13 @@ interface TypeActionFilters {
   oid: string
   per: any
   point?: string
+  name: string
 }
 
-const SET_ORG = "SET_ORG";
+const SET_ORG_LIST = "SET_ORG_LIST";
 const SET_PERIOD = "SET_PERIOD";
-const CHANGE_ORG = "CHANGE_ORG";
+const SET_ORG_OID = "SET_ORG_OID";
+const SET_ORG_NAME = "SET_ORG_NAME";
 
 const createPeriodTree = (st: Date, end: number) => {
   //получить квартал по номеру месяца (от 0 - янв.)
@@ -92,8 +94,9 @@ const createPeriodTree = (st: Date, end: number) => {
   return rootNode;
 };
 
-let initialState: object = {
+let initialState = {
   orgList: [],
+  currFilters: {}, // переделать
   orgMapList: new Map([['281586771165316', "ООО ОСК ИнфоТранс"]]),
   perList: createPeriodTree(new Date(2020, 0, 1), Date.now()),
   isFetchingFilters: true,
@@ -102,50 +105,57 @@ let initialState: object = {
   period: localStorage.getItem('period') || "2021-03",
   periodType: localStorage.getItem('periodType') || "y",
   periodName: "3 кв 2021",
-  // fnDate: new Date().toISOString().slice(0, 10), // удалить
-  // stDate: subMonths(new Date(), 1).toISOString().slice(0, 10), // удалить
   ktl: {
     kaAtr: 'ka', // or mct
     ktlOid: '281586771165316',
   },
   val: 'percent',
   heightDisplay: window.innerHeight,
+  selectedFilters: {
+    selectedOrgOid: localStorage.getItem('orgOid') || '281586771165316',
+    selectedPeriod: localStorage.getItem('period') || "2021-03",
+    selectedPeriodType: localStorage.getItem('periodType') || "y",
+  }
 };
 
 const filtersReducer = (state = initialState, action: TypeActionFilters) => {
   switch (action.type) {
-    case SET_ORG:
+    case SET_ORG_LIST:
       return {...state, orgList: action.orgList.data, isFetchingFilters: false};
 
     case SET_PERIOD:
       const [periodType, period] = action.per.split(":");
+      if (periodType === 'root') return state;
       localStorage.setItem('periodType', periodType);
       localStorage.setItem('period', period);
-      return periodType === 'root' ? state : {...state, periodType, period};
+      return {...state, periodType, period};
 
-    case CHANGE_ORG:
-      const newName = selectNameOrg(state, action.oid);
+    case SET_ORG_OID:
       localStorage.setItem('orgOid', action.oid);
+      return action.oid ? {...state, orgOid: action.oid} : state;
+
+    case SET_ORG_NAME:
+      const newName = selectNameOrg(state, action.oid);
       localStorage.setItem('orgName', newName);
-      return newName ? {...state, orgName: newName, orgOid: action.oid} : {...state};
+      return newName ? {...state, orgName: newName} : state;
 
     default:
       return state;
   }
 };
 
-export const setOrg = (orgList: any) => ({type: SET_ORG, orgList});
+export const setOrgList = (orgList: any) => ({type: SET_ORG_LIST, orgList});
 export const setPeriod = (per: string) => ({type: SET_PERIOD, per});
-export const changeOrg = (oid: string) => ({type: CHANGE_ORG, oid});
+export const setOrgOid = (oid: string) => ({type: SET_ORG_OID, oid});
+export const setOrgName = (oid: string) => ({type: SET_ORG_NAME, oid});
 
 export const requestOrg = () => async (dispatch: any) => {
   const response = await filtersAPI.getOrg();
-  dispatch(setOrg(response));
+  dispatch(setOrgList(response));
 };
-
 export const requestWidgetsFromFilters = (oid: string, period: string, periodType: string) => async (dispatch: any) => {
-  dispatch(requestWidgets(oid,period, periodType));
-  dispatch(changeOrg(oid));
+  dispatch(requestWidgets(oid, period, periodType));
+  dispatch(setOrgName(oid))
 };
 
 

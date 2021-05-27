@@ -2,13 +2,8 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {requestWidgets} from "../Redux/widgets-reducer";
 import {
-  selectHeightDisplay,
-  // selectFilters,
-  selectInf,
-  selectIsFetchingWidgets,
-  selectKPK,
-  selectKPKTitle, selectOrgOid, selectPeriod, selectPeriodType,
-  selectSC
+  selectHeightDisplay, selectInf, selectIsFetchingWidgets, selectKPK, selectOrgName, selectOrgOid, selectPeriod,
+  selectPeriodType, selectSC
 } from "../Redux/selectors";
 import Widgets from "./Widgets";
 import {WidgetsStateProps, RootState} from "../Common/Types";
@@ -38,8 +33,8 @@ const mapState = (state: RootState) => ({
   sc: selectSC(state),
   inf: selectInf(state),
   isFetchingWidgets: selectIsFetchingWidgets(state),
-  heightDisplay:selectHeightDisplay(state),
-  kpkTitle: selectKPKTitle(state),
+  heightDisplay: selectHeightDisplay(state),
+  kpkTitle: selectOrgName(state),
   orgOid: selectOrgOid(state),
   period: selectPeriod(state),
   periodType: selectPeriodType(state),
