@@ -28,17 +28,16 @@ const Navbar: React.FC<Props> = props => {
   };
 
   return (
-    <div className={`${classes.navbar} ${classes.ai}`}>
+    <div className={classes.navbar}>
       <div>
         <img src={logo} loading='lazy' alt=""/>
       </div>
       <div>
         <h1>Ключевые показатели эффективности</h1>
       </div>
-      <div className={classes.right_block}>
-        <span className={classes.name}>Поморцев Сергей</span>
+      <div>
+        <span>Поморцев Сергей</span>
 
-        {/*меню бургер*/}
         <IconButton
           aria-label="more"
           aria-controls="long-menu"
@@ -53,11 +52,6 @@ const Navbar: React.FC<Props> = props => {
           keepMounted
           open={open}
           onClose={handleClose}
-          // PaperProps={{
-          //   style: {
-          //     width: '30ch',
-          //   },
-          // }}
         >
           {options.map((option) => (
             <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>

@@ -3,6 +3,7 @@ import classes from "./Filters.module.scss";
 import MenuMulChBox from "./Filter-components/MenuMulChBox/MenuMulChBox";
 import {Preloader} from "../Common/Preloader";
 import MenuTreeList from "./Filter-components/MenuTreeList/MenuTreeList";
+import {Button} from "@material-ui/core";
 
 const propsFilterDocuments = {
   title: 'Договор/КА',
@@ -33,23 +34,26 @@ const Filters: React.FC<any> = ({
   return (
     <div className={classes.filters}>
       {/*// @ts-ignore*/}
-      <button className={classes.btn} onClick={acceptFilters} >пименить фильтры</button>
       <MenuTreeList treeList={orgList}
-                    title={'Оргструктура'}
+                    title={'оргструктура'}
                     setter={setOrgOid}
                     period={period}
                     periodType={periodType}
       />
       {/*// @ts-ignore*/}
       <MenuTreeList treeList={perList}
-                    title={'Период'}
+                    title={'период'}
                     setter={setPeriod}
                     period={period}
                     periodType={periodType}
       />
-      <MenuMulChBox {...propsFilterDocuments}/>
-      <MenuMulChBox {...propsFilterValues}/>
-      <MenuMulChBox {...propsFilterView}/>
+      <button className={classes.btn}>Договор/КА</button>
+      <button className={classes.btn}>Значения</button>
+      <button className={classes.btn}>Вид</button>
+      {/*<MenuMulChBox {...propsFilterDocuments}/>*/}
+      {/*<MenuMulChBox {...propsFilterValues}/>*/}
+      {/*<MenuMulChBox {...propsFilterView}/>*/}
+      <button className={classes.btn} onClick={acceptFilters} >применить</button>
     </div>
   )
 };

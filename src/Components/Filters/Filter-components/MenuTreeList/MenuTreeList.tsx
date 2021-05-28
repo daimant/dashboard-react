@@ -8,15 +8,21 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import {RenderTree} from "../../../Common/Types";
 
-const useStyles = makeStyles({
-  root: {
-    margin: '.5rem',
-  },
-});
+
 
 const MenuTreeList: React.FC<any> = ({treeList, title, requestWidgetsFromFilters, setter, period, periodType}) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selected, setSelected] = React.useState<string[]>([]);
+
+  const useStyles = makeStyles({
+    root: {
+      margin: '.5rem',
+      height: title === "оргструктура" ? 800 : 400,
+      flexGrow: 1,
+      width: title === "оргструктура" ? 600 : 200,
+      overflow: 'auto',
+    },
+  });
 
   const handleSelect = (event: React.ChangeEvent<{}>, nodeIds: string[]) => {
     setSelected(nodeIds);

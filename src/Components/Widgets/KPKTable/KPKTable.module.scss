@@ -7,10 +7,10 @@
   overflow: auto;
 
   .cell {
-    border-bottom: none;
-    font-size: 1.7vh;
     padding: .7vh;
     line-height: 2vh;
+    font-size: 1.7vh;
+    border-bottom: none;
   }
 
   .tableContainer {
@@ -23,4 +23,8 @@
   text-align: center;
   padding: .7vh;
   font-size: 3vh;
+}
+
+.kpkTable::-webkit-scrollbar {
+  width: 0;
 }

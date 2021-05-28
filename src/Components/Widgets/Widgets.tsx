@@ -12,7 +12,7 @@ const Widgets: React.FC<WidgetsPropsElements> = ({kpk, sc, inf, isFetchingWidget
   return (
     <main>
       <KPKTable kpk={kpk} title={kpkTitle}/>
-      <div>
+      <div style={{display: 'run-in'}}>
         {sc.map((graph: WidgetsGraphElements, i: number) =>
           <Graph sc={graph} key={i} heightDisplay={heightDisplay}/>
         )}
