@@ -1,4 +1,5 @@
 import {widgetsAPI} from "../../API/API";
+import {AxiosResponse} from "axios";
 
 interface TypeActionWidgets {
   type: string
@@ -6,237 +7,17 @@ interface TypeActionWidgets {
     data: object,
     name_col: object
   }
+  sc: object[];
 }
 
 const SET_KPK = "SET_KPK";
-const SET_IS_FETCHING_WIDGETS = "SET_IS_FETCHING_WIDGETS";
+const SET_SC = "SET_SC";
+const SET_IS_FETCHING_WIDGETS_STARTED = "SET_IS_FETCHING_WIDGETS_STARTED";
+const SET_IS_FETCHING_WIDGETS_ENDED = "SET_IS_FETCHING_WIDGETS_ENDED";
 
 let initialState: object = {
   kpk: {},
-  sc: [
-    {
-      "id": 1,
-      "title": "Выполнено ЗНО, шт",
-      "data": [
-        {
-          "d": "10.04",
-          "v": 83
-        },
-        {
-          "d": "11.04",
-          "v": 86
-        },
-        {
-          "d": "12.04",
-          "v": 84
-        },
-        {
-          "d": "13.04",
-          "v": 79
-        },
-        {
-          "d": "14.04",
-          "v": 90
-        },
-        {
-          "d": "15.04",
-          "v": 86
-        },
-        {
-          "d": "16.04",
-          "v": 98
-        },
-        {
-          "d": "17.04",
-          "v": 87
-        },
-        {
-          "d": "18.04",
-          "v": 81
-        },
-        {
-          "d": "19.04",
-          "v": 79
-        },
-        {
-          "d": "20.04",
-          "v": 77
-        },
-        {
-          "d": "21.04",
-          "v": 81
-        },
-        {
-          "d": "22.04",
-          "v": 98
-        },
-        {
-          "d": "23.04",
-          "v": 90
-        },
-        {
-          "d": "24.04",
-          "v": 85
-        },
-        {
-          "d": "25.04",
-          "v": 95
-        },
-        {
-          "d": "26.04",
-          "v": 94
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "title": "Зарегистрировано обращений, шт",
-      "data": [
-        {
-          "d": "10.04",
-          "v": 99
-        },
-        {
-          "d": "11.04",
-          "v": 88
-        },
-        {
-          "d": "12.04",
-          "v": 80
-        },
-        {
-          "d": "13.04",
-          "v": 88
-        },
-        {
-          "d": "14.04",
-          "v": 90
-        },
-        {
-          "d": "15.04",
-          "v": 75
-        },
-        {
-          "d": "16.04",
-          "v": 86
-        },
-        {
-          "d": "17.04",
-          "v": 88
-        },
-        {
-          "d": "18.04",
-          "v": 81
-        },
-        {
-          "d": "19.04",
-          "v": 88
-        },
-        {
-          "d": "20.04",
-          "v": 87
-        },
-        {
-          "d": "21.04",
-          "v": 91
-        },
-        {
-          "d": "22.04",
-          "v": 86
-        },
-        {
-          "d": "23.04",
-          "v": 92
-        },
-        {
-          "d": "24.04",
-          "v": 84
-        },
-        {
-          "d": "25.04",
-          "v": 94
-        },
-        {
-          "d": "26.04",
-          "v": 87
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "title": "SLA, %",
-      "data": [
-        {
-          "d": "10.04",
-          "v": 82
-        },
-        {
-          "d": "11.04",
-          "v": 80
-        },
-        {
-          "d": "12.04",
-          "v": 85
-        },
-        {
-          "d": "13.04",
-          "v": 75
-        },
-        {
-          "d": "14.04",
-          "v": 89
-        },
-        {
-          "d": "15.04",
-          "v": 84
-        },
-        {
-          "d": "16.04",
-          "v": 95
-        },
-        {
-          "d": "17.04",
-          "v": 76
-        },
-        {
-          "d": "18.04",
-          "v": 88
-        },
-        {
-          "d": "19.04",
-          "v": 95
-        },
-        {
-          "d": "20.04",
-          "v": 94
-        },
-        {
-          "d": "21.04",
-          "v": 86
-        },
-        {
-          "d": "22.04",
-          "v": 84
-        },
-        {
-          "d": "23.04",
-          "v": 87
-        },
-        {
-          "d": "24.04",
-          "v": 77
-        },
-        {
-          "d": "25.04",
-          "v": 78
-        },
-        {
-          "d": "26.04",
-          "v": 100
-        }
-      ]
-    }
-  ],
+  sc: [],
   inf: [
     [
       "Чистая прибыль",
@@ -275,10 +56,16 @@ const widgetsReducer = (state = initialState, action: TypeActionWidgets) => {
   switch (action.type) {
     case SET_KPK:
       const kpk = {data: action.kpk.data, nameCol: action.kpk.name_col};
-      return {...state, kpk, isFetchingWidgets: false};
+      return {...state, kpk};
 
-    case SET_IS_FETCHING_WIDGETS:
+    case SET_SC:
+      return action.sc.length ? {...state, sc: action.sc} : state;
+
+    case SET_IS_FETCHING_WIDGETS_STARTED:
       return {...state, isFetchingWidgets: true};
+
+    case SET_IS_FETCHING_WIDGETS_ENDED:
+      return {...state, isFetchingWidgets: false};
 
     default:
       return state;
@@ -286,12 +73,25 @@ const widgetsReducer = (state = initialState, action: TypeActionWidgets) => {
 };
 
 export const setKPK = (kpk: any) => ({type: SET_KPK, kpk});
-export const setIsFetchingWidgets = () => ({type: SET_IS_FETCHING_WIDGETS});
+export const setSC = (sc: object[]) => ({type: SET_SC, sc});
+export const setIsFetchingWidgetsStarted = () => ({type: SET_IS_FETCHING_WIDGETS_STARTED});
+export const setIsFetchingWidgetsEnded = () => ({type: SET_IS_FETCHING_WIDGETS_ENDED});
 
-export const requestWidgets = (oid: string, period: string, periodType: string) => async (dispatch: any) => {
-  dispatch(setIsFetchingWidgets());
-  const response = await widgetsAPI.getKPK(oid, period, periodType);
-  dispatch(setKPK(response));
+export const requestWidgets = (oid: string, period: string, periodType: string, numSC: number[] = []) => async (dispatch: any) => {
+  dispatch(setIsFetchingWidgetsStarted());
+
+  const responseKPK = await widgetsAPI.getKPK(oid, period, periodType);
+  dispatch(setKPK(responseKPK));
+
+  const responseSC = [];
+
+  if (numSC[0]) responseSC.push(await widgetsAPI.getSC(oid, period, periodType, numSC[0]));
+  if (numSC[1]) responseSC.push(await widgetsAPI.getSC(oid, period, periodType, numSC[1]));
+  if (numSC[2]) responseSC.push(await widgetsAPI.getSC(oid, period, periodType, numSC[2]));
+
+  dispatch(setSC(responseSC));
+
+  dispatch(setIsFetchingWidgetsEnded());
 };
 
 export default widgetsReducer;

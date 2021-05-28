@@ -1,5 +1,5 @@
-import {filtersAPI, widgetsAPI} from "../../API/API";
-import {requestWidgets, setIsFetchingWidgets, setKPK} from "./widgets-reducer";
+import {filtersAPI} from "../../API/API";
+import {requestWidgets} from "./widgets-reducer";
 import {selectNameOrg} from "./selectors";
 
 interface TypeActionFilters {

@@ -24,9 +24,20 @@ export const widgetsAPI = {
       // })
       .then((response: AxiosResponse) => response.data);
   },
-  getSC: (number: number) => {
+  getSC: (oid: string, period: string, period_type: string, num: number) => {
     return instance
-      .get(`sc/${number}`)
+      .get(`sc/${num}`)
+      // .post(`sc/${num}`, { // prod mode
+      //   "org_oid": +oid,
+      //   "srv_oid" : 0, // в графиках не надо
+      //   "period": period,
+      //   "period_type": period_type,
+      //   "ktl": {
+      //     "ka_atr": "ka", // or mct 
+      //     "ktl_oid": 281586771165316,
+      //   },
+      //   "val": "percent",
+      // })
       .then((response: AxiosResponse) => response.data);
   },
   getINF:

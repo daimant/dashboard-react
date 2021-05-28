@@ -11,7 +11,7 @@ import {WidgetsStateProps, RootState} from "../Common/Types";
 class WidgetsContainer extends Component<WidgetsStateProps> {
   componentDidMount() {
     // @ts-ignore
-    this.props.requestWidgets(this.props.orgOid, this.props.period, this.props.periodType);
+    this.props.requestWidgets(this.props.orgOid, this.props.period, this.props.periodType, [1, 2, 3]);
   }
 
   render() {
