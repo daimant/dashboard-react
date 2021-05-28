@@ -17,6 +17,7 @@ const SET_ORG_LIST = "SET_ORG_LIST";
 const SET_PERIOD = "SET_PERIOD";
 const SET_ORG_OID = "SET_ORG_OID";
 const SET_ORG_NAME = "SET_ORG_NAME";
+const SET_FILTERS_DEFAULT = "SET_FILTERS_DEFAULT";
 
 const createPeriodTree = (st: Date, end: number) => {
   //получить квартал по номеру месяца (от 0 - янв.)
@@ -139,6 +140,13 @@ const filtersReducer = (state = initialState, action: TypeActionFilters) => {
       localStorage.setItem('orgName', newName);
       return newName ? {...state, orgName: newName} : state;
 
+    case SET_FILTERS_DEFAULT:
+      localStorage.removeItem('orgName');
+      localStorage.removeItem('orgOid');
+      localStorage.removeItem('periodType');
+      localStorage.removeItem('period');
+      return {...state, orgOid: '281586771165316', orgName: "ООО ОСК ИнфоТранс", period: "2021-03", periodType: "y"};
+
     default:
       return state;
   }
@@ -148,6 +156,7 @@ export const setOrgList = (orgList: any) => ({type: SET_ORG_LIST, orgList});
 export const setPeriod = (per: string) => ({type: SET_PERIOD, per});
 export const setOrgOid = (oid: string) => ({type: SET_ORG_OID, oid});
 export const setOrgName = (oid: string) => ({type: SET_ORG_NAME, oid});
+export const setFiltersDefault = () => ({type: SET_FILTERS_DEFAULT});
 
 export const requestOrg = () => async (dispatch: any) => {
   const response = await filtersAPI.getOrg();
