@@ -94,6 +94,12 @@ const createPeriodTree = (st: Date, end: number) => {
   //возврат всего дерева
   return rootNode;
 };
+const defaultFilters = {
+  orgOid: '281586771165316',
+  orgName: "ООО ОСК ИнфоТранс",
+  period: "2021-03",
+  periodType: "y",
+};
 
 let initialState = {
   orgList: [],
@@ -101,10 +107,10 @@ let initialState = {
   orgMapList: new Map([['281586771165316', "ООО ОСК ИнфоТранс"]]),
   perList: createPeriodTree(new Date(2020, 0, 1), Date.now()),
   isFetchingFilters: true,
-  orgOid: localStorage.getItem('orgOid') || '281586771165316',
-  orgName: localStorage.getItem('orgName') || "ООО ОСК ИнфоТранс",
-  period: localStorage.getItem('period') || "2021-03",
-  periodType: localStorage.getItem('periodType') || "y",
+  orgOid: localStorage.getItem('orgOid') || defaultFilters.orgOid,
+  orgName: localStorage.getItem('orgName') || defaultFilters.orgName,
+  period: localStorage.getItem('period') || defaultFilters.period,
+  periodType: localStorage.getItem('periodType') || defaultFilters.periodType,
   periodName: "3 кв 2021",
   ktl: {
     kaAtr: 'ka', // or mct
@@ -141,11 +147,15 @@ const filtersReducer = (state = initialState, action: TypeActionFilters) => {
       return newName ? {...state, orgName: newName} : state;
 
     case SET_FILTERS_DEFAULT:
-      localStorage.removeItem('orgName');
       localStorage.removeItem('orgOid');
       localStorage.removeItem('periodType');
       localStorage.removeItem('period');
-      return {...state, orgOid: '281586771165316', orgName: "ООО ОСК ИнфоТранс", period: "2021-03", periodType: "y"};
+      return {
+        ...state,
+        orgOid: defaultFilters.orgOid,
+        period: defaultFilters.period,
+        periodType: defaultFilters.periodType
+      };
 
     default:
       return state;
