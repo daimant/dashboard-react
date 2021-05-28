@@ -2,10 +2,12 @@
   box-shadow: 0 0 1.6rem rgba(0, 0, 0, 0.1);
   border-radius: .4rem;
   width: 40vw;
-  height: 20vh;
+  height: 31.2%;
   background: #FFFFFF;
-  margin: 0 .5rem 1rem;
+  margin: 0 .6vw 3%;
   font-size: 1.7vh;
+  overflow: auto;
+  overflow-y: hidden;
 }
 
 .title {

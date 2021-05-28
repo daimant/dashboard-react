@@ -50,10 +50,11 @@ const Filters: React.FC<any> = ({
       <button className={classes.btn}>Договор/КА</button>
       <button className={classes.btn}>Значения</button>
       <button className={classes.btn}>Вид</button>
+      <button className={classes.btn}>сбросить</button>
       {/*<MenuMulChBox {...propsFilterDocuments}/>*/}
       {/*<MenuMulChBox {...propsFilterValues}/>*/}
       {/*<MenuMulChBox {...propsFilterView}/>*/}
-      <button className={classes.btn} onClick={acceptFilters} >применить</button>
+      <Button onClick={acceptFilters} >применить</Button>
     </div>
   )
 };

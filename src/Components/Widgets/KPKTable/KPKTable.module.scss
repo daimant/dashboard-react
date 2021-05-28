@@ -1,9 +1,9 @@
 .kpkTable {
   box-shadow: 0 0 1.6rem rgba(0, 0, 0, 0.1);
   border-radius: .4rem;
-  width: 30vw;
+  min-width: 30vw;
   height: 100%;
-  margin: 0 .5rem;
+  margin: 0 .6vw;
   overflow: auto;
 
   .cell {

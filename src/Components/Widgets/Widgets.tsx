@@ -1,5 +1,5 @@
 import React from "react";
-import "./Widgets.module.scss";
+import classes from "./Widgets.module.scss";
 import KPKTable from "./KPKTable/KPKTable";
 import Graph from "./Graph/Graph";
 import InfTable from "./InfTable/InfTable";
@@ -12,7 +12,7 @@ const Widgets: React.FC<WidgetsPropsElements> = ({kpk, sc, inf, isFetchingWidget
   return (
     <main>
       <KPKTable kpk={kpk} title={kpkTitle}/>
-      <div style={{display: 'run-in'}}>
+      <div className={classes.graphs}>
         {sc.map((graph: WidgetsGraphElements, i: number) =>
           <Graph sc={graph} key={i} heightDisplay={heightDisplay}/>
         )}

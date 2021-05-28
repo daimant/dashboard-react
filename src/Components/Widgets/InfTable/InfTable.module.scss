@@ -1,11 +1,15 @@
 .infTable {
-  width: 25vw;
+  box-shadow: 0 0 1.6rem rgba(0, 0, 0, 0.1);
+  border-radius: .4rem;
+  min-width: 25vw;
   height: 100%;
-  margin: 0 .5rem;
+  margin: 0 .6vw;
+  overflow: auto;
+  overflow-y: hidden;
 
   .cell {
     padding: 0 0;
-    line-height: 10vh;
+    line-height: 10.1vh;
     font-size: 3vh;
     border-bottom: none;
     text-align: center;
