@@ -5,6 +5,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 interface Props {
 }
@@ -31,6 +32,7 @@ const Navbar: React.FC<Props> = props => {
     <div className={classes.navbar}>
       <div>
         <img src={logo} loading='lazy' alt=""/>
+        <SettingsIcon fontSize='large'/>
       </div>
       <div>
         <h1>Ключевые показатели эффективности</h1>

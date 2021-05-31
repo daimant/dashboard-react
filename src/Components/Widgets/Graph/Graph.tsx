@@ -4,23 +4,20 @@ import {AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContain
 import {GraphProps} from "../../Common/Types";
 import WidgetsTitle from "../WidgetsTitle/WidgetsTitle";
 
-const Graph: React.FC<GraphProps> = ({sc, heightDisplay, widgetsTitle}) => {
+const Graph: React.FC<GraphProps> = ({sc, heightDisplay}) => {
   const {title, data, max, min} = sc;
 
   return (
     <div className={classes.graphs}>
-      <div className={classes.title}>
-        <p className={classes.titleGraph}>{title}</p>
-        <WidgetsTitle widgetsTitle={widgetsTitle}/>
-      </div>
+      <p className={classes.title}>{title}</p>
       <ResponsiveContainer>
         <AreaChart
           data={data}
           margin={{
             top: 0,
             right: 30,
-            left: heightDisplay < 900 ? -20 : -15,
-            bottom: heightDisplay < 900 ? 40 : 65,
+            left: heightDisplay < 700 ? -30 : heightDisplay > 700 && heightDisplay < 1000 ? -20 : -15,
+            bottom: heightDisplay < 700 ? 20 : heightDisplay > 700 && heightDisplay < 1000 ? 30 : 55,
           }}
         >
           <CartesianGrid strokeDasharray="3 3"/>

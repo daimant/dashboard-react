@@ -38,6 +38,7 @@ const Filters: React.FC<any> = ({
   return (
     <div className={classes.filters}>
       {/*// @ts-ignore*/}
+      <ButtonGroup variant="text" aria-label="text primary button group">
       <MenuTreeList treeList={orgList}
                     title={'оргструктура'}
                     setter={setOrgOid}
@@ -51,12 +52,11 @@ const Filters: React.FC<any> = ({
                     period={period}
                     periodType={periodType}
       />
-      <button className={classes.btn}>Договор/КА</button>
-      <button className={classes.btn}>Значения</button>
-      <button className={classes.btn}>Вид</button>
-      {/*<MenuMulChBox {...propsFilterDocuments}/>*/}
-      {/*<MenuMulChBox {...propsFilterValues}/>*/}
-      {/*<MenuMulChBox {...propsFilterView}/>*/}
+      </ButtonGroup>
+
+      {/*<button className={classes.btn}>Договор/КА</button>*/}
+      {/*<button className={classes.btn}>Значения</button>*/}
+      {/*<button className={classes.btn}>Вид</button>*/}
       <ButtonGroup variant="text" aria-label="text primary button group">
         <Button onClick={requestSetFiltersDefault}>сбросить фильтры</Button>
         <Button onClick={acceptFilters}>применить</Button>

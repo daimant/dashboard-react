@@ -66,7 +66,6 @@ export interface InfTableElements {
 
 export interface KPKTablePropsElements {
   kpk: WidgetsKPKElements
-  widgetsTitle: string
 }
 
 export interface KPKTableElements {
@@ -82,7 +81,6 @@ export interface GraphProps {
   key: number
   sc: WidgetsGraphElements
   heightDisplay: number
-  widgetsTitle: string
 }
 
 export interface GraphElements {

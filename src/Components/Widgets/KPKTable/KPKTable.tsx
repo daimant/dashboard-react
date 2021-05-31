@@ -10,19 +10,18 @@ import classes from "./KPKTable.module.scss";
 import {KPKTablePropsElements} from "../../Common/Types";
 import WidgetsTitle from "../WidgetsTitle/WidgetsTitle";
 
-const KPKTable: React.FC<KPKTablePropsElements> = ({kpk, widgetsTitle}) => {
+const KPKTable: React.FC<KPKTablePropsElements> = ({kpk}) => {
   const {cols, data: rows} = kpk;
 
   return (
-    <div className={classes.kpkTable}>
-      <WidgetsTitle widgetsTitle={widgetsTitle}/>
-      <TableContainer component={Paper} className={classes.tableContainer}>
-        <Table size="small" stickyHeader className={classes.table}>
+    <div className={classes.kpkTable} >
+      <TableContainer component={Paper} className={classes.tableContainer} >
+        <Table size="small" stickyHeader aria-label="a dense table" >
           <TableHead>
             <TableRow>
               <TableCell className={classes.cell}>{cols[1]}</TableCell>
               <TableCell align="right" className={classes.cell}>{cols[2]}</TableCell>
-              <TableCell align="right" className={classes.cell}>{cols[3]}</TableCell>
+              {/*<TableCell align="right" className={classes.cell}>{cols[3]}</TableCell>*/}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -37,10 +36,10 @@ const KPKTable: React.FC<KPKTablePropsElements> = ({kpk, widgetsTitle}) => {
                   // @ts-ignore
                   row[cols[2]]
                 }</TableCell>
-                <TableCell align="right" className={classes.cell}>{
-                  // @ts-ignore
-                  row[cols[3]]
-                }</TableCell>
+                {/*<TableCell align="right" className={classes.cell}>{*/}
+                {/*  // @ts-ignore*/}
+                {/*  row[cols[3]]*/}
+                {/*}</TableCell>*/}
               </TableRow>
             ))}
           </TableBody>

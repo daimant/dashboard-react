@@ -12,7 +12,6 @@ import WidgetsTitle from "../WidgetsTitle/WidgetsTitle";
 const InfTable: React.FC<InfTableProps> = ({inf: rows, widgetsTitle}) => {
   return (
     <div className={classes.infTable}>
-      <WidgetsTitle widgetsTitle={widgetsTitle}/>
       <TableContainer component={Paper} className={classes.tableContainer}>
         <Table size="small" aria-label="a dense table" className={classes.table}>
           <TableBody>
