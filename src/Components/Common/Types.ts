@@ -5,7 +5,7 @@ export interface WidgetsStateProps {
   sc: WidgetsGraphElements[]
   inf: InfTableElements[]
   isFetchingWidgets: boolean
-  kpkTitle: string
+  widgetsTitle: string
   heightDisplay: number
   orgOid: string
   period: string
@@ -27,7 +27,7 @@ export interface WidgetsPropsElements {
   sc: WidgetsGraphElements[]
   inf: InfTableElements[]
   isFetchingWidgets: boolean
-  kpkTitle: string
+  widgetsTitle: string
   heightDisplay: number
 }
 
@@ -54,6 +54,7 @@ export interface WidgetsGraphElements {
 
 export interface InfTableProps {
   inf: InfTableElements[]
+  widgetsTitle: string
 }
 
 export interface InfTableElements {
@@ -65,7 +66,7 @@ export interface InfTableElements {
 
 export interface KPKTablePropsElements {
   kpk: WidgetsKPKElements
-  title: string
+  widgetsTitle: string
 }
 
 export interface KPKTableElements {
@@ -81,6 +82,7 @@ export interface GraphProps {
   key: number
   sc: WidgetsGraphElements
   heightDisplay: number
+  widgetsTitle: string
 }
 
 export interface GraphElements {

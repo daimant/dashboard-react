@@ -10,8 +10,13 @@
   overflow-y: hidden;
 }
 
-.title {
-  font-size: 3vh;
-  padding-top: .5vh;
+.titleGraph {
   text-align: center;
+  width: 25%;
+  font-size: 2vh;
+  padding: 1%;
+}
+
+.title {
+  display: flex;
 }

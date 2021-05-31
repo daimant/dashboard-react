@@ -8,15 +8,16 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import classes from "./KPKTable.module.scss";
 import {KPKTablePropsElements} from "../../Common/Types";
+import WidgetsTitle from "../WidgetsTitle/WidgetsTitle";
 
-const KPKTable: React.FC<KPKTablePropsElements> = ({kpk, title}) => {
+const KPKTable: React.FC<KPKTablePropsElements> = ({kpk, widgetsTitle}) => {
   const {cols, data: rows} = kpk;
 
   return (
     <div className={classes.kpkTable}>
+      <WidgetsTitle widgetsTitle={widgetsTitle}/>
       <TableContainer component={Paper} className={classes.tableContainer}>
-        <p className={classes.title}>{title}</p>
-        <Table size="small" aria-label="a dense table" className={classes.table}>
+        <Table size="small" stickyHeader className={classes.table}>
           <TableHead>
             <TableRow>
               <TableCell className={classes.cell}>{cols[1]}</TableCell>

@@ -9,7 +9,6 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import {RenderTree} from "../../../Common/Types";
 
 
-
 const MenuTreeList: React.FC<any> = ({treeList, title, requestWidgetsFromFilters, setter, period, periodType}) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selected, setSelected] = React.useState<string[]>([]);
@@ -17,9 +16,9 @@ const MenuTreeList: React.FC<any> = ({treeList, title, requestWidgetsFromFilters
   const useStyles = makeStyles({
     root: {
       margin: '.5rem',
-      height: title === "оргструктура" ? 800 : 400,
+      height: title === "оргструктура" ? 400 : 200,
       flexGrow: 1,
-      width: title === "оргструктура" ? 600 : 200,
+      width: title === "оргструктура" ? 550 : 200,
       overflow: 'auto',
     },
   });

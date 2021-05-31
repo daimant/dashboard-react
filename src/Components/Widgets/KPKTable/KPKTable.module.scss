@@ -2,29 +2,27 @@
   box-shadow: 0 0 1.6rem rgba(0, 0, 0, 0.1);
   border-radius: .4rem;
   min-width: 30vw;
-  height: 100%;
+  max-height: 100%;
   margin: 0 .6vw;
-  overflow: auto;
+  overflow: hidden;
 
   .cell {
     padding: .7vh;
     line-height: 2vh;
     font-size: 1.7vh;
     border-bottom: none;
+    background-color: #FFFFFF;
   }
 
   .tableContainer {
+    border-radius: 0;
+    height: 90%;
     box-shadow: none;
     box-sizing: content-box;
+    margin-bottom: 15vh;
   }
 }
 
-.title {
-  text-align: center;
-  padding: .7vh;
-  font-size: 3vh;
-}
-
-.kpkTable::-webkit-scrollbar {
+.tableContainer::-webkit-scrollbar {
   width: 0;
 }
