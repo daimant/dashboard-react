@@ -5,6 +5,7 @@ import Graph from "./Graph/Graph";
 import InfTable from "./InfTable/InfTable";
 import {WidgetsGraphElements, WidgetsPropsElements} from "../Common/Types";
 import {Preloader} from "../Common/Preloader";
+import CircularBar from "./CircularBar/CircularBar";
 
 const Widgets: React.FC<WidgetsPropsElements> = ({kpk, sc, inf, isFetchingWidgets, heightDisplay}) => {
   if (isFetchingWidgets) return <Preloader/>;
@@ -12,6 +13,11 @@ const Widgets: React.FC<WidgetsPropsElements> = ({kpk, sc, inf, isFetchingWidget
   return (
     <main>
       <KPKTable kpk={kpk}/>
+      <div className={classes.graphs}>
+        {[['97%', '+5'], ['23%', '-50'], ['90%', '+0.5']].map((el, i) =>
+          <CircularBar today={el[0]} diff={el[1]} key={i}/>
+        )}
+      </div>
       <div className={classes.graphs}>
         {sc.map((graph: WidgetsGraphElements, i: number) =>
           <Graph sc={graph} key={i} heightDisplay={heightDisplay}/>

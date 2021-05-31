@@ -18,6 +18,7 @@ const SET_PERIOD = "SET_PERIOD";
 const SET_ORG_OID = "SET_ORG_OID";
 const SET_ORG_NAME = "SET_ORG_NAME";
 const SET_FILTERS_DEFAULT = "SET_FILTERS_DEFAULT";
+const SET_SHOW_FILTERS = "SET_SHOW_FILTERS";
 
 const createPeriodTree = (st: Date, end: number) => {
   //получить квартал по номеру месяца (от 0 - янв.)
@@ -122,7 +123,8 @@ let initialState = {
     selectedOrgOid: localStorage.getItem('orgOid') || '281586771165316',
     selectedPeriod: localStorage.getItem('period') || "2021-03",
     selectedPeriodType: localStorage.getItem('periodType') || "y",
-  }
+  },
+  showFilters: localStorage.getItem('showFilters') !== 'false',
 };
 
 const filtersReducer = (state = initialState, action: TypeActionFilters) => {
@@ -157,6 +159,12 @@ const filtersReducer = (state = initialState, action: TypeActionFilters) => {
         periodType: defaultFilters.periodType
       };
 
+    case SET_SHOW_FILTERS:
+      localStorage.setItem('showFilters', String(!state.showFilters));
+      if (state.showFilters)
+        return {...state, showFilters: false};
+      else return {...state, showFilters: true};
+
     default:
       return state;
   }
@@ -167,6 +175,7 @@ export const setPeriod = (per: string) => ({type: SET_PERIOD, per});
 export const setOrgOid = (oid: string) => ({type: SET_ORG_OID, oid});
 export const setOrgName = (oid: string) => ({type: SET_ORG_NAME, oid});
 export const setFiltersDefault = () => ({type: SET_FILTERS_DEFAULT});
+export const setShowFilters = () => ({type: SET_SHOW_FILTERS});
 
 export const requestOrg = () => async (dispatch: any) => {
   const response = await filtersAPI.getOrg();

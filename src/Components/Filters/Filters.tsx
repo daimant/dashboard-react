@@ -23,9 +23,11 @@ import ButtonGroup from "@material-ui/core/ButtonGroup";
 
 const Filters: React.FC<any> = ({
                                   orgList, isFetchingFilters, orgOid, orgName, ktl, val, requestWidgetsFromFilters,
-                                  setPeriod, setOrgOid, perList, period, periodType, selectedFilters, setFiltersDefault
+                                  setPeriod, setOrgOid, perList, period, periodType, selectedFilters, setFiltersDefault,
+                                  showFilters
                                 }) => {
   if (isFetchingFilters) return <Preloader/>;
+  if (!showFilters) return <></>;
 
   const acceptFilters = () => {
     requestWidgetsFromFilters(orgOid, period, periodType);
@@ -38,20 +40,26 @@ const Filters: React.FC<any> = ({
   return (
     <div className={classes.filters}>
       {/*// @ts-ignore*/}
+      <div style={{display: 'block', width: "60%"}}>
+        <p>Выбранная организация:</p>
+        <p>{orgOid}</p>
+        <p>Выбранный период: {period}{periodType}</p>
+      </div>
+      <p></p>
       <ButtonGroup variant="text" aria-label="text primary button group">
-      <MenuTreeList treeList={orgList}
-                    title={'оргструктура'}
-                    setter={setOrgOid}
-                    period={period}
-                    periodType={periodType}
-      />
-      {/*// @ts-ignore*/}
-      <MenuTreeList treeList={perList}
-                    title={'период'}
-                    setter={setPeriod}
-                    period={period}
-                    periodType={periodType}
-      />
+        <MenuTreeList treeList={orgList}
+                      title={'оргструктура'}
+                      setter={setOrgOid}
+                      period={period}
+                      periodType={periodType}
+        />
+        {/*// @ts-ignore*/}
+        <MenuTreeList treeList={perList}
+                      title={'период'}
+                      setter={setPeriod}
+                      period={period}
+                      periodType={periodType}
+        />
       </ButtonGroup>
 
       {/*<button className={classes.btn}>Договор/КА</button>*/}

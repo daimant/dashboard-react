@@ -7,16 +7,13 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
 import SettingsIcon from '@material-ui/icons/Settings';
 
-interface Props {
-}
-
 const options = [
   'Ключевые показатели эффективности (текущий дашборд)',
   'Рейтинг сотрудников',
   'Статистика по объектам обслуживания'
 ];
 
-const Navbar: React.FC<Props> = props => {
+const Navbar: React.FC<any> = ({showFilters, setShowFilters}) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -28,11 +25,17 @@ const Navbar: React.FC<Props> = props => {
     setAnchorEl(null);
   };
 
+  const changeShowFilters = () => {
+    setShowFilters();
+  };
+
   return (
     <div className={classes.navbar}>
       <div>
         <img src={logo} loading='lazy' alt=""/>
-        <SettingsIcon fontSize='large'/>
+        <div className="material-icons" style={{fontSize: '40px', cursor: 'pointer'}} onClick={changeShowFilters}>
+          filter_alt
+        </div>
       </div>
       <div>
         <h1>Ключевые показатели эффективности</h1>

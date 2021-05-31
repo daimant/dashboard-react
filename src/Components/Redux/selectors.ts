@@ -106,6 +106,7 @@ export const selectHeightDisplay = (state: any) => state.filters.heightDisplay;
 export const selectPeriod = (state: any) => state.filters.period;
 export const selectPeriodType = (state: any) => state.filters.periodType;
 export const selectSelectedFilters = (state: any) => state.filters.selectedFilters;
+export const selectShowFilters = (state: any) => state.filters.showFilters;
 
 // filters-reducer
 export const selectNameOrg = (state: any, oid: string) => state.orgMapList.get(oid);
