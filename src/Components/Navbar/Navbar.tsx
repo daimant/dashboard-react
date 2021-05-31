@@ -33,7 +33,7 @@ const Navbar: React.FC<any> = ({showFilters, setShowFilters}) => {
     <div className={classes.navbar}>
       <div>
         <img src={logo} loading='lazy' alt=""/>
-        <div className="material-icons" style={{fontSize: '40px', cursor: 'pointer'}} onClick={changeShowFilters}>
+        <div className={`material-icons ${classes.filterIcon}`} onClick={changeShowFilters}>
           filter_alt
         </div>
       </div>

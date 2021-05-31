@@ -40,7 +40,7 @@ const Filters: React.FC<any> = ({
   return (
     <div className={classes.filters}>
       {/*// @ts-ignore*/}
-      <div style={{display: 'block', width: "60%"}}>
+      <div className={classes.aboutFilters}>
         <p>Выбранная организация:</p>
         <p>{orgOid}</p>
         <p>Выбранный период: {period}{periodType}</p>

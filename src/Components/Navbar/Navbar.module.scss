@@ -5,8 +5,14 @@ img {
 
 .navbar {
   justify-content: space-between;
+
   * {
     align-items: center;
   }
+}
+
+.filterIcon {
+  font-size: 40px;
+  cursor: pointer;
 }
 
