@@ -51,8 +51,7 @@ const mapState = (state: any) => ({
   periodType: selectPeriodType(state),
   selectedFilters: selectSelectedFilters(state),
   showFilters: selectShowFilters(state),
-  orgMapList: selectOrgMapList(state),
-  periodNameMapList: selectPeriodNameMapList(state),
+
 });
 
 export default connect(mapState, {

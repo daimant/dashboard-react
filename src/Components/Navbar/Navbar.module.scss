@@ -11,8 +11,21 @@ img {
   }
 }
 
+.leftNav {
+  width: 25%;
+}
+
 .filterIcon {
   font-size: 40px;
   cursor: pointer;
 }
 
+.aboutFilters {
+  font-size: .8vw;
+  display: block;
+  overflow: auto;
+}
+
+.generalTitle {
+  margin-left: -12vw;
+}

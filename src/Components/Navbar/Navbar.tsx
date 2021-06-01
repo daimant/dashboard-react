@@ -6,6 +6,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
 import SettingsIcon from '@material-ui/icons/Settings';
+import {Preloader} from "../Common/Preloader";
 
 const options = [
   'Ключевые показатели эффективности (текущий дашборд)',
@@ -13,31 +14,45 @@ const options = [
   'Статистика по объектам обслуживания'
 ];
 
-const Navbar: React.FC<any> = ({showFilters, setShowFilters}) => {
+const Navbar: React.FC<any> = ({
+                                 showFilters, setShowFilters, orgOid, period, periodType, orgMapList, periodNameMapList,
+                                 isFetchingFilters
+                               }) => {
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
+  if (isFetchingFilters) return <Preloader/>;
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-
   const handleClose = () => {
     setAnchorEl(null);
   };
-
   const changeShowFilters = () => {
     setShowFilters();
   };
+  const shortNameOrg = orgMapList
+    .get(orgOid)
+    .replace(/Региональный центр сервиса/, 'РЦС')
+    .replace(/Территориальное управление технической поддержки/, 'ТУТП')
+    .replace(/Отдел поддержки пользователей/, 'ОТП')
+    .replace(/Отдел технической поддержки/, 'ОТП')
 
   return (
     <div className={classes.navbar}>
-      <div>
+      <div className={classes.leftNav}>
         <img src={logo} loading='lazy' alt=""/>
         <div className={`material-icons ${classes.filterIcon}`} onClick={changeShowFilters}>
           filter_alt
         </div>
+        <div className={classes.aboutFilters}>
+          <p>Организация: {shortNameOrg}</p>
+          <p>Период: {periodNameMapList.get(`${periodType}:${period}`)}</p>
+        </div>
       </div>
-      <div>
+      <div className={classes.generalTitle}>
         <h1>Ключевые показатели эффективности</h1>
       </div>
       <div>

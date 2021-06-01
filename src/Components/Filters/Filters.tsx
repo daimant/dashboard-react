@@ -15,20 +15,12 @@ const Filters: React.FC<any> = ({
   const acceptFilters = () => {
     requestWidgetsFromFilters(orgOid, period, periodType);
   };
-
   const requestSetFiltersDefault = () => {
     setFiltersDefault()
   };
 
   return (
     <div className={classes.filters}>
-      {/*// @ts-ignore*/}
-      <div className={classes.aboutFilters}>
-        <p>Выбранная организация:</p>
-        <p>{orgMapList.get(orgOid)}</p>
-        <p>Выбранный период: {periodNameMapList.get(`${periodType}:${period}`)}</p>
-      </div>
-      <p></p>
         <MenuTreeList treeList={orgList}
                       title={'оргструктура'}
                       setter={setOrgOid}
