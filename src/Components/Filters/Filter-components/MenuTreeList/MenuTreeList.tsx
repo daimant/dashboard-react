@@ -22,7 +22,7 @@ const MenuTreeList: React.FC<any> = ({treeList, title, requestWidgetsFromFilters
       overflow: 'auto',
     },
     menu: {
-      margin: '12vh 5vw'
+      margin: '8vh 4vw'
     }
   });
 
@@ -69,7 +69,7 @@ const MenuTreeList: React.FC<any> = ({treeList, title, requestWidgetsFromFilters
         <TreeView
           className={classes.root}
           defaultCollapseIcon={<ExpandMoreIcon/>}
-          defaultExpanded={[treeList.name]}
+          defaultExpanded={title === 'оргструктура' ? [treeList.oid] : ['root']}
           defaultExpandIcon={<ChevronRightIcon/>}
           onNodeSelect={handleSelect}
         >
