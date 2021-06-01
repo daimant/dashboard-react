@@ -21,6 +21,9 @@ const MenuTreeList: React.FC<any> = ({treeList, title, requestWidgetsFromFilters
       width: title === "оргструктура" ? 550 : 200,
       overflow: 'auto',
     },
+    menu: {
+      margin: '12vh 5vw'
+    }
   });
 
   const handleSelect = (event: React.ChangeEvent<{}>, nodeIds: string[]) => {
@@ -56,6 +59,7 @@ const MenuTreeList: React.FC<any> = ({treeList, title, requestWidgetsFromFilters
         {title}
       </Button>
       <Menu
+        className={classes.menu}
         id="simple-menu"
         anchorEl={anchorEl}
         keepMounted
