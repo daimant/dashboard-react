@@ -20,6 +20,7 @@ const SET_ORG_NAME = "SET_ORG_NAME";
 const SET_FILTERS_DEFAULT = "SET_FILTERS_DEFAULT";
 const SET_SHOW_FILTERS = "SET_SHOW_FILTERS";
 
+const tempPeriodNameMapList = new Map();
 const createPeriodTree = (st: Date, end: number) => {
   //получить квартал по номеру месяца (от 0 - янв.)
   const getQuarter = (month: number) => {
@@ -61,6 +62,9 @@ const createPeriodTree = (st: Date, end: number) => {
     // type: "y"
     let ny = createNode(y + ' год', `y:${y}-01`, []);
 
+    // сохраняем год в коллекцию названий периодов
+    tempPeriodNameMapList.set(`y:${y}-01`, `${y} год`);
+
     // для добавления кварталов необходимо понять какой минимальный и максимальный квартал
     let curr_q1 = (d1.getFullYear() === y ? Math.max(1, getQuarter(d1.getMonth())) : 1);
     let curr_q2 = (d2.getFullYear() === y ? Math.min(4, getQuarter(d2.getMonth())) : 4);
@@ -69,6 +73,9 @@ const createPeriodTree = (st: Date, end: number) => {
     for (let q = curr_q1; q <= curr_q2; q++) {
       // type: "q"
       let nq = createNode(q + ' квартал', `q:${y}-0${q}`, []);
+
+      // сохраняем квартал в коллекцию названий периодов
+      tempPeriodNameMapList.set(`q:${y}-0${q}`, `${y} год - ${q} квартал`);
 
       //получаем доступные месяцы для выбранного квартала
       let mm = getMonths(q);
@@ -81,6 +88,9 @@ const createPeriodTree = (st: Date, end: number) => {
       for (let m = curr_m1; m <= curr_m2; m++) {
         // type: "m"
         let nm = createNode(months[m], `m:${y}-${pad((m + 1), 2)}`, []);
+
+        // сохраняем месяц в коллекцию названий периодов
+        tempPeriodNameMapList.set(`m:${y}-${pad((m + 1), 2)}`, `${y} год - ${months[m]}`);
 
         //добавляем месяцы
         nq.children.push(nm);
@@ -99,13 +109,14 @@ const defaultFilters = {
   orgOid: '281586771165316',
   orgName: "ООО ОСК ИнфоТранс",
   period: "2021-03",
-  periodType: "y",
+  periodType: "m",
 };
 
 let initialState = {
   orgList: [],
   currFilters: {}, // переделать
   orgMapList: new Map([['281586771165316', "ООО ОСК ИнфоТранс"]]),
+  periodNameMapList: tempPeriodNameMapList,
   perList: createPeriodTree(new Date(2020, 0, 1), Date.now()),
   isFetchingFilters: true,
   orgOid: localStorage.getItem('orgOid') || defaultFilters.orgOid,
