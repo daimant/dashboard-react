@@ -21,7 +21,6 @@ class WidgetsContainer extends Component<WidgetsStateProps> {
         sc={this.props.sc}
         inf={this.props.inf}
         isFetchingWidgets={this.props.isFetchingWidgets}
-        widgetsTitle={this.props.widgetsTitle}
         heightDisplay={this.props.heightDisplay}
       />
     );
@@ -34,7 +33,6 @@ const mapState = (state: RootState) => ({
   inf: selectInf(state),
   isFetchingWidgets: selectIsFetchingWidgets(state),
   heightDisplay: selectHeightDisplay(state),
-  widgetsTitle: selectOrgName(state),
   orgOid: selectOrgOid(state),
   period: selectPeriod(state),
   periodType: selectPeriodType(state),

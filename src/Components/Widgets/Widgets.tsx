@@ -7,7 +7,9 @@ import {WidgetsGraphElements, WidgetsPropsElements} from "../Common/Types";
 import {Preloader} from "../Common/Preloader/Preloader";
 import CircularBar from "./CircularBar/CircularBar";
 
-const Widgets: React.FC<WidgetsPropsElements> = ({kpk, sc, inf, isFetchingWidgets, heightDisplay}) => {
+const Widgets: React.FC<WidgetsPropsElements> = props => {
+  const {kpk, sc, inf, isFetchingWidgets, heightDisplay} = props;
+
   if (isFetchingWidgets) return <Preloader/>;
 
   return (

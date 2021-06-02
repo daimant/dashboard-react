@@ -27,8 +27,6 @@ class WidgetsContainer extends React.Component<any> {
         periodType={this.props.periodType}
         selectedFilters={this.props.selectedFilters}
         showFilters={this.props.showFilters}
-        orgMapList={this.props.orgMapList}
-        periodNameMapList={this.props.periodNameMapList}
 
         requestWidgetsFromFilters={this.props.requestWidgetsFromFilters}
         setPeriod={this.props.setPeriod}
@@ -51,7 +49,6 @@ const mapState = (state: any) => ({
   periodType: selectPeriodType(state),
   selectedFilters: selectSelectedFilters(state),
   showFilters: selectShowFilters(state),
-
 });
 
 export default connect(mapState, {

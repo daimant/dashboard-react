@@ -5,7 +5,6 @@ export interface WidgetsStateProps {
   sc: WidgetsGraphElements[]
   inf: InfTableElements[]
   isFetchingWidgets: boolean
-  widgetsTitle: string
   heightDisplay: number
   orgOid: string
   period: string
@@ -27,7 +26,6 @@ export interface WidgetsPropsElements {
   sc: WidgetsGraphElements[]
   inf: InfTableElements[]
   isFetchingWidgets: boolean
-  widgetsTitle: string
   heightDisplay: number
 }
 

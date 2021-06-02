@@ -5,11 +5,13 @@ import MenuTreeList from "./Filter-components/MenuTreeList/MenuTreeList";
 import {Button} from "@material-ui/core";
 import {FetchError} from "../Common/FetchError/FetchError";
 
-const Filters: React.FC<any> = ({
-                                  orgList, isFetchingFilters, orgOid, orgName, ktl, val, requestWidgetsFromFilters,
-                                  setPeriod, setOrgOid, perList, period, periodType, selectedFilters, setFiltersDefault,
-                                  showFilters, orgMapList, periodNameMapList
-                                }) => {
+const Filters: React.FC<any> = props => {
+  const {
+    orgList, isFetchingFilters, orgOid, orgName, ktl, val, requestWidgetsFromFilters,
+    setPeriod, setOrgOid, perList, period, periodType, selectedFilters, setFiltersDefault,
+    showFilters
+  } = props;
+
   if (!showFilters) return <></>;
   if (isFetchingFilters) return <Preloader/>;
 
