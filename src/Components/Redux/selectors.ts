@@ -69,7 +69,8 @@ export const selectIsFetchingWidgets = (state: any) => state.widgets.isFetchingW
 //filters
 export const selectOrgList = (state: any) => {
   const currOrgList: { name: string, oid: string, parent: string }[] = state.filters.orgList;
-  if (!currOrgList[0]) return currOrgList;
+  // @ts-ignore
+  if (!currOrgList[0] || currOrgList[0].oid !== 281586771165316) return currOrgList;
   // @ts-ignore
   if (currOrgList.children && currOrgList.children.length) {
     // @ts-ignore

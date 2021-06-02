@@ -1,8 +1,9 @@
 import React from "react";
 import classes from "./Filters.module.scss";
-import {Preloader} from "../Common/Preloader";
+import {Preloader} from "../Common/Preloader/Preloader";
 import MenuTreeList from "./Filter-components/MenuTreeList/MenuTreeList";
 import {Button} from "@material-ui/core";
+import {FetchError} from "../Common/FetchError/FetchError";
 
 const Filters: React.FC<any> = ({
                                   orgList, isFetchingFilters, orgOid, orgName, ktl, val, requestWidgetsFromFilters,
@@ -11,30 +12,31 @@ const Filters: React.FC<any> = ({
                                 }) => {
   if (!showFilters) return <></>;
   if (isFetchingFilters) return <Preloader/>;
+  if (!orgList.oid) return <FetchError/>;
 
   const acceptFilters = () => {
     requestWidgetsFromFilters(orgOid, period, periodType);
   };
   const requestSetFiltersDefault = () => {
-    setFiltersDefault()
+    setFiltersDefault();
   };
 
   return (
     <div className={classes.filters}>
-        <MenuTreeList treeList={orgList}
-                      title={'оргструктура'}
-                      setter={setOrgOid}
-                      period={period}
-                      periodType={periodType}
-        />
-        <MenuTreeList treeList={perList}
-                      title={'период'}
-                      setter={setPeriod}
-                      period={period}
-                      periodType={periodType}
-        />
-        <Button onClick={requestSetFiltersDefault}>сбросить фильтры</Button>
-        <Button onClick={acceptFilters}>применить</Button>
+      <MenuTreeList treeList={orgList}
+                    title={'оргструктура'}
+                    setter={setOrgOid}
+                    period={period}
+                    periodType={periodType}
+      />
+      <MenuTreeList treeList={perList}
+                    title={'период'}
+                    setter={setPeriod}
+                    period={period}
+                    periodType={periodType}
+      />
+      <Button onClick={requestSetFiltersDefault}>сбросить фильтры</Button>
+      <Button onClick={acceptFilters}>применить</Button>
     </div>
   )
 };
