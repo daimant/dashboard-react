@@ -113,7 +113,8 @@ const defaultFilters = {
 };
 
 let initialState = {
-  orgList: [],
+  orgList: {},
+  altOrgList: {},
   currFilters: {}, // переделать
   orgMapList: new Map([['281586771165316', "ООО ОСК ИнфоТранс"]]),
   periodNameMapList: tempPeriodNameMapList,

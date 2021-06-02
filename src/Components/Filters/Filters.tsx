@@ -7,7 +7,7 @@ import {FetchError} from "../Common/FetchError/FetchError";
 
 const Filters: React.FC<any> = props => {
   const {
-    orgList, isFetchingFilters, orgOid, orgName, ktl, val, requestWidgetsFromFilters,
+    orgList, altOrgList, isFetchingFilters, orgOid, orgName, ktl, val, requestWidgetsFromFilters,
     setPeriod, setOrgOid, perList, period, periodType, selectedFilters, setFiltersDefault,
     showFilters
   } = props;
@@ -27,6 +27,7 @@ const Filters: React.FC<any> = props => {
       {(!orgList || !orgList.oid)
         ? <FetchError/>
         : <><MenuTreeList treeList={orgList}
+                          altTreeList={altOrgList}
                           title={'оргструктура'}
                           setter={setOrgOid}
                           period={period}

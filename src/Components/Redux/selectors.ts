@@ -68,15 +68,12 @@ export const selectIsFetchingWidgets = (state: any) => state.widgets.isFetchingW
 
 //filters
 export const selectOrgList = (state: any) => {
-  const currOrgList: { name: string, oid: string, parent: string }[] = state.filters.orgList;
-  // @ts-ignore
+  const currOrgList: any = state.filters.orgList;
   if (!currOrgList || !currOrgList[0] || currOrgList && currOrgList[0].oid !== 281586771165316) return currOrgList;
-  // @ts-ignore
   if (currOrgList.children && currOrgList.children.length) {
-    // @ts-ignore
     return currOrgList;
   }
-  const orgPosition = new Map(currOrgList.map((el, i) => [el['oid'], i]));
+  const orgPosition = new Map(currOrgList.map((el: any, i: any) => [el['oid'], i]));
 
   for (let i = currOrgList.length - 1; i > 0; i--) {
     state.filters.orgMapList.set(currOrgList[i].oid + '', currOrgList[i].name);
@@ -88,12 +85,24 @@ export const selectOrgList = (state: any) => {
   }
 
   for (let org of currOrgList) {
-    // @ts-ignore
     org.oid += '';
-    // @ts-ignore
     org.parent += '';
   }
-  // @ts-ignore
+
+  const altOrgList = JSON.parse(JSON.stringify(currOrgList[0]));
+  const removeOrgWithoutDoZNO = (orgs: any) => {
+    if (!orgs.children.length) return;
+
+    for (let i = orgs.children.length - 1; i >= 0; i--) {
+      if (!orgs.children[i].do_ZNO)
+        orgs.children.splice(i, 1);
+      if (orgs.children[i].children)
+        removeOrgWithoutDoZNO(orgs.children[i]);
+    }
+  };
+  removeOrgWithoutDoZNO(altOrgList);
+
+  state.filters.altOrgList = altOrgList;
   state.filters.orgList = currOrgList[0];
   return currOrgList[0];
 };
@@ -110,6 +119,7 @@ export const selectSelectedFilters = (state: any) => state.filters.selectedFilte
 export const selectShowFilters = (state: any) => state.filters.showFilters;
 export const selectOrgMapList = (state: any) => state.filters.orgMapList;
 export const selectPeriodNameMapList = (state: any) => state.filters.periodNameMapList;
+export const selectAltOrgList = (state: any) => state.filters.altOrgList;
 
 // filters-reducer
 export const selectNameOrg = (state: any, oid: string) => state.orgMapList.get(oid);

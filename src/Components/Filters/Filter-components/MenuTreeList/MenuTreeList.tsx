@@ -7,11 +7,15 @@ import TreeItem from '@material-ui/lab/TreeItem';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import {RenderTree} from "../../../Common/Types";
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 
-const MenuTreeList: React.FC<any> = ({treeList, title, requestWidgetsFromFilters, setter, period, periodType}) => {
+const MenuTreeList: React.FC<any> = props => {
+  const {treeList, title, requestWidgetsFromFilters, setter, period, periodType, altTreeList = {}} = props;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selected, setSelected] = React.useState<string[]>([]);
+  const [checked, setChecked] = React.useState(false);
 
   const useStyles = makeStyles({
     root: {
@@ -25,6 +29,10 @@ const MenuTreeList: React.FC<any> = ({treeList, title, requestWidgetsFromFilters
       margin: '8vh 4vw'
     }
   });
+
+  const toggleChecked = () => {
+    setChecked((prev) => !prev);
+  };
 
   const handleSelect = (event: React.ChangeEvent<{}>, nodeIds: string[]) => {
     setSelected(nodeIds);
@@ -66,6 +74,13 @@ const MenuTreeList: React.FC<any> = ({treeList, title, requestWidgetsFromFilters
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
+        {title === 'оргструктура' &&
+        <FormControlLabel
+            control={<Switch size="medium" checked={checked} onChange={toggleChecked} color="default"
+            />}
+            labelPlacement="start"
+            label={`Организация выполняет ЗНО - Да/Не важно`}
+        />}
         <TreeView
           className={classes.root}
           defaultCollapseIcon={<ExpandMoreIcon/>}
@@ -73,7 +88,7 @@ const MenuTreeList: React.FC<any> = ({treeList, title, requestWidgetsFromFilters
           defaultExpandIcon={<ChevronRightIcon/>}
           onNodeSelect={handleSelect}
         >
-          {renderTree(treeList)}
+          {!checked ? renderTree(treeList) : renderTree(altTreeList)}
         </TreeView>
       </Menu>
 
