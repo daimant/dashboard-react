@@ -12,7 +12,7 @@ const Filters: React.FC<any> = ({
                                 }) => {
   if (!showFilters) return <></>;
   if (isFetchingFilters) return <Preloader/>;
-  if (!orgList.oid) return <FetchError/>;
+  if (!orgList || !orgList.oid) return <FetchError/>;
 
   const acceptFilters = () => {
     requestWidgetsFromFilters(orgOid, period, periodType);
