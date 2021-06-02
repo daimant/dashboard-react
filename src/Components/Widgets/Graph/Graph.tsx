@@ -17,7 +17,7 @@ const Graph: React.FC<GraphProps> = ({sc, heightDisplay}) => {
             top: 0,
             right: 30,
             left: heightDisplay < 700 ? -30 : heightDisplay > 700 && heightDisplay < 1000 ? -20 : -15,
-            bottom: heightDisplay < 700 ? 20 : heightDisplay > 700 && heightDisplay < 1000 ? 30 : 55,
+            bottom: heightDisplay < 700 ? 20 : heightDisplay > 700 && heightDisplay < 1000 ? 45 : 55,
           }}
         >
           <CartesianGrid strokeDasharray="3 3"/>

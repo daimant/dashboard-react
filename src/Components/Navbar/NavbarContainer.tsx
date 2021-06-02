@@ -2,11 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import Navbar from "./Navbar";
 import {
-  selectIsFetchingFilters,
-  selectOrgMapList, selectOrgOid,
-  selectPeriod,
-  selectPeriodNameMapList,
-  selectPeriodType,
+  selectIsFetchingFilters, selectOrgMapList, selectOrgOid, selectPeriod, selectPeriodNameMapList, selectPeriodType,
   selectShowFilters
 } from "../Redux/selectors";
 import {setShowFilters} from "../Redux/filters-reducer";

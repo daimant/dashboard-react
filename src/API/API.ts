@@ -50,7 +50,7 @@ export const widgetsAPI = {
 export const filtersAPI = {
   getOrg: () => {
     return instance
-    // .get('/sprav/org_all/281586771165316') // prod mode
+    // .get('/sprav/org_all') // prod mode
       .get('sprav_org_all_281586771165316')
       .then((response: AxiosResponse) => response.data);
   }

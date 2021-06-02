@@ -22,8 +22,6 @@ const Navbar: React.FC<any> = ({
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-  if (isFetchingFilters) return <Preloader/>;
-
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -34,13 +32,13 @@ const Navbar: React.FC<any> = ({
     setShowFilters();
   };
   const shortNameOrg = orgMapList.get(orgOid)
-  ? orgMapList
-    .get(orgOid)
-    .replace(/Региональный центр сервиса/, 'РЦС')
-    .replace(/Территориальное управление технической поддержки/, 'ТУТП')
-    .replace(/Отдел поддержки пользователей/, 'ОТП')
-    .replace(/Отдел технической поддержки/, 'ОТП')
-  : localStorage.getItem('orgName');
+    ? orgMapList
+      .get(orgOid)
+      .replace(/Региональный центр сервиса/, 'РЦС')
+      .replace(/Территориальное управление технической поддержки/, 'ТУТП')
+      .replace(/Отдел поддержки пользователей/, 'ОТП')
+      .replace(/Отдел технической поддержки/, 'ОТП')
+    : localStorage.getItem('orgName');
 
   return (
     <div className={classes.navbar}>
@@ -49,10 +47,12 @@ const Navbar: React.FC<any> = ({
         <div className={`material-icons ${classes.filterIcon}`} onClick={changeShowFilters}>
           filter_alt
         </div>
-        <div className={classes.aboutFilters}>
+        {isFetchingFilters
+          ? <Preloader/>
+          : <div className={classes.aboutFilters}>
           <p>Организация: {shortNameOrg}</p>
           <p>Период: {periodNameMapList.get(`${periodType}:${period}`)}</p>
-        </div>
+        </div>}
       </div>
       <div className={classes.generalTitle}>
         <h1>Ключевые показатели эффективности</h1>

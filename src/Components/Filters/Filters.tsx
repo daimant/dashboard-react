@@ -24,19 +24,18 @@ const Filters: React.FC<any> = ({
     <div className={classes.filters}>
       {(!orgList || !orgList.oid)
         ? <FetchError/>
-        :
-        <><MenuTreeList treeList={orgList}
-                    title={'оргструктура'}
-                    setter={setOrgOid}
-                    period={period}
-                    periodType={periodType}
-      />
-      <MenuTreeList treeList={perList}
-                    title={'период'}
-                    setter={setPeriod}
-                    period={period}
-                    periodType={periodType}
-        /></>
+        : <><MenuTreeList treeList={orgList}
+                          title={'оргструктура'}
+                          setter={setOrgOid}
+                          period={period}
+                          periodType={periodType}
+        />
+          <MenuTreeList treeList={perList}
+                        title={'период'}
+                        setter={setPeriod}
+                        period={period}
+                        periodType={periodType}
+          /></>
       }
       <Button onClick={requestSetFiltersDefault}>сбросить фильтры</Button>
       <Button onClick={acceptFilters}>применить</Button>
