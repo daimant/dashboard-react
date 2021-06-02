@@ -33,12 +33,14 @@ const Navbar: React.FC<any> = ({
   const changeShowFilters = () => {
     setShowFilters();
   };
-  const shortNameOrg = orgMapList
+  const shortNameOrg = orgMapList.get(orgOid)
+  ? orgMapList
     .get(orgOid)
     .replace(/Региональный центр сервиса/, 'РЦС')
     .replace(/Территориальное управление технической поддержки/, 'ТУТП')
     .replace(/Отдел поддержки пользователей/, 'ОТП')
     .replace(/Отдел технической поддержки/, 'ОТП')
+  : localStorage.getItem('orgName');
 
   return (
     <div className={classes.navbar}>

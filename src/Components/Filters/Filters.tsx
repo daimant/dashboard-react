@@ -12,7 +12,6 @@ const Filters: React.FC<any> = ({
                                 }) => {
   if (!showFilters) return <></>;
   if (isFetchingFilters) return <Preloader/>;
-  if (!orgList || !orgList.oid) return <FetchError/>;
 
   const acceptFilters = () => {
     requestWidgetsFromFilters(orgOid, period, periodType);
@@ -23,7 +22,10 @@ const Filters: React.FC<any> = ({
 
   return (
     <div className={classes.filters}>
-      <MenuTreeList treeList={orgList}
+      {(!orgList || !orgList.oid)
+        ? <FetchError/>
+        :
+        <><MenuTreeList treeList={orgList}
                     title={'оргструктура'}
                     setter={setOrgOid}
                     period={period}
@@ -34,7 +36,8 @@ const Filters: React.FC<any> = ({
                     setter={setPeriod}
                     period={period}
                     periodType={periodType}
-      />
+        /></>
+      }
       <Button onClick={requestSetFiltersDefault}>сбросить фильтры</Button>
       <Button onClick={acceptFilters}>применить</Button>
     </div>
