@@ -26,7 +26,7 @@ const MenuTreeList: React.FC<any> = props => {
       overflow: 'auto',
     },
     menu: {
-      margin: '8vh 4vw'
+      margin: `${title === 'оргструктура' ? '4vh' : '9vh'} ${title === 'оргструктура' ? '6vw' : '4vw'}`,
     }
   });
 
