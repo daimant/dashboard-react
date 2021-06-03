@@ -90,17 +90,11 @@ export const selectOrgList = (state: any) => {
   }
 
   const altOrgList = JSON.parse(JSON.stringify(currOrgList[0]));
-  const removeOrgWithoutDoZNO = (orgs: any) => {
-    if (!orgs.children.length) return;
 
-    for (let i = orgs.children.length - 1; i >= 0; i--) {
-      if (!orgs.children[i].do_ZNO)
-        orgs.children.splice(i, 1);
-      if (orgs.children[i] && orgs.children[i].children)
-        removeOrgWithoutDoZNO(orgs.children[i]);
-    }
-  };
-  removeOrgWithoutDoZNO(altOrgList);
+  for (let i = altOrgList.children.length - 1; altOrgList.name && i >= 0; i--) {
+    if (!altOrgList.children[i].do_ZNO)
+      altOrgList.children.splice(i, 1);
+  }
 
   state.filters.altOrgList = altOrgList;
   state.filters.orgList = currOrgList[0];
