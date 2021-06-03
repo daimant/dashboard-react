@@ -92,7 +92,7 @@ export const selectOrgList = (state: any) => {
   const altOrgList = JSON.parse(JSON.stringify(currOrgList[0]));
 
   for (let i = altOrgList.children.length - 1; altOrgList.name && i >= 0; i--) {
-    if (!altOrgList.children[i].do_ZNO)
+    if (!altOrgList.children[i].zno)
       altOrgList.children.splice(i, 1);
   }
 
