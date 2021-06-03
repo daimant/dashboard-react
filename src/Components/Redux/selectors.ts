@@ -96,7 +96,7 @@ export const selectOrgList = (state: any) => {
     for (let i = orgs.children.length - 1; i >= 0; i--) {
       if (!orgs.children[i].do_ZNO)
         orgs.children.splice(i, 1);
-      if (orgs.children[i].children)
+      if (orgs.children[i] && orgs.children[i].children)
         removeOrgWithoutDoZNO(orgs.children[i]);
     }
   };
