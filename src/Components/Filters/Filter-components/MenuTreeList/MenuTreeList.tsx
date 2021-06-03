@@ -79,7 +79,7 @@ const MenuTreeList: React.FC<any> = props => {
             control={<Switch size="medium" checked={checked} onChange={toggleChecked} color="default"
             />}
             labelPlacement="start"
-            label={`Организация выполняет ЗНО - Да/Не важно`}
+            label={`Организация выполняет ЗНО - Не важно/Да`}
         />}
         <TreeView
           className={classes.root}
