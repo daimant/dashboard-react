@@ -16,6 +16,7 @@ const SET_IS_FETCHING_WIDGETS_ENDED = "SET_IS_FETCHING_WIDGETS_ENDED";
 
 let initialState: object = {
   kpk: {},
+  kpkParent:{},
   sc: [],
   inf: [
     [
@@ -76,12 +77,11 @@ export const setSC = (sc: object[]) => ({type: SET_SC, sc});
 export const setIsFetchingWidgetsStarted = () => ({type: SET_IS_FETCHING_WIDGETS_STARTED});
 export const setIsFetchingWidgetsEnded = () => ({type: SET_IS_FETCHING_WIDGETS_ENDED});
 
-export const requestWidgets = (oid: string, period: string, periodType: string, numSC: number[] = [1,2,3]) => async (dispatch: any) => {
-  dispatch(setIsFetchingWidgetsStarted());
-
+export const requestKPK = (oid: string, period: string, periodType: string) => async (dispatch: any) => {
   const responseKPK = await widgetsAPI.getKPK(oid, period, periodType);
   dispatch(setKPK(responseKPK));
-
+};
+export const requestSC = (oid: string, period: string, periodType: string, numSC: number[]) => async (dispatch: any) => {
   const responseSC = [];
 
   if (numSC[0]) responseSC.push(await widgetsAPI.getSC(oid, period, periodType, numSC[0]));
@@ -89,7 +89,12 @@ export const requestWidgets = (oid: string, period: string, periodType: string, 
   if (numSC[2]) responseSC.push(await widgetsAPI.getSC(oid, period, periodType, numSC[2]));
 
   dispatch(setSC(responseSC));
+};
 
+export const requestWidgets = (oid: string, period: string, periodType: string, numSC: number[] = [1,2,3]) => async (dispatch: any) => {
+  dispatch(setIsFetchingWidgetsStarted());
+  await dispatch(requestKPK(oid, period, periodType));
+  await dispatch(requestSC(oid, period, periodType, numSC));
   dispatch(setIsFetchingWidgetsEnded());
 };
 
