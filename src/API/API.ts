@@ -38,7 +38,8 @@ export const widgetsAPI = {
       //   },
       //   "val": "percent",
       // })
-      .then((response: AxiosResponse) => response.data);
+      .then((response: AxiosResponse) => response.data)
+      .catch(() => ({title: 'Ошибка при загрузке...', data: []}))
   },
   getINF:
     () => {

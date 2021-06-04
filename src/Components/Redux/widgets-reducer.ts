@@ -77,7 +77,7 @@ export const setSC = (sc: object[]) => ({type: SET_SC, sc});
 export const setIsFetchingWidgetsStarted = () => ({type: SET_IS_FETCHING_WIDGETS_STARTED});
 export const setIsFetchingWidgetsEnded = () => ({type: SET_IS_FETCHING_WIDGETS_ENDED});
 
-export const requestWidgets = (oid: string, period: string, periodType: string, numSC: number[] = []) => async (dispatch: any) => {
+export const requestWidgets = (oid: string, period: string, periodType: string, numSC: number[] = [1,2,3]) => async (dispatch: any) => {
   dispatch(setIsFetchingWidgetsStarted());
 
   const responseKPK = await widgetsAPI.getKPK(oid, period, periodType);
