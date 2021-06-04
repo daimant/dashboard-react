@@ -3,9 +3,8 @@ import {connect} from "react-redux";
 import Filters from "./Filters";
 import {requestOrg, requestWidgetsFromFilters, setFiltersDefault, setOrgOid, setPeriod} from "../Redux/filters-reducer";
 import {
-  selectAltOrgList,
-  selectIsFetchingFilters, selectKTL, selectOrgList, selectOrgMapList, selectOrgName, selectOrgOid, selectPeriod,
-  selectPeriodNameMapList, selectPeriodType, selectPerList, selectSelectedFilters, selectShowFilters, selectVal
+  selectIsFetchingFilters, selectKTL, selectOrgList, selectOrgName, selectOrgOid, selectPeriod, selectPeriodType,
+  selectPerList, selectSelectedFilters, selectShowFilters, selectVal, selectAltOrgList
 } from "../Redux/selectors";
 
 class WidgetsContainer extends React.Component<any> {

@@ -2,15 +2,14 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {requestWidgets} from "../Redux/widgets-reducer";
 import {
-  selectHeightDisplay, selectInf, selectIsFetchingWidgets, selectKPK, selectOrgName, selectOrgOid, selectPeriod,
+  selectHeightDisplay, selectInf, selectIsFetchingWidgets, selectKPK, selectOrgOid, selectPeriod,
   selectPeriodType, selectSC
 } from "../Redux/selectors";
 import Widgets from "./Widgets";
 import {WidgetsStateProps, RootState} from "../Common/Types";
 
-class WidgetsContainer extends Component<WidgetsStateProps> {
+class WidgetsContainer extends Component<any> {
   componentDidMount() {
-    // @ts-ignore
     this.props.requestWidgets(this.props.orgOid, this.props.period, this.props.periodType);
   }
 

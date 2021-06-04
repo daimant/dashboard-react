@@ -2,13 +2,13 @@ import React from "react";
 import classes from "./Widgets.module.scss";
 import KPKTable from "./KPKTable/KPKTable";
 import Graph from "./Graph/Graph";
-import InfTable from "./InfTable/InfTable";
+// import InfTable from "./InfTable/InfTable";
 import {WidgetsGraphElements, WidgetsPropsElements} from "../Common/Types";
 import {Preloader} from "../Common/Preloader/Preloader";
 import CircularBar from "./CircularBar/CircularBar";
 
 const Widgets: React.FC<WidgetsPropsElements> = props => {
-  const {kpk, sc, inf, isFetchingWidgets, heightDisplay} = props;
+  const {kpk, sc /*inf*/, isFetchingWidgets, heightDisplay} = props;
 
   if (isFetchingWidgets) return <Preloader/>;
 

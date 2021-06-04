@@ -5,7 +5,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
-import SettingsIcon from '@material-ui/icons/Settings';
 import {Preloader} from "../Common/Preloader/Preloader";
 
 const options = [

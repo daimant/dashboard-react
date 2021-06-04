@@ -1,5 +1,4 @@
 import {widgetsAPI} from "../../API/API";
-import {AxiosResponse} from "axios";
 
 interface TypeActionWidgets {
   type: string

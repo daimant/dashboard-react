@@ -2,11 +2,10 @@ import React from "react";
 import classes from "./Graph.module.scss";
 import {LineChart, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, Line} from 'recharts';
 import {GraphProps} from "../../Common/Types";
-import WidgetsTitle from "../WidgetsTitle/WidgetsTitle";
 
 const Graph: React.FC<GraphProps> = ({sc, heightDisplay}) => {
   const {title, data, max, min} = sc;
-console.log(data)
+
   return (
     <div className={classes.graphs}>
       <p className={classes.title}>{title}</p>
@@ -16,7 +15,7 @@ console.log(data)
           margin={{
             top: 0,
             right: 30,
-            left: heightDisplay < 700 ? -30 : heightDisplay > 700 && heightDisplay < 1000 ? -20 : -15,
+            left: heightDisplay < 700 ? -30 : heightDisplay > 700 && heightDisplay < 1000 ? -20 : 5,
             bottom: heightDisplay < 700 ? 20 : heightDisplay > 700 && heightDisplay < 1000 ? 45 : 55,
           }}
         >

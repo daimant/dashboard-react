@@ -7,8 +7,8 @@ import {FetchError} from "../Common/FetchError/FetchError";
 
 const Filters: React.FC<any> = props => {
   const {
-    orgList, altOrgList, isFetchingFilters, orgOid, orgName, ktl, val, requestWidgetsFromFilters,
-    setPeriod, setOrgOid, perList, period, periodType, selectedFilters, setFiltersDefault,
+    orgList, altOrgList, isFetchingFilters, orgOid, /*orgName, ktl, val,*/ requestWidgetsFromFilters,
+    setPeriod, setOrgOid, perList, period, periodType, /*selectedFilters,*/ setFiltersDefault,
     showFilters
   } = props;
 

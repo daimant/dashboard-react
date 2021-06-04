@@ -1,3 +1,4 @@
+"sloppy mode";
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
@@ -12,7 +13,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 
 const MenuTreeList: React.FC<any> = props => {
-  const {treeList, title, requestWidgetsFromFilters, setter, period, periodType, altTreeList = {}} = props;
+  const {treeList, title, /*requestWidgetsFromFilters, period, periodType,*/ setter, altTreeList = {}} = props;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selected, setSelected] = React.useState<string[]>([]);
   const [checked, setChecked] = React.useState(false);

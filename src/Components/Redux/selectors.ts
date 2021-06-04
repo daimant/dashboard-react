@@ -1,4 +1,4 @@
-import {RootState} from "../Common/Types";
+// import {RootState} from "../Common/Types";
 
 //widgets
 export const selectKPK = (state: any) => {
@@ -69,7 +69,7 @@ export const selectIsFetchingWidgets = (state: any) => state.widgets.isFetchingW
 //filters
 export const selectOrgList = (state: any) => {
   const currOrgList: any = state.filters.orgList;
-  if (!currOrgList || !currOrgList[0] || currOrgList && currOrgList[0].oid !== 281586771165316) return currOrgList;
+  if (!currOrgList || !currOrgList[0] || currOrgList[0]?.oid !== 281586771165316) return currOrgList;
   if (currOrgList.children && currOrgList.children.length) {
     return currOrgList;
   }
