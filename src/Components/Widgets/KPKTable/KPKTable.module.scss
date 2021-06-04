@@ -19,10 +19,18 @@
     box-shadow: none;
     box-sizing: content-box;
     height: 100%;
-  //overflow: 'hidden';
   }
+}
+
+.tableHead {
+  display: flex;
+  align-items: center;
 }
 
 .tableContainer::-webkit-scrollbar {
   width: 0;
+}
+
+.clickableRow {
+  cursor: pointer;
 }

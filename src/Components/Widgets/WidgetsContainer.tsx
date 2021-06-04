@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {requestWidgets} from "../Redux/widgets-reducer";
+import {requestKPKChild, removeKPKChild, requestWidgets} from "../Redux/widgets-reducer";
 import {
   selectHeightDisplay, selectInf, selectIsFetchingWidgets, selectKPK, selectOrgOid, selectPeriod,
   selectPeriodType, selectSC
@@ -21,6 +21,12 @@ class WidgetsContainer extends Component<any> {
         inf={this.props.inf}
         isFetchingWidgets={this.props.isFetchingWidgets}
         heightDisplay={this.props.heightDisplay}
+        orgOid={this.props.orgOid}
+        period={this.props.period}
+        periodType={this.props.periodType}
+
+        requestKPKChild={this.props.requestKPKChild}
+        removeKPKChild={this.props.removeKPKChild}
       />
     );
   }
@@ -38,4 +44,8 @@ const mapState = (state: RootState) => ({
 });
 
 // @ts-ignore
-export default connect<WidgetsStateProps, {}, {}>(mapState, {requestWidgets})(WidgetsContainer);
+export default connect<WidgetsStateProps, {}, {}>(mapState, {
+  requestWidgets,
+  requestKPKChild,
+  removeKPKChild
+})(WidgetsContainer);

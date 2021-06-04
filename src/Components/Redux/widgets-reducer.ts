@@ -6,17 +6,20 @@ interface TypeActionWidgets {
     data: object,
     name_col: object
   }
-  sc: object[];
+  kpkParent: {}
+  sc: object[]
 }
 
 const SET_KPK = "SET_KPK";
+const SET_KPK_PARENT = "SET_KPK_PARENT";
 const SET_SC = "SET_SC";
 const SET_IS_FETCHING_WIDGETS_STARTED = "SET_IS_FETCHING_WIDGETS_STARTED";
 const SET_IS_FETCHING_WIDGETS_ENDED = "SET_IS_FETCHING_WIDGETS_ENDED";
+const REMOVE_KPK_CHILD = 'REMOVE_KPK_CHILD';
 
 let initialState: object = {
   kpk: {},
-  kpkParent:{},
+  kpkParent: {},
   sc: [],
   inf: [
     [
@@ -58,6 +61,9 @@ const widgetsReducer = (state = initialState, action: TypeActionWidgets) => {
       const kpk = {data: action.kpk.data, nameCol: action.kpk.name_col};
       return {...state, kpk};
 
+    case SET_KPK_PARENT:
+      return {...state, kpkParent: action.kpkParent};
+
     case SET_SC:
       return action.sc.length ? {...state, sc: action.sc} : state;
 
@@ -67,18 +73,23 @@ const widgetsReducer = (state = initialState, action: TypeActionWidgets) => {
     case SET_IS_FETCHING_WIDGETS_ENDED:
       return {...state, isFetchingWidgets: false};
 
+    case REMOVE_KPK_CHILD:
+      return{...state, kpk: action.kpkParent, kpkParent: {}};
+
     default:
       return state;
   }
 };
 
 export const setKPK = (kpk: any) => ({type: SET_KPK, kpk});
+export const setKPKParent = (kpkParent: any) => ({type: SET_KPK_PARENT, kpkParent});
 export const setSC = (sc: object[]) => ({type: SET_SC, sc});
 export const setIsFetchingWidgetsStarted = () => ({type: SET_IS_FETCHING_WIDGETS_STARTED});
 export const setIsFetchingWidgetsEnded = () => ({type: SET_IS_FETCHING_WIDGETS_ENDED});
+export const removeKPKChild = () => ({type: REMOVE_KPK_CHILD});
 
-export const requestKPK = (oid: string, period: string, periodType: string) => async (dispatch: any) => {
-  const responseKPK = await widgetsAPI.getKPK(oid, period, periodType);
+export const requestKPK = (oid: string, period: string, periodType: string, serviceOid = 0) => async (dispatch: any) => {
+  const responseKPK = await widgetsAPI.getKPK(oid, period, periodType, serviceOid);
   dispatch(setKPK(responseKPK));
 };
 export const requestSC = (oid: string, period: string, periodType: string, numSC: number[]) => async (dispatch: any) => {
@@ -90,12 +101,17 @@ export const requestSC = (oid: string, period: string, periodType: string, numSC
 
   dispatch(setSC(responseSC));
 };
-
-export const requestWidgets = (oid: string, period: string, periodType: string, numSC: number[] = [1,2,3]) => async (dispatch: any) => {
+export const requestWidgets = (oid: string, period: string, periodType: string, numSC: number[] = [1, 2, 3]) => async (dispatch: any) => {
   dispatch(setIsFetchingWidgetsStarted());
   await dispatch(requestKPK(oid, period, periodType));
   await dispatch(requestSC(oid, period, periodType, numSC));
   dispatch(setIsFetchingWidgetsEnded());
+};
+export const requestKPKChild = (oid: string, period: string, periodType: string, serviceOid: number, kpkParent: object) => async (dispatch: any) => {
+  await dispatch(requestKPK(oid, period, periodType, serviceOid));
+  dispatch(setKPKParent(kpkParent));
+  console.log('widget-reducer setKPKParent', oid, period, periodType, serviceOid)
+  // setKPKParent(kpkParent); //clear kpkParent dont forget
 };
 
 export default widgetsReducer;

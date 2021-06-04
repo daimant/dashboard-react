@@ -8,12 +8,12 @@ const instance = axios.create({
 });
 
 export const widgetsAPI = {
-  getKPK: (oid: string, period: string, period_type: string) => {
+  getKPK: (oid: string, period: string, period_type: string, serviceOid: number) => {
     return instance
       .get(`kpk`)
       // .post(`kpk`, { // prod mode
       //   "org_oid": +oid,
-      //   "srv_oid" : 0, // в графиках не надо
+      //   "srv_oid" : serviceOid,
       //   "period": period,
       //   "period_type": period_type,
       //   "ktl": {
@@ -29,7 +29,6 @@ export const widgetsAPI = {
       .get(`sc/${num}`)
       // .post(`sc/${num}`, { // prod mode
       //   "org_oid": +oid,
-      //   "srv_oid" : 0, // в графиках не надо
       //   "period": period,
       //   "period_type": period_type,
       //   "ktl": {
