@@ -21,8 +21,8 @@ const Widgets: React.FC<any> = props => {
                 orgOid={orgOid} period={period} periodType={periodType} cols={kpkChild.data ? kpkChild.cols : kpk.cols}
                 rows={kpkChild.data ? kpkChild.data : kpk.data}/>
       <div className={classes.graphs}>
-        {todays.map((el: { title: string, v1: number, p: number }, i: number) =>
-          <CircularBar title={el.title} today={el.v1} diff={el.p} key={i}/>
+        {todays.map((el: { title: string, v1: number, p: number, err: boolean}, i: number) =>
+          <CircularBar title={el.title} today={el.v1} diff={el.p} key={i} err={el.err}/>
         )}
       </div>
       <div className={classes.graphs}>
