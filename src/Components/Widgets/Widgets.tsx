@@ -8,19 +8,21 @@ import {Preloader} from "../Common/Preloader/Preloader";
 import CircularBar from "./CircularBar/CircularBar";
 
 const Widgets: React.FC<any> = props => {
-  const {kpk, sc /*inf*/, isFetchingWidgets, heightDisplay, requestKPKChild, removeKPKChild, orgOid, period, periodType, kpkChild} = props;
+  const {
+    kpk, sc /*inf*/, isFetchingWidgets, heightDisplay, requestKPKChild, removeKPKChild, orgOid, period, periodType,
+    kpkChild, todays
+  } = props;
 
   if (isFetchingWidgets) return <Preloader/>;
 
   return (
     <main>
       <KPKTable kpk={kpkChild.data ? kpkChild : kpk} requestKPKChild={requestKPKChild} removeKPKChild={removeKPKChild}
-                orgOid={orgOid} period={period} periodType={periodType}
-                cols={kpkChild.data ? kpkChild.cols : kpk.cols}
+                orgOid={orgOid} period={period} periodType={periodType} cols={kpkChild.data ? kpkChild.cols : kpk.cols}
                 rows={kpkChild.data ? kpkChild.data : kpk.data}/>
       <div className={classes.graphs}>
-        {[['97%', '+5'], ['23%', '-50'], ['90%', '+0.5']].map((el, i) =>
-          <CircularBar today={el[0]} diff={el[1]} key={i}/>
+        {todays.map((el: { title: string, v1: number, p: number }, i: number) =>
+          <CircularBar title={el.title} today={el.v1} diff={el.p} key={i}/>
         )}
       </div>
       <div className={classes.graphs}>

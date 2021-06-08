@@ -45,6 +45,15 @@ export const selectSC = (state: any) => {
 
   return state.widgets.sc
 };
+export const selectTodays = (state: any) => {
+  if (!state.widgets.todays.length) return [];
+
+  for (let i in state.widgets.todays) {
+    if (state.widgets.todays[i]['p'] <= 1)
+      state.widgets.todays[i]['p'] = +(state.widgets.todays[i]['p'] * 100).toFixed(1);
+  }
+  return state.widgets.todays
+};
 export const selectInf = (state: any) => {
   const {inf} = state.widgets;
   const parsedInf: object[] = [];
