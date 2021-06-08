@@ -37,17 +37,10 @@ export const selectSC = (state: any) => {
   if (!state.widgets.sc) return {};
 
   for (let point of state.widgets.sc) {
-    let min = Infinity;
-    let max = -Infinity;
-
-    for (let {v} of point.data) {
-      if (v > max)
-        max = v;
-      if (v < min)
-        min = v;
+    for (let i in point.data) {
+      if (point.data[i]['p'] < 1)
+        point.data[i]['p'] = +(point.data[i]['p'] * 100).toFixed(1);
     }
-    point.max = max;
-    point.min = min;
   }
 
   return state.widgets.sc

@@ -42,16 +42,16 @@ const Graph: React.FC<GraphProps> = ({sc, heightDisplay}) => {
       <p className={classes.title}>{title}</p>
       <ResponsiveContainer>
         <ComposedChart data={data} margin={{
-          top: 5,
+          top: 0,
           right: 30,
           left: heightDisplay < 700 ? -30 : heightDisplay > 700 && heightDisplay < 1000 ? -20 : 5,
           bottom: heightDisplay < 700 ? 20 : heightDisplay > 700 && heightDisplay < 1000 ? 45 : 55,
         }}>
           <XAxis dataKey="d"/>
-          <YAxis yAxisId="left" domain={[min - 1, max + 1]} tickCount={10} stroke='#8884d8'/>
+          <YAxis yAxisId="left" domain={['dataMin - 1', 'dataMax + 1']} tickCount={10} stroke='#8884d8'/>
           {/*<YAxis yAxisId="left" tickCount={10} tickLine={false} axisLine={false} minTickGap={600}/>*/}
-          <YAxis yAxisId="right" orientation='right' tickCount={10} tickLine={false} axisLine={false} domain={[0, 100]}
-                 stroke='#82ca9d'/>
+          <YAxis yAxisId="right" orientation='right' tickCount={10} tickLine={false} axisLine={false}
+                 domain={['dataMin - 1', 'dataMax + 1']} stroke='#82ca9d'/>
           <Tooltip formatter={(value: any, name: any) => ([`${value}${name === 'p' ? "%" : "шт"}`])}/>
           <CartesianGrid strokeDasharray="3 3"/>
           <Line yAxisId="left" type='monotone' dataKey='v1' stroke='#8884d8' strokeWidth={3}
@@ -61,15 +61,6 @@ const Graph: React.FC<GraphProps> = ({sc, heightDisplay}) => {
                 onClick={switchOfLineProc}/>
           <Legend formatter={(value) => (value === 'v1' ? 'Значение' : '%')}/>
         </ComposedChart>
-
-        {/*>*/}
-        {/*  <XAxis dataKey="d"/>*/}
-        {/*  <YAxis domain={[min - 1, max + 1]}/>*/}
-        {/*  <Tooltip />*/}
-        {/*  <Legend />*/}
-        {/*  <Line type="monotone" dataKey="v1" stroke="#8884d8" />*/}
-        {/*  <Line type="monotone" dataKey="v2" stroke="#82ca9d" />*/}
-        {/*  <Tooltip/>*/}
       </ResponsiveContainer>
     </div>
   )
