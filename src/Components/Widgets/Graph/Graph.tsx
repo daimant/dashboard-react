@@ -14,52 +14,40 @@ import {GraphProps} from "../../Common/Types";
 
 const Graph: React.FC<GraphProps> = ({sc, heightDisplay}) => {
   const {title, data, max, min} = sc;
-  const [checked, setChecked] = React.useState(false);
+  const [hiddenVal, setHiddenVal] = React.useState(false);
+  const [hiddenProc, setHiddenProc] = React.useState(false);
 
-  const switchOfLineValue = () => {
+  const hideLineClick = (event: any) => {
+    if (event.dataKey === 'v1')
+      setHiddenVal(!hiddenVal);
+    if (event.dataKey === 'p')
+      setHiddenProc(!hiddenProc);
   };
-  const switchOfLineProc = () => {
-  };
-  const toggleChecked = () => {
-    setChecked((prev) => !prev);
-  };
-  const renderLegend = (props: any) => {
-    const {payload} = props;
-
-    return (
-      <ul>
-        {
-          payload.map((entry: any, index: any) => (
-            <li key={`item-${index}`}>{entry.value}</li>
-          ))
-        }
-      </ul>
-    );
-  }
 
   return (
     <div className={classes.graphs}>
       <p className={classes.title}>{title}</p>
       <ResponsiveContainer>
         <ComposedChart data={data} margin={{
-          top: 0,
-          right: 30,
-          left: heightDisplay < 700 ? -30 : heightDisplay > 700 && heightDisplay < 1000 ? -20 : 5,
-          bottom: heightDisplay < 700 ? 20 : heightDisplay > 700 && heightDisplay < 1000 ? 45 : 55,
+          top: 5,
+          right: 5,
+          left: heightDisplay < 700 ? -30 : heightDisplay > 700 && heightDisplay < 1000 ? 0 : 5,
+          bottom: heightDisplay < 700 ? 25 : heightDisplay > 700 && heightDisplay < 1000 ? 50 : 60,
         }}>
           <XAxis dataKey="d"/>
-          <YAxis yAxisId="left" domain={['dataMin - 1', 'dataMax + 1']} tickCount={10} stroke='#8884d8'/>
-          {/*<YAxis yAxisId="left" tickCount={10} tickLine={false} axisLine={false} minTickGap={600}/>*/}
-          <YAxis yAxisId="right" orientation='right' tickCount={10} tickLine={false} axisLine={false}
-                 domain={['dataMin - 1', 'dataMax + 1']} stroke='#82ca9d'/>
+          <YAxis style={hiddenVal ? {display: 'none'} : {}} yAxisId="left" domain={['dataMin', 'dataMax']} tickCount={5}
+                 stroke='#8884d8'/>
+          <YAxis style={hiddenProc ? {display: 'none'} : {}} yAxisId="right" orientation='right' tickCount={5}
+                 axisLine={false} domain={['dataMin', 'dataMax']} stroke='#82ca9d'/>
           <Tooltip formatter={(value: any, name: any) => ([`${value}${name === 'p' ? "%" : "шт"}`])}/>
           <CartesianGrid strokeDasharray="3 3"/>
-          <Line yAxisId="left" type='monotone' dataKey='v1' stroke='#8884d8' strokeWidth={3}
-                onClick={switchOfLineValue}/>
+          <Line style={hiddenVal ? {display: 'none'} : {}} yAxisId="left" type='monotone' dataKey='v1' stroke='#8884d8'
+                strokeWidth={3}/>
+          <Line style={hiddenProc ? {display: 'none'} : {}} yAxisId="right" type="monotone" dataKey='p' stroke='#82ca9d'
+                strokeWidth={3}/>
+          {/*<YAxis yAxisId="left" tickCount={10} tickLine={false} axisLine={false} minTickGap={600}/>*/}
           {/*<Line yAxisId="left" type='monotone' dataKey='v2' stroke='#82ca9d' strokeWidth={3}/>*/}
-          <Line yAxisId="right" type="monotone" dataKey='p' stroke='#82ca9d' strokeWidth={3}
-                onClick={switchOfLineProc}/>
-          <Legend formatter={(value) => (value === 'v1' ? 'Значение' : '%')}/>
+          <Legend formatter={(value) => (value === 'v1' ? 'Значение' : '%')} onClick={hideLineClick}/>
         </ComposedChart>
       </ResponsiveContainer>
     </div>
