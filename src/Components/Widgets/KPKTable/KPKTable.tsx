@@ -49,7 +49,7 @@ const KPKTable: React.FC<any> = ({requestKPKChild, removeKPKChild, orgOid, perio
                         }
                         onClick={
                           row[value1] !== '-' && colsHead === 'Услуга'
-                            ? () => {openService(row[value1])}
+                            ? () => {openService(row[id])}
                             : () => {}
                         }>
                 <TableCell component="th" scope="row" className={classes.cell}>{
