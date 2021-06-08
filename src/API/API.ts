@@ -25,7 +25,7 @@ export const widgetsAPI = {
       // .post(`kpk`, payload) // prod mode
       .then((response: AxiosResponse) => response.data);
   },
-  getWidgets: (oid: string, period: string, period_type: string, numSC: number[]) => {
+  getWidgets: (oid: string, period: string, period_type: string, numSC: number[], numTodays: number[]) => {
     // const payload = {
     //   "org_oid": +oid,
     //   "srv_oid": 0,
@@ -39,18 +39,22 @@ export const widgetsAPI = {
     // };
     return axios.all([
       ...numSC.map(num => instance.get(`sc/${num}`)),
+      ...numTodays.map(num => instance.get(`today/${num}`)),
       instance.get(`kpk`)
       // ...numSC.map(num => instance.post(`sc/${num}`, payload)), // prod mode
+      // ...numTodays.map(num => instance.post(`today/${num}`, payload)), // prod mode
       // instance.post(`kpk`, payload), // prod mode
     ])
       .then((response: AxiosResponse[]) => response.map(res => res.data))
-      .catch(() => ({title: 'Ошибка при загрузке...', data: []}))
+      .catch(() => ([{title: 'Ошибка при загрузке...', data: []}]))
   },
+/*
   getINF: () => {
       return instance
         .get(`inf`)
         .then((response: AxiosResponse) => response.data);
     },
+*/
 };
 export const filtersAPI = {
   getOrg: () => {
