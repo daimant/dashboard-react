@@ -78,7 +78,7 @@ const widgetsReducer = (state = initialState, action: TypeActionWidgets) => {
       return {...state, isFetchingWidgets: false};
 
     case REMOVE_KPK_CHILD:
-      return{...state, kpkChild: {}};
+      return {...state, kpkChild: {}};
 
     default:
       return state;
@@ -92,23 +92,11 @@ export const setIsFetchingWidgetsStarted = () => ({type: SET_IS_FETCHING_WIDGETS
 export const setIsFetchingWidgetsEnded = () => ({type: SET_IS_FETCHING_WIDGETS_ENDED});
 export const removeKPKChild = () => ({type: REMOVE_KPK_CHILD});
 
-export const requestKPK = (oid: string, period: string, periodType: string, serviceOid = 0) => async (dispatch: any) => {
-  const responseKPK = await widgetsAPI.getKPK(oid, period, periodType, serviceOid);
-  dispatch(setKPK(responseKPK));
-};
-export const requestSC = (oid: string, period: string, periodType: string, numSC: number[]) => async (dispatch: any) => {
-  const responseSC = [];
-
-  if (numSC[0]) responseSC.push(await widgetsAPI.getSC(oid, period, periodType, numSC[0]));
-  if (numSC[1]) responseSC.push(await widgetsAPI.getSC(oid, period, periodType, numSC[1]));
-  if (numSC[2]) responseSC.push(await widgetsAPI.getSC(oid, period, periodType, numSC[2]));
-
-  dispatch(setSC(responseSC));
-};
 export const requestWidgets = (oid: string, period: string, periodType: string, numSC: number[] = [1, 2, 3]) => async (dispatch: any) => {
   dispatch(setIsFetchingWidgetsStarted());
-  await dispatch(requestKPK(oid, period, periodType));
-  await dispatch(requestSC(oid, period, periodType, numSC));
+  const response = await widgetsAPI.getWidgets(oid, period, periodType, numSC);
+  dispatch(setKPK(response.pop()));
+  dispatch(setSC(response));
   dispatch(setIsFetchingWidgetsEnded());
 };
 export const requestKPKChild = (oid: string, period: string, periodType: string, serviceOid: number) => async (dispatch: any) => {

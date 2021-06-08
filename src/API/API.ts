@@ -9,39 +9,44 @@ const instance = axios.create({
 
 export const widgetsAPI = {
   getKPK: (oid: string, period: string, period_type: string, serviceOid: number) => {
+    // const payload = {
+    //   "org_oid": +oid,
+    //   "srv_oid": serviceOid,
+    //   "period": period,
+    //   "period_type": period_type,
+    //   "ktl": {
+    //     "ka_atr": "ka", // or mct 
+    //     "ktl_oid": 281586771165316,
+    //   },
+    //   "val": "percent",
+    // };
     return instance
       .get(`kpk`)
-      // .post(`kpk`, { // prod mode
-      //   "org_oid": +oid,
-      //   "srv_oid" : serviceOid,
-      //   "period": period,
-      //   "period_type": period_type,
-      //   "ktl": {
-      //     "ka_atr": "ka", // or mct 
-      //     "ktl_oid": 281586771165316,
-      //   },
-      //   "val": "percent",
-      // })
+      // .post(`kpk`, payload) // prod mode
       .then((response: AxiosResponse) => response.data);
   },
-  getSC: (oid: string, period: string, period_type: string, num: number) => {
-    return instance
-      .get(`sc/${num}`)
-      // .post(`sc/${num}`, { // prod mode
-      //   "org_oid": +oid,
-      //   "period": period,
-      //   "period_type": period_type,
-      //   "ktl": {
-      //     "ka_atr": "ka", // or mct 
-      //     "ktl_oid": 281586771165316,
-      //   },
-      //   "val": "percent",
-      // })
-      .then((response: AxiosResponse) => response.data)
+  getWidgets: (oid: string, period: string, period_type: string, numSC: number[]) => {
+    // const payload = {
+    //   "org_oid": +oid,
+    //   "srv_oid": 0,
+    //   "period": period,
+    //   "period_type": period_type,
+    //   "ktl": {
+    //     "ka_atr": "ka", // or mct 
+    //     "ktl_oid": 281586771165316,
+    //   },
+    //   "val": "percent",
+    // };
+    return axios.all([
+      ...numSC.map(num => instance.get(`sc/${num}`)),
+      instance.get(`kpk`)
+      // ...numSC.map(num => instance.post(`sc/${num}`, payload)), // prod mode
+      // instance.post(`kpk`, payload), // prod mode
+    ])
+      .then((response: AxiosResponse[]) => response.map(res => res.data))
       .catch(() => ({title: 'Ошибка при загрузке...', data: []}))
   },
-  getINF:
-    () => {
+  getINF: () => {
       return instance
         .get(`inf`)
         .then((response: AxiosResponse) => response.data);

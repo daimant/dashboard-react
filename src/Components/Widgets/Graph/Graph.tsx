@@ -13,7 +13,7 @@ import {
 import {GraphProps} from "../../Common/Types";
 
 const Graph: React.FC<GraphProps> = ({sc, heightDisplay}) => {
-  const {title, data, max, min} = sc;
+  const {title, data} = sc;
   const [hiddenVal, setHiddenVal] = React.useState(false);
   const [hiddenProc, setHiddenProc] = React.useState(false);
 
@@ -39,7 +39,7 @@ const Graph: React.FC<GraphProps> = ({sc, heightDisplay}) => {
                  stroke='#8884d8'/>
           <YAxis style={hiddenProc ? {display: 'none'} : {}} yAxisId="right" orientation='right' tickCount={5}
                  axisLine={false} domain={['dataMin', 'dataMax']} stroke='#82ca9d'/>
-          <Tooltip formatter={(value: any, name: any) => ([`${value}${name === 'p' ? "%" : "шт"}`])}/>
+          <Tooltip formatter={(value: any, name: any) => ([`${value}${name === 'p' ? " %" : " шт"}`])}/>
           <CartesianGrid strokeDasharray="3 3"/>
           <Line style={hiddenVal ? {display: 'none'} : {}} yAxisId="left" type='monotone' dataKey='v1' stroke='#8884d8'
                 strokeWidth={3}/>

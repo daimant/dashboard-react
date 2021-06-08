@@ -38,7 +38,7 @@ export const selectSC = (state: any) => {
 
   for (let point of state.widgets.sc) {
     for (let i in point.data) {
-      if (point.data[i]['p'] < 1)
+      if (point.data[i]['p'] <= 1)
         point.data[i]['p'] = +(point.data[i]['p'] * 100).toFixed(1);
     }
   }
