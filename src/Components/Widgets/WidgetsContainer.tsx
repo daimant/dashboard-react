@@ -24,6 +24,7 @@ class WidgetsContainer extends Component<any> {
         orgOid={this.props.orgOid}
         period={this.props.period}
         periodType={this.props.periodType}
+        kpkChild={this.props.kpkChild}
 
         requestKPKChild={this.props.requestKPKChild}
         removeKPKChild={this.props.removeKPKChild}
@@ -41,6 +42,7 @@ const mapState = (state: RootState) => ({
   orgOid: selectOrgOid(state),
   period: selectPeriod(state),
   periodType: selectPeriodType(state),
+  kpkChild: selectKPK(state, 'child'),
 });
 
 // @ts-ignore

@@ -1,8 +1,8 @@
 // import {RootState} from "../Common/Types";
 
 //widgets
-export const selectKPK = (state: any) => {
-  const {kpk} = state.widgets;
+export const selectKPK = (state: any, kpkName: string = 'kpk') => {
+  const kpk = state.widgets[kpkName === 'child' ? 'kpkChild' : 'kpk'];
 
   if (!kpk.data) return {};
 
@@ -31,7 +31,7 @@ export const selectKPK = (state: any) => {
     parsedKPK.push(currObj);
   }
 
-  return {cols: state.widgets.kpk.nameCol, data: parsedKPK};
+  return {cols: kpk.nameCol, data: parsedKPK};
 };
 export const selectSC = (state: any) => {
   if (!state.widgets.sc) return {};
@@ -64,7 +64,6 @@ export const selectInf = (state: any) => {
   return parsedInf;
 };
 export const selectIsFetchingWidgets = (state: any) => state.widgets.isFetchingWidgets;
-// export const selectFilters = (state: any) => state.widgets.srvOid; // ебанина какая-то
 
 //filters
 export const selectOrgList = (state: any) => {
@@ -114,6 +113,7 @@ export const selectShowFilters = (state: any) => state.filters.showFilters;
 export const selectOrgMapList = (state: any) => state.filters.orgMapList;
 export const selectPeriodNameMapList = (state: any) => state.filters.periodNameMapList;
 export const selectAltOrgList = (state: any) => state.filters.altOrgList;
+
 
 // filters-reducer
 export const selectNameOrg = (state: any, oid: string) => state.orgMapList.get(oid);

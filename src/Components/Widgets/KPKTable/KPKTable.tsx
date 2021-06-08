@@ -11,17 +11,15 @@ import classes from "./KPKTable.module.scss";
 import CloseIcon from '@material-ui/icons/Close';
 import {Preloader} from "../../Common/Preloader/Preloader";
 
-const KPKTable: React.FC<any> = ({kpk, requestKPKChild, removeKPKChild, orgOid, period, periodType}) => {
-  const {cols, data: rows} = kpk;
-
+const KPKTable: React.FC<any> = ({requestKPKChild, removeKPKChild, orgOid, period, periodType, cols, rows}) => {
   if (!rows.length) return <Preloader/>;
 
-  const colsHead = cols[1];
+  const [id, colsHead, value1, /*value2*/] = cols;
   const closeService = () => {
     removeKPKChild();
   };
   const openService = (event: any) => {
-    requestKPKChild(orgOid, period, periodType, event, kpk);
+    requestKPKChild(orgOid, period, periodType, event);
   };
 
   return (
@@ -37,31 +35,28 @@ const KPKTable: React.FC<any> = ({kpk, requestKPKChild, removeKPKChild, orgOid, 
                   {colsHead}
                 </span>
               }</TableCell>
-              <TableCell align="right" className={classes.cell}>{cols[2]}</TableCell>
+              <TableCell align="right" className={classes.cell}>{value1}</TableCell>
               {/*<TableCell align="right" className={classes.cell}>{cols[3]}</TableCell>*/}
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.map((row: any) => (
-              <TableRow key={row[cols[0]]}
+              <TableRow key={row[id]}
                         className={
-                          row[cols[2]] !== '-' && colsHead === 'Услуга'
+                          row[value1] !== '-' && colsHead === 'Услуга'
                             ? classes.clickableRow
                             : ''
                         }
                         onClick={
-                          row[cols[2]] !== '-' && colsHead === 'Услуга'
-                            ? () => {
-                              openService(row[cols[0]])
-                            }
-                            : () => {
-                            }
+                          row[value1] !== '-' && colsHead === 'Услуга'
+                            ? () => {openService(row[value1])}
+                            : () => {}
                         }>
                 <TableCell component="th" scope="row" className={classes.cell}>{
-                  row[cols[1]]
+                  row[colsHead]
                 }</TableCell>
                 <TableCell align="right" className={classes.cell}>{
-                  row[cols[2]]
+                  row[value1]
                 }</TableCell>
                 {/*<TableCell align="right" className={classes.cell}>{*/}
                 {/*  // @ts-ignore*/}
