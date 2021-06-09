@@ -1,4 +1,3 @@
-"sloppy mode";
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
@@ -19,7 +18,7 @@ const MenuTreeList: React.FC<any> = props => {
   } = props;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selected, setSelected] = React.useState<string>('');
-  const [checked, setChecked] = React.useState(false);
+  const [checked, setChecked] = React.useState(localStorage.getItem('checkedOrgZNO') === "1" || false);
 
   const useStyles = makeStyles({
     root: {
@@ -35,7 +34,8 @@ const MenuTreeList: React.FC<any> = props => {
   });
 
   const toggleChecked = () => {
-    setChecked((prev) => !prev);
+    localStorage.setItem('checkedOrgZNO', checked ? "0" : '1');
+    setChecked(!checked);
   };
 
   const handleSelect = (event: React.ChangeEvent<{}>, nodeIds: string) => {
@@ -49,10 +49,10 @@ const MenuTreeList: React.FC<any> = props => {
   const handleClose = () => {
     setAnchorEl(null);
 
-    if (typeof selected !== "object")
+    if (selected && typeof selected !== "object")
       setter(selected);
 
-    if ((title === 'оргструктура' && selected !== orgOid) || (title === 'период' && selected !== `${periodType}:${period}`))
+    if ((selected && title === 'оргструктура' && selected !== orgOid) || (selected && title === 'период' && selected !== `${periodType}:${period}`))
       acceptFilters();
   };
 
@@ -95,7 +95,7 @@ const MenuTreeList: React.FC<any> = props => {
           defaultExpandIcon={<ChevronRightIcon/>}
           onNodeSelect={handleSelect}
         >
-          {!checked ? renderTree(treeList) : renderTree(altTreeList)}
+          {title === 'оргструктура' ? (!checked ? renderTree(treeList) : renderTree(altTreeList)) : renderTree(treeList)}
         </TreeView>
       </Menu>
 

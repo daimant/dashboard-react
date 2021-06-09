@@ -27,7 +27,7 @@ let initialState: object = {
   kpkChild: {},
   sc: [],
   todays: [],
-  inf: [
+  /*inf: [
     [
       "Чистая прибыль",
       "100М"
@@ -56,9 +56,9 @@ let initialState: object = {
       "KPI",
       "100%"
     ]
-  ],
+  ],*/
   isFetchingWidgets: true,
-  srvOid: 0,
+  /* srvOid: 0,*/
 };
 
 const widgetsReducer = (state = initialState, action: TypeActionWidgets) => {
