@@ -20,6 +20,7 @@ const Filters: React.FC<any> = props => {
   };
   const requestSetFiltersDefault = () => {
     setFiltersDefault();
+    acceptFilters();
   };
 
   return (
@@ -32,16 +33,17 @@ const Filters: React.FC<any> = props => {
                           setter={setOrgOid}
                           period={period}
                           periodType={periodType}
+                          acceptFilters={acceptFilters}
         />
           <MenuTreeList treeList={perList}
                         title={'период'}
                         setter={setPeriod}
                         period={period}
                         periodType={periodType}
+                        acceptFilters={acceptFilters}
           /></>
       }
-      <Button onClick={requestSetFiltersDefault}>сбросить фильтры</Button>
-      <Button onClick={acceptFilters}>применить</Button>
+      <Button variant="outlined" onClick={requestSetFiltersDefault}>сбросить фильтры</Button>
     </div>
   )
 };

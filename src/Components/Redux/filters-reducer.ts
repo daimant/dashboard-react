@@ -108,7 +108,7 @@ const createPeriodTree = (st: Date, end: number) => {
 const defaultFilters = {
   orgOid: '281586771165316',
   orgName: "ООО ОСК ИнфоТранс",
-  period: "2021-03",
+  period: `${new Date().getFullYear()}-${new Date().getMonth() - 1 < 10 ? `0${new Date().getMonth() + 1}` : new Date().getMonth() + 1}`,
   periodType: "m",
 };
 

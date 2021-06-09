@@ -13,7 +13,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 
 const MenuTreeList: React.FC<any> = props => {
-  const {treeList, title, /*requestWidgetsFromFilters, period, periodType,*/ setter, altTreeList = {}} = props;
+  const {treeList, title, /*requestWidgetsFromFilters, period, periodType,*/ setter, acceptFilters, altTreeList = {}} = props;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selected, setSelected] = React.useState<string[]>([]);
   const [checked, setChecked] = React.useState(false);
@@ -48,6 +48,7 @@ const MenuTreeList: React.FC<any> = props => {
 
     if (typeof selected !== "object")
       setter(selected);
+    acceptFilters();
   };
 
   const classes = useStyles();
@@ -64,7 +65,7 @@ const MenuTreeList: React.FC<any> = props => {
 
   return (
     <div>
-      <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+      <Button aria-controls="simple-menu" variant="outlined" onClick={handleClick}>
         {title}
       </Button>
       <Menu
