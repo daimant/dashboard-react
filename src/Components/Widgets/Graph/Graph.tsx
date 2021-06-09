@@ -11,6 +11,16 @@ import {
   Line,
 } from 'recharts';
 import {GraphProps} from "../../Common/Types";
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+
+export const CheckedValueGraph: React.FC<any> = ({value, hidden}) => {
+  return (
+    <span>
+      {value} {!hidden ? <CheckBoxIcon style={{}} color='action' fontSize='small'/> : <CheckBoxOutlineBlankIcon color='action' fontSize='small'/>}
+    </span>
+  )
+};
 
 const Graph: React.FC<GraphProps> = ({sc, heightDisplay}) => {
   const {title, data} = sc;
@@ -47,7 +57,10 @@ const Graph: React.FC<GraphProps> = ({sc, heightDisplay}) => {
                 strokeWidth={3}/>
           {/*<YAxis yAxisId="left" tickCount={10} tickLine={false} axisLine={false} minTickGap={600}/>*/}
           {/*<Line yAxisId="left" type='monotone' dataKey='v2' stroke='#82ca9d' strokeWidth={3}/>*/}
-          <Legend formatter={(value) => (value === 'v1' ? 'Значение' : '%')} onClick={hideLineClick}/>
+          <Legend iconSize={0} formatter={(value) => (value === 'v1'
+              ? <CheckedValueGraph value={'Значение'} hidden={hiddenVal}/>
+              : <CheckedValueGraph value={'%'} hidden={hiddenProc}/>
+          )} onClick={hideLineClick}/>
         </ComposedChart>
       </ResponsiveContainer>
     </div>
