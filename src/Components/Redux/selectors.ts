@@ -23,8 +23,10 @@ export const selectKPK = (state: any, kpkName: string = 'kpk') => {
 
         let currVal = kpk.data[i][j].replace(/,/, ".");
 
-        currObj[kpk.nameCol[j]] = +currVal
-          ? Math.trunc(+currVal)
+        currObj[kpk.nameCol[j]] = +currVal && +currVal % 1
+          ? (+currVal).toFixed(2)
+          : +currVal
+          ? +currVal
           : currVal;
       }
     }
@@ -39,7 +41,7 @@ export const selectSC = (state: any) => {
   for (let point of state.widgets.sc) {
     for (let i in point.data) {
       if (point.data[i]['p'] <= 1)
-        point.data[i]['p'] = +(point.data[i]['p'] * 100).toFixed(1);
+        point.data[i]['p'] = +(point.data[i]['p'] * 100).toFixed(2);
     }
   }
 
