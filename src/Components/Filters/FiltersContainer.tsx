@@ -4,7 +4,7 @@ import Filters from "./Filters";
 import {requestOrg, requestWidgetsFromFilters, setFiltersDefault, setOrgOid, setPeriod} from "../Redux/filters-reducer";
 import {
   selectIsFetchingFilters, selectKTL, selectOrgList, selectOrgName, selectOrgOid, selectPeriod, selectPeriodType,
-  selectPerList, selectSelectedFilters, selectShowFilters, selectVal, selectAltOrgList
+  selectPerList, selectSelectedFilters, selectShowFilters, selectVal, selectAltOrgList, selectIsFetchingWidgets
 } from "../Redux/selectors";
 
 class WidgetsContainer extends React.Component<any> {
@@ -19,6 +19,7 @@ class WidgetsContainer extends React.Component<any> {
         orgList={this.props.orgList}
         altOrgList={this.props.altOrgList}
         isFetchingFilters={this.props.isFetchingFilters}
+        isFetchingWidgets={this.props.isFetchingWidgets}
         orgOid={this.props.orgOid}
         orgName={this.props.orgName}
         ktl={this.props.ktl}
@@ -42,6 +43,7 @@ const mapState = (state: any) => ({
   orgList: selectOrgList(state),
   altOrgList: selectAltOrgList(state),
   isFetchingFilters: selectIsFetchingFilters(state),
+  isFetchingWidgets: selectIsFetchingWidgets(state),
   orgOid: selectOrgOid(state),
   orgName: selectOrgName(state),
   ktl: selectKTL(state),

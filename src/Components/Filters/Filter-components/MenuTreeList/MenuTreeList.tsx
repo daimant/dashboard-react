@@ -13,7 +13,10 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 
 const MenuTreeList: React.FC<any> = props => {
-  const {treeList, title, /*requestWidgetsFromFilters,*/  orgOid, period, periodType, setter, acceptFilters, altTreeList = {}} = props;
+  const {
+    treeList, title, /*requestWidgetsFromFilters,*/  orgOid, period, periodType, setter, acceptFilters, altTreeList = {},
+    isFetchingWidgets
+  } = props;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selected, setSelected] = React.useState<string>('');
   const [checked, setChecked] = React.useState(false);
@@ -67,7 +70,7 @@ const MenuTreeList: React.FC<any> = props => {
 
   return (
     <div>
-      <Button aria-controls="simple-menu" variant="outlined" onClick={handleClick}>
+      <Button aria-controls="simple-menu" variant="outlined" onClick={handleClick} disabled={isFetchingWidgets}>
         {title}
       </Button>
       <Menu

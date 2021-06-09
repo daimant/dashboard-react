@@ -7,7 +7,7 @@ import {FetchError} from "../Common/FetchError/FetchError";
 
 const Filters: React.FC<any> = props => {
   const {
-    orgList, altOrgList, isFetchingFilters, orgOid, /*orgName, ktl, val,*/ requestWidgetsFromFilters,
+    orgList, altOrgList, isFetchingFilters, isFetchingWidgets, orgOid, /*orgName, ktl, val,*/ requestWidgetsFromFilters,
     setPeriod, setOrgOid, perList, period, periodType, /*selectedFilters,*/ setFiltersDefault,
     showFilters
   } = props;
@@ -35,6 +35,7 @@ const Filters: React.FC<any> = props => {
                           period={period}
                           periodType={periodType}
                           acceptFilters={acceptFilters}
+                          isFetchingWidgets={isFetchingWidgets}
         />
           <MenuTreeList treeList={perList}
                         title={'период'}
@@ -43,9 +44,12 @@ const Filters: React.FC<any> = props => {
                         period={period}
                         periodType={periodType}
                         acceptFilters={acceptFilters}
+                        isFetchingWidgets={isFetchingWidgets}
           /></>
       }
-      <Button variant="outlined" onClick={requestSetFiltersDefault}>сбросить фильтры</Button>
+      <Button variant="outlined" onClick={requestSetFiltersDefault} disabled={isFetchingWidgets}>
+        сбросить фильтры
+      </Button>
     </div>
   )
 };
