@@ -7,7 +7,7 @@ const CircularBar: React.FC<any> = ({title, today, diff, err}) => {
   return (
     <div className={classes.graphs}>
       <CircularProgressbarWithChildren
-        value={today}
+        value={diff}
         styles={buildStyles({
           pathColor: 'rgb(136, 132, 216)'
         })}>

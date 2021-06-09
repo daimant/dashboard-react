@@ -31,12 +31,14 @@ const Filters: React.FC<any> = props => {
                           altTreeList={altOrgList}
                           title={'оргструктура'}
                           setter={setOrgOid}
+                          orgOid={orgOid}
                           period={period}
                           periodType={periodType}
                           acceptFilters={acceptFilters}
         />
           <MenuTreeList treeList={perList}
                         title={'период'}
+                        orgOid={orgOid}
                         setter={setPeriod}
                         period={period}
                         periodType={periodType}

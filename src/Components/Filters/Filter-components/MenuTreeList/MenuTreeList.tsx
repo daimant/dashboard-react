@@ -13,9 +13,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 
 const MenuTreeList: React.FC<any> = props => {
-  const {treeList, title, /*requestWidgetsFromFilters, period, periodType,*/ setter, acceptFilters, altTreeList = {}} = props;
+  const {treeList, title, /*requestWidgetsFromFilters,*/  orgOid, period, periodType, setter, acceptFilters, altTreeList = {}} = props;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [selected, setSelected] = React.useState<string[]>([]);
+  const [selected, setSelected] = React.useState<string>('');
   const [checked, setChecked] = React.useState(false);
 
   const useStyles = makeStyles({
@@ -35,7 +35,7 @@ const MenuTreeList: React.FC<any> = props => {
     setChecked((prev) => !prev);
   };
 
-  const handleSelect = (event: React.ChangeEvent<{}>, nodeIds: string[]) => {
+  const handleSelect = (event: React.ChangeEvent<{}>, nodeIds: string) => {
     setSelected(nodeIds);
   };
 
@@ -48,7 +48,9 @@ const MenuTreeList: React.FC<any> = props => {
 
     if (typeof selected !== "object")
       setter(selected);
-    acceptFilters();
+
+    if ((title === 'оргструктура' && selected !== orgOid) || (title === 'период' && selected !== `${periodType}:${period}`))
+      acceptFilters();
   };
 
   const classes = useStyles();
