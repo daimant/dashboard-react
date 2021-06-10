@@ -23,8 +23,8 @@ const Filters: React.FC<any> = props => {
       type === 'период' ? newPeriodType : periodType
     );
   };
-  const requestSetFiltersDefault = async () => {
-    await setFiltersDefault();
+  const requestSetFiltersDefault = () => {
+    setFiltersDefault();
     acceptFilters();
   };
 

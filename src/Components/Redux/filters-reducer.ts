@@ -193,7 +193,7 @@ export const requestOrg = () => async (dispatch: any) => {
   const response = await filtersAPI.getOrg();
   dispatch(setOrgList(response));
 };
-export const requestWidgetsFromFilters = (oid: string, period: string, periodType: string) => async (dispatch: any) => {
+export const requestWidgetsFromFilters = (oid: string, period: string, periodType: string) => (dispatch: any) => {
   dispatch(requestWidgets(oid, period, periodType));
   dispatch(setOrgName(oid))
 };
