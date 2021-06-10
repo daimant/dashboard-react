@@ -9,10 +9,22 @@ import Paper from '@material-ui/core/Paper';
 import classes from "./KPKTable.module.scss";
 import CloseIcon from '@material-ui/icons/Close';
 import {Preloader} from "../../Common/Preloader/Preloader";
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+
+const CheckedValueKPK: React.FC<any> = ({hidden, setHiddenUnusedKPK}) => {
+  return (
+    <span onClick={() => setHiddenUnusedKPK(!hidden)} className={classes.clickable}> - скрыть пустые {hidden
+      ? <CheckBoxIcon className={classes.iconCheckBox} color='action' fontSize='small'/>
+      : <CheckBoxOutlineBlankIcon className={classes.iconCheckBox} color='action' fontSize='small'/>}
+    </span>
+  )
+};
 
 const KPKTable: React.FC<any> = ({requestKPKChild, removeKPKChild, orgOid, period, periodType, cols, rows}) => {
-  if (!cols.length) return <Preloader/>;
+  const [hiddenUnusedKPK, setHiddenUnusedKPK] = React.useState(false);
 
+  if (!cols.length) return <Preloader/>;
   const [id, colsHead, value] = cols;
 
   return (
@@ -21,22 +33,25 @@ const KPKTable: React.FC<any> = ({requestKPKChild, removeKPKChild, orgOid, perio
         <Table size="small" stickyHeader aria-label="a dense table">
           <TableHead>
             <TableRow>
-              <TableCell className={classes.cell}>{colsHead === 'Услуга' || colsHead === 'Ошибка при загрузке'
-                ? colsHead
-                : <span className={classes.tableHead}>
-                  <CloseIcon fontSize='small' onClick={removeKPKChild}/>
-                  {colsHead}
-                </span>
-              }</TableCell>
+              <TableCell className={classes.cell}>
+                {colsHead === 'Услуга' || colsHead === 'Ошибка при загрузке'
+                  ? colsHead
+                  : <span className={classes.tableHead}>
+                      <CloseIcon fontSize='small' onClick={removeKPKChild}/>{colsHead}
+                    </span>
+                }
+                <CheckedValueKPK hidden={hiddenUnusedKPK} setHiddenUnusedKPK={setHiddenUnusedKPK}/>
+              </TableCell>
               <TableCell align="right" className={classes.cell}>{value}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.map((row: any) => (
               <TableRow key={row[id]}
+                        style={row[value] === '-' && hiddenUnusedKPK ? {display: 'none'} : {}}
                         className={
                           row[value] !== '-' && colsHead === 'Услуга'
-                            ? classes.clickableRow
+                            ? classes.clickable
                             : ''
                         }
                         onClick={
