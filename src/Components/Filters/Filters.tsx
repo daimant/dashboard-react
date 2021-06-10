@@ -15,11 +15,16 @@ const Filters: React.FC<any> = props => {
   if (!showFilters) return <></>;
   if (isFetchingFilters) return <Preloader/>;
 
-  const acceptFilters = () => {
-    requestWidgetsFromFilters(orgOid, period, periodType);
+  const acceptFilters = (type: string = 'def', selected: any = '') => {
+    const [newPeriodType, newPeriod] = type === 'период' ? selected.split(":") : ['', ''];
+    requestWidgetsFromFilters(
+      type === 'оргструктура' ? selected : orgOid,
+      type === 'период' ? newPeriod : period,
+      type === 'период' ? newPeriodType : periodType
+    );
   };
-  const requestSetFiltersDefault = () => {
-    setFiltersDefault();
+  const requestSetFiltersDefault = async () => {
+    await setFiltersDefault();
     acceptFilters();
   };
 

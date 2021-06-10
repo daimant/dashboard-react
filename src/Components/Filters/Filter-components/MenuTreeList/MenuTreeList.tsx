@@ -46,14 +46,14 @@ const MenuTreeList: React.FC<any> = props => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleClose = async () => {
     setAnchorEl(null);
 
     if (selected && typeof selected !== "object")
-      setter(selected);
+      await setter(selected);
 
     if ((selected && title === 'оргструктура' && selected !== orgOid) || (selected && title === 'период' && selected !== `${periodType}:${period}`))
-      acceptFilters();
+      acceptFilters(title, selected);
   };
 
   const classes = useStyles();
