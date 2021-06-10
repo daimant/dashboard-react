@@ -197,6 +197,10 @@ export const requestWidgetsFromFilters = (oid: string, period: string, periodTyp
   dispatch(requestWidgets(oid, period, periodType));
   dispatch(setOrgName(oid))
 };
+export const requestSetFiltersDefault = () => async (dispatch: any) => {
+  dispatch(requestWidgets(defaultFilters.orgOid, defaultFilters.period, defaultFilters.periodType));
+  dispatch(setFiltersDefault());
+}
 
 
 export default filtersReducer;

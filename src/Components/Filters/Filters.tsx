@@ -8,8 +8,7 @@ import {FetchError} from "../Common/FetchError/FetchError";
 const Filters: React.FC<any> = props => {
   const {
     orgList, altOrgList, isFetchingFilters, isFetchingWidgets, orgOid, /*orgName, ktl, val,*/ requestWidgetsFromFilters,
-    setPeriod, setOrgOid, perList, period, periodType, /*selectedFilters,*/ setFiltersDefault,
-    showFilters
+    setPeriod, setOrgOid, perList, period, periodType, /*selectedFilters,*/ requestSetFiltersDefault, showFilters
   } = props;
 
   if (!showFilters) return <></>;
@@ -22,10 +21,6 @@ const Filters: React.FC<any> = props => {
       type === 'период' ? newPeriod : period,
       type === 'период' ? newPeriodType : periodType
     );
-  };
-  const requestSetFiltersDefault = () => {
-    setFiltersDefault();
-    acceptFilters();
   };
 
   return (
