@@ -16,8 +16,9 @@ import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 
 export const CheckedValueGraph: React.FC<any> = ({value, hidden}) => {
   return (
-    <span>
-      {value} {!hidden ? <CheckBoxIcon style={{}} color='action' fontSize='small'/> : <CheckBoxOutlineBlankIcon color='action' fontSize='small'/>}
+    <span>{value} {!hidden
+      ? <CheckBoxIcon className={classes.iconCheckBox} color='action' fontSize='small'/>
+      : <CheckBoxOutlineBlankIcon className={classes.iconCheckBox} color='action' fontSize='small'/>}
     </span>
   )
 };
@@ -45,22 +46,40 @@ const Graph: React.FC<GraphProps> = ({sc, heightDisplay}) => {
           bottom: heightDisplay < 700 ? 25 : heightDisplay > 700 && heightDisplay < 1000 ? 50 : 60,
         }}>
           <XAxis dataKey="d"/>
-          <YAxis style={hiddenVal ? {display: 'none'} : {}} yAxisId="left" domain={['dataMin', 'dataMax']} tickCount={5}
+          <YAxis style={hiddenVal ? {display: 'none'} : {}}
+                 yAxisId="left"
+                 domain={['dataMin', 'dataMax']}
+                 tickCount={5}
                  stroke='#8884d8'/>
-          <YAxis style={hiddenProc ? {display: 'none'} : {}} yAxisId="right" orientation='right' tickCount={5}
-                 axisLine={false} domain={['dataMin', 'dataMax']} stroke='#82ca9d'/>
+          <YAxis style={hiddenProc ? {display: 'none'} : {}}
+                 yAxisId="right"
+                 orientation='right'
+                 tickCount={5}
+                 axisLine={false}
+                 domain={['dataMin', 'dataMax']}
+                 stroke='#82ca9d'/>
           <Tooltip formatter={(value: any, name: any) => ([`${value}${name === 'p' ? " %" : " шт"}`])}/>
           <CartesianGrid strokeDasharray="3 3"/>
-          <Line style={hiddenVal ? {display: 'none'} : {}} yAxisId="left" type='monotone' dataKey='v1' stroke='#8884d8'
+          <Line style={hiddenVal ? {display: 'none'} : {}}
+                yAxisId="left"
+                type='monotone'
+                dataKey='v1'
+                stroke='#8884d8'
                 strokeWidth={3}/>
-          <Line style={hiddenProc ? {display: 'none'} : {}} yAxisId="right" type="monotone" dataKey='p' stroke='#82ca9d'
+          <Line style={hiddenProc ? {display: 'none'} : {}}
+                yAxisId="right"
+                type="monotone"
+                dataKey='p'
+                stroke='#82ca9d'
                 strokeWidth={3}/>
           {/*<YAxis yAxisId="left" tickCount={10} tickLine={false} axisLine={false} minTickGap={600}/>*/}
           {/*<Line yAxisId="left" type='monotone' dataKey='v2' stroke='#82ca9d' strokeWidth={3}/>*/}
-          <Legend iconSize={0} formatter={(value) => (value === 'v1'
-              ? <CheckedValueGraph value={'Значение'} hidden={hiddenVal}/>
-              : <CheckedValueGraph value={'%'} hidden={hiddenProc}/>
-          )} onClick={hideLineClick}/>
+          <Legend iconSize={0}
+                  onClick={hideLineClick}
+                  formatter={(value) => (value === 'v1'
+                      ? <CheckedValueGraph value={'Значение'} hidden={hiddenVal}/>
+                      : <CheckedValueGraph value={'%'} hidden={hiddenProc}/>
+                  )}/>
         </ComposedChart>
       </ResponsiveContainer>
     </div>
