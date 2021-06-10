@@ -1,7 +1,6 @@
 import {AxiosResponse} from "axios";
 
 const axios = require('axios').default;
-
 const instance = axios.create({
   // baseURL: "http://10.248.40.236:7755/api/", // prod mode
   baseURL: "http://localhost:4000/",
@@ -38,28 +37,28 @@ export const widgetsAPI = {
     //   "val": "percent",
     // };
     return axios.all([
-      // ...numSC.map(num => instance.get(`sc/${num}`)),
-      // ...numTodays.map(num => instance.get(`today/${num}`)),
-      // instance.get(`kpk`)
-      ...numSC.map(num => instance
-        .post(`sc/${num}`, payload)
-        .catch(() => {})
-      ), // prod mode
-      ...numTodays.map(num => instance
-        .post(`today/${num}`, payload)
-        .catch(() => {})
-      ), // prod mode
-      instance.post(`kpk`, payload).catch(() => {}), // prod mode
+      ...numSC.map(num => instance.get(`sc/${num}`).catch(() => {})),
+      ...numTodays.map(num => instance.get(`today/${num}`).catch(() => {})),
+      instance.get(`kpk`).catch(() => {})
+      // ...numSC.map(num => instance
+      //   .post(`sc/${num}`, payload)
+      //   .catch(() => {})
+      // ), // prod mode
+      // ...numTodays.map(num => instance
+      //   .post(`today/${num}`, payload)
+      //   .catch(() => {})
+      // ), // prod mode
+      // instance.post(`kpk`, payload).catch(() => {}), // prod mode
     ])
       .then((response: AxiosResponse[]) => response.map(res => res ? res.data : res));
   },
-/*
-  getINF: () => {
-      return instance
-        .get(`inf`)
-        .then((response: AxiosResponse) => response.data);
-    },
-*/
+  /*
+    getINF: () => {
+        return instance
+          .get(`inf`)
+          .then((response: AxiosResponse) => response.data);
+      },
+  */
 };
 export const filtersAPI = {
   getOrg: () => {
