@@ -64,7 +64,9 @@ let initialState: object = {
 const widgetsReducer = (state = initialState, action: TypeActionWidgets) => {
   switch (action.type) {
     case SET_KPK:
-      const kpk = {data: action.kpk.data, nameCol: action.kpk.name_col};
+      const kpk = (action.kpk)
+        ? {data: action.kpk.data, nameCol: action.kpk.name_col}
+        : {data: [], nameCol: ["\u0421\u0435\u0440\u0432\u0438\u0441_oid", "Ошибка при загрузке"]};
       return {...state, kpk};
 
     case SET_KPK_CHILD:

@@ -38,15 +38,20 @@ export const widgetsAPI = {
     //   "val": "percent",
     // };
     return axios.all([
-      ...numSC.map(num => instance.get(`sc/${num}`)),
-      ...numTodays.map(num => instance.get(`today/${num}`)),
-      instance.get(`kpk`)
-      // ...numSC.map(num => instance.post(`sc/${num}`, payload)), // prod mode
-      // ...numTodays.map(num => instance.post(`today/${num}`, payload)), // prod mode
-      // instance.post(`kpk`, payload), // prod mode
+      // ...numSC.map(num => instance.get(`sc/${num}`)),
+      // ...numTodays.map(num => instance.get(`today/${num}`)),
+      // instance.get(`kpk`)
+      ...numSC.map(num => instance
+        .post(`sc/${num}`, payload)
+        .catch(() => {})
+      ), // prod mode
+      ...numTodays.map(num => instance
+        .post(`today/${num}`, payload)
+        .catch(() => {})
+      ), // prod mode
+      instance.post(`kpk`, payload).catch(() => {}), // prod mode
     ])
-      .then((response: AxiosResponse[]) => response.map(res => res.data))
-      .catch(() => ([{title: 'Ошибка при загрузке...', data: []}]))
+      .then((response: AxiosResponse[]) => response.map(res => res ? res.data : res));
   },
 /*
   getINF: () => {

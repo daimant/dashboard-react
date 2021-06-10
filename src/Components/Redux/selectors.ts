@@ -37,8 +37,13 @@ export const selectKPK = (state: any, kpkName: string = 'kpk') => {
 };
 export const selectSC = (state: any) => {
   if (!state.widgets.sc) return {};
+  for (let i in state.widgets.sc) {
+    if (!state.widgets.sc[i]) {
+      state.widgets.sc[i] = {title: 'Ошибка при загрузке', data: []};
+      continue;
+    }
 
-  for (let point of state.widgets.sc) {
+    const point = state.widgets.sc[i]
     for (let i in point.data) {
       if (point.data[i]['p'] <= 1)
         point.data[i]['p'] = +(point.data[i]['p'] * 100).toFixed(2);
@@ -51,9 +56,8 @@ export const selectTodays = (state: any) => {
   if (!state.widgets.todays.length) return [];
 
   for (let i in state.widgets.todays) {
-    if (!state.widgets.todays[i] || state.widgets.todays[i].v1 === null || state.widgets.todays[i].p === null) {
-      state.widgets.todays[i] = {title: "Ошибка при загрузке", err: true}
-    }
+    if (!state.widgets.todays[i] || state.widgets.todays[i].v1 === null || state.widgets.todays[i].p === null)
+      state.widgets.todays[i] = {title: "Ошибка при загрузке", err: true};
     else if (state.widgets.todays[i].p <= 1)
       state.widgets.todays[i].p = +(state.widgets.todays[i].p * 100).toFixed(1);
   }

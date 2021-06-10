@@ -12,7 +12,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import {Preloader} from "../../Common/Preloader/Preloader";
 
 const KPKTable: React.FC<any> = ({requestKPKChild, removeKPKChild, orgOid, period, periodType, cols, rows}) => {
-  if (!rows.length) return <Preloader/>;
+  if (!cols.length) return <Preloader/>;
 
   const [id, colsHead, value1, /*value2*/] = cols;
   const closeService = () => {
@@ -28,7 +28,7 @@ const KPKTable: React.FC<any> = ({requestKPKChild, removeKPKChild, orgOid, perio
         <Table size="small" stickyHeader aria-label="a dense table">
           <TableHead>
             <TableRow>
-              <TableCell className={classes.cell}>{colsHead === 'Услуга'
+              <TableCell className={classes.cell}>{colsHead === 'Услуга' || colsHead === 'Ошибка при загрузке'
                 ? colsHead
                 : <span className={classes.tableHead}>
                   <CloseIcon fontSize='small' onClick={closeService}/>
