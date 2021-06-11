@@ -67,13 +67,13 @@ const Graph: React.FC<GraphProps> = ({sc, heightDisplay}) => {
           <Legend iconSize={0}
                   verticalAlign="top"
                   formatter={(line) => (<div className={classes.headGraph}>
-                        <h3 className={line === 'v1' ? classes.titleName : classes.hiddenTitleName}>{title}&emsp;</h3>
-                        {line === 'v1'
-                          ? <CheckedValueGraph description={'значение'} hidden={hiddenVal} line={line}
-                                               hideLineClick={hideLineClick} />
-                          : <CheckedValueGraph description={'%'} hidden={hiddenProc} line={line}
-                                               hideLineClick={hideLineClick}/>}
-                      </div>
+                      <h3 className={line === 'v1' ? classes.titleName : classes.hiddenTitleName}>{title}&emsp;</h3>
+                      {line === 'v1'
+                        ? <CheckedValueGraph description={'значение'} hidden={hiddenVal} line={line}
+                                             hideLineClick={hideLineClick}/>
+                        : <CheckedValueGraph description={'%'} hidden={hiddenProc} line={line}
+                                             hideLineClick={hideLineClick}/>}
+                    </div>
                   )}/>
         </ComposedChart>
       </ResponsiveContainer>

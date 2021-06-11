@@ -9,15 +9,19 @@ import Paper from '@material-ui/core/Paper';
 import classes from "./KPKTable.module.scss";
 import CloseIcon from '@material-ui/icons/Close';
 import {Preloader} from "../../Common/Preloader/Preloader";
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import Switch from "@material-ui/core/Switch/Switch";
+import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabel";
 
 const CheckedValueKPK: React.FC<any> = ({hidden, setHiddenUnusedKPK}) => {
   return (
-    <span onClick={() => setHiddenUnusedKPK(!hidden)} className={classes.clickable}> - скрыть пустые {hidden
-      ? <CheckBoxIcon className={classes.iconCheckBox} color='action' fontSize='small'/>
-      : <CheckBoxOutlineBlankIcon className={classes.iconCheckBox} color='action' fontSize='small'/>}
-    </span>
+    <span className={classes.clickable}>{
+      <FormControlLabel
+        control={<Switch size="medium" checked={hidden} onChange={() => setHiddenUnusedKPK(!hidden)} color="default"
+        />}
+        labelPlacement="start"
+        label='скрыть пустые '
+      />
+    }</span>
   )
 };
 
