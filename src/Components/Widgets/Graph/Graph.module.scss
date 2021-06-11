@@ -10,12 +10,28 @@
   overflow-y: hidden;
 }
 
-.title {
-  font-size: 2vh;
-  padding: 1%;
-  text-align: center;
+.titleName {
+  color: black;
+}
+
+.hiddenTitleName {
+  display: none;
+}
+
+.checkBoxGroup {
+  cursor: pointer;
+  font-weight: normal;
 }
 
 .iconCheckBox {
   vertical-align: middle;
+}
+
+.headGraph {
+  display: flex;
+  margin-bottom: 2%;
+}
+
+.hiddenIDontNowHowDoItElse {
+  font-size: 6px;
 }

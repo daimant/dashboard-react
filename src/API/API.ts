@@ -22,7 +22,8 @@ export const widgetsAPI = {
     return instance
       .get(`kpk`)
       // .post(`kpk`, payload) // prod mode
-      .then((response: AxiosResponse) => response.data);
+      .then((response: AxiosResponse) => response.data)
+      .catch(() => {});
   },
   getWidgets: (oid: string, period: string, period_type: string, numSC: number[], numTodays: number[]) => {
     // const payload = {
