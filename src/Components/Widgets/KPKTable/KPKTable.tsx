@@ -38,13 +38,15 @@ const KPKTable: React.FC<any> = ({requestKPKChild, removeKPKChild, orgOid, perio
           <TableHead>
             <TableRow>
               <TableCell className={classes.cell}>
-                {colsHead === 'Услуга' || colsHead === 'Ошибка при загрузке'
-                  ? colsHead
-                  : <span className={classes.tableHead}>
+                <div className={classes.tableHead}>
+                  {colsHead === 'Услуга' || colsHead === 'Ошибка при загрузке'
+                    ? <span>{colsHead}</span>
+                    : <span className={classes.tableHead}>
                       <CloseIcon fontSize='small' onClick={removeKPKChild}/>{colsHead}
                     </span>
-                }
-                <CheckedValueKPK hidden={hiddenUnusedKPK} setHiddenUnusedKPK={setHiddenUnusedKPK}/>
+                  }
+                  <CheckedValueKPK hidden={hiddenUnusedKPK} setHiddenUnusedKPK={setHiddenUnusedKPK}/>
+                </div>
               </TableCell>
               <TableCell align="right" className={classes.cell}>{value}</TableCell>
             </TableRow>

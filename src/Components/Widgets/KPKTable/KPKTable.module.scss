@@ -23,11 +23,6 @@
   }
 }
 
-.tableHead {
-  display: flex;
-  align-items: center;
-}
-
 ::-webkit-scrollbar {
   width: 20px;
 }
@@ -53,4 +48,9 @@
 
 .iconCheckBox {
   vertical-align: middle;
+}
+
+.tableHead {
+  display: flex;
+  align-items: center;
 }
