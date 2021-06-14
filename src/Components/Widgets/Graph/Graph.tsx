@@ -16,14 +16,18 @@ const CheckedValueGraph: React.FC<any> = ({description, hidden, hideLineClick, l
 
 const Graph: React.FC<GraphProps> = ({sc, heightDisplay}) => {
   const {title, data} = sc;
-  const [hiddenVal, setHiddenVal] = React.useState(false);
-  const [hiddenProc, setHiddenProc] = React.useState(false);
+  const [hiddenVal, setHiddenVal] = React.useState(localStorage.getItem(`hiddenValSC-${title}`) === "1" || false);
+  const [hiddenProc, setHiddenProc] = React.useState(localStorage.getItem(`hiddenProcSC-${title}`) === "1" || false);
 
   const hideLineClick = (line: string) => {
-    if (line === 'v1')
+    if (line === 'v1') {
+      localStorage.setItem(`hiddenValSC-${title}`, hiddenVal ? "0" : '1');
       setHiddenVal(!hiddenVal);
-    if (line === 'p')
+    }
+    if (line === 'p') {
+      localStorage.setItem(`hiddenProcSC-${title}`, hiddenProc ? "0" : '1');
       setHiddenProc(!hiddenProc);
+    }
   };
 
   return (
