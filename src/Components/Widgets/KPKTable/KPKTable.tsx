@@ -12,11 +12,11 @@ import {Preloader} from "../../Common/Preloader/Preloader";
 import Switch from "@material-ui/core/Switch/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabel";
 
-const CheckedValueKPK: React.FC<any> = ({hidden, setHiddenUnusedKPK}) => {
+const CheckedValueKPK: React.FC<any> = ({hidden, requestSetHiddenUnusedKPK}) => {
   return (
     <span className={classes.clickable}>{
       <FormControlLabel
-        control={<Switch size="medium" checked={hidden} onChange={() => setHiddenUnusedKPK(!hidden)} color="default"
+        control={<Switch size="medium" checked={hidden} onChange={() => requestSetHiddenUnusedKPK()} color="default"
         />}
         labelPlacement="start"
         label='скрыть пустые '
@@ -26,10 +26,15 @@ const CheckedValueKPK: React.FC<any> = ({hidden, setHiddenUnusedKPK}) => {
 };
 
 const KPKTable: React.FC<any> = ({requestKPKChild, removeKPKChild, orgOid, period, periodType, cols, rows}) => {
-  const [hiddenUnusedKPK, setHiddenUnusedKPK] = React.useState(false);
+  const [hiddenUnusedKPK, setHiddenUnusedKPK] = React.useState(localStorage.getItem('KPKRowHidden') === "1" || false);
 
   if (!cols.length) return <Preloader/>;
   const [id, colsHead, value] = cols;
+
+  const requestSetHiddenUnusedKPK = () => {
+    localStorage.setItem('KPKRowHidden', hiddenUnusedKPK ? "0" : '1');
+    setHiddenUnusedKPK(!hiddenUnusedKPK);
+  };
 
   return (
     <div className={classes.kpkTable}>
@@ -45,7 +50,7 @@ const KPKTable: React.FC<any> = ({requestKPKChild, removeKPKChild, orgOid, perio
                       <CloseIcon fontSize='small' onClick={removeKPKChild}/>{colsHead}
                     </span>
                   }
-                  <CheckedValueKPK hidden={hiddenUnusedKPK} setHiddenUnusedKPK={setHiddenUnusedKPK}/>
+                  <CheckedValueKPK hidden={hiddenUnusedKPK} requestSetHiddenUnusedKPK={requestSetHiddenUnusedKPK}/>
                 </div>
               </TableCell>
               <TableCell align="right" className={classes.cell}>{value}</TableCell>
