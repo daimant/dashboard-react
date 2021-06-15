@@ -19,7 +19,7 @@ const CheckedValueKPK: React.FC<any> = ({hidden, requestSetHiddenUnusedKPK}) => 
         control={<Switch size="medium" checked={hidden} onChange={() => requestSetHiddenUnusedKPK()} color="default"
         />}
         labelPlacement="start"
-        label='скрыть пустые '
+        label={<span className={`${classes.textAroundSwitcher} ${classes.tableHead}`}>Все услуги / Услуги с ЗНО</span>}
       />
     }</span>
   )
@@ -47,7 +47,8 @@ const KPKTable: React.FC<any> = ({requestKPKChild, removeKPKChild, orgOid, perio
                   {colsHead === 'Услуга' || colsHead === 'Ошибка при загрузке'
                     ? <span>{colsHead}</span>
                     : <span className={classes.tableHead}>
-                      <CloseIcon fontSize='small' onClick={removeKPKChild}/>{colsHead}
+                      <CloseIcon fontSize='small' onClick={removeKPKChild}/>
+                      {colsHead}
                     </span>
                   }
                   <CheckedValueKPK hidden={hiddenUnusedKPK} requestSetHiddenUnusedKPK={requestSetHiddenUnusedKPK}/>
@@ -67,7 +68,7 @@ const KPKTable: React.FC<any> = ({requestKPKChild, removeKPKChild, orgOid, perio
                         }
                         onClick={
                           row[value] !== '-' && colsHead === 'Услуга'
-                            ? () => {requestKPKChild(orgOid, period, periodType, row[id])}
+                            ? () => { requestKPKChild(orgOid, period, periodType, row[id]) }
                             : () => {}
                         }>
                 <TableCell component="th" scope="row" className={classes.cell}>{
