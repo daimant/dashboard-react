@@ -63,6 +63,24 @@ export const selectTodays = (state: any) => {
   }
   return state.widgets.todays;
 };
+export const selectTops = (state: any) => {
+  if (!state.widgets.tops) return {};
+  for (let i in state.widgets.tops) {
+    if (!state.widgets.tops[i]) {
+      state.widgets.tops[i] = {title: 'Ошибка при загрузке', data: []};
+      continue;
+    }
+
+    const point = state.widgets.tops[i]
+    for (let i in point.data) {
+      if (point.data[i]['p'] <= 1)
+        point.data[i]['p'] = +(point.data[i]['p'] * 100).toFixed(2);
+    }
+  }
+
+  return state.widgets.tops
+};
+
 export const selectInf = (state: any) => {
   const {inf} = state.widgets;
   const parsedInf: object[] = [];

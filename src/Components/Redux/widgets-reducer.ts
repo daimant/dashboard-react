@@ -12,12 +12,14 @@ interface TypeActionWidgets {
   }
   sc: object[]
   todays: object[]
+  tops: object[]
 }
 
 const SET_KPK = "SET_KPK";
 const SET_KPK_CHILD = "SET_KPK_CHILD";
 const SET_SC = "SET_SC";
 const SET_TODAY = "SET_TODAY";
+const SET_TOPS = "SET_TOPS";
 const SET_IS_FETCHING_WIDGETS_STARTED = "SET_IS_FETCHING_WIDGETS_STARTED";
 const SET_IS_FETCHING_WIDGETS_ENDED = "SET_IS_FETCHING_WIDGETS_ENDED";
 const REMOVE_KPK_CHILD = 'REMOVE_KPK_CHILD';
@@ -27,6 +29,7 @@ let initialState: object = {
   kpkChild: {},
   sc: [],
   todays: [],
+  tops: [],
   /*inf: [
     [
       "Чистая прибыль",
@@ -79,6 +82,9 @@ const widgetsReducer = (state = initialState, action: TypeActionWidgets) => {
     case SET_TODAY:
       return action.todays.length ? {...state, todays: action.todays} : state;
 
+    case SET_TOPS:
+      return action.tops.length ? {...state, tops: action.tops} : state;
+
     case SET_IS_FETCHING_WIDGETS_STARTED:
       return {...state, isFetchingWidgets: true};
 
@@ -97,17 +103,19 @@ export const setKPK = (kpk: any) => ({type: SET_KPK, kpk});
 export const setKPKChild = (kpkChild: any) => ({type: SET_KPK_CHILD, kpkChild});
 export const setSC = (sc: object[]) => ({type: SET_SC, sc});
 export const setTodays = (todays: object[]) => ({type: SET_TODAY, todays});
+export const setTops = (tops: object[]) => ({type: SET_TOPS, tops});
 export const setIsFetchingWidgetsStarted = () => ({type: SET_IS_FETCHING_WIDGETS_STARTED});
 export const setIsFetchingWidgetsEnded = () => ({type: SET_IS_FETCHING_WIDGETS_ENDED});
 export const removeKPKChild = () => ({type: REMOVE_KPK_CHILD});
 
 export const requestWidgets = (
-  oid: string, period: string, periodType: string, numSC: number[] = [1, 2, 3], numTodays: number[] = [1, 2, 3]
+  oid: string, period: string, periodType: string, numSC: number[] = [1, 2, 3], numTodays: number[] = [1, 2, 3], numTops: number[] = [1, 2]
 ) => async (dispatch: any) => {
   dispatch(setIsFetchingWidgetsStarted());
-  const response = await widgetsAPI.getWidgets(oid, period, periodType, numSC, numTodays);
+  const response = await widgetsAPI.getWidgets(oid, period, periodType, numSC, numTodays, numTops);
   dispatch(setSC(response.splice(0, numSC.length)));
   dispatch(setTodays(response.splice(0, numTodays.length)));
+  dispatch(setTops(response.splice(0, numTops.length)));
   dispatch(setKPK(response.pop()));
   dispatch(setIsFetchingWidgetsEnded());
 };

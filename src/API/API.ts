@@ -25,7 +25,7 @@ export const widgetsAPI = {
       .then((response: AxiosResponse) => response.data)
       .catch(() => {});
   },
-  getWidgets: (oid: string, period: string, period_type: string, numSC: number[], numTodays: number[]) => {
+  getWidgets: (oid: string, period: string, period_type: string, numSC: number[], numTodays: number[], numTops: number[]) => {
     // const payload = {
     //   "org_oid": +oid,
     //   "srv_oid": 0,
@@ -40,6 +40,7 @@ export const widgetsAPI = {
     return axios.all([
       ...numSC.map(num => instance.get(`sc/${num}`).catch(() => {})),
       ...numTodays.map(num => instance.get(`today/${num}`).catch(() => {})),
+      ...numTops.map(num => instance.get(`top/${num}`).catch(() => {})),
       instance.get(`kpk`).catch(() => {})
       // ...numSC.map(num => instance
       //   .post(`sc/${num}`, payload)
@@ -49,6 +50,7 @@ export const widgetsAPI = {
       //   .post(`today/${num}`, payload)
       //   .catch(() => {})
       // ), // prod mode
+      // ...numTops.map(num => instance.get(`top/${num}`).catch(() => {})),
       // instance.post(`kpk`, payload).catch(() => {}), // prod mode
     ])
       .then((response: AxiosResponse[]) => response.map(res => res ? res.data : res));
