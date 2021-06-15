@@ -23,6 +23,7 @@ const Widgets: React.FC<any> = props => {
                   cols={kpkChild.data ? kpkChild.cols : kpk.cols}
                   rows={kpkChild.data ? kpkChild.data : kpk.data}/>
         <div className={classes.graphs}>
+          <h4 className={classes.headCircularBar}>СЕГОДНЯ</h4>
           {todays.map((el: { title: string, v1: number, p: number, err: boolean }, i: number) =>
             <CircularBar title={el.title} today={el.v1} diff={el.p} key={i} err={el.err}/>
           )}
@@ -35,7 +36,7 @@ const Widgets: React.FC<any> = props => {
         {/*<InfTable inf={inf} widgetsTitle={widgetsTitle}/>*/}
       </main>
       <div>
-        {console.log(sc,tops)}
+        {/*{console.log(sc,tops)}*/}
         {tops.map((graph: WidgetsGraphElements, i: number) =>
           <Graph sc={graph} key={i} heightDisplay={heightDisplay}/>
         )}
