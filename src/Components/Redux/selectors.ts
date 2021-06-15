@@ -99,6 +99,8 @@ export const selectOrgList = (state: any) => {
     org.parent += '';
   }
 
+  currOrgList[0].children.sort((a: any, b:any) => a.name > b.name ? 1 : -1);
+
   const altOrgList = JSON.parse(JSON.stringify(currOrgList[0]));
 
   for (let i = altOrgList.children.length - 1; altOrgList.name && i >= 0; i--) {
@@ -124,7 +126,6 @@ export const selectShowFilters = (state: any) => state.filters.showFilters;
 export const selectOrgMapList = (state: any) => state.filters.orgMapList;
 export const selectPeriodNameMapList = (state: any) => state.filters.periodNameMapList;
 export const selectAltOrgList = (state: any) => state.filters.altOrgList;
-
 
 // filters-reducer
 export const selectNameOrg = (state: any, oid: string) => state.orgMapList.get(oid);
