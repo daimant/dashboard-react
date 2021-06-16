@@ -3,7 +3,7 @@ import classes from './CircularBar.module.scss'
 import {buildStyles, CircularProgressbarWithChildren} from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
-const CircularBar: React.FC<any> = ({title, today, diff, err, key}) => {
+const CircularBar: React.FC<any> = ({today, diff, err}) => {
   return (
     <div className={classes.graphs}>
       <CircularProgressbarWithChildren
@@ -13,7 +13,6 @@ const CircularBar: React.FC<any> = ({title, today, diff, err, key}) => {
         })}>
         {!err && <h4>{diff}%</h4>}
         <strong style={{fontSize: '3vw'}}>{today}</strong>
-        {/*<h5>{title.toUpperCase()}</h5>*/}
       </CircularProgressbarWithChildren>
     </div>
   )

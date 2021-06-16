@@ -2,14 +2,13 @@ import React from "react";
 import classes from "./Widgets.module.scss";
 import KPKTable from "./KPKTable/KPKTable";
 import Graph from "./Graph/Graph";
-// import InfTable from "./InfTable/InfTable";
-import {WidgetsGraphElements, /*WidgetsPropsElements*/} from "../Common/Types";
+import {WidgetsGraphElements} from "../Common/Types";
 import {Preloader} from "../Common/Preloader/Preloader";
 import CircularBar from "./CircularBar/CircularBar";
 
 const Widgets: React.FC<any> = props => {
   const {
-    kpk, sc /*inf*/, isFetchingWidgets, heightDisplay, requestKPKChild, removeKPKChild, orgOid, period, periodType,
+    kpk, sc, isFetchingWidgets, heightDisplay, requestKPKChild, removeKPKChild, orgOid, period, periodType,
     kpkChild, todays, tops
   } = props;
 
@@ -33,12 +32,10 @@ const Widgets: React.FC<any> = props => {
             <Graph sc={graph} key={i} heightDisplay={heightDisplay}/>
           )}
         </div>
-        {/*<InfTable inf={inf} widgetsTitle={widgetsTitle}/>*/}
       </main>
-      <div>
-        {/*{console.log(sc,tops)}*/}
+      <div className={`${classes.secondMain}`}>
         {tops.map((graph: WidgetsGraphElements, i: number) =>
-          <Graph sc={graph} key={i} heightDisplay={heightDisplay}/>
+          <Graph sc={graph} key={i} heightDisplay={heightDisplay} extendedStyle={{height: '100%'}}/>
         )}
       </div>
     </div>

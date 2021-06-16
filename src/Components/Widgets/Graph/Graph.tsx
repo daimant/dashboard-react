@@ -1,11 +1,13 @@
 import React from "react";
 import classes from "./Graph.module.scss";
 import {ComposedChart, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, Line} from 'recharts';
-import {GraphProps} from "../../Common/Types";
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 
+// @ts-ignore
 const CheckedValueGraph: React.FC<any> = ({description, hidden, hideLineClick, line}) => {
+  if (description === '') return '';
+
   return (
     <h3 className={classes.checkBoxGroup} onClick={() => hideLineClick(line)}>{description} {!hidden
       ? <CheckBoxIcon className={classes.iconCheckBox} color='action' fontSize='small'/>
@@ -14,7 +16,7 @@ const CheckedValueGraph: React.FC<any> = ({description, hidden, hideLineClick, l
   )
 };
 
-const Graph: React.FC<GraphProps> = ({sc, heightDisplay}) => {
+const Graph: React.FC<any> = ({sc, heightDisplay, extendedStyle = {}}) => {
   const {title, data} = sc;
   const [hiddenVal, setHiddenVal] = React.useState(localStorage.getItem(`hiddenValSC-${title}`) === "1" || false);
   const [hiddenProc, setHiddenProc] = React.useState(localStorage.getItem(`hiddenProcSC-${title}`) === "1" || false);
@@ -31,7 +33,7 @@ const Graph: React.FC<GraphProps> = ({sc, heightDisplay}) => {
   };
 
   return (
-    <div className={classes.graphs}>
+    <div className={classes.graphs} style={extendedStyle}>
       <ResponsiveContainer>
         <ComposedChart data={data} margin={{
           top: -10, // 5 was
@@ -66,17 +68,20 @@ const Graph: React.FC<GraphProps> = ({sc, heightDisplay}) => {
                 dataKey='p'
                 stroke='#82ca9d'
                 strokeWidth={3}/>
-          {/*<YAxis yAxisId="left" tickCount={10} tickLine={false} axisLine={false} minTickGap={600}/>*/}
-          {/*<Line yAxisId="left" type='monotone' dataKey='v2' stroke='#82ca9d' strokeWidth={3}/>*/}
           <Legend iconSize={0}
                   verticalAlign="top"
                   formatter={(line) => (<div className={classes.headGraph}>
                       <h3 className={line === 'v1' ? classes.titleName : classes.hiddenTitleName}>{title}&emsp;</h3>
                       {line === 'v1'
-                        ? <CheckedValueGraph description={'значение'} hidden={hiddenVal} line={line}
-                                             hideLineClick={hideLineClick}/>
-                        : <CheckedValueGraph description={'%'} hidden={hiddenProc} line={line}
-                                             hideLineClick={hideLineClick}/>}
+                        ? <CheckedValueGraph
+                          description={sc?.data?.length && sc.data[0].v1 !== undefined ? 'значение' : ""}
+                          hidden={hiddenVal} line={line}
+                          hideLineClick={hideLineClick}/>
+                        : <CheckedValueGraph
+                          description={sc?.data?.length && !sc.data[0].p !== undefined ? '%' : ''}
+                          hidden={hiddenProc}
+                          line={line}
+                          hideLineClick={hideLineClick}/>}
                     </div>
                   )}/>
         </ComposedChart>
