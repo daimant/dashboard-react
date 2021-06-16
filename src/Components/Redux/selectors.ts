@@ -117,8 +117,6 @@ export const selectOrgList = (state: any) => {
     org.parent += '';
   }
 
-  currOrgList[0].children.sort((a: any, b:any) => a.name > b.name ? 1 : -1);
-
   const altOrgList = JSON.parse(JSON.stringify(currOrgList[0]));
 
   for (let i = altOrgList.children.length - 1; altOrgList.name && i >= 0; i--) {
