@@ -16,7 +16,7 @@ const CheckedValueGraph: React.FC<any> = ({description, hidden, hideLineClick, l
   )
 };
 
-const Graph: React.FC<any> = ({sc, heightDisplay, extendedStyle = {}}) => {
+const Graph: React.FC<any> = ({sc, extendedStyle = {}}) => {
   const {title, data} = sc;
   const [hiddenVal, setHiddenVal] = React.useState(localStorage.getItem(`hiddenValSC-${title}`) === "1" || false);
   const [hiddenProc, setHiddenProc] = React.useState(localStorage.getItem(`hiddenProcSC-${title}`) === "1" || false);
@@ -38,8 +38,8 @@ const Graph: React.FC<any> = ({sc, heightDisplay, extendedStyle = {}}) => {
         <ComposedChart data={data} margin={{
           top: -10, // 5 was
           right: 5,
-          left: heightDisplay < 700 ? -30 : heightDisplay > 700 && heightDisplay < 1000 ? 0 : 5,
-          bottom: heightDisplay < 700 ? -20 : heightDisplay > 700 && heightDisplay < 1000 ? 5 : 15, //25 50 60 was
+          left: window.innerHeight < 700 ? -30 : window.innerHeight > 700 && window.innerHeight < 1000 ? 0 : 5,
+          bottom: window.innerHeight < 700 ? -20 : window.innerHeight > 700 && window.innerHeight < 1000 ? 5 : 15, //25 50 60 was
         }}>
           <XAxis dataKey="d"/>
           <YAxis style={hiddenVal ? {display: 'none'} : {}}

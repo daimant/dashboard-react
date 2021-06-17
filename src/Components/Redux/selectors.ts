@@ -134,7 +134,6 @@ export const selectOrgName = (state: any) => state.filters.orgName;
 export const selectKTL = (state: any) => state.filters.ktl;
 export const selectVal = (state: any) => state.filters.val;
 export const selectPerList = (state: any) => state.filters.perList;
-export const selectHeightDisplay = (state: any) => state.filters.heightDisplay;
 export const selectPeriod = (state: any) => state.filters.period;
 export const selectPeriodType = (state: any) => state.filters.periodType;
 export const selectSelectedFilters = (state: any) => state.filters.selectedFilters;

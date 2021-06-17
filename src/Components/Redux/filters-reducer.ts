@@ -130,7 +130,6 @@ let initialState = {
     ktlOid: '281586771165316',
   },
   val: 'percent',
-  heightDisplay: window.innerHeight,
   selectedFilters: {
     selectedOrgOid: localStorage.getItem('orgOid') || '281586771165316',
     selectedPeriod: localStorage.getItem('period') || "2021-03",

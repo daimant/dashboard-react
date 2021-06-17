@@ -8,7 +8,7 @@ import CircularBar from "./CircularBar/CircularBar";
 
 const Widgets: React.FC<any> = props => {
   const {
-    kpk, sc, isFetchingWidgets, heightDisplay, requestKPKChild, removeKPKChild, orgOid, period, periodType,
+    kpk, sc, isFetchingWidgets, requestKPKChild, removeKPKChild, orgOid, period, periodType,
     kpkChild, todays, tops
   } = props;
 
@@ -29,13 +29,13 @@ const Widgets: React.FC<any> = props => {
         </div>
         <div className={classes.graphs}>
           {sc.map((graph: WidgetsGraphElements, i: number) =>
-            <Graph sc={graph} key={i} heightDisplay={heightDisplay}/>
+            <Graph sc={graph} key={i}/>
           )}
         </div>
       </main>
       <div className={`${classes.secondMain}`}>
         {tops.map((graph: WidgetsGraphElements, i: number) =>
-          <Graph sc={graph} key={i} heightDisplay={heightDisplay} extendedStyle={{height: '100%'}}/>
+          <Graph sc={graph} key={i} extendedStyle={{height: '100%'}}/>
         )}
       </div>
     </div>
