@@ -1,7 +1,17 @@
 .filters {
   justify-content: space-between;
   margin: 1% 2%;
-  width: 30%;
+  width: 20%;
+
+  @media (max-width: 2000px) {
+    width: 30%;
+  }
+  @media (max-width: 1500px) {
+    width: 35%;
+  }
+  @media (max-width: 1200px) {
+    width: 50%;
+  }
 
   * {
     padding: 0;

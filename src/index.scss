@@ -4,5 +4,10 @@
 }
 
 html {
+  @media screen and (max-width: 995px),
+  screen and (max-height: 595px) {
+    display: none;
+  }
+
   background-color: #E5E5E5;
 }

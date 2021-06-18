@@ -6,11 +6,13 @@
   }
 
   strong {
+    font-size: 5vh;
+
     @media (max-width: 2000px) {
-      font-size: 4vh
+      font-size: 4vh;
     }
-    @media (min-width: 2000px) {
-      font-size: 5vh
+    @media (max-width: 1200px) {
+      font-size: 3vh;
     }
   }
 }
