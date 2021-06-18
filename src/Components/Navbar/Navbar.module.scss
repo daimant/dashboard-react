@@ -12,7 +12,11 @@ img {
 }
 
 .leftNav {
-  width: 30%;
+  width: 35%;
+
+  @media (min-width: 1200px) {
+    width: 25%;
+  }
 }
 
 .filterIcon {
