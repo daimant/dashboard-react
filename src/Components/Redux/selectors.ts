@@ -26,8 +26,8 @@ export const selectKPK = (state: any, kpkName: string = 'kpk') => {
         currObj[kpk.nameCol[j]] = +currVal && +currVal % 1
           ? (+currVal).toFixed(2)
           : +currVal
-          ? +currVal
-          : currVal;
+            ? +currVal
+            : currVal;
       }
     }
     parsedKPK.push(currObj);
@@ -117,7 +117,10 @@ export const selectOrgList = (state: any) => {
     org.parent += '';
   }
 
-  currOrgList[0].children.sort((a: any, b:any) => a.name > b.name ? 1 : -1);
+  for (let org of currOrgList) {
+    if (org?.children?.length)
+      org.children.sort((a: any, b: any) => a.name > b.name ? 1 : -1)
+  }
 
   const altOrgList = JSON.parse(JSON.stringify(currOrgList[0]));
 
