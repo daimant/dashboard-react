@@ -11,13 +11,31 @@ import CloseIcon from '@material-ui/icons/Close';
 import {Preloader} from "../../Common/Preloader/Preloader";
 import Switch from "@material-ui/core/Switch/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabel";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const CheckedValueKPK: React.FC<any> = ({hidden, requestSetHiddenUnusedKPK}) => {
+  const useStyles = makeStyles((theme) => ({
+      toggle: {
+        '& .Mui-checked + .MuiSwitch-track': {
+          backgroundColor: '#52d869'
+        },
+      },
+    })
+  );
+
+  const classesMUI = useStyles();
+
   return (
     <span className={classes.clickable}>{
       <FormControlLabel
-        control={<Switch size="medium" checked={hidden} onChange={() => requestSetHiddenUnusedKPK()} color="default"
-        />}
+        control={
+          <Switch
+            size="medium"
+            checked={hidden}
+            onChange={() => requestSetHiddenUnusedKPK()}
+            color="default"
+            className={classesMUI.toggle}
+          />}
         labelPlacement="start"
         label={<span className={`${classes.textAroundSwitcher} ${classes.tableHead}`}>Все услуги / Услуги с ЗНО</span>}
       />
@@ -35,7 +53,6 @@ const KPKTable: React.FC<any> = ({requestKPKChild, removeKPKChild, orgOid, perio
     localStorage.setItem('KPKRowHidden', hiddenUnusedKPK ? "0" : '1');
     setHiddenUnusedKPK(!hiddenUnusedKPK);
   };
-
   return (
     <div className={classes.kpkTable}>
       <TableContainer component={Paper} className={classes.tableContainer}>
@@ -68,8 +85,11 @@ const KPKTable: React.FC<any> = ({requestKPKChild, removeKPKChild, orgOid, perio
                         }
                         onClick={
                           row[value] !== '-' && colsHead === 'Услуга'
-                            ? () => { requestKPKChild(orgOid, period, periodType, row[id]) }
-                            : () => {}
+                            ? () => {
+                              requestKPKChild(orgOid, period, periodType, row[id])
+                            }
+                            : () => {
+                            }
                         }>
                 <TableCell component="th" scope="row" className={classes.cell}>{
                   row[colsHead]

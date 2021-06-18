@@ -10,11 +10,9 @@ import {RenderTree} from "../../../Common/Types";
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-
 const MenuTreeList: React.FC<any> = props => {
   const {
-    treeList, title, /*requestWidgetsFromFilters,*/  orgOid, period, periodType, setter, acceptFilters, altTreeList = {},
-    isFetchingWidgets
+    treeList, title,  orgOid, period, periodType, setter, acceptFilters, altTreeList = {}, isFetchingWidgets
   } = props;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selected, setSelected] = React.useState<string>('');
@@ -30,7 +28,12 @@ const MenuTreeList: React.FC<any> = props => {
     },
     menu: {
       margin: `${title === 'оргструктура' ? '4vh' : '9vh'} ${title === 'оргструктура' ? '6vw' : '4vw'}`,
-    }
+    },
+    toggle: {
+      '& .Mui-checked + .MuiSwitch-track': {
+        backgroundColor: '#52d869'
+      },
+    },
   });
 
   const toggleChecked = () => {
@@ -83,7 +86,11 @@ const MenuTreeList: React.FC<any> = props => {
       >
         {title === 'оргструктура' &&
         <FormControlLabel
-            control={<Switch size="medium" checked={checked} onChange={toggleChecked} color="default"
+            control={<Switch size="medium"
+                             checked={checked}
+                             onChange={toggleChecked}
+                             color="default"
+                             className={classes.toggle}
             />}
             labelPlacement="start"
             label={`Все организации / Организации выполняющие ЗНО`}
