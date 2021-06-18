@@ -18,6 +18,8 @@ const CheckedValueGraph: React.FC<any> = ({description, hidden, hideLineClick, l
 
 const Graph: React.FC<any> = ({sc, extendedStyle = {}}) => {
   const {title, data} = sc;
+  const showValueLine = sc?.data?.length && sc.data[0].v1;
+  const showPercentLine = sc?.data?.length && !sc.data[0].p;
   const [hiddenVal, setHiddenVal] = React.useState(localStorage.getItem(`hiddenValSC-${title}`) === "1" || false);
   const [hiddenProc, setHiddenProc] = React.useState(localStorage.getItem(`hiddenProcSC-${title}`) === "1" || false);
 
@@ -36,10 +38,7 @@ const Graph: React.FC<any> = ({sc, extendedStyle = {}}) => {
     <div className={classes.graphs} style={extendedStyle}>
       <ResponsiveContainer>
         <ComposedChart data={data} margin={{
-          top: -10, // 5 was
-          right: 5,
-          left: window.innerHeight < 700 ? -30 : window.innerHeight > 700 && window.innerHeight < 1000 ? 0 : 5,
-          bottom: window.innerHeight < 700 ? -20 : window.innerHeight > 700 && window.innerHeight < 1000 ? 5 : 15, //25 50 60 was
+          top: -10
         }}>
           <XAxis dataKey="d"/>
           <YAxis style={hiddenVal ? {display: 'none'} : {}}
@@ -74,11 +73,11 @@ const Graph: React.FC<any> = ({sc, extendedStyle = {}}) => {
                       <h3 className={line === 'v1' ? classes.titleName : classes.hiddenTitleName}>{title}&emsp;</h3>
                       {line === 'v1'
                         ? <CheckedValueGraph
-                          description={sc?.data?.length && sc.data[0].v1 !== undefined ? 'значение' : ""}
+                          description={showValueLine || (showValueLine && showPercentLine) !== undefined ? 'значение' : ""}
                           hidden={hiddenVal} line={line}
                           hideLineClick={hideLineClick}/>
                         : <CheckedValueGraph
-                          description={sc?.data?.length && !sc.data[0].p !== undefined ? '%' : ''}
+                          description={showPercentLine || (showValueLine && showPercentLine) !== undefined ? '%' : ''}
                           hidden={hiddenProc}
                           line={line}
                           hideLineClick={hideLineClick}/>}
