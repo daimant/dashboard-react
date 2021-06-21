@@ -47,7 +47,7 @@ const Graph: React.FC<any> = ({sc, extendedStyle = {}}) => {
                  tickCount={5}
                  stroke='#8884d8'/>
           <YAxis style={hiddenProc ? {display: 'none'} : {}}
-                 // tickFormatter={tick => (tick)}
+                 tickFormatter={tick => `${(Math.round(tick * 10) / 10)}`}
                  yAxisId="right"
                  orientation='right'
                  tickCount={5}
