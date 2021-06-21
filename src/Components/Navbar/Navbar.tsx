@@ -57,7 +57,7 @@ const Navbar: React.FC<any> = ({
         <h1>Ключевые показатели эффективности</h1>
       </div>
       <div>
-        <span>Поморцев Сергей</span>
+        <span>Пользователь</span>
 
         <IconButton
           aria-label="more"

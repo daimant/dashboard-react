@@ -47,6 +47,7 @@ const Graph: React.FC<any> = ({sc, extendedStyle = {}}) => {
                  tickCount={5}
                  stroke='#8884d8'/>
           <YAxis style={hiddenProc ? {display: 'none'} : {}}
+                 // tickFormatter={tick => (tick)}
                  yAxisId="right"
                  orientation='right'
                  tickCount={5}

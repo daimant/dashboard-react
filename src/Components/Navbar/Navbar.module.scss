@@ -6,17 +6,13 @@ img {
 .navbar {
   justify-content: space-between;
 
-  * {
-    align-items: center;
-  }
+  * { align-items: center }
 }
 
 .leftNav {
   width: 35%;
 
-  @media (min-width: 1200px) {
-    width: 25%;
-  }
+  @media (min-width: 1200px) { width: 25% }
 }
 
 .filterIcon {
@@ -30,7 +26,5 @@ img {
 }
 
 .generalTitle {
-  @media (min-width: 1200px) {
-    margin-left: -12vw;
-  }
+  @media (min-width: 1200px) { margin-left: -12vw }
 }
