@@ -6,9 +6,14 @@ import TreeView from '@material-ui/lab/TreeView';
 import TreeItem from '@material-ui/lab/TreeItem';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import {RenderTree} from "../../../Common/Types";
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+
+export type RenderTree = {
+  oid: string
+  name: string
+  children?: RenderTree[]
+}
 
 const MenuTreeList: React.FC<any> = props => {
   const {

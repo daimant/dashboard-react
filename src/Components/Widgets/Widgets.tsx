@@ -2,9 +2,21 @@ import React from "react";
 import classes from "./Widgets.module.scss";
 import KPKTable from "./KPKTable/KPKTable";
 import Graph from "./Graph/Graph";
-import {WidgetsGraphElements} from "../Common/Types";
 import {Preloader} from "../Common/Preloader/Preloader";
 import CircularBar from "./CircularBar/CircularBar";
+
+export type GraphsType = {
+  id?: number
+  title: string
+  max: number
+  min: number
+  data: GraphElementsType[]
+}
+export type GraphElementsType = {
+  d: string
+  v: number
+}
+export type TodaysType = { title: string, v1: number, p: number, err: boolean };
 
 const Widgets: React.FC<any> = props => {
   const {
@@ -23,18 +35,18 @@ const Widgets: React.FC<any> = props => {
                   rows={kpkChild.data ? kpkChild.data : kpk.data}/>
         <div className={classes.graphs}>
           <h4 className={classes.headCircularBar}>СЕГОДНЯ</h4>
-          {todays.map((el: { title: string, v1: number, p: number, err: boolean }, i: number) =>
+          {todays.map((el: TodaysType, i: number) =>
             <CircularBar title={el.title} today={el.v1} diff={el.p} key={i} err={el.err}/>
           )}
         </div>
         <div className={classes.graphs}>
-          {sc.map((graph: WidgetsGraphElements, i: number) =>
+          {sc.map((graph: GraphsType, i: number) =>
             <Graph sc={graph} key={i}/>
           )}
         </div>
       </main>
       <div className={`${classes.secondMain}`}>
-        {tops.map((graph: WidgetsGraphElements, i: number) =>
+        {tops.map((graph: GraphsType, i: number) =>
           <Graph sc={graph} key={i} extendedStyle={{height: '100%'}}/>
         )}
       </div>

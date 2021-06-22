@@ -1,6 +1,6 @@
 import {widgetsAPI} from "../../API/API";
 
-interface TypeActionWidgets {
+export type ActionsWidgetsType = {
   type: string
   kpk: {
     data: object
@@ -14,6 +14,22 @@ interface TypeActionWidgets {
   todays: object[]
   tops: object[]
 }
+export type InitialStateWidgetsType = {
+  kpk: object,
+  kpkChild: object,
+  sc: [],
+  todays: [],
+  tops: [],
+  isFetchingWidgets: boolean,
+}
+type SetKPKActionType = { type: typeof SET_KPK, kpk: object };
+type SetKPKChildActionType = { type: typeof SET_KPK_CHILD, kpkChild: object };
+type SetSCActionType = { type: typeof SET_SC, sc: object[] };
+type SetTodaysActionType = { type: typeof SET_TODAY, todays: object[] };
+type SetTopsActionType = { type: typeof SET_TOPS, tops: object[] };
+type SetIsFetchingWidgetsStartedActionType = { type: typeof SET_IS_FETCHING_WIDGETS_STARTED };
+type SetIsFetchingWidgetsEndedActionType = { type: typeof SET_IS_FETCHING_WIDGETS_ENDED };
+type RemoveKPKChildActionType = { type: typeof REMOVE_KPK_CHILD };
 
 const SET_KPK = "SET_KPK";
 const SET_KPK_CHILD = "SET_KPK_CHILD";
@@ -24,12 +40,13 @@ const SET_IS_FETCHING_WIDGETS_STARTED = "SET_IS_FETCHING_WIDGETS_STARTED";
 const SET_IS_FETCHING_WIDGETS_ENDED = "SET_IS_FETCHING_WIDGETS_ENDED";
 const REMOVE_KPK_CHILD = 'REMOVE_KPK_CHILD';
 
-let initialState: object = {
+let initialStateWidgets: InitialStateWidgetsType = {
   kpk: {},
   kpkChild: {},
   sc: [],
   todays: [],
   tops: [],
+  isFetchingWidgets: true,
   /*inf: [
     [
       "Чистая прибыль",
@@ -60,11 +77,10 @@ let initialState: object = {
       "100%"
     ]
   ],*/
-  isFetchingWidgets: true,
   /* srvOid: 0,*/
 };
 
-const widgetsReducer = (state = initialState, action: TypeActionWidgets) => {
+const widgetsReducer = (state = initialStateWidgets, action: ActionsWidgetsType) => {
   switch (action.type) {
     case SET_KPK:
       const kpk = (action.kpk)
@@ -99,14 +115,14 @@ const widgetsReducer = (state = initialState, action: TypeActionWidgets) => {
   }
 };
 
-export const setKPK = (kpk: any) => ({type: SET_KPK, kpk});
-export const setKPKChild = (kpkChild: any) => ({type: SET_KPK_CHILD, kpkChild});
-export const setSC = (sc: object[]) => ({type: SET_SC, sc});
-export const setTodays = (todays: object[]) => ({type: SET_TODAY, todays});
-export const setTops = (tops: object[]) => ({type: SET_TOPS, tops});
-export const setIsFetchingWidgetsStarted = () => ({type: SET_IS_FETCHING_WIDGETS_STARTED});
-export const setIsFetchingWidgetsEnded = () => ({type: SET_IS_FETCHING_WIDGETS_ENDED});
-export const removeKPKChild = () => ({type: REMOVE_KPK_CHILD});
+export const setKPK = (kpk: object): SetKPKActionType => ({type: SET_KPK, kpk});
+export const setKPKChild = (kpkChild: object): SetKPKChildActionType => ({type: SET_KPK_CHILD, kpkChild});
+export const setSC = (sc: object[]): SetSCActionType => ({type: SET_SC, sc});
+export const setTodays = (todays: object[]): SetTodaysActionType => ({type: SET_TODAY, todays});
+export const setTops = (tops: object[]): SetTopsActionType => ({type: SET_TOPS, tops});
+export const setIsFetchingWidgetsStarted = (): SetIsFetchingWidgetsStartedActionType => ({type: SET_IS_FETCHING_WIDGETS_STARTED});
+export const setIsFetchingWidgetsEnded = (): SetIsFetchingWidgetsEndedActionType => ({type: SET_IS_FETCHING_WIDGETS_ENDED});
+export const removeKPKChild = (): RemoveKPKChildActionType => ({type: REMOVE_KPK_CHILD});
 
 export const requestWidgets = (
   oid: string, period: string, periodType: string, numSC: number[] = [1, 2, 3], numTodays: number[] = [1, 2, 3], numTops: number[] = [1, 2]

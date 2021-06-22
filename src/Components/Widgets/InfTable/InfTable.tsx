@@ -7,7 +7,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import classes from "./InfTable.module.scss";
 import {InfTableProps} from "../../Common/Types";
-import WidgetsTitle from "../WidgetsTitle/WidgetsTitle";
 
 const InfTable: React.FC<InfTableProps> = ({inf: rows, widgetsTitle}) => {
   return (

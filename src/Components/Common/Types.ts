@@ -75,20 +75,7 @@ export interface KPKTableElements {
 
 // graph
 
-export interface GraphProps {
-  key: number
-  sc: WidgetsGraphElements
-  heightDisplay: number
-}
-
 export interface GraphElements {
   d: string
   v: number
-}
-
-//filters
-export interface RenderTree {
-  oid: string
-  name: string
-  children?: RenderTree[]
 }

@@ -2,7 +2,7 @@ import {filtersAPI} from "../../API/API";
 import {requestWidgets} from "./widgets-reducer";
 import {selectNameOrg} from "./selectors";
 
-interface TypeActionFilters {
+export type ActionsFiltersType = {
   type: string
   orgList: {
     data: []
@@ -11,7 +11,31 @@ interface TypeActionFilters {
   per: any
   point?: string
   name: string
-}
+};
+export type InitialStateFiltersType = {
+  orgList: {}
+  altOrgList: {}
+  orgMapList: Map<string, string>
+  periodNameMapList: Map<string, string>
+  perList: PeriodListType
+  isFetchingFilters: boolean,
+  orgOid: string
+  orgName: string
+  period: string
+  periodType: string
+  showFilters: boolean
+};
+export type PeriodListType = {
+  name: string
+  oid: string
+  children?: object[]
+};
+type SetOrgListActionType = { type: typeof SET_ORG_LIST, orgList: object };
+type SetPeriodActionType = { type: typeof SET_PERIOD, per: string };
+type SetOrgOidActionType = { type: typeof SET_ORG_OID, oid: string };
+type SetOrgNameActionType = { type: typeof SET_ORG_NAME, oid: string };
+type SetFiltersDefaultActionType = { type: typeof SET_FILTERS_DEFAULT };
+type SetShowFiltersActionType = { type: typeof SET_SHOW_FILTERS };
 
 const SET_ORG_LIST = "SET_ORG_LIST";
 const SET_PERIOD = "SET_PERIOD";
@@ -21,7 +45,7 @@ const SET_FILTERS_DEFAULT = "SET_FILTERS_DEFAULT";
 const SET_SHOW_FILTERS = "SET_SHOW_FILTERS";
 
 const tempPeriodNameMapList = new Map();
-const createPeriodTree = (st: Date, end: number) => {
+const createPeriodTree = (st: Date, end: number): PeriodListType => {
   //получить квартал по номеру месяца (от 0 - янв.)
   const getQuarter = (month: number) => {
     return Math.floor((month + 3) / 3);
@@ -112,10 +136,9 @@ const defaultFilters = {
   periodType: "m",
 };
 
-let initialState = {
+let initialStateFilters: InitialStateFiltersType = {
   orgList: {},
   altOrgList: {},
-  currFilters: {}, // переделать
   orgMapList: new Map([['281586771165316', "ООО ОСК ИнфоТранс"]]),
   periodNameMapList: tempPeriodNameMapList,
   perList: createPeriodTree(new Date(2020, 0, 1), Date.now()),
@@ -124,21 +147,14 @@ let initialState = {
   orgName: localStorage.getItem('orgName') || defaultFilters.orgName,
   period: localStorage.getItem('period') || defaultFilters.period,
   periodType: localStorage.getItem('periodType') || defaultFilters.periodType,
-  periodName: "3 кв 2021",
-  ktl: {
-    kaAtr: 'ka', // or mct
-    ktlOid: '281586771165316',
-  },
-  val: 'percent',
-  selectedFilters: {
-    selectedOrgOid: localStorage.getItem('orgOid') || '281586771165316',
-    selectedPeriod: localStorage.getItem('period') || "2021-03",
-    selectedPeriodType: localStorage.getItem('periodType') || "y",
-  },
   showFilters: localStorage.getItem('showFilters') !== 'false',
+  /*  ktl: {
+      kaAtr: 'ka', // or mct
+      ktlOid: '281586771165316',
+    },*/
 };
 
-const filtersReducer = (state = initialState, action: TypeActionFilters) => {
+const filtersReducer = (state = initialStateFilters, action: ActionsFiltersType): InitialStateFiltersType => {
   switch (action.type) {
     case SET_ORG_LIST:
       return {...state, orgList: action.orgList.data, isFetchingFilters: false};
@@ -181,12 +197,12 @@ const filtersReducer = (state = initialState, action: TypeActionFilters) => {
   }
 };
 
-export const setOrgList = (orgList: any) => ({type: SET_ORG_LIST, orgList});
-export const setPeriod = (per: string) => ({type: SET_PERIOD, per});
-export const setOrgOid = (oid: string) => ({type: SET_ORG_OID, oid});
-export const setOrgName = (oid: string) => ({type: SET_ORG_NAME, oid});
-export const setFiltersDefault = () => ({type: SET_FILTERS_DEFAULT});
-export const setShowFilters = () => ({type: SET_SHOW_FILTERS});
+export const setOrgList = (orgList: object): SetOrgListActionType => ({type: SET_ORG_LIST, orgList});
+export const setPeriod = (per: string): SetPeriodActionType => ({type: SET_PERIOD, per});
+export const setOrgOid = (oid: string): SetOrgOidActionType => ({type: SET_ORG_OID, oid});
+export const setOrgName = (oid: string): SetOrgNameActionType => ({type: SET_ORG_NAME, oid});
+export const setFiltersDefault = (): SetFiltersDefaultActionType => ({type: SET_FILTERS_DEFAULT});
+export const setShowFilters = (): SetShowFiltersActionType => ({type: SET_SHOW_FILTERS});
 
 export const requestOrg = () => async (dispatch: any) => {
   const response = await filtersAPI.getOrg();
@@ -199,7 +215,7 @@ export const requestWidgetsFromFilters = (oid: string, period: string, periodTyp
 export const requestSetFiltersDefault = () => async (dispatch: any) => {
   dispatch(requestWidgets(defaultFilters.orgOid, defaultFilters.period, defaultFilters.periodType));
   dispatch(setFiltersDefault());
-}
+};
 
 
 export default filtersReducer;

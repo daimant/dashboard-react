@@ -14,7 +14,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabe
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const CheckedValueKPK: React.FC<any> = ({hidden, requestSetHiddenUnusedKPK}) => {
-  const useStyles = makeStyles((theme) => ({
+  const useStyles = makeStyles(() => ({
       toggle: {
         '& .Mui-checked + .MuiSwitch-track': {
           backgroundColor: '#52d869'

@@ -1,4 +1,4 @@
-// import {RootState} from "../Common/Types";
+// import {RootState} from "./store";
 
 //widgets
 export const selectKPK = (state: any, kpkName: string = 'kpk') => {
@@ -43,7 +43,7 @@ export const selectSC = (state: any) => {
       continue;
     }
 
-    const point = state.widgets.sc[i]
+    const point = state.widgets.sc[i];
     for (let i in point.data) {
       if (point.data[i]['p'] <= 1)
         point.data[i]['p'] = +(point.data[i]['p'] * 100).toFixed(2);
@@ -71,7 +71,7 @@ export const selectTops = (state: any) => {
       continue;
     }
 
-    const point = state.widgets.tops[i]
+    const point = state.widgets.tops[i];
     for (let i in point.data) {
       if (point.data[i]['p'] <= 1)
         point.data[i]['p'] = +(point.data[i]['p'] * 100).toFixed(2);
