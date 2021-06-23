@@ -8,23 +8,12 @@ export type ActionsFiltersType = {
     data: []
   }
   oid: string
-  per: any
+  per: string
   point?: string
   name: string
 };
-export type InitialStateFiltersType = {
-  orgList: {}
-  altOrgList: {}
-  orgMapList: Map<string, string>
-  periodNameMapList: Map<string, string>
-  perList: PeriodListType
-  isFetchingFilters: boolean,
-  orgOid: string
-  orgName: string
-  period: string
-  periodType: string
-  showFilters: boolean
-};
+export type InitialStateFiltersType = typeof initialStateFilters;
+
 export type PeriodListType = {
   name: string
   oid: string
@@ -61,13 +50,13 @@ const createPeriodTree = (st: Date, end: number): PeriodListType => {
   const months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль',
     'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
   // формат числа с лидирующими нулями
-  const pad = (num: any, size: number) => {
+  const pad = (num: number | string, size: number) => {
     num = num.toString();
     while (num.length < size) num = "0" + num;
     return num;
   };
   // создаем произвольный узел
-  const createNode = (name: string, oid: any, children: object[]) => {
+  const createNode = (name: string, oid: string, children: object[]) => {
     return {
       name: name,
       oid: oid,
@@ -136,18 +125,18 @@ const defaultFilters = {
   periodType: "m",
 };
 
-let initialStateFilters: InitialStateFiltersType = {
+let initialStateFilters = {
   orgList: {},
   altOrgList: {},
-  orgMapList: new Map([['281586771165316', "ООО ОСК ИнфоТранс"]]),
-  periodNameMapList: tempPeriodNameMapList,
-  perList: createPeriodTree(new Date(2020, 0, 1), Date.now()),
-  isFetchingFilters: true,
-  orgOid: localStorage.getItem('orgOid') || defaultFilters.orgOid,
-  orgName: localStorage.getItem('orgName') || defaultFilters.orgName,
-  period: localStorage.getItem('period') || defaultFilters.period,
-  periodType: localStorage.getItem('periodType') || defaultFilters.periodType,
-  showFilters: localStorage.getItem('showFilters') !== 'false',
+  orgMapList: new Map([['281586771165316', "ООО ОСК ИнфоТранс"]]) as Map<string, string>,
+  periodNameMapList: tempPeriodNameMapList as Map<string, string>,
+  perList: createPeriodTree(new Date(2020, 0, 1), Date.now()) as PeriodListType,
+  isFetchingFilters: true as boolean,
+  orgOid: localStorage.getItem('orgOid') || defaultFilters.orgOid as string,
+  orgName: localStorage.getItem('orgName') || defaultFilters.orgName as string,
+  period: localStorage.getItem('period') || defaultFilters.period as string,
+  periodType: localStorage.getItem('periodType') || defaultFilters.periodType as string,
+  showFilters: localStorage.getItem('showFilters') === 'true' ? true : false as boolean,
   /*  ktl: {
       kaAtr: 'ka', // or mct
       ktlOid: '281586771165316',

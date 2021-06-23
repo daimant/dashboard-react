@@ -2,8 +2,8 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {requestKPKChild, removeKPKChild, requestWidgets} from "../Redux/widgets-reducer";
 import {
-  selectInf, selectIsFetchingWidgets, selectKPK, selectOrgOid, selectPeriod,
-  selectPeriodType, selectSC, selectTodays, selectTops
+  /*selectInf, */ selectIsFetchingWidgets, selectKPK, selectOrgOid, selectPeriod,
+  selectPeriodType, selectGraph, selectTodays
 } from "../Redux/selectors";
 import Widgets from "./Widgets";
 import {WidgetsStateProps, RootState} from "../Common/Types";
@@ -20,7 +20,9 @@ class WidgetsContainer extends Component<any> {
         sc={this.props.sc}
         todays={this.props.todays}
         tops={this.props.tops}
-        inf={this.props.inf}
+        /*
+                inf={this.props.inf}
+        */
         isFetchingWidgets={this.props.isFetchingWidgets}
         orgOid={this.props.orgOid}
         period={this.props.period}
@@ -36,10 +38,12 @@ class WidgetsContainer extends Component<any> {
 
 const mapState = (state: RootState) => ({
   kpk: selectKPK(state),
-  sc: selectSC(state),
+  sc: selectGraph(state, 'sc'),
+  tops: selectGraph(state, 'tops'),
   todays: selectTodays(state),
-  tops: selectTops(state),
-  inf: selectInf(state),
+  /*
+    inf: selectInf(state),
+  */
   isFetchingWidgets: selectIsFetchingWidgets(state),
   orgOid: selectOrgOid(state),
   period: selectPeriod(state),

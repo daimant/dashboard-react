@@ -35,22 +35,22 @@ export const selectKPK = (state: any, kpkName: string = 'kpk') => {
 
   return {cols: kpk.nameCol, data: parsedKPK};
 };
-export const selectSC = (state: any) => {
-  if (!state.widgets.sc) return {};
-  for (let i in state.widgets.sc) {
-    if (!state.widgets.sc[i]) {
-      state.widgets.sc[i] = {title: 'Ошибка при загрузке', data: []};
+export const selectGraph = (state: any, howGraph: string) => {
+  if (!state.widgets[howGraph]) return {};
+  for (let i in state.widgets[howGraph]) {
+    if (!state.widgets[howGraph][i]) {
+      state.widgets[howGraph][i] = {title: 'Ошибка при загрузке', data: []};
       continue;
     }
 
-    const point = state.widgets.sc[i];
+    const point = state.widgets[howGraph][i];
     for (let i in point.data) {
       if (point.data[i]['p'] <= 1)
         point.data[i]['p'] = +(point.data[i]['p'] * 100).toFixed(2);
     }
   }
 
-  return state.widgets.sc
+  return state.widgets[howGraph]
 };
 export const selectTodays = (state: any) => {
   if (!state.widgets.todays.length) return [];
@@ -63,24 +63,7 @@ export const selectTodays = (state: any) => {
   }
   return state.widgets.todays;
 };
-export const selectTops = (state: any) => {
-  if (!state.widgets.tops) return {};
-  for (let i in state.widgets.tops) {
-    if (!state.widgets.tops[i]) {
-      state.widgets.tops[i] = {title: 'Ошибка при загрузке', data: []};
-      continue;
-    }
-
-    const point = state.widgets.tops[i];
-    for (let i in point.data) {
-      if (point.data[i]['p'] <= 1)
-        point.data[i]['p'] = +(point.data[i]['p'] * 100).toFixed(2);
-    }
-  }
-
-  return state.widgets.tops
-};
-
+/*
 export const selectInf = (state: any) => {
   const {inf} = state.widgets;
   const parsedInf: object[] = [];
@@ -92,6 +75,7 @@ export const selectInf = (state: any) => {
   }
   return parsedInf;
 };
+*/
 export const selectIsFetchingWidgets = (state: any) => state.widgets.isFetchingWidgets;
 
 //filters

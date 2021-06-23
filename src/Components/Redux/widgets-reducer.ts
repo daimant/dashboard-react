@@ -14,13 +14,16 @@ export type ActionsWidgetsType = {
   todays: object[]
   tops: object[]
 }
-export type InitialStateWidgetsType = {
-  kpk: object,
-  kpkChild: object,
-  sc: [],
-  todays: [],
-  tops: [],
-  isFetchingWidgets: boolean,
+export type InitialStateWidgetsType = typeof initialStateWidgets;
+export type KPKType = {
+  nameCol: [string, string, string, string]
+  data: KPKRowsType
+}
+export type KPKRowsType = {
+  Период: string
+  Сегодня: string
+  Сервис_oid: number
+  Услуга: string
 }
 type SetKPKActionType = { type: typeof SET_KPK, kpk: object };
 type SetKPKChildActionType = { type: typeof SET_KPK_CHILD, kpkChild: object };
@@ -40,13 +43,13 @@ const SET_IS_FETCHING_WIDGETS_STARTED = "SET_IS_FETCHING_WIDGETS_STARTED";
 const SET_IS_FETCHING_WIDGETS_ENDED = "SET_IS_FETCHING_WIDGETS_ENDED";
 const REMOVE_KPK_CHILD = 'REMOVE_KPK_CHILD';
 
-let initialStateWidgets: InitialStateWidgetsType = {
-  kpk: {},
-  kpkChild: {},
-  sc: [],
-  todays: [],
-  tops: [],
-  isFetchingWidgets: true,
+let initialStateWidgets = {
+  kpk: {} as {} | KPKType,
+  kpkChild: {} as {} | KPKType,
+  sc: [] as Array<object>,
+  todays: [] as Array<object>,
+  tops: [] as Array<object>,
+  isFetchingWidgets: true as boolean,
   /*inf: [
     [
       "Чистая прибыль",
@@ -80,7 +83,7 @@ let initialStateWidgets: InitialStateWidgetsType = {
   /* srvOid: 0,*/
 };
 
-const widgetsReducer = (state = initialStateWidgets, action: ActionsWidgetsType) => {
+const widgetsReducer = (state = initialStateWidgets, action: ActionsWidgetsType): InitialStateWidgetsType => {
   switch (action.type) {
     case SET_KPK:
       const kpk = (action.kpk)
