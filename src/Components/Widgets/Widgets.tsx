@@ -1,4 +1,4 @@
-import React from "react";
+import React, {FC} from "react";
 import classes from "./Widgets.module.scss";
 import KPKTable from "./KPKTable/KPKTable";
 import Graph from "./Graph/Graph";
@@ -16,7 +16,6 @@ export type GraphElementsType = {
   d: string
   v: number
 }
-export type TodaysType = { title: string, v1: number, p: number, err: boolean };
 
 const Widgets: React.FC<any> = props => {
   const {
@@ -30,9 +29,7 @@ const Widgets: React.FC<any> = props => {
     <div>
       <main>
         <KPKTable kpk={kpkChild.data ? kpkChild : kpk} requestKPKChild={requestKPKChild} removeKPKChild={removeKPKChild}
-                  orgOid={orgOid} period={period} periodType={periodType}
-                  cols={kpkChild.data ? kpkChild.cols : kpk.cols}
-                  rows={kpkChild.data ? kpkChild.data : kpk.data}/>
+                  orgOid={orgOid} period={period} periodType={periodType}/>
         <div className={classes.graphs}>
           <h4 className={classes.headCircularBar}>СЕГОДНЯ</h4>
           {todays.map((el: TodaysType, i: number) =>

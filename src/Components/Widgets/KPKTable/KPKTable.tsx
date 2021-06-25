@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC} from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -43,8 +43,9 @@ const CheckedValueKPK: React.FC<any> = ({hidden, requestSetHiddenUnusedKPK}) => 
   )
 };
 
-const KPKTable: React.FC<any> = ({requestKPKChild, removeKPKChild, orgOid, period, periodType, cols, rows}) => {
+const KPKTable: FC<any> = ({requestKPKChild, removeKPKChild, orgOid, period, periodType, kpk}) => {
   const [hiddenUnusedKPK, setHiddenUnusedKPK] = React.useState(localStorage.getItem('KPKRowHidden') === "1" || false);
+  const {cols, data: rows} = kpk;
 
   if (!cols.length) return <Preloader/>;
   const [id, colsHead, value] = cols;
