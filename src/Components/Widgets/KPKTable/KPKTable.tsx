@@ -45,7 +45,7 @@ const CheckedValueKPK: React.FC<any> = ({hidden, requestSetHiddenUnusedKPK}) => 
 
 const KPKTable: FC<any> = ({requestKPKChild, removeKPKChild, orgOid, period, periodType, kpk}) => {
   const [hiddenUnusedKPK, setHiddenUnusedKPK] = React.useState(localStorage.getItem('KPKRowHidden') === "1" || false);
-  const {cols, data: rows} = kpk;
+  const {cols, rows} = kpk;
 
   if (!cols.length) return <Preloader/>;
   const [id, colsHead, value] = cols;

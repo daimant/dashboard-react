@@ -1,40 +1,7 @@
-// import {RootState} from "./store";
+import {RootStateType} from "./store";
 
 //widgets
-export const selectKPK = (state: any, kpkName: string = 'kpk') => {
-  const kpk = state.widgets[kpkName === 'child' ? 'kpkChild' : 'kpk'];
-
-  if (!kpk.data) return {};
-
-  const parsedKPK = [];
-  // идем по строкам сервисов
-  for (let i = 0; i < kpk.data.length; i++) {
-    const currObj: any = {};
-
-    // идем по элеентам в строках
-    for (let j = 0; j < kpk.nameCol.length; j++) {
-      //пропускаем оид в каждой строке
-      if (j === 0)
-        currObj[kpk.nameCol[j]] = kpk.data[i][j];
-      else {
-        //конвертируем в стринг значения для построения таблицы кпк
-        if (typeof kpk.data[i][j] === 'number')
-          kpk.data[i][j] += '';
-
-        let currVal = kpk.data[i][j].replace(/,/, ".");
-
-        currObj[kpk.nameCol[j]] = +currVal && +currVal % 1
-          ? (+currVal).toFixed(2)
-          : +currVal
-            ? +currVal
-            : currVal;
-      }
-    }
-    parsedKPK.push(currObj);
-  }
-
-  return {cols: kpk.nameCol, data: parsedKPK};
-};
+export const selectKPK = (state: RootStateType, kpkName: string = 'kpk') => kpkName === 'child' ? state.widgets.kpkChild : state.widgets.kpk;
 export const selectGraph = (state: any, howGraph: string) => {
   if (!state.widgets[howGraph]) return {};
   for (let i in state.widgets[howGraph]) {
@@ -76,7 +43,7 @@ export const selectInf = (state: any) => {
   return parsedInf;
 };
 */
-export const selectIsFetchingWidgets = (state: any) => state.widgets.isFetchingWidgets;
+export const selectIsFetchingWidgets = (state: RootStateType) => state.widgets.isFetchingWidgets;
 
 //filters
 export const selectOrgList = (state: any) => {
@@ -117,19 +84,19 @@ export const selectOrgList = (state: any) => {
   state.filters.orgList = currOrgList[0];
   return currOrgList[0];
 };
-export const selectIsFetchingFilters = (state: any) => state.filters.isFetchingFilters;
-export const selectOrgOid = (state: any) => state.filters.orgOid;
-export const selectOrgName = (state: any) => state.filters.orgName;
+export const selectIsFetchingFilters = (state: RootStateType) => state.filters.isFetchingFilters;
+export const selectOrgOid = (state: RootStateType) => state.filters.orgOid;
+export const selectOrgName = (state: RootStateType) => state.filters.orgName;
 export const selectKTL = (state: any) => state.filters.ktl;
 export const selectVal = (state: any) => state.filters.val;
-export const selectPerList = (state: any) => state.filters.perList;
-export const selectPeriod = (state: any) => state.filters.period;
-export const selectPeriodType = (state: any) => state.filters.periodType;
+export const selectPerList = (state: RootStateType) => state.filters.perList;
+export const selectPeriod = (state: RootStateType) => state.filters.period;
+export const selectPeriodType = (state: RootStateType) => state.filters.periodType;
 export const selectSelectedFilters = (state: any) => state.filters.selectedFilters;
-export const selectShowFilters = (state: any) => state.filters.showFilters;
-export const selectOrgMapList = (state: any) => state.filters.orgMapList;
-export const selectPeriodNameMapList = (state: any) => state.filters.periodNameMapList;
-export const selectAltOrgList = (state: any) => state.filters.altOrgList;
+export const selectShowFilters = (state: RootStateType) => state.filters.showFilters;
+export const selectOrgMapList = (state: RootStateType) => state.filters.orgMapList;
+export const selectPeriodNameMapList = (state: RootStateType) => state.filters.periodNameMapList;
+export const selectAltOrgList = (state: RootStateType) => state.filters.altOrgList;
 
 // filters-reducer
 export const selectNameOrg = (state: any, oid: string) => state.orgMapList.get(oid);

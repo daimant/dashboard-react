@@ -4,14 +4,14 @@ import filtersReducer from "./filters-reducer";
 import thunkMiddleware from "redux-thunk";
 import {composeWithDevTools} from 'redux-devtools-extension';
 
-const reducers = combineReducers({
+const rootReducer = combineReducers({
   filters: filtersReducer,
   widgets: widgetsReducer,
 });
 
-const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunkMiddleware)));
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunkMiddleware)));
 
-// export type RootState = ReturnType<typeof store.getState>;
-// export type DispatchType = typeof store.dispatch;
+export type RootStateType = ReturnType<typeof store.getState>;
+export type DispatchType = typeof store.dispatch;
 
 export default store;

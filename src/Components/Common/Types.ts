@@ -1,81 +1,84 @@
 // widgets container
 
-export interface WidgetsStateProps {
-  kpk: WidgetsKPKElements
-  sc: WidgetsGraphElements[]
-  inf: InfTableElements[]
-  isFetchingWidgets: boolean
-  heightDisplay: number
-  orgOid: string
-  period: string
-  periodType: string
-}
+// @ts-ignore
+const example = {}
 
-export interface RootState {
-  widgets: WidgetsStateProps
-  filters: {
-    isFetchingFilters: boolean
-    data: []
-  }
-}
-
-// widgets
-
-export interface WidgetsPropsElements {
-  kpk: WidgetsKPKElements
-  sc: WidgetsGraphElements[]
-  inf: InfTableElements[]
-  isFetchingWidgets: boolean
-  heightDisplay: number
-}
-
-interface WidgetsKPKElements {
-  data: object[]
-  cols: [
-    number,
-    string,
-    string,
-    string
-  ]
-  kpk: KPKTableElements[]
-}
-
-export interface WidgetsGraphElements {
-  id?: number
-  title: string
-  max: number
-  min: number
-  data: GraphElements[]
-}
-
-// inf table
-
-export interface InfTableProps {
-  inf: InfTableElements[]
-  widgetsTitle: string
-}
-
-export interface InfTableElements {
-  name: string
-  value: string
-}
-
-// kpk table
-
-export interface KPKTablePropsElements {
-  kpk: WidgetsKPKElements
-}
-
-export interface KPKTableElements {
-  Сервис_oid: number
-  Сервис: string
-  Период: string
-  Сегодня: string
-}
-
-// graph
-
-export interface GraphElements {
-  d: string
-  v: number
-}
+// export interface WidgetsStateProps {
+//   kpk: WidgetsKPKElements
+//   sc: WidgetsGraphElements[]
+//   inf: InfTableElements[]
+//   isFetchingWidgets: boolean
+//   heightDisplay: number
+//   orgOid: string
+//   period: string
+//   periodType: string
+// }
+//
+// export interface RootState {
+//   widgets: WidgetsStateProps
+//   filters: {
+//     isFetchingFilters: boolean
+//     data: []
+//   }
+// }
+//
+// // widgets
+//
+// export interface WidgetsPropsElements {
+//   kpk: WidgetsKPKElements
+//   sc: WidgetsGraphElements[]
+//   inf: InfTableElements[]
+//   isFetchingWidgets: boolean
+//   heightDisplay: number
+// }
+//
+// interface WidgetsKPKElements {
+//   data: object[]
+//   cols: [
+//     number,
+//     string,
+//     string,
+//     string
+//   ]
+//   kpk: KPKTableElements[]
+// }
+//
+// export interface WidgetsGraphElements {
+//   id?: number
+//   title: string
+//   max: number
+//   min: number
+//   data: GraphElements[]
+// }
+//
+// // inf table
+//
+// export interface InfTableProps {
+//   inf: InfTableElements[]
+//   widgetsTitle: string
+// }
+//
+// export interface InfTableElements {
+//   name: string
+//   value: string
+// }
+//
+// // kpk table
+//
+// export interface KPKTablePropsElements {
+//   kpk: WidgetsKPKElements
+// }
+//
+// export interface KPKTableElements {
+//   Сервис_oid: number
+//   Сервис: string
+//   Период: string
+//   Сегодня: string
+// }
+//
+// // graph
+//
+// export interface GraphElements {
+//   d: string
+//   v: number
+// }
