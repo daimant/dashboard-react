@@ -1,6 +1,6 @@
 import {widgetsAPI} from "../../API/API";
 
-export type ActionsWidgetsType = {
+type ActionsWidgetsType = {
   type: string
   kpk: {
     data: object
@@ -14,17 +14,29 @@ export type ActionsWidgetsType = {
   todays: object[]
   tops: object[]
 }
-export type InitialStateWidgetsType = typeof initialStateWidgets;
+type InitialStateWidgetsType = typeof initialStateWidgets;
+
 export type KPKType = {
   nameCol: [string, string, string, string]
   data: KPKRowsType
 }
-export type KPKRowsType = {
+type KPKRowsType = {
   Период: string
   Сегодня: string
   Сервис_oid: number
   Услуга: string
 }
+export type GraphType = {
+  id?: number
+  title: string
+  data: GraphElementsType[]
+};
+type GraphElementsType = {
+  d: string
+  v: number
+};
+export type TodaysType = { title: string, v1: number, p: number, err: boolean };
+
 type SetKPKActionType = { type: typeof SET_KPK, kpk: object };
 type SetKPKChildActionType = { type: typeof SET_KPK_CHILD, kpkChild: object };
 type SetSCActionType = { type: typeof SET_SC, sc: object[] };

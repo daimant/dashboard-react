@@ -2,19 +2,16 @@ import {filtersAPI} from "../../API/API";
 import {requestWidgets} from "./widgets-reducer";
 import {selectNameOrg} from "./selectors";
 
-export type ActionsFiltersType = {
+type ActionsFiltersType = {
   type: string
   orgList: {
     data: []
   }
   oid: string
   per: string
-  point?: string
-  name: string
 };
-export type InitialStateFiltersType = typeof initialStateFilters;
-
-export type PeriodListType = {
+type InitialStateFiltersType = typeof initialStateFilters;
+type PeriodListType = {
   name: string
   oid: string
   children?: object[]
