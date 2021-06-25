@@ -6,7 +6,7 @@ import {
   selectPeriodType, selectGraph, selectTodays
 } from "../Redux/selectors";
 import Widgets from "./Widgets";
-import {WidgetsStateProps, RootState} from "../Common/Types";
+import {RootStateType} from "../Redux/store";
 
 class WidgetsContainer extends Component<any> {
   componentDidMount() {
