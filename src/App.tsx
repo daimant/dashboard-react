@@ -11,6 +11,7 @@ function App() {
         <NavbarContainer/>
         <FiltersContainer/>
       </header>
+      {/*// @ts-ignore*/}
       <WidgetsContainer/>
     </div>
   );

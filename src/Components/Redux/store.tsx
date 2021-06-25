@@ -1,4 +1,4 @@
-import {applyMiddleware, combineReducers, compose, createStore} from "redux";
+import {applyMiddleware, combineReducers, createStore} from "redux";
 import widgetsReducer from "./widgets-reducer";
 import filtersReducer from "./filters-reducer";
 import thunkMiddleware from "redux-thunk";

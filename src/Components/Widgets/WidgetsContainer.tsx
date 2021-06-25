@@ -1,6 +1,13 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {requestKPKChild, removeKPKChild, requestWidgets} from "../Redux/widgets-reducer";
+import {
+  requestKPKChild,
+  removeKPKChild,
+  requestWidgets,
+  KPKType,
+  GraphType,
+  TodaysType
+} from "../Redux/widgets-reducer";
 import {
   /*selectInf, */ selectIsFetchingWidgets, selectKPK, selectOrgOid, selectPeriod,
   selectPeriodType, selectGraph, selectTodays
@@ -8,7 +15,25 @@ import {
 import Widgets from "./Widgets";
 import {RootStateType} from "../Redux/store";
 
-class WidgetsContainer extends Component<any> {
+type MapStatePropsType = {
+  kpk: KPKType
+  sc: GraphType[]
+  isFetchingWidgets: boolean
+  orgOid: string
+  period: string
+  periodType: string
+  kpkChild: KPKType
+  todays: TodaysType[]
+  tops: GraphType[]
+}
+type MapDispatchPropsType = {
+  requestWidgets: (oid: string, period: string, periodType: string) => void
+  requestKPKChild: (orgOid: string, period: string, periodType: string, serviceOid: string) => void
+  removeKPKChild: () => void
+}
+type PropsWidgetsContainerType = MapStatePropsType & MapDispatchPropsType
+
+class WidgetsContainer extends Component<PropsWidgetsContainerType> {
   componentDidMount() {
     this.props.requestWidgets(this.props.orgOid, this.props.period, this.props.periodType);
   }
@@ -35,8 +60,8 @@ class WidgetsContainer extends Component<any> {
     );
   }
 }
-
-const mapState = (state: RootState) => ({
+const mapState = (state: RootStateType): MapStatePropsType => ({
+// @ts-ignore
   kpk: selectKPK(state),
   sc: selectGraph(state, 'sc'),
   tops: selectGraph(state, 'tops'),
@@ -48,11 +73,12 @@ const mapState = (state: RootState) => ({
   orgOid: selectOrgOid(state),
   period: selectPeriod(state),
   periodType: selectPeriodType(state),
+  // @ts-ignore
   kpkChild: selectKPK(state, 'child'),
 });
 
 // @ts-ignore
-export default connect<WidgetsStateProps, {}, {}>(mapState, {
+export default connect<MapStatePropsType, MapDispatchPropsType, {}, RootStateType>(mapState, {
   requestWidgets,
   requestKPKChild,
   removeKPKChild
