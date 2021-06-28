@@ -57,27 +57,28 @@ const KPKTable: FC<any> = ({requestKPKChild, removeKPKChild, orgOid, period, per
   return (
     <div className={classes.kpkTable}>
       <TableContainer component={Paper} className={classes.tableContainer}>
-        <Table size="small" stickyHeader aria-label="a dense table">
-          <TableHead>
-            <TableRow>
+        <Table size="small" stickyHeader aria-label="a dense table" component={'table'}>
+          <TableHead component={'thead'}>
+            <TableRow component={"tr"}>
               <TableCell className={classes.cell}>
                 <div className={classes.tableHead}>
                   {colsHead === 'Услуга' || colsHead === 'Ошибка при загрузке'
                     ? <span>{colsHead}</span>
                     : <span className={classes.tableHead}>
-                      <CloseIcon fontSize='small' onClick={removeKPKChild}/>
+                      <CloseIcon fontSize='small' onClick={removeKPKChild} component={'span'}/>
                       {colsHead}
                     </span>
                   }
                   <CheckedValueKPK hidden={hiddenUnusedKPK} requestSetHiddenUnusedKPK={requestSetHiddenUnusedKPK}/>
                 </div>
               </TableCell>
-              <TableCell align="right" className={classes.cell}>{value}</TableCell>
+              <TableCell className={classes.cell}>{value}</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody component={'tbody'}>
             {rows.map((row: any) => (
               <TableRow key={row[id]}
+                        component={"tr"}
                         style={row[value] === '-' && hiddenUnusedKPK ? {display: 'none'} : {}}
                         className={
                           row[value] !== '-' && colsHead === 'Услуга'
@@ -95,7 +96,7 @@ const KPKTable: FC<any> = ({requestKPKChild, removeKPKChild, orgOid, period, per
                 <TableCell component="th" scope="row" className={classes.cell}>{
                   row[colsHead]
                 }</TableCell>
-                <TableCell align="right" className={classes.cell}>{
+                <TableCell  className={`${classes.cell} ${classes.rightColumn}`}>{
                   row[value]
                 }</TableCell>
               </TableRow>
