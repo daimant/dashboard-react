@@ -8,14 +8,15 @@ import {GraphType, KPKType, TodaysType} from "../Redux/widgets-reducer";
 
 type PropsType = {
   kpk: KPKType
-  sc : GraphType[]
+  kpkChild: KPKType
+  sc: Array<GraphType>
+  tops: Array<GraphType>
+  todays: Array<TodaysType>
   isFetchingWidgets: boolean
   orgOid: string
   period: string
   periodType: string
-  kpkChild: KPKType
-  todays: TodaysType[]
-  tops: GraphType[]
+
   requestKPKChild: (orgOid: string, period: string, periodType: string, serviceOid: string) => void
   removeKPKChild: () => void
 }
@@ -29,8 +30,8 @@ const Widgets: FC<PropsType> = ({
   return (
     <div>
       <main>
-        <KPKTable kpk={kpkChild.rows ? kpkChild : kpk} requestKPKChild={requestKPKChild} removeKPKChild={removeKPKChild}
-                  orgOid={orgOid} period={period} periodType={periodType}/>
+        <KPKTable kpk={kpkChild.hasOwnProperty('rows') ? kpkChild : kpk} requestKPKChild={requestKPKChild}
+                  removeKPKChild={removeKPKChild} orgOid={orgOid} period={period} periodType={periodType}/>
         <div className={classes.graphs}>
           <h4 className={classes.headCircularBar}>СЕГОДНЯ</h4>
           {todays.map((el: TodaysType, i: number) =>

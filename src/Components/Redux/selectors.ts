@@ -1,35 +1,11 @@
 import {RootStateType} from "./store";
 
 //widgets
-export const selectKPK = (state: RootStateType, kpkName: string = 'kpk') => kpkName === 'child' ? state.widgets.kpkChild : state.widgets.kpk;
-export const selectGraph = (state: any, howGraph: string) => {
-  if (!state.widgets[howGraph]) return {};
-  for (let i in state.widgets[howGraph]) {
-    if (!state.widgets[howGraph][i]) {
-      state.widgets[howGraph][i] = {title: 'Ошибка при загрузке', data: []};
-      continue;
-    }
-
-    const point = state.widgets[howGraph][i];
-    for (let i in point.data) {
-      if (point.data[i]['p'] <= 1)
-        point.data[i]['p'] = +(point.data[i]['p'] * 100).toFixed(2);
-    }
-  }
-
-  return state.widgets[howGraph]
-};
-export const selectTodays = (state: any) => {
-  if (!state.widgets.todays.length) return [];
-
-  for (let i in state.widgets.todays) {
-    if (!state.widgets.todays[i] || state.widgets.todays[i].v1 === null || state.widgets.todays[i].p === null)
-      state.widgets.todays[i] = {title: "Ошибка при загрузке", err: true};
-    else if (state.widgets.todays[i].p <= 1)
-      state.widgets.todays[i].p = +(state.widgets.todays[i].p * 100).toFixed(1);
-  }
-  return state.widgets.todays;
-};
+export const selectKPK = (state: RootStateType) => state.widgets.kpk;
+export const selectKPKChild = (state: RootStateType) => state.widgets.kpkChild;
+export const selectSC = (state: RootStateType) => state.widgets.sc;
+export const selectTops = (state: RootStateType) => state.widgets.tops;
+export const selectTodays = (state: RootStateType) => state.widgets.todays;
 /*
 export const selectInf = (state: any) => {
   const {inf} = state.widgets;

@@ -10,30 +10,30 @@ import {
 } from "../Redux/widgets-reducer";
 import {
   /*selectInf, */ selectIsFetchingWidgets, selectKPK, selectOrgOid, selectPeriod,
-  selectPeriodType, selectGraph, selectTodays
+  selectPeriodType, selectTodays, selectKPKChild, selectTops, selectSC
 } from "../Redux/selectors";
 import Widgets from "./Widgets";
 import {RootStateType} from "../Redux/store";
 
 type MapStatePropsType = {
   kpk: KPKType
-  sc: GraphType[]
+  kpkChild: KPKType
+  sc: Array<GraphType>
+  tops: Array<GraphType>
+  todays: Array<TodaysType>
   isFetchingWidgets: boolean
   orgOid: string
   period: string
   periodType: string
-  kpkChild: KPKType
-  todays: TodaysType[]
-  tops: GraphType[]
 }
 type MapDispatchPropsType = {
   requestWidgets: (oid: string, period: string, periodType: string) => void
   requestKPKChild: (orgOid: string, period: string, periodType: string, serviceOid: string) => void
   removeKPKChild: () => void
 }
-type PropsWidgetsContainerType = MapStatePropsType & MapDispatchPropsType
+type PropsType = MapStatePropsType & MapDispatchPropsType
 
-class WidgetsContainer extends Component<PropsWidgetsContainerType> {
+class WidgetsContainer extends Component<PropsType> {
   componentDidMount() {
     this.props.requestWidgets(this.props.orgOid, this.props.period, this.props.periodType);
   }
@@ -61,10 +61,10 @@ class WidgetsContainer extends Component<PropsWidgetsContainerType> {
   }
 }
 const mapState = (state: RootStateType): MapStatePropsType => ({
-// @ts-ignore
   kpk: selectKPK(state),
-  sc: selectGraph(state, 'sc'),
-  tops: selectGraph(state, 'tops'),
+  kpkChild: selectKPKChild(state),
+  sc: selectSC(state),
+  tops: selectTops(state),
   todays: selectTodays(state),
   /*
     inf: selectInf(state),
@@ -73,8 +73,6 @@ const mapState = (state: RootStateType): MapStatePropsType => ({
   orgOid: selectOrgOid(state),
   period: selectPeriod(state),
   periodType: selectPeriodType(state),
-  // @ts-ignore
-  kpkChild: selectKPK(state, 'child'),
 });
 
 // @ts-ignore
