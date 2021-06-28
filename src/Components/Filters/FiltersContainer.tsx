@@ -3,8 +3,8 @@ import {connect} from "react-redux";
 import Filters from "./Filters";
 import {requestOrg, requestWidgetsFromFilters, requestSetFiltersDefault, setOrgOid, setPeriod} from "../Redux/filters-reducer";
 import {
-  selectIsFetchingFilters, selectKTL, selectOrgList, selectOrgName, selectOrgOid, selectPeriod, selectPeriodType,
-  selectPerList, selectSelectedFilters, selectShowFilters, selectVal, selectAltOrgList, selectIsFetchingWidgets
+  selectIsFetchingFilters, /*selectVal, selectKTL,*/ selectOrgList, selectOrgOid, selectPeriod, selectPeriodType,
+  selectPerList, selectShowFilters, selectAltOrgList, selectIsFetchingWidgets
 } from "../Redux/selectors";
 import {RootStateType} from "../Redux/store";
 
@@ -22,13 +22,11 @@ class FiltersContainer extends Component<any> {
         isFetchingFilters={this.props.isFetchingFilters}
         isFetchingWidgets={this.props.isFetchingWidgets}
         orgOid={this.props.orgOid}
-        orgName={this.props.orgName}
-        ktl={this.props.ktl}
-        val={this.props.val}
+        // ktl={this.props.ktl}
+        // val={this.props.val}
         perList={this.props.perList}
         period={this.props.period}
         periodType={this.props.periodType}
-        selectedFilters={this.props.selectedFilters}
         showFilters={this.props.showFilters}
 
         requestWidgetsFromFilters={this.props.requestWidgetsFromFilters}
@@ -46,13 +44,11 @@ const mapState = (state: RootStateType) => ({
   isFetchingFilters: selectIsFetchingFilters(state),
   isFetchingWidgets: selectIsFetchingWidgets(state),
   orgOid: selectOrgOid(state),
-  orgName: selectOrgName(state),
-  ktl: selectKTL(state),
-  val: selectVal(state),
+  // ktl: selectKTL(state),
+  // val: selectVal(state),
   perList: selectPerList(state),
   period: selectPeriod(state),
   periodType: selectPeriodType(state),
-  selectedFilters: selectSelectedFilters(state),
   showFilters: selectShowFilters(state),
 });
 

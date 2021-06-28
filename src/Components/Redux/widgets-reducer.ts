@@ -82,7 +82,7 @@ const widgetsReducer = (state = initialStateWidgets, action: ActionsWidgetsType)
     case SET_KPK:
       const kpk = (action.kpk)
         ? PipeKPK(action.kpk)
-        : {cols: ["Сервис_oid", "Ошибка при загрузке", "", ""], rows: []};
+        : {cols: ["Сервис_oid", "Ошибка при загрузке"], rows: []};
       return {...state, kpk};
 
     case SET_KPK_CHILD:
