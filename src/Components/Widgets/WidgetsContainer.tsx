@@ -28,7 +28,7 @@ type MapStatePropsType = {
 }
 type MapDispatchPropsType = {
   requestWidgets: (oid: string, period: string, periodType: string) => void
-  requestKPKChild: (orgOid: string, period: string, periodType: string, serviceOid: string) => void
+  requestKPKChild: (orgOid: string, period: string, periodType: string, serviceOid: number) => void
   removeKPKChild: () => void
 }
 type PropsType = MapStatePropsType & MapDispatchPropsType
@@ -75,7 +75,6 @@ const mapState = (state: RootStateType): MapStatePropsType => ({
   periodType: selectPeriodType(state),
 });
 
-// @ts-ignore
 export default connect<MapStatePropsType, MapDispatchPropsType, {}, RootStateType>(mapState, {
   requestWidgets,
   requestKPKChild,

@@ -12,8 +12,23 @@ import {Preloader} from "../../Common/Preloader/Preloader";
 import Switch from "@material-ui/core/Switch/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabel";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import {KPKType} from "../../Redux/widgets-reducer";
 
-const CheckedValueKPK: React.FC<any> = ({hidden, requestSetHiddenUnusedKPK}) => {
+type PropsType = {
+  orgOid: string
+  period: string
+  periodType: string
+  kpk: KPKType
+
+  requestKPKChild: (orgOid: string, period: string, periodType: string, serviceOid: number) => void
+  removeKPKChild: () => void
+}
+type CheckedValueType = {
+  hidden: boolean
+  requestSetHiddenUnusedKPK: () => void
+}
+
+const CheckedValueKPK: React.FC<CheckedValueType> = ({hidden, requestSetHiddenUnusedKPK}) => {
   const useStyles = makeStyles(() => ({
       toggle: {
         '& .Mui-checked + .MuiSwitch-track': {
@@ -43,11 +58,11 @@ const CheckedValueKPK: React.FC<any> = ({hidden, requestSetHiddenUnusedKPK}) => 
   )
 };
 
-const KPKTable: FC<any> = ({requestKPKChild, removeKPKChild, orgOid, period, periodType, kpk}) => {
+const KPKTable: FC<PropsType> = ({requestKPKChild, removeKPKChild, orgOid, period, periodType, kpk}) => {
   const [hiddenUnusedKPK, setHiddenUnusedKPK] = React.useState(localStorage.getItem('KPKRowHidden') === "1" || false);
+  // @ts-ignore
   const {cols, rows} = kpk;
-
-  if (!cols.length) return <Preloader/>;
+  if (!cols.length || !cols[2]) return <Preloader/>;
   const [id, colsHead, value] = cols;
 
   const requestSetHiddenUnusedKPK = () => {

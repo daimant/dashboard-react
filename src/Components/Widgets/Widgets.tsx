@@ -17,7 +17,7 @@ type PropsType = {
   period: string
   periodType: string
 
-  requestKPKChild: (orgOid: string, period: string, periodType: string, serviceOid: string) => void
+  requestKPKChild: (orgOid: string, period: string, periodType: string, serviceOid: number) => void
   removeKPKChild: () => void
 }
 

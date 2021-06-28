@@ -5,7 +5,7 @@
   "author": "Sergey Pomortsev",
   "description": "will be show metrics of manufacture",
   "main": "index.html",
-  "homepage": "https://daimant.github.io/dashboard-react/",
+  "//homepage": "https://daimant.github.io/dashboard-react/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/daimant/dashboard-react.git"

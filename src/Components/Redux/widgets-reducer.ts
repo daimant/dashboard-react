@@ -23,7 +23,7 @@ type KPKRowsType = {
   Сегодня: string
   Сервис_oid: number
   Услуга: string
-}
+} | []
 export type GraphType = {
   id?: number
   title: string
@@ -88,7 +88,7 @@ const widgetsReducer = (state = initialStateWidgets, action: ActionsWidgetsType)
     case SET_KPK_CHILD:
       const kpkChild = (action.kpkChild)
         ? PipeKPK(action.kpkChild)
-        : {cols: ["\u0421\u0435\u0440\u0432\u0438\u0441_oid", "Ошибка при загрузке"], rows: []};
+        : {cols: ["Услуга", "Ошибка при загрузке"], rows: []};
       return {...state, kpkChild};
 
     case SET_SC:
