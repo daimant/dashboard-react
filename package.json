@@ -2,13 +2,14 @@
   "name": "dashboard-react",
   "version": "1.0.0",
   "private": true,
+  "author": "Sergey Pomortsev",
   "description": "will be show metrics of manufacture",
   "main": "index.html",
+  "homepage": "https://daimant.github.io/dashboard-react/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/daimant/dashboard-react.git"
   },
-  "author": "Sergey Pomortsev",
   "bugs": {
     "url": "https://github.com/daimant/dashboard-react/issues"
   },
@@ -17,7 +18,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "JSONserver": "json-server --watch -p 4000 db.json",
+    "deployGitHub": "concurrently \"npm run build\" \"gh-pages -d build\"",
     "dev": "concurrently \"react-scripts start\" \"json-server --watch -p 4000 db.json\""
   },
   "dependencies": {
@@ -74,6 +78,7 @@
     ]
   },
   "devDependencies": {
+    "gh-pages": "^3.2.3",
     "redux-devtools-extension": "^2.13.9"
   }
 }
