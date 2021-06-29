@@ -8,11 +8,11 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import classes from "./KPKTable.module.scss";
 import CloseIcon from '@material-ui/icons/Close';
-import {Preloader} from "../../Common/Preloader/Preloader";
 import Switch from "@material-ui/core/Switch/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabel";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import {KPKType} from "../../Redux/widgets-reducer";
+import {FetchError} from "../../Common/FetchError/FetchError";
 
 type PropsType = {
   orgOid: string
@@ -23,12 +23,12 @@ type PropsType = {
   requestKPKChild: (orgOid: string, period: string, periodType: string, serviceOid: number) => void
   removeKPKChild: () => void
 }
-type CheckedValueType = {
+type CheckedValueKPKType = {
   hidden: boolean
   requestSetHiddenUnusedKPK: () => void
 }
 
-const CheckedValueKPK: FC<CheckedValueType> = ({hidden, requestSetHiddenUnusedKPK}) => {
+const CheckedValueKPK: FC<CheckedValueKPKType> = ({hidden, requestSetHiddenUnusedKPK}) => {
   const useStyles = makeStyles(() => ({
       toggle: {
         '& .Mui-checked + .MuiSwitch-track': {
@@ -37,7 +37,6 @@ const CheckedValueKPK: FC<CheckedValueType> = ({hidden, requestSetHiddenUnusedKP
       },
     })
   );
-
   const classesMUI = useStyles();
 
   return (
@@ -58,11 +57,14 @@ const CheckedValueKPK: FC<CheckedValueType> = ({hidden, requestSetHiddenUnusedKP
   )
 };
 
-const KPKTable: FC<PropsType> = ({requestKPKChild, removeKPKChild, orgOid, period, periodType, kpk}) => {
+const KPKTable: FC<PropsType> = ({kpk, requestKPKChild, removeKPKChild, orgOid, period, periodType}) => {
   const [hiddenUnusedKPK, setHiddenUnusedKPK] = React.useState(localStorage.getItem('KPKRowHidden') === "1" || false);
-  // @ts-ignore
+
+  if (!kpk?.cols?.length)
+    return <div className={`${classes.kpkTable} ${classes.cell}`}>
+      <FetchError/>
+    </div>;
   const {cols, rows} = kpk;
-  if (!cols.length || !cols[2]) return <Preloader/>;
   const [id, colsHead, value] = cols;
 
   const requestSetHiddenUnusedKPK = () => {
@@ -111,7 +113,7 @@ const KPKTable: FC<PropsType> = ({requestKPKChild, removeKPKChild, orgOid, perio
                 <TableCell component="th" scope="row" className={classes.cell}>{
                   row[colsHead]
                 }</TableCell>
-                <TableCell  className={`${classes.cell} ${classes.rightColumn}`}>{
+                <TableCell className={`${classes.cell} ${classes.rightColumn}`}>{
                   row[value]
                 }</TableCell>
               </TableRow>

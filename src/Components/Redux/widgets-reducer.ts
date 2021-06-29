@@ -15,15 +15,15 @@ export type RawKPKType = {
   data: Array<[number, string, any, number]>
 }
 export type KPKType = {
-  cols: [string, string, string, string]
+  cols: [string, string, string, string] | Array<string>
   rows: Array<KPKRowsType>
-} | {}
+}
 type KPKRowsType = {
   Период: string
   Сегодня: string
   Сервис_oid: number
   Услуга: string
-} | []
+}
 export type GraphType = {
   id?: number
   title: string
@@ -80,6 +80,8 @@ let initialStateWidgets = {
 const widgetsReducer = (state = initialStateWidgets, action: ActionsWidgetsType): InitialStateWidgetsType => {
   switch (action.type) {
     case SET_KPK:
+      if (!action.kpk.name_col)
+        return state;
       const kpk = (action.kpk)
         ? PipeKPK(action.kpk)
         : {cols: ["Сервис_oid", "Ошибка при загрузке"], rows: []};
@@ -107,7 +109,7 @@ const widgetsReducer = (state = initialStateWidgets, action: ActionsWidgetsType)
       return {...state, isFetchingWidgets: false};
 
     case REMOVE_KPK_CHILD:
-      return {...state, kpkChild: {}};
+      return {...state, kpkChild: {cols: [], rows:[]}};
 
     default:
       return state;

@@ -30,7 +30,7 @@ const Widgets: FC<PropsType> = ({
   return (
     <div>
       <main>
-        <KPKTable kpk={kpkChild.hasOwnProperty('rows') ? kpkChild : kpk} requestKPKChild={requestKPKChild}
+        <KPKTable kpk={kpkChild.rows?.length ? kpkChild : kpk} requestKPKChild={requestKPKChild}
                   removeKPKChild={removeKPKChild} orgOid={orgOid} period={period} periodType={periodType}/>
         <div className={classes.graphs}>
           <h4 className={classes.headCircularBar}>СЕГОДНЯ</h4>
