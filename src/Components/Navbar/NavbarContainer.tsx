@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Component} from "react";
 import {connect} from "react-redux";
 import Navbar from "./Navbar";
 import {
@@ -6,8 +6,23 @@ import {
   selectShowFilters
 } from "../Redux/selectors";
 import {setShowFilters} from "../Redux/filters-reducer";
+import {RootStateType} from "../Redux/store";
 
-class NavbarContainer extends React.Component<any> {
+type MapStatePropsType = {
+  showFilters: boolean
+  orgOid: string
+  period: string
+  periodType: string
+  orgMapList: Map<string, string>
+  periodNameMapList: Map<string, string>
+  isFetchingFilters: boolean
+}
+type MapDispatchPropsType = {
+  setShowFilters: () => void
+}
+type PropsType = MapStatePropsType & MapDispatchPropsType
+
+class NavbarContainer extends Component<PropsType> {
   componentDidMount() {
   }
 
@@ -28,7 +43,7 @@ class NavbarContainer extends React.Component<any> {
   }
 }
 
-const mapState = (state: any) => ({
+const mapState = (state: RootStateType) => ({
   showFilters: selectShowFilters(state),
   orgOid: selectOrgOid(state),
   period: selectPeriod(state),
@@ -38,6 +53,6 @@ const mapState = (state: any) => ({
   isFetchingFilters: selectIsFetchingFilters(state),
 });
 
-export default connect(mapState, {
+export default connect<MapStatePropsType, MapDispatchPropsType, {}, RootStateType>(mapState, {
   setShowFilters
 })(NavbarContainer);

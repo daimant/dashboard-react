@@ -76,7 +76,7 @@ const MenuTreeList: React.FC<PropsType> = ({treeList, title, orgOid, period, per
     <TreeItem key={nodes.oid} nodeId={nodes.oid} label={nodes.name}>
       {
         Array.isArray(nodes.children)
-          ? nodes.children.map((node: any) => renderTree(node))
+          ? nodes.children.map((node: any) => renderTree(node)) // что-то надо придумать
           : null
       }
     </TreeItem>

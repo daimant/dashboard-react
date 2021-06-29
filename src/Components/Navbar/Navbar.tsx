@@ -1,4 +1,4 @@
-import React from "react";
+import React, {FC} from "react";
 import logo from '../../Assets/img/oskRZDLogo.png'
 import classes from "./Navbar.module.scss";
 import IconButton from '@material-ui/core/IconButton';
@@ -8,6 +8,17 @@ import MenuIcon from '@material-ui/icons/Menu';
 import {Preloader} from "../Common/Preloader/Preloader";
 import FilterIcon from '../../Assets/Icons/FilterIcon.svg';
 
+type PropsType = {
+  showFilters: boolean
+  orgOid: string
+  period: string
+  periodType: string
+  orgMapList: Map<string, string>
+  periodNameMapList: Map<string, string>
+  isFetchingFilters: boolean
+
+  setShowFilters: () => void
+}
 
 const options = [
   'Ключевые показатели эффективности (текущий дашборд)',
@@ -15,10 +26,10 @@ const options = [
   'Статистика по объектам обслуживания'
 ];
 
-const Navbar: React.FC<any> = ({
-                                 showFilters, setShowFilters, orgOid, period, periodType, orgMapList, periodNameMapList,
-                                 isFetchingFilters
-                               }) => {
+const Navbar: FC<PropsType> = ({
+                           /*showFilters,*/ setShowFilters, orgOid, period, periodType, orgMapList, periodNameMapList,
+                           isFetchingFilters
+                         }) => {
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -32,7 +43,8 @@ const Navbar: React.FC<any> = ({
   const changeShowFilters = () => {
     setShowFilters();
   };
-  const shortNameOrg = orgMapList.get(orgOid)
+  const shortNameOrg = orgMapList.has(orgOid)
+    // @ts-ignore хз как ему это объяснить
     ? orgMapList
       .get(orgOid)
       .replace(/Региональный центр сервиса/, 'РЦС')
@@ -58,14 +70,13 @@ const Navbar: React.FC<any> = ({
       </div>
       <div>
         <span>Пользователь</span>
-
         <IconButton
           aria-label="more"
           aria-controls="long-menu"
           aria-haspopup="true"
           onClick={handleClick}
-        >
-          <MenuIcon/>
+          href={''}>
+          <MenuIcon component={'svg'}/>
         </IconButton>
         <Menu
           id="long-menu"
@@ -75,7 +86,7 @@ const Navbar: React.FC<any> = ({
           onClose={handleClose}
         >
           {options.map((option) => (
-            <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>
+            <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose} button={true} component={'li'}>
               {option}
             </MenuItem>
           ))}

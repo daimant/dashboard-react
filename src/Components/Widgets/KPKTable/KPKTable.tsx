@@ -93,7 +93,7 @@ const KPKTable: FC<PropsType> = ({kpk, requestKPKChild, removeKPKChild, orgOid, 
             </TableRow>
           </TableHead>
           <TableBody component={'tbody'}>
-            {rows.map((row: any) => (
+            {rows.map((row: any) => ( // тут мои полномочия всё
               <TableRow key={row[id]}
                         component={"tr"}
                         style={row[value] === '-' && hiddenUnusedKPK ? {display: 'none'} : {}}
