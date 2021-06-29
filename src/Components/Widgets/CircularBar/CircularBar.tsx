@@ -3,7 +3,13 @@ import classes from './CircularBar.module.scss'
 import {buildStyles, CircularProgressbarWithChildren} from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
-const CircularBar: React.FC<any> = ({today, diff, err}) => {
+type PropsType = {
+  today: number
+  diff: number
+  err: boolean
+}
+
+const CircularBar: React.FC<PropsType> = ({today, diff, err}) => {
   return (
     <div className={classes.graphs}>
       <CircularProgressbarWithChildren

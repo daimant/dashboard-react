@@ -35,7 +35,7 @@ const Widgets: FC<PropsType> = ({
         <div className={classes.graphs}>
           <h4 className={classes.headCircularBar}>СЕГОДНЯ</h4>
           {todays.map((el: TodaysType, i: number) =>
-            <CircularBar title={el.title} today={el.v1} diff={el.p} key={i} err={el.err}/>
+            <CircularBar today={el.v1} diff={el.p} key={i} err={el.err}/>
           )}
         </div>
         <div className={classes.graphs}>
