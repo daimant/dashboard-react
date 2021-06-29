@@ -28,7 +28,7 @@ type CheckedValueType = {
   requestSetHiddenUnusedKPK: () => void
 }
 
-const CheckedValueKPK: React.FC<CheckedValueType> = ({hidden, requestSetHiddenUnusedKPK}) => {
+const CheckedValueKPK: FC<CheckedValueType> = ({hidden, requestSetHiddenUnusedKPK}) => {
   const useStyles = makeStyles(() => ({
       toggle: {
         '& .Mui-checked + .MuiSwitch-track': {

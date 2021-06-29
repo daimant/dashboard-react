@@ -29,7 +29,7 @@ export type GraphType = {
   title: string
   data: Array<GraphElementsType>
 };
-type GraphElementsType = {
+export type GraphElementsType = {
   d: string
   v1: number
   v2: number
