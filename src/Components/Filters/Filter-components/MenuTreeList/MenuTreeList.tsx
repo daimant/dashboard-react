@@ -9,15 +9,16 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-export type RenderTree = {
+type RenderTree = {
   oid: string
   name: string
-  children?: RenderTree[]
+  children: RenderTree[]
 }
+
 
 const MenuTreeList: React.FC<any> = props => {
   const {
-    treeList, title,  orgOid, period, periodType, setter, acceptFilters, altTreeList = {}, isFetchingWidgets
+    treeList, title, orgOid, period, periodType, setter, acceptFilters, altTreeList = {}, isFetchingWidgets
   } = props;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selected, setSelected] = React.useState<string>('');
@@ -78,7 +79,8 @@ const MenuTreeList: React.FC<any> = props => {
 
   return (
     <div>
-      <Button aria-controls="simple-menu" variant="outlined" onClick={handleClick} disabled={isFetchingWidgets}>
+      <Button aria-controls="simple-menu" variant="outlined" onClick={handleClick} disabled={isFetchingWidgets}
+              href={''}>
         {title}
       </Button>
       <Menu
@@ -102,15 +104,14 @@ const MenuTreeList: React.FC<any> = props => {
         />}
         <TreeView
           className={classes.root}
-          defaultCollapseIcon={<ExpandMoreIcon/>}
+          defaultCollapseIcon={<ExpandMoreIcon component={'svg'}/>}
           defaultExpanded={title === 'оргструктура' ? [treeList.oid] : ['root']}
-          defaultExpandIcon={<ChevronRightIcon/>}
+          defaultExpandIcon={<ChevronRightIcon component={'svg'}/>}
           onNodeSelect={handleSelect}
         >
           {title === 'оргструктура' ? (!checked ? renderTree(treeList) : renderTree(altTreeList)) : renderTree(treeList)}
         </TreeView>
       </Menu>
-
     </div>
   );
 };
