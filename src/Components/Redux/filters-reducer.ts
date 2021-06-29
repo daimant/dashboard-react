@@ -173,9 +173,7 @@ const filtersReducer = (state = initialStateFilters, action: ActionsFiltersType)
 
     case SET_SHOW_FILTERS:
       localStorage.setItem('showFilters', String(!state.showFilters));
-      if (state.showFilters)
-        return {...state, showFilters: false};
-      else return {...state, showFilters: true};
+      return {...state, showFilters: !state.showFilters};
 
     default:
       return state;

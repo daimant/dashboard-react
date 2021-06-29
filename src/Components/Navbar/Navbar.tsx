@@ -6,6 +6,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
 import {Preloader} from "../Common/Preloader/Preloader";
+import FilterIcon from '../Common/Icons/FilterIcon.svg';
+
 
 const options = [
   'Ключевые показатели эффективности (текущий дашборд)',
@@ -43,15 +45,13 @@ const Navbar: React.FC<any> = ({
     <div className={classes.navbar}>
       <div className={classes.leftNav}>
         <img src={logo} loading='lazy' alt=""/>
-        <div className={`material-icons ${classes.filterIcon}`} onClick={changeShowFilters}>
-          filter_alt
-        </div>
+        <img src={FilterIcon} alt="" className={classes.filterIcon} onClick={changeShowFilters}/>
         {isFetchingFilters
           ? <Preloader/>
           : <div className={classes.aboutFilters}>
-          <p>Организация: {shortNameOrg}</p>
-          <p>Период: {periodNameMapList.get(`${periodType}:${period}`)}</p>
-        </div>}
+            <p>Организация: {shortNameOrg}</p>
+            <p>Период: {periodNameMapList.get(`${periodType}:${period}`)}</p>
+          </div>}
       </div>
       <div className={classes.generalTitle}>
         <h1>Ключевые показатели эффективности</h1>
