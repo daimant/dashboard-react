@@ -1,19 +1,13 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {requestKPKChild, removeKPKChild, requestWidgets} from '../Redux/widgets-reducer';
 import {
-  requestKPKChild,
-  removeKPKChild,
-  requestWidgets,
-  KPKType,
-  GraphType,
-  TodaysType
-} from "../Redux/widgets-reducer";
-import {
-  /*selectInf, */ selectIsFetchingWidgets, selectKPK, selectOrgOid, selectPeriod,
-  selectPeriodType, selectTodays, selectKPKChild, selectTops, selectSC
-} from "../Redux/selectors";
-import Widgets from "./Widgets";
-import {RootStateType} from "../Redux/store";
+  /*selectInf, */ selectIsFetchingWidgets, selectKPK, selectOrgOid, selectPeriod, selectPeriodType, selectTodays,
+  selectKPKChild, selectTops, selectSC
+} from '../Redux/selectors';
+import Widgets from './Widgets';
+import {RootStateType} from '../Redux/store';
+import {KPKType, GraphType, TodaysType} from '../Common/Types';
 
 type MapStatePropsType = {
   kpk: KPKType
@@ -60,6 +54,7 @@ class WidgetsContainer extends Component<PropsType> {
     );
   }
 }
+
 const mapState = (state: RootStateType): MapStatePropsType => ({
   kpk: selectKPK(state),
   kpkChild: selectKPKChild(state),

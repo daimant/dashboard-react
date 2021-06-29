@@ -1,10 +1,10 @@
-import React, {FC} from "react";
-import classes from "./Widgets.module.scss";
-import KPKTable from "./KPKTable/KPKTable";
-import Graph from "./Graph/Graph";
-import {Preloader} from "../Common/Preloader/Preloader";
-import CircularBar from "./CircularBar/CircularBar";
-import {GraphType, KPKType, TodaysType} from "../Redux/widgets-reducer";
+import React, {FC} from 'react';
+import classes from './Widgets.module.scss';
+import KPKTable from './KPKTable/KPKTable';
+import Graph from './Graph/Graph';
+import {Preloader} from '../Common/Preloader/Preloader';
+import CircularBar from './CircularBar/CircularBar';
+import {GraphType, KPKType, TodaysType} from '../Common/Types';
 
 type PropsType = {
   kpk: KPKType

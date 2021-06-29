@@ -1,5 +1,4 @@
-import {GraphType, RawKPKType, TodaysType} from "./widgets-reducer";
-import {OrgListType} from "./filters-reducer";
+import {GraphType, RawKPKType, TodaysType, OrgListType} from '../Common/Types';
 
 // Widgets
 export const PipeKPK = (kpk: RawKPKType) => {
@@ -18,7 +17,7 @@ export const PipeKPK = (kpk: RawKPKType) => {
         if (typeof kpk.data[i][j] === 'number')
           kpk.data[i][j] += '';
 
-        let currVal = kpk.data[i][j].replace(/,/, ".");
+        let currVal = kpk.data[i][j].replace(/,/, '.');
 
         currObj[kpk.name_col[j]] = +currVal && +currVal % 1
           ? (+currVal).toFixed(2)
@@ -52,7 +51,7 @@ export const PipeGraph = (graphs: GraphType[]) => {
 export const PipeTodays = (todays: Array<TodaysType>) => {
   for (let i in todays) {
     if (todays.hasOwnProperty(i) && (todays[i].v1 === null || todays[i].p === null))
-      todays[i] = {title: "Ошибка при загрузке", v1: 0, p: 0, err: true};
+      todays[i] = {title: 'Ошибка при загрузке', v1: 0, p: 0, err: true};
     else if (todays[i].p <= 1)
       todays[i].p = +(todays[i].p * 100).toFixed(1);
   }
@@ -64,7 +63,7 @@ export const PipeOrgList = (orgList: Array<OrgListType>)=> {
   if (!orgList || !orgList[0] || orgList[0]?.oid !== 281586771165316) return {};
 
   const orgPosition = new Map(orgList.map((el: any, i: any) => [el['oid'], i]));
-  const orgMapList = new Map([['281586771165316', "ООО ОСК ИнфоТранс"]]);
+  const orgMapList = new Map([['281586771165316', 'ООО ОСК ИнфоТранс']]);
 
   for (let i = orgList.length - 1; i > 0; i--) {
     orgMapList.set(orgList[i].oid + '', orgList[i].name);

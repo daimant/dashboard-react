@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import classes from './WidgetsTitle.module.scss';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 

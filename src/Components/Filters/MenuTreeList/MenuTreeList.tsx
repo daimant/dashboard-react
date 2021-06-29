@@ -8,7 +8,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import {OrgListType, PeriodListType} from "../../Redux/filters-reducer";
+import {OrgListType, PeriodListType} from '../../Common/Types';
 
 type PropsType = {
   treeList: OrgListType | PeriodListType
@@ -27,14 +27,14 @@ const MenuTreeList: React.FC<PropsType> = ({treeList, title, orgOid, period, per
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selected, setSelected] = React.useState<string>('');
-  const [checked, setChecked] = React.useState(localStorage.getItem('checkedOrgZNO') === "1" || false);
+  const [checked, setChecked] = React.useState(localStorage.getItem('checkedOrgZNO') === '1' || false);
 
   const useStyles = makeStyles({
     root: {
       margin: '.5rem',
-      height: title === "оргструктура" ? 400 : 200,
+      height: title === 'оргструктура' ? 400 : 200,
       flexGrow: 1,
-      width: title === "оргструктура" ? 550 : 200,
+      width: title === 'оргструктура' ? 550 : 200,
       overflow: 'auto',
     },
     menu: {
@@ -48,7 +48,7 @@ const MenuTreeList: React.FC<PropsType> = ({treeList, title, orgOid, period, per
   });
 
   const toggleChecked = () => {
-    localStorage.setItem('checkedOrgZNO', checked ? "0" : '1');
+    localStorage.setItem('checkedOrgZNO', checked ? '0' : '1');
     setChecked(!checked);
   };
 
@@ -63,7 +63,7 @@ const MenuTreeList: React.FC<PropsType> = ({treeList, title, orgOid, period, per
   const handleClose = () => {
     setAnchorEl(null);
 
-    if (selected && typeof selected !== "object")
+    if (selected && typeof selected !== 'object')
       setter(selected);
 
     if ((selected && title === 'оргструктура' && selected !== orgOid) || (selected && title === 'период' && selected !== `${periodType}:${period}`))
@@ -84,13 +84,12 @@ const MenuTreeList: React.FC<PropsType> = ({treeList, title, orgOid, period, per
 
   return (
     <div>
-      <Button aria-controls="simple-menu" variant="outlined" onClick={handleClick} disabled={isFetchingWidgets}
-              href={''}>
+      <Button aria-controls='simple-menu' variant='outlined' onClick={handleClick} disabled={isFetchingWidgets} href={''}>
         {title}
       </Button>
       <Menu
         className={classes.menu}
-        id="simple-menu"
+        id='simple-menu'
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
@@ -98,13 +97,13 @@ const MenuTreeList: React.FC<PropsType> = ({treeList, title, orgOid, period, per
       >
         {title === 'оргструктура' &&
         <FormControlLabel
-            control={<Switch size="medium"
+            control={<Switch size='medium'
                              checked={checked}
                              onChange={toggleChecked}
-                             color="default"
+                             color='default'
                              className={classes.toggle}
             />}
-            labelPlacement="start"
+            labelPlacement='start'
             label={`Все организации / Организации выполняющие ЗНО`}
         />}
         <TreeView
@@ -114,7 +113,7 @@ const MenuTreeList: React.FC<PropsType> = ({treeList, title, orgOid, period, per
           defaultExpandIcon={<ChevronRightIcon component={'svg'}/>}
           onNodeSelect={handleSelect}
         >
-          {// @ts-ignore
+          {// @ts-ignore хз как чинить
           }{title === 'оргструктура' ? (!checked ? renderTree(treeList) : renderTree(altTreeList)) : renderTree(treeList)}
         </TreeView>
       </Menu>

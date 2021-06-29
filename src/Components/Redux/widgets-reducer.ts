@@ -1,5 +1,9 @@
-import {widgetsAPI} from "../../API/API";
-import {PipeKPK, PipeGraph, PipeTodays} from "./pipes";
+import {widgetsAPI} from '../../API/API';
+import {PipeKPK, PipeGraph, PipeTodays} from './pipes';
+import {AnyAction} from 'redux';
+import {ThunkAction} from 'redux-thunk';
+import {RootStateType} from './store';
+import {GraphType, KPKType, RawKPKType, TodaysType} from '../Common/Types';
 
 type ActionsWidgetsType = {
   type: string
@@ -10,32 +14,6 @@ type ActionsWidgetsType = {
   todays: Array<TodaysType>
 }
 type InitialStateWidgetsType = typeof initialStateWidgets;
-export type RawKPKType = {
-  name_col: [string, string, string, string]
-  data: Array<[number, string, any, number]>
-}
-export type KPKType = {
-  cols: [string, string, string, string] | Array<string>
-  rows: Array<KPKRowsType>
-}
-type KPKRowsType = {
-  Период: string
-  Сегодня: string
-  Сервис_oid: number
-  Услуга: string
-}
-export type GraphType = {
-  id?: number
-  title: string
-  data: Array<GraphElementsType>
-};
-export type GraphElementsType = {
-  d: string
-  v1: number
-  v2: number
-  p: number
-};
-export type TodaysType = { title: string, v1: number, p: number, err: boolean };
 
 let initialStateWidgets = {
   kpk: {} as KPKType,
@@ -84,13 +62,13 @@ const widgetsReducer = (state = initialStateWidgets, action: ActionsWidgetsType)
         return state;
       const kpk = (action.kpk)
         ? PipeKPK(action.kpk)
-        : {cols: ["Сервис_oid", "Ошибка при загрузке"], rows: []};
+        : {cols: ['Сервис_oid', 'Ошибка при загрузке'], rows: []};
       return {...state, kpk};
 
     case SET_KPK_CHILD:
       const kpkChild = (action.kpkChild)
         ? PipeKPK(action.kpkChild)
-        : {cols: ["Услуга", "Ошибка при загрузке"], rows: []};
+        : {cols: ['Услуга', 'Ошибка при загрузке'], rows: []};
       return {...state, kpkChild};
 
     case SET_SC:
@@ -109,7 +87,7 @@ const widgetsReducer = (state = initialStateWidgets, action: ActionsWidgetsType)
       return {...state, isFetchingWidgets: false};
 
     case REMOVE_KPK_CHILD:
-      return {...state, kpkChild: {cols: [], rows:[]}};
+      return {...state, kpkChild: {cols: [], rows: []}};
 
     default:
       return state;
@@ -127,13 +105,13 @@ type SetIsFetchingWidgetsEndedACType = { type: typeof SET_IS_FETCHING_WIDGETS_EN
 type RemoveKPKChildACType = { type: typeof REMOVE_KPK_CHILD };
 
 // action types
-const SET_KPK = "SET_KPK";
-const SET_KPK_CHILD = "SET_KPK_CHILD";
-const SET_SC = "SET_SC";
-const SET_TODAY = "SET_TODAY";
-const SET_TOPS = "SET_TOPS";
-const SET_IS_FETCHING_WIDGETS_STARTED = "SET_IS_FETCHING_WIDGETS_STARTED";
-const SET_IS_FETCHING_WIDGETS_ENDED = "SET_IS_FETCHING_WIDGETS_ENDED";
+const SET_KPK = 'SET_KPK';
+const SET_KPK_CHILD = 'SET_KPK_CHILD';
+const SET_SC = 'SET_SC';
+const SET_TODAY = 'SET_TODAY';
+const SET_TOPS = 'SET_TOPS';
+const SET_IS_FETCHING_WIDGETS_STARTED = 'SET_IS_FETCHING_WIDGETS_STARTED';
+const SET_IS_FETCHING_WIDGETS_ENDED = 'SET_IS_FETCHING_WIDGETS_ENDED';
 const REMOVE_KPK_CHILD = 'REMOVE_KPK_CHILD';
 
 // action creators
@@ -149,7 +127,7 @@ export const removeKPKChild = (): RemoveKPKChildACType => ({type: REMOVE_KPK_CHI
 // thunks
 export const requestWidgets = (
   oid: string, period: string, periodType: string, numSC: number[] = [1, 2, 3], numTodays: number[] = [1, 2, 3], numTops: number[] = [1, 2]
-) => async (dispatch: any) => {
+): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
   dispatch(setIsFetchingWidgetsStarted());
   const response = await widgetsAPI.getWidgets(oid, period, periodType, numSC, numTodays, numTops);
   dispatch(setSC(response.splice(0, numSC.length)));
@@ -158,7 +136,10 @@ export const requestWidgets = (
   dispatch(setKPK(response.pop()));
   dispatch(setIsFetchingWidgetsEnded());
 };
-export const requestKPKChild = (oid: string, period: string, periodType: string, serviceOid: number) => async (dispatch: any) => {
+
+export const requestKPKChild = (
+  oid: string, period: string, periodType: string, serviceOid: number
+): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
   const responseKPKChild = await widgetsAPI.getKPK(oid, period, periodType, serviceOid);
   dispatch(setKPKChild(responseKPKChild));
 };

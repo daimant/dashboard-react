@@ -1,18 +1,19 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
-import Filters from "./Filters";
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import Filters from './Filters';
 import {
   requestOrg,
   requestWidgetsFromFilters,
   requestSetFiltersDefault,
   setOrgOid,
-  setPeriod, OrgListType, PeriodListType
-} from "../Redux/filters-reducer";
+  setPeriod
+} from '../Redux/filters-reducer';
 import {
   selectIsFetchingFilters, /*selectVal, selectKTL,*/ selectOrgList, selectOrgOid, selectPeriod, selectPeriodType,
   selectPerList, selectShowFilters, selectAltOrgList, selectIsFetchingWidgets
-} from "../Redux/selectors";
-import {RootStateType} from "../Redux/store";
+} from '../Redux/selectors';
+import {RootStateType} from '../Redux/store';
+import {OrgListType, PeriodListType} from '../Common/Types';
 
 type MapStatePropsType = {
   orgList: OrgListType

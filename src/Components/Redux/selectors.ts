@@ -1,4 +1,4 @@
-import {RootStateType} from "./store";
+import {RootStateType} from './store';
 
 //widgets
 export const selectKPK = (state: RootStateType) => state.widgets.kpk;

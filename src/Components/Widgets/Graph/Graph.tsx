@@ -3,7 +3,7 @@ import classes from './Graph.module.scss';
 import {ComposedChart, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, Line} from 'recharts';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import {GraphType} from '../../Redux/widgets-reducer';
+import {GraphType} from '../../Common/Types';
 
 type CheckedValueGraphType = {
   description: string

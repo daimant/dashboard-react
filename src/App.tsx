@@ -1,8 +1,8 @@
 import React from 'react';
 import classes from './App.module.scss';
-import WidgetsContainer from "./Components/Widgets/WidgetsContainer";
-import FiltersContainer from "./Components/Filters/FiltersContainer";
-import NavbarContainer from "./Components/Navbar/NavbarContainer";
+import WidgetsContainer from './Components/Widgets/WidgetsContainer';
+import FiltersContainer from './Components/Filters/FiltersContainer';
+import NavbarContainer from './Components/Navbar/NavbarContainer';
 
 function App() {
   return (
@@ -11,7 +11,6 @@ function App() {
         <NavbarContainer/>
         <FiltersContainer/>
       </header>
-      {/*// @ts-ignore*/}
       <WidgetsContainer/>
     </div>
   );

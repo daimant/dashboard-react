@@ -1,12 +1,12 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
-import Navbar from "./Navbar";
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import Navbar from './Navbar';
 import {
   selectIsFetchingFilters, selectOrgMapList, selectOrgOid, selectPeriod, selectPeriodNameMapList, selectPeriodType,
   selectShowFilters
-} from "../Redux/selectors";
-import {setShowFilters} from "../Redux/filters-reducer";
-import {RootStateType} from "../Redux/store";
+} from '../Redux/selectors';
+import {setShowFilters} from '../Redux/filters-reducer';
+import {RootStateType} from '../Redux/store';
 
 type MapStatePropsType = {
   showFilters: boolean

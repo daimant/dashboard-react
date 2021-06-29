@@ -1,5 +1,5 @@
-import React from "react"
-import classes from './CircularBar.module.scss'
+import React from 'react';
+import classes from './CircularBar.module.scss';
 import {buildStyles, CircularProgressbarWithChildren} from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 

@@ -6,13 +6,13 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import classes from "./KPKTable.module.scss";
+import classes from './KPKTable.module.scss';
 import CloseIcon from '@material-ui/icons/Close';
-import Switch from "@material-ui/core/Switch/Switch";
-import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabel";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import {KPKType} from "../../Redux/widgets-reducer";
-import {FetchError} from "../../Common/FetchError/FetchError";
+import Switch from '@material-ui/core/Switch/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel/FormControlLabel';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import {KPKType} from '../../Common/Types';
+import {FetchError} from '../../Common/FetchError/FetchError';
 
 type PropsType = {
   orgOid: string

@@ -1,11 +1,11 @@
-import React, {FC} from "react";
+import React, {FC} from 'react';
 import logo from '../../Assets/img/oskRZDLogo.png'
-import classes from "./Navbar.module.scss";
+import classes from './Navbar.module.scss';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
-import {Preloader} from "../Common/Preloader/Preloader";
+import {Preloader} from '../Common/Preloader/Preloader';
 import FilterIcon from '../../Assets/Icons/FilterIcon.svg';
 
 type PropsType = {
@@ -56,8 +56,8 @@ const Navbar: FC<PropsType> = ({
   return (
     <div className={classes.navbar}>
       <div className={classes.leftNav}>
-        <img src={logo} loading='lazy' alt=""/>
-        <img src={FilterIcon} alt="" className={classes.filterIcon} onClick={changeShowFilters}/>
+        <img src={logo} loading='lazy' alt=''/>
+        <img src={FilterIcon} alt='' className={classes.filterIcon} onClick={changeShowFilters}/>
         {isFetchingFilters
           ? <Preloader/>
           : <div className={classes.aboutFilters}>
@@ -71,15 +71,15 @@ const Navbar: FC<PropsType> = ({
       <div>
         <span>Пользователь</span>
         <IconButton
-          aria-label="more"
-          aria-controls="long-menu"
-          aria-haspopup="true"
+          aria-label='more'
+          aria-controls='long-menu'
+          aria-haspopup='true'
           onClick={handleClick}
           href={''}>
           <MenuIcon component={'svg'}/>
         </IconButton>
         <Menu
-          id="long-menu"
+          id='long-menu'
           anchorEl={anchorEl}
           keepMounted
           open={open}

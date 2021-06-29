@@ -1,14 +1,11 @@
-import {filtersAPI} from "../../API/API";
-import {requestWidgets} from "./widgets-reducer";
-import {PipeOrgList} from "./pipes";
+import {filtersAPI} from '../../API/API';
+import {requestWidgets} from './widgets-reducer';
+import {PipeOrgList} from './pipes';
+import {ThunkAction} from 'redux-thunk';
+import {RootStateType} from './store';
+import {AnyAction} from 'redux';
+import {OrgListType, PeriodListType} from '../Common/Types';
 
-export type OrgListType = {
-  oid: any
-  name: string
-  parent: any
-  zno: number
-  children?: Array<OrgListType>
-}
 type ActionsFiltersType = {
   type: string
   orgList: {
@@ -17,12 +14,7 @@ type ActionsFiltersType = {
   oid: string
   per: string
 };
-export type InitialStateFiltersType = typeof initialStateFilters;
-export type PeriodListType = {
-  name: string
-  oid: string
-  children?: Array<object>
-};
+type InitialStateFiltersType = typeof initialStateFilters;
 
 const tempPeriodNameMapList = new Map();
 const createPeriodTree = (st: Date, end: number): PeriodListType => {
@@ -43,7 +35,7 @@ const createPeriodTree = (st: Date, end: number): PeriodListType => {
   // формат числа с лидирующими нулями
   const pad = (num: number | string, size: number) => {
     num = num.toString();
-    while (num.length < size) num = "0" + num;
+    while (num.length < size) num = '0' + num;
     return num;
   };
   // создаем произвольный узел
@@ -111,9 +103,9 @@ const createPeriodTree = (st: Date, end: number): PeriodListType => {
 };
 const defaultFilters = {
   orgOid: '281586771165316',
-  orgName: "ООО ОСК ИнфоТранс",
+  orgName: 'ООО ОСК ИнфоТранс',
   period: `${new Date().getFullYear()}-${new Date().getMonth() - 1 < 10 ? `0${new Date().getMonth() + 1}` : new Date().getMonth() + 1}`,
-  periodType: "m",
+  periodType: 'm',
 };
 
 let initialStateFilters = {
@@ -189,12 +181,12 @@ type SetFiltersDefaultACType = { type: typeof SET_FILTERS_DEFAULT };
 type SetShowFiltersACType = { type: typeof SET_SHOW_FILTERS };
 
 // action types
-const SET_ORG_LIST = "SET_ORG_LIST";
-const SET_PERIOD = "SET_PERIOD";
-const SET_ORG_OID = "SET_ORG_OID";
-const SET_ORG_NAME = "SET_ORG_NAME";
-const SET_FILTERS_DEFAULT = "SET_FILTERS_DEFAULT";
-const SET_SHOW_FILTERS = "SET_SHOW_FILTERS";
+const SET_ORG_LIST = 'SET_ORG_LIST';
+const SET_PERIOD = 'SET_PERIOD';
+const SET_ORG_OID = 'SET_ORG_OID';
+const SET_ORG_NAME = 'SET_ORG_NAME';
+const SET_FILTERS_DEFAULT = 'SET_FILTERS_DEFAULT';
+const SET_SHOW_FILTERS = 'SET_SHOW_FILTERS';
 
 // action creators
 export const setOrgList = (orgList: object): SetOrgListACType => ({type: SET_ORG_LIST, orgList});
@@ -204,15 +196,17 @@ export const setOrgName = (oid: string): SetOrgNameACType => ({type: SET_ORG_NAM
 export const setFiltersDefault = (): SetFiltersDefaultACType => ({type: SET_FILTERS_DEFAULT});
 export const setShowFilters = (): SetShowFiltersACType => ({type: SET_SHOW_FILTERS});
 
-export const requestOrg = () => async (dispatch: any) => {
+export const requestOrg = (): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
   const response = await filtersAPI.getOrg();
   dispatch(setOrgList(response));
 };
-export const requestWidgetsFromFilters = (oid: string, period: string, periodType: string) => (dispatch: any) => {
+export const requestWidgetsFromFilters = (
+  oid: string, period: string, periodType: string
+): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
   dispatch(requestWidgets(oid, period, periodType));
   dispatch(setOrgName(oid))
 };
-export const requestSetFiltersDefault = () => async (dispatch: any) => {
+export const requestSetFiltersDefault = (): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
   dispatch(requestWidgets(defaultFilters.orgOid, defaultFilters.period, defaultFilters.periodType));
   dispatch(setFiltersDefault());
 };
