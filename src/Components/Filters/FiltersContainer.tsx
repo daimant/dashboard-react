@@ -1,14 +1,40 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import Filters from "./Filters";
-import {requestOrg, requestWidgetsFromFilters, requestSetFiltersDefault, setOrgOid, setPeriod} from "../Redux/filters-reducer";
+import {
+  requestOrg,
+  requestWidgetsFromFilters,
+  requestSetFiltersDefault,
+  setOrgOid,
+  setPeriod, OrgListType, PeriodListType
+} from "../Redux/filters-reducer";
 import {
   selectIsFetchingFilters, /*selectVal, selectKTL,*/ selectOrgList, selectOrgOid, selectPeriod, selectPeriodType,
   selectPerList, selectShowFilters, selectAltOrgList, selectIsFetchingWidgets
 } from "../Redux/selectors";
 import {RootStateType} from "../Redux/store";
 
-class FiltersContainer extends Component<any> {
+type MapStatePropsType = {
+  orgList: OrgListType
+  altOrgList: OrgListType
+  isFetchingFilters: boolean
+  isFetchingWidgets: boolean
+  orgOid: string
+  perList: PeriodListType
+  period: string
+  periodType: string
+  showFilters: boolean
+}
+type MapDispatchPropsType = {
+  requestOrg: () => void
+  requestWidgetsFromFilters: (oid: string, period: string, periodType: string) => void
+  setPeriod: (per: string) => void
+  setOrgOid: (oid: string) => void
+  requestSetFiltersDefault: () => void
+}
+type PropsType = MapStatePropsType & MapDispatchPropsType
+
+class FiltersContainer extends Component<PropsType> {
   componentDidMount() {
     if (!this.props.orgList.oid)
       this.props.requestOrg()
@@ -52,7 +78,7 @@ const mapState = (state: RootStateType) => ({
   showFilters: selectShowFilters(state),
 });
 
-export default connect(mapState, {
+export default connect<MapStatePropsType, MapDispatchPropsType, {}, RootStateType>(mapState, {
   requestOrg,
   requestWidgetsFromFilters,
   setPeriod,

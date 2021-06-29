@@ -18,7 +18,7 @@ type ActionsFiltersType = {
   per: string
 };
 export type InitialStateFiltersType = typeof initialStateFilters;
-type PeriodListType = {
+export type PeriodListType = {
   name: string
   oid: string
   children?: Array<object>
