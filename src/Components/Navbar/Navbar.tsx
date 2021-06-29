@@ -1,12 +1,12 @@
 import React from "react";
-import logo from '../../Assets/img/osk_rzd_logo.png'
+import logo from '../../Assets/img/oskRZDLogo.png'
 import classes from "./Navbar.module.scss";
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
 import {Preloader} from "../Common/Preloader/Preloader";
-import FilterIcon from '../Common/Icons/FilterIcon.svg';
+import FilterIcon from '../../Assets/Icons/FilterIcon.svg';
 
 
 const options = [
