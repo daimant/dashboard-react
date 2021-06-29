@@ -4,8 +4,26 @@ import {Preloader} from "../Common/Preloader/Preloader";
 import MenuTreeList from "./Filter-components/MenuTreeList/MenuTreeList";
 import {Button} from "@material-ui/core";
 import {FetchError} from "../Common/FetchError/FetchError";
+import {OrgListType, PeriodListType} from "../Redux/filters-reducer";
 
-const Filters: React.FC<any> = props => {
+type PropsType = {
+  orgList: OrgListType
+  altOrgList: OrgListType
+  isFetchingFilters: boolean
+  isFetchingWidgets: boolean
+  orgOid: string
+  perList: PeriodListType
+  period: string
+  periodType: string
+  showFilters: boolean
+
+  requestWidgetsFromFilters: (oid: string, period: string, periodType: string) => void
+  setPeriod: (per: string) => void
+  setOrgOid: (oid: string) => void
+  requestSetFiltersDefault: () => void
+}
+
+const Filters: React.FC<PropsType> = props => {
   const {
     orgList, altOrgList, isFetchingFilters, isFetchingWidgets, orgOid, /*ktl, val,*/ requestWidgetsFromFilters,
     setPeriod, setOrgOid, perList, period, periodType, requestSetFiltersDefault, showFilters
@@ -47,7 +65,7 @@ const Filters: React.FC<any> = props => {
                         isFetchingWidgets={isFetchingWidgets}
           /></>
       }
-      <Button variant="outlined" onClick={requestSetFiltersDefault} disabled={isFetchingWidgets}>
+      <Button variant="outlined" onClick={requestSetFiltersDefault} disabled={isFetchingWidgets} href={''}>
         сбросить фильтры
       </Button>
     </div>
