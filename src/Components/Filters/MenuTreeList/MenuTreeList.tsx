@@ -8,18 +8,23 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import {OrgListType, PeriodListType} from "../../Redux/filters-reducer";
 
-type RenderTree = {
-  oid: string
-  name: string
-  children: RenderTree[]
+type PropsType = {
+  treeList: OrgListType | PeriodListType
+  altTreeList: OrgListType | {}
+  title: string
+  orgOid: string
+  period: string
+  periodType: string
+  isFetchingWidgets: boolean
+
+  setter: (oid: string) => void
+  acceptFilters: (type: string, selected: any) => void
 }
 
+const MenuTreeList: React.FC<PropsType> = ({treeList, title, orgOid, period, periodType, setter, acceptFilters, altTreeList, isFetchingWidgets}) => {
 
-const MenuTreeList: React.FC<any> = props => {
-  const {
-    treeList, title, orgOid, period, periodType, setter, acceptFilters, altTreeList = {}, isFetchingWidgets
-  } = props;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selected, setSelected] = React.useState<string>('');
   const [checked, setChecked] = React.useState(localStorage.getItem('checkedOrgZNO') === "1" || false);
@@ -67,11 +72,11 @@ const MenuTreeList: React.FC<any> = props => {
 
   const classes = useStyles();
 
-  const renderTree = (nodes: RenderTree) => (
+  const renderTree = (nodes: OrgListType | PeriodListType) => (
     <TreeItem key={nodes.oid} nodeId={nodes.oid} label={nodes.name}>
       {
         Array.isArray(nodes.children)
-          ? nodes.children.map((node) => renderTree(node))
+          ? nodes.children.map((node: any) => renderTree(node))
           : null
       }
     </TreeItem>
@@ -109,7 +114,8 @@ const MenuTreeList: React.FC<any> = props => {
           defaultExpandIcon={<ChevronRightIcon component={'svg'}/>}
           onNodeSelect={handleSelect}
         >
-          {title === 'оргструктура' ? (!checked ? renderTree(treeList) : renderTree(altTreeList)) : renderTree(treeList)}
+          {// @ts-ignore
+          }{title === 'оргструктура' ? (!checked ? renderTree(treeList) : renderTree(altTreeList)) : renderTree(treeList)}
         </TreeView>
       </Menu>
     </div>

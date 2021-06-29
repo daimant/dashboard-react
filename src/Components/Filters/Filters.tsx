@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./Filters.module.scss";
 import {Preloader} from "../Common/Preloader/Preloader";
-import MenuTreeList from "./Filter-components/MenuTreeList/MenuTreeList";
+import MenuTreeList from "./MenuTreeList/MenuTreeList";
 import {Button} from "@material-ui/core";
 import {FetchError} from "../Common/FetchError/FetchError";
 import {OrgListType, PeriodListType} from "../Redux/filters-reducer";
@@ -56,6 +56,7 @@ const Filters: React.FC<PropsType> = props => {
                           isFetchingWidgets={isFetchingWidgets}
         />
           <MenuTreeList treeList={perList}
+                        altTreeList={{}}
                         title={'период'}
                         orgOid={orgOid}
                         setter={setPeriod}
