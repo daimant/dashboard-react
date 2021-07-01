@@ -10,9 +10,10 @@ import classes from './KPKTable.module.scss';
 import CloseIcon from '@material-ui/icons/Close';
 import Switch from '@material-ui/core/Switch/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel/FormControlLabel';
-import makeStyles from '@material-ui/core/styles/makeStyles';
 import {KPKType} from '../../Common/Types';
 import {FetchError} from '../../Common/FetchError/FetchError';
+import Tooltip from '@material-ui/core/Tooltip';
+import {withStyles, Theme, makeStyles} from '@material-ui/core/styles';
 
 type PropsType = {
   orgOid: string
@@ -56,21 +57,38 @@ const CheckedValueKPK: FC<CheckedValueKPKType> = ({hidden, requestSetHiddenUnuse
     }</span>
   )
 };
+const LightTooltip = withStyles((theme: Theme) => ({
+  tooltip: {
+    backgroundColor: theme.palette.common.white,
+    boxShadow: theme.shadows[1],
+    fontSize: 12,
+  },
+}))(Tooltip);
 
 const KPKTable: FC<PropsType> = ({kpk, requestKPKChild, removeKPKChild, orgOid, period, periodType}) => {
   const [hiddenUnusedKPK, setHiddenUnusedKPK] = React.useState(localStorage.getItem('KPKRowHidden') === "1" || false);
 
   if (!kpk?.cols?.length)
-    return <div className={`${classes.kpkTable} ${classes.cell}`}>
-      <FetchError/>
-    </div>;
+    return (
+      <div className={`${classes.kpkTable} ${classes.cell}`}>
+        <FetchError/>
+      </div>
+    );
+
   const {cols, rows} = kpk;
   const [id, colsHead, value] = cols;
-
   const requestSetHiddenUnusedKPK = () => {
     localStorage.setItem('KPKRowHidden', hiddenUnusedKPK ? "0" : '1');
     setHiddenUnusedKPK(!hiddenUnusedKPK);
   };
+  const randomValuesArrs = [
+    ['Своевременность', (Math.random() * 5 + 95).toFixed(2)],
+    ['Оперативность', (Math.random() * 5 + 95).toFixed(2)],
+    ['Качество работы', (Math.random() * 5 + 95).toFixed(2)],
+    ['Четвертый параметр', (Math.random() * 5 + 95).toFixed(2)],
+    ['Пятый параметр', (Math.random() * 5 + 95).toFixed(2)]
+  ];
+
   return (
     <div className={classes.kpkTable}>
       <TableContainer component={Paper} className={classes.tableContainer}>
@@ -82,9 +100,8 @@ const KPKTable: FC<PropsType> = ({kpk, requestKPKChild, removeKPKChild, orgOid, 
                   {colsHead === 'Услуга' || colsHead === 'Ошибка при загрузке'
                     ? <span>{colsHead}</span>
                     : <span className={classes.tableHead}>
-                      <CloseIcon fontSize='small' onClick={removeKPKChild} component={'span'}/>
-                      {colsHead}
-                    </span>
+                        <CloseIcon fontSize='small' onClick={removeKPKChild} component={'span'}/>{colsHead}
+                      </span>
                   }
                   <CheckedValueKPK hidden={hiddenUnusedKPK} requestSetHiddenUnusedKPK={requestSetHiddenUnusedKPK}/>
                 </div>
@@ -94,6 +111,7 @@ const KPKTable: FC<PropsType> = ({kpk, requestKPKChild, removeKPKChild, orgOid, 
           </TableHead>
           <TableBody component={'tbody'}>
             {rows.map((row: any) => ( // тут мои полномочия всё
+
               <TableRow key={row[id]}
                         component={"tr"}
                         style={row[value] === '-' && hiddenUnusedKPK ? {display: 'none'} : {}}
@@ -110,12 +128,22 @@ const KPKTable: FC<PropsType> = ({kpk, requestKPKChild, removeKPKChild, orgOid, 
                             : () => {
                             }
                         }>
-                <TableCell component="th" scope="row" className={classes.cell}>{
+                <TableCell component='th' scope='row' className={classes.cell}>{
                   row[colsHead]
                 }</TableCell>
-                <TableCell className={`${classes.cell} ${classes.rightColumn}`}>{
-                  row[value]
-                }</TableCell>
+                <LightTooltip title={
+                  <div className={classes.blackColor}>
+                    {`${row[value]} состоит из:`}
+                    {randomValuesArrs.map((arr: any) => (
+                      <span
+                        className={`${classes[arr[1] > 98 ? 'greenColor' : 'redColor']} ${classes.tableHead}`}>{arr[0]}: {arr[1]}</span>
+                    ))}
+                  </div>
+                } placement='right'>
+                  <TableCell className={`${classes.cell} ${classes.rightColumn}`}>{
+                    row[value]
+                  }</TableCell>
+                </LightTooltip>
               </TableRow>
             ))}
           </TableBody>
