@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import logo from '../../Assets/img/oskRZDLogo.png'
+import Logo from '../../Assets/img/oskRZDLogo.png'
 import classes from './Navbar.module.scss';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
@@ -56,8 +56,8 @@ const Navbar: FC<PropsType> = ({
   return (
     <div className={classes.navbar}>
       <div className={classes.leftNav}>
-        <img src={logo} loading='lazy' alt=''/>
-        <img src={FilterIcon} alt='' className={classes.filterIcon} onClick={changeShowFilters}/>
+        <img src={Logo} loading='lazy' alt=''/>
+        <img src={FilterIcon} loading='lazy' alt='' className={classes.filterIcon} onClick={changeShowFilters}/>
         {isFetchingFilters
           ? <Preloader/>
           : <div className={classes.aboutFilters}>
