@@ -4,6 +4,7 @@ import './index.scss';
 import AppContainer from './AppContainer';
 import store from './Components/Redux/store';
 import {Provider} from 'react-redux';
+import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -13,3 +14,5 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
+
+reportWebVitals(); // google analise your veb
