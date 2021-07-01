@@ -40,13 +40,18 @@ const Widgets: FC<PropsType> = ({
         </div>
         <div className={classes.graphs}>
           {sc.map((graph: GraphType, i: number) =>
-            <Graph sc={graph} key={i}/>
+            <Graph graph={graph} key={i}/>
           )}
         </div>
       </main>
       <div className={`${classes.secondMain}`}>
         {tops.map((graph: GraphType, i: number) =>
-          <Graph sc={graph} key={i} extendedStyle={{height: '100%'}}/>
+          <Graph graph={graph} key={i} extendedStyle={{height: '100%'}}/>
+        )}
+      </div>
+      <div className={`${classes.secondMain}`}>
+        {tops.map((graph: GraphType, i: number) =>
+          <Graph graph={graph} key={i} extendedStyle={{height: '100%'}}/>
         )}
       </div>
     </div>

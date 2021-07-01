@@ -13,7 +13,7 @@ type CheckedValueGraphType = {
   hideLineClick: (line: string) => void
 }
 type PropsType = {
-  sc: GraphType
+  graph: GraphType
   extendedStyle?: object
 }
 
@@ -28,20 +28,20 @@ const CheckedValueGraph: FC<CheckedValueGraphType> = ({description, hidden, hide
   )
 };
 
-const Graph: FC<PropsType> = ({sc, extendedStyle = {}}) => {
-  const {title, data} = sc;
-  const showValueLine = sc?.data?.length && sc.data[0].v1;
-  const showPercentLine = sc?.data?.length && !sc.data[0].p;
-  const [hiddenVal, setHiddenVal] = React.useState(localStorage.getItem(`hiddenValSC-${title}`) === '1' || false);
-  const [hiddenProc, setHiddenProc] = React.useState(localStorage.getItem(`hiddenProcSC-${title}`) === '1' || false);
+const Graph: FC<PropsType> = ({graph, extendedStyle = {}}) => {
+  const {title, data} = graph;
+  const showValueLine = data?.length && data[0].v1;
+  const showPercentLine = data?.length && !data[0].p;
+  const [hiddenVal, setHiddenVal] = React.useState(localStorage.getItem(`hiddenValGraph-${title}`) === '1' || false);
+  const [hiddenProc, setHiddenProc] = React.useState(localStorage.getItem(`hiddenProcGraph-${title}`) === '1' || false);
 
   const hideLineClick = (line: string) => {
     if (line === 'v1') {
-      localStorage.setItem(`hiddenValSC-${title}`, hiddenVal ? '0' : '1');
+      localStorage.setItem(`hiddenValGraph-${title}`, hiddenVal ? '0' : '1');
       setHiddenVal(!hiddenVal);
     }
     if (line === 'p') {
-      localStorage.setItem(`hiddenProcSC-${title}`, hiddenProc ? '0' : '1');
+      localStorage.setItem(`hiddenProcGraph-${title}`, hiddenProc ? '0' : '1');
       setHiddenProc(!hiddenProc);
     }
   };
