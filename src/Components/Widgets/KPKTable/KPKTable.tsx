@@ -100,7 +100,7 @@ const KPKTable: FC<PropsType> = ({kpk, requestKPKChild, removeKPKChild, orgOid, 
                   {colsHead === 'Услуга' || colsHead === 'Ошибка при загрузке'
                     ? <span>{colsHead}</span>
                     : <span className={classes.tableHead}>
-                        <CloseIcon fontSize='small' onClick={removeKPKChild} component={'span'}/>{colsHead}
+                        <CloseIcon fontSize='small' onClick={removeKPKChild} component={'svg'}/>{colsHead}
                       </span>
                   }
                   <CheckedValueKPK hidden={hiddenUnusedKPK} requestSetHiddenUnusedKPK={requestSetHiddenUnusedKPK}/>
