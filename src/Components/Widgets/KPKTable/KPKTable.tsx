@@ -131,15 +131,21 @@ const KPKTable: FC<PropsType> = ({kpk, requestKPKChild, removeKPKChild, orgOid, 
                 <TableCell component='th' scope='row' className={classes.cell}>{
                   row[colsHead]
                 }</TableCell>
-                <LightTooltip title={
-                  <div className={classes.blackColor}>
-                    {`${row[value]} состоит из:`}
-                    {randomValuesArrs.map((arr: any) => (
-                      <span
-                        className={`${classes[arr[1] > 98 ? 'greenColor' : 'redColor']} ${classes.tableHead}`}>{arr[0]}: {arr[1]}</span>
-                    ))}
-                  </div>
-                } placement='right'>
+                <LightTooltip
+                  placement='right'
+                  title={row[value] !== '-'
+                    ? <div className={`${classes.blackColor}`} style={{}}>
+                      {`${row[value]} состоит из:`}
+                      {randomValuesArrs.map((arr: any, i: number) => (
+                        <span
+                          className={`${classes[arr[1] > 98 ? 'greenColor' : 'redColor']} ${classes.tableHead}`}
+                          key={i}
+                        >{arr[0]}: {arr[1]}
+                            </span>
+                      ))}
+                    </div>
+                    : ''
+                  }>
                   <TableCell className={`${classes.cell} ${classes.rightColumn}`}>{
                     row[value]
                   }</TableCell>

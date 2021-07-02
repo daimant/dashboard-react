@@ -49,11 +49,10 @@ const Widgets: FC<PropsType> = ({
           <Graph graph={graph} key={i} extendedStyle={{height: '100%'}}/>
         )}
       </div>
-      <div className={`${classes.secondMain}`}>
-        {tops.map((graph: GraphType, i: number) =>
-          <Graph graph={graph} key={i} extendedStyle={{height: '100%'}}/>
-        )}
-      </div>
+      {/*<div className={`${classes.secondMain}`}>*/}
+      {/*  <Graph graph={sc[0]} key={0} extendedStyle={{height: '100%'}}/>*/}
+      {/*  <Graph graph={sc[1]} key={1} extendedStyle={{height: '100%'}}/>*/}
+      {/*</div>*/}
     </div>
   )
 };
