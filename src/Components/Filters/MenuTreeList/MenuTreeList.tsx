@@ -27,7 +27,8 @@ const MenuTreeList: React.FC<PropsType> = ({treeList, title, orgOid, period, per
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selected, setSelected] = React.useState<string>('');
-  const [checked, setChecked] = React.useState(localStorage.getItem('checkedOrgZNO') === '1' || false);
+  const [checkedInfotransRZD, setCheckedInfotransRZD] = React.useState(localStorage.getItem('checkedInfotransRZD') === '1' || false);
+  const [checkedOSKZNO, setCheckedOSKZNO] = React.useState(localStorage.getItem('checkedOrgZNO') === '1' || false);
 
   const useStyles = makeStyles({
     root: {
@@ -38,18 +39,27 @@ const MenuTreeList: React.FC<PropsType> = ({treeList, title, orgOid, period, per
       overflow: 'auto',
     },
     menu: {
-      margin: `${title === 'оргструктура' ? '4vh' : '9vh'} ${title === 'оргструктура' ? '6vw' : '4vw'}`,
+      margin: `${title === 'оргструктура' ? '8vh' : '4vh'} ${title === 'оргструктура' ? '6.5vw' : '4vw'}`,
+      // margin: `${title === 'оргструктура' ? '4vh' : '9vh'} ${title === 'оргструктура' ? '6vw' : '4vw'}`,
     },
     toggle: {
       '& .Mui-checked + .MuiSwitch-track': {
         backgroundColor: '#52d869'
       },
     },
+    flexDisplay: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
   });
 
-  const toggleChecked = () => {
-    localStorage.setItem('checkedOrgZNO', checked ? '0' : '1');
-    setChecked(!checked);
+  const toggleCheckedInfotransRZD = () => {
+    localStorage.setItem('checkedInfotransRZD', checkedInfotransRZD ? '0' : '1');
+    setCheckedInfotransRZD(!checkedInfotransRZD);
+  };
+  const toggleCheckedOSKZNO = () => {
+    localStorage.setItem('checkedOrgZNO', checkedOSKZNO ? '0' : '1');
+    setCheckedOSKZNO(!checkedOSKZNO);
   };
 
   const handleSelect = (event: React.ChangeEvent<{}>, nodeIds: string) => {
@@ -84,7 +94,8 @@ const MenuTreeList: React.FC<PropsType> = ({treeList, title, orgOid, period, per
 
   return (
     <div>
-      <Button aria-controls='simple-menu' variant='outlined' onClick={handleClick} disabled={isFetchingWidgets} href={''}>
+      <Button aria-controls='simple-menu' variant='outlined' onClick={handleClick} disabled={isFetchingWidgets}
+              href={''}>
         {title}
       </Button>
       <Menu
@@ -95,17 +106,34 @@ const MenuTreeList: React.FC<PropsType> = ({treeList, title, orgOid, period, per
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        {title === 'оргструктура' &&
-        <FormControlLabel
-            control={<Switch size='medium'
-                             checked={checked}
-                             onChange={toggleChecked}
-                             color='default'
-                             className={classes.toggle}
+        <div className={classes.flexDisplay}>
+          <span>
+            {title === 'оргструктура' &&
+            <FormControlLabel
+                control={<Switch size='medium'
+                                 checked={checkedInfotransRZD}
+                                 onChange={toggleCheckedInfotransRZD}
+                                 color='default'
+                                 className={classes.toggle}
+                />}
+                labelPlacement='start'
+                label={`Оргструктура Инфотранс / РЖД`}
             />}
-            labelPlacement='start'
-            label={`Все организации / Организации выполняющие ЗНО`}
-        />}
+          </span>
+          <span>
+            {title === 'оргструктура' &&
+            <FormControlLabel
+                control={<Switch size='medium'
+                                 checked={checkedOSKZNO}
+                                 onChange={toggleCheckedOSKZNO}
+                                 color='default'
+                                 className={classes.toggle}
+                />}
+                labelPlacement='start'
+                label={`Все организации / Организации выполняющие ЗНО`}
+            />}
+          </span>
+        </div>
         <TreeView
           className={classes.root}
           defaultCollapseIcon={<ExpandMoreIcon component={'svg'}/>}
@@ -113,8 +141,9 @@ const MenuTreeList: React.FC<PropsType> = ({treeList, title, orgOid, period, per
           defaultExpandIcon={<ChevronRightIcon component={'svg'}/>}
           onNodeSelect={handleSelect}
         >
+
           {// @ts-ignore хз как чинить
-          }{title === 'оргструктура' ? (!checked ? renderTree(treeList) : renderTree(altTreeList)) : renderTree(treeList)}
+          }{title === 'оргструктура' ? (!checkedOSKZNO ? renderTree(treeList) : renderTree(altTreeList)) : renderTree(treeList)}
         </TreeView>
       </Menu>
     </div>
