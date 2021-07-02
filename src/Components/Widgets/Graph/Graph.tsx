@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import classes from './Graph.module.scss';
-import {ComposedChart, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, Line} from 'recharts';
+import {ComposedChart, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, Line} from 'recharts';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import {GraphType} from '../../Common/Types';
@@ -56,18 +56,16 @@ const Graph: FC<PropsType> = ({graph, extendedStyle = {}}) => {
           <YAxis style={hiddenVal ? {display: 'none'} : {}}
                  yAxisId='left'
                  domain={['dataMin', 'dataMax']}
-                 tickCount={5}
+                 tickCount={3}
                  stroke='#8884d8'/>
           <YAxis style={hiddenProc ? {display: 'none'} : {}}
                  tickFormatter={tick => `${(Math.round(tick * 10) / 10)}`}
                  yAxisId='right'
                  orientation='right'
-                 tickCount={5}
-                 axisLine={false}
+                 tickCount={3}
                  domain={['dataMin', 'dataMax']}
                  stroke='#82ca9d'/>
           <Tooltip formatter={(value: any, name: any) => ([`${value}${name === 'p' ? ' %' : ' шт'}`])}/>
-          <CartesianGrid strokeDasharray='3 3'/>
           <Line style={hiddenVal ? {display: 'none'} : {}}
                 yAxisId='left'
                 type='monotone'
