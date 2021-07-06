@@ -1,0 +1,38 @@
+//can be clean
+.graphs {
+  box-shadow: 0 0 1.6rem rgba(0, 0, 0, 0.1);
+  border-radius: .4rem;
+  width: 55vw;
+  @media (max-width: 2000px) { height: 31.3% }
+  @media (min-width: 2000px) { height: 30.4% }
+  background: #FFFFFF;
+  margin: 0 .6vw 2%;
+  font-size: 1.7vh;
+  overflow: hidden;
+}
+
+.titleName {
+  color: black;
+}
+
+.hiddenTitleName {
+  display: none;
+}
+
+.checkBoxGroup {
+  cursor: pointer;
+  font-weight: normal;
+}
+
+.iconCheckBox {
+  vertical-align: middle;
+}
+
+.headGraph {
+  display: flex;
+  margin-bottom: 2%;
+}
+
+.hiddenIDontNowHowDoItElse {
+  font-size: 6px;
+}

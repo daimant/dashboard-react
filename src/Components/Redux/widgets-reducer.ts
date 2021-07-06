@@ -1,16 +1,16 @@
 import {widgetsAPI} from '../../API/API';
-import {PipeKPK, PipeGraph, PipeTodays} from './pipes';
+import {PipeKPK, PipeGraphLine, PipeTodays, PipeGraphArea} from './pipes';
 import {AnyAction} from 'redux';
 import {ThunkAction} from 'redux-thunk';
 import {RootStateType} from './store';
-import {GraphType, KPKType, RawKPKType, TodaysType} from '../Common/Types';
+import {GraphAreaType, GraphLineType, KPKType, RawGraphAreaType, RawKPKType, TodaysType} from '../Common/Types';
 
 type ActionsWidgetsType = {
   type: string
   kpk: RawKPKType
   kpkChild: RawKPKType
-  sc: Array<GraphType>
-  tops: Array<GraphType>
+  sc: Array<GraphLineType>
+  tops: Array<RawGraphAreaType>
   todays: Array<TodaysType>
 }
 type InitialStateWidgetsType = typeof initialStateWidgets;
@@ -18,8 +18,8 @@ type InitialStateWidgetsType = typeof initialStateWidgets;
 let initialStateWidgets = {
   kpk: {} as KPKType,
   kpkChild: {} as KPKType,
-  sc: [] as Array<GraphType>,
-  tops: [] as Array<GraphType>,
+  sc: [] as Array<GraphLineType>,
+  tops: [] as Array<GraphAreaType>,
   todays: [] as Array<TodaysType>,
   isFetchingWidgets: true as boolean,
   /*inf: [
@@ -72,10 +72,10 @@ const widgetsReducer = (state = initialStateWidgets, action: ActionsWidgetsType)
       return {...state, kpkChild};
 
     case SET_SC:
-      return action.sc.length ? {...state, sc: PipeGraph(action.sc)} : state;
+      return action.sc.length ? {...state, sc: PipeGraphLine(action.sc)} : state;
 
     case SET_TOPS:
-      return action.tops.length ? {...state, tops: PipeGraph(action.tops)} : state;
+      return action.tops.length ? {...state, tops: PipeGraphArea(action.tops)} : state;
 
     case SET_TODAY:
       return action.todays.length ? {...state, todays: PipeTodays(action.todays)} : state;
@@ -117,8 +117,8 @@ const REMOVE_KPK_CHILD = 'REMOVE_KPK_CHILD';
 // action creators
 export const setKPK = (kpk: RawKPKType): SetKPKACType => ({type: SET_KPK, kpk});
 export const setKPKChild = (kpkChild: RawKPKType): SetKPKChildACType => ({type: SET_KPK_CHILD, kpkChild});
-export const setSC = (sc: Array<GraphType>): SetSCACType => ({type: SET_SC, sc});
-export const setTops = (tops: Array<GraphType>): SetTopsACType => ({type: SET_TOPS, tops});
+export const setSC = (sc: Array<GraphLineType>): SetSCACType => ({type: SET_SC, sc});
+export const setTops = (tops: Array<RawGraphAreaType>): SetTopsACType => ({type: SET_TOPS, tops});
 export const setTodays = (todays: Array<TodaysType>): SetTodaysACType => ({type: SET_TODAY, todays});
 export const setIsFetchingWidgetsStarted = (): SetIsFetchingWidgetsStartedACType => ({type: SET_IS_FETCHING_WIDGETS_STARTED});
 export const setIsFetchingWidgetsEnded = (): SetIsFetchingWidgetsEndedACType => ({type: SET_IS_FETCHING_WIDGETS_ENDED});

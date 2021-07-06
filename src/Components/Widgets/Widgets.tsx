@@ -1,16 +1,17 @@
 import React, {FC} from 'react';
 import classes from './Widgets.module.scss';
 import KPKTable from './KPKTable/KPKTable';
-import Graph from './Graph/Graph';
+import GraphLine from './GraphLine/GraphLine';
 import {Preloader} from '../Common/Preloader/Preloader';
 import CircularBar from './CircularBar/CircularBar';
-import {GraphType, KPKType, TodaysType} from '../Common/Types';
+import {GraphAreaType, GraphLineType, KPKType, TodaysType} from '../Common/Types';
+import GraphArea from "./GraphArea/GraphArea";
 
 type PropsType = {
   kpk: KPKType
   kpkChild: KPKType
-  sc: Array<GraphType>
-  tops: Array<GraphType>
+  sc: Array<GraphLineType>
+  tops: Array<GraphAreaType>
   todays: Array<TodaysType>
   isFetchingWidgets: boolean
   orgOid: string
@@ -39,20 +40,20 @@ const Widgets: FC<PropsType> = ({
           )}
         </div>
         <div className={classes.graphs}>
-          {sc.map((graph: GraphType, i: number) =>
-            <Graph graph={graph} key={i}/>
+          {sc.map((graphLineData: GraphLineType, i: number) =>
+            <GraphLine graphLineData={graphLineData} key={i}/>
           )}
         </div>
       </main>
       <div className={`${classes.secondMain}`}>
-        {tops.map((graph: GraphType, i: number) =>
-          <Graph graph={graph} key={i} extendedStyle={{height: '100%'}}/>
+        {tops.map((graphAreaData: GraphAreaType, i: number) =>
+          <GraphArea graphAreaData={graphAreaData} key={i} extendedStyle={{height: '100%'}}/>
         )}
       </div>
-      {/*<div className={`${classes.secondMain}`}>*/}
-      {/*  <Graph graph={sc[0]} key={0} extendedStyle={{height: '100%'}}/>*/}
-      {/*  <Graph graph={sc[1]} key={1} extendedStyle={{height: '100%'}}/>*/}
-      {/*</div>*/}
+{/*      <div className={`${classes.secondMain}`}>
+        <GraphArea graphAreaData={tops[0]} extendedStyle={{height: '100%'}}/>
+        <GraphArea graphAreaData={tops[1]} extendedStyle={{height: '100%'}}/>
+      </div>*/}
     </div>
   )
 };

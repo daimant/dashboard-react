@@ -7,13 +7,13 @@ import {
 } from '../Redux/selectors';
 import Widgets from './Widgets';
 import {RootStateType} from '../Redux/store';
-import {KPKType, GraphType, TodaysType} from '../Common/Types';
+import {KPKType, GraphLineType, TodaysType, GraphAreaType} from '../Common/Types';
 
 type MapStatePropsType = {
   kpk: KPKType
   kpkChild: KPKType
-  sc: Array<GraphType>
-  tops: Array<GraphType>
+  sc: Array<GraphLineType>
+  tops: Array<GraphAreaType>
   todays: Array<TodaysType>
   isFetchingWidgets: boolean
   orgOid: string

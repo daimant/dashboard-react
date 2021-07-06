@@ -1,4 +1,11 @@
-import {GraphType, RawKPKType, TodaysType, OrgListType} from '../Common/Types';
+import {
+  GraphLineType,
+  RawKPKType,
+  TodaysType,
+  OrgListType,
+  RawGraphAreaType,
+  GraphAreaType,
+} from '../Common/Types';
 
 // Widgets
 export const PipeKPK = (kpk: RawKPKType) => {
@@ -31,7 +38,7 @@ export const PipeKPK = (kpk: RawKPKType) => {
 
   return {cols: kpk.name_col, rows: parsedKPK};
 };
-export const PipeGraph = (graphs: GraphType[]) => {
+export const PipeGraphLine = (graphs: GraphLineType[]) => {
   if (!graphs) return [];
   for (let i in graphs) {
     if (!graphs[i]) {
@@ -48,6 +55,39 @@ export const PipeGraph = (graphs: GraphType[]) => {
 
   return graphs
 };
+export const PipeGraphArea = (graphs: RawGraphAreaType[]) => {
+  if (!graphs) return [];
+
+  const parsedGraphs: GraphAreaType[] = [];
+
+  for (let i in graphs) {
+    const rawGraph = graphs[i];
+
+    if (!rawGraph) {
+      parsedGraphs[i] = {title: 'Ошибка при загрузке', percents: {}, data: []};
+      continue;
+    }
+
+    const graph: GraphAreaType = {
+      title: graphs[i].title,
+      percents: {
+        p1: 'Процент установки/назначения человеком',
+        p2: 'Процент установки/назначения ботом',
+        p3: 'Процент ошибок бота'
+      },
+      data: []
+    };
+
+    for (let day of rawGraph.data) {
+      const newDay = {d: day.d, p1: [day.p2 + day.p3, 1, day.p1], p2: [0, day.p2, day.p2], p3: [day.p2, day.p2 + day.p3, day.p3]};
+      graph.data.push(newDay);
+    }
+
+    parsedGraphs.push(graph);
+  }
+
+  return parsedGraphs;
+};
 export const PipeTodays = (todays: Array<TodaysType>) => {
   for (let i in todays) {
     if (todays.hasOwnProperty(i) && (todays[i].v1 === null || todays[i].p === null))
@@ -59,7 +99,7 @@ export const PipeTodays = (todays: Array<TodaysType>) => {
 };
 
 // filters
-export const PipeOrgList = (orgList: Array<OrgListType>)=> {
+export const PipeOrgList = (orgList: Array<OrgListType>) => {
   if (!orgList || !orgList[0] || orgList[0]?.oid !== 281586771165316) return {};
 
   const orgPosition = new Map(orgList.map((el: any, i: any) => [el['oid'], i]));

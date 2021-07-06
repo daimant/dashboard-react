@@ -1,9 +1,9 @@
 import React, {FC} from 'react';
-import classes from './Graph.module.scss';
+import classes from './GraphLine.module.scss';
 import {ComposedChart, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, Line} from 'recharts';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import {GraphType} from '../../Common/Types';
+import {GraphLineType} from '../../Common/Types';
 
 type CheckedValueGraphType = {
   description: string
@@ -13,7 +13,7 @@ type CheckedValueGraphType = {
   hideLineClick: (line: string) => void
 }
 type PropsType = {
-  graph: GraphType
+  graphLineData: GraphLineType
   extendedStyle?: object
 }
 
@@ -28,8 +28,8 @@ const CheckedValueGraph: FC<CheckedValueGraphType> = ({description, hidden, hide
   )
 };
 
-const Graph: FC<PropsType> = ({graph, extendedStyle = {}}) => {
-  const {title, data} = graph;
+const GraphLine: FC<PropsType> = ({graphLineData, extendedStyle = {}}) => {
+  const {title, data} = graphLineData;
   const showValueLine = data?.length && data[0].v1;
   const showPercentLine = data?.length && !data[0].p;
   const [hiddenVal, setHiddenVal] = React.useState(localStorage.getItem(`hiddenValGraph-${title}`) === '1' || false);
@@ -49,9 +49,7 @@ const Graph: FC<PropsType> = ({graph, extendedStyle = {}}) => {
   return (
     <div className={classes.graphs} style={extendedStyle}>
       <ResponsiveContainer>
-        <ComposedChart data={data} margin={{
-          top: -10
-        }}>
+        <ComposedChart data={data} margin={{top: -10}}>
           <XAxis dataKey='d'/>
           <YAxis style={hiddenVal ? {display: 'none'} : {}}
                  yAxisId='left'
@@ -97,4 +95,4 @@ const Graph: FC<PropsType> = ({graph, extendedStyle = {}}) => {
   )
 };
 
-export default Graph;
+export default GraphLine;

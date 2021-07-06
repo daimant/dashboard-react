@@ -29,15 +29,40 @@ type KPKRowsType = {
   Сервис_oid: number
   Услуга: string
 }
-export type GraphType = {
+
+export type GraphLineType = {
   id?: number
   title: string
-  data: Array<GraphElementsType>
+  data: Array<GraphLineElementsType>
 };
-type GraphElementsType = {
+type GraphLineElementsType = {
   d: string
   v1: number
   v2: number
   p: number
 };
+
+export type RawGraphAreaType = {
+  title: string
+  data: Array<RawGraphAreaElementsType>
+};
+type RawGraphAreaElementsType = {
+  d: string
+  p1: number
+  p2: number
+  p3: number
+};
+
+export type GraphAreaType = {
+  title: string
+  percents: { p1: string, p2: string, p3: string } | {}
+  data: Array<GraphAreaTypeElements>
+}
+type GraphAreaTypeElements = {
+  d: string
+  p1: Array<number>
+  p2: Array<number>
+  p3: Array<number>
+}
+
 export type TodaysType = { title: string, v1: number, p: number, err: boolean };
