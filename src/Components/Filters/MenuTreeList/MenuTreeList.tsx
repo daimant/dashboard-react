@@ -23,8 +23,33 @@ type PropsType = {
   acceptFilters: (type: string, selected: any) => void
 }
 
-const MenuTreeList: React.FC<PropsType> = ({treeList, title, orgOid, period, periodType, setter, acceptFilters, altTreeList, isFetchingWidgets}) => {
+const TEMPTreeListRZD = {
+  children: [{
+    children: [],
+    name: "Дальневосточная ж.д.",
+    oid: "281586771165001",
+    parent: "281586771165316",
+    zno: 1,
+  }, {
+    children: [],
+    name: "Забайкальская ж.д.",
+    oid: "281586771165002",
+    parent: "281586771165316",
+    zno: 1,
+  }, {
+    children: [],
+    name: "Октябрьская ж.д.",
+    oid: "281586771165003",
+    parent: "281586771165316",
+    zno: 1,
+  }],
+  name: "ОАО РЖД",
+  oid: "281586771165316",
+  parent: "0",
+  zno: 1,
+};
 
+const MenuTreeList: React.FC<PropsType> = ({treeList, title, orgOid, period, periodType, setter, acceptFilters, altTreeList, isFetchingWidgets}) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selected, setSelected] = React.useState<string>('');
   const [checkedInfotransRZD, setCheckedInfotransRZD] = React.useState(localStorage.getItem('checkedInfotransRZD') === '1' || false);
@@ -33,7 +58,7 @@ const MenuTreeList: React.FC<PropsType> = ({treeList, title, orgOid, period, per
   const useStyles = makeStyles({
     root: {
       margin: '.5rem',
-      height: title === 'оргструктура' ? 400 : 200,
+      height: title === 'оргструктура' ? 400 : 250,
       flexGrow: 1,
       width: title === 'оргструктура' ? 550 : 200,
       overflow: 'auto',
@@ -137,13 +162,20 @@ const MenuTreeList: React.FC<PropsType> = ({treeList, title, orgOid, period, per
         <TreeView
           className={classes.root}
           defaultCollapseIcon={<ExpandMoreIcon component={'svg'}/>}
-          defaultExpanded={title === 'оргструктура' ? [treeList.oid] : ['root']}
+          // @ts-ignore
+          defaultExpanded={title === 'период' ? [treeList.oid, ...treeList.children.map((org: any) => org.oid)] : [treeList.oid]}
           defaultExpandIcon={<ChevronRightIcon component={'svg'}/>}
           onNodeSelect={handleSelect}
         >
-
-          {// @ts-ignore хз как чинить
-          }{title === 'оргструктура' ? (!checkedOSKZNO ? renderTree(treeList) : renderTree(altTreeList)) : renderTree(treeList)}
+          {title === 'оргструктура'
+            ? (checkedInfotransRZD
+              ? renderTree(TEMPTreeListRZD)
+              : (checkedOSKZNO
+                  // @ts-ignore хз как чинить
+                  ? renderTree(altTreeList)
+                  : renderTree(treeList)
+              ))
+            : renderTree(treeList)}
         </TreeView>
       </Menu>
     </div>

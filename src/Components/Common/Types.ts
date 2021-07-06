@@ -55,7 +55,7 @@ type RawGraphAreaElementsType = {
 
 export type GraphAreaType = {
   title: string
-  percents: { p1: string, p2: string, p3: string } | {}
+  percents: { p1: string, p2: string, p3: string }
   data: Array<GraphAreaTypeElements>
 }
 type GraphAreaTypeElements = {

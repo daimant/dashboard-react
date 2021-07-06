@@ -64,7 +64,15 @@ export const PipeGraphArea = (graphs: RawGraphAreaType[]) => {
     const rawGraph = graphs[i];
 
     if (!rawGraph) {
-      parsedGraphs[i] = {title: 'Ошибка при загрузке', percents: {}, data: []};
+      parsedGraphs[i] = {
+        title: 'Ошибка при загрузке',
+        percents: {
+          p1: 'Процент установки/назначения человеком',
+          p3: 'Процент ошибок бота',
+          p2: 'Процент установки/назначения ботом',
+        },
+        data: [],
+      };
       continue;
     }
 
