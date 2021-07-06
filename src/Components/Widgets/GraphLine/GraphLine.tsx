@@ -63,7 +63,8 @@ const GraphLine: FC<PropsType> = ({graphLineData, extendedStyle = {}}) => {
                  tickCount={3}
                  domain={['dataMin', 'dataMax']}
                  stroke='#82ca9d'/>
-          <Tooltip formatter={(value: any, name: any) => ([`${value}${name === 'p' ? ' %' : ' шт'}`])}/>
+          <Tooltip labelFormatter={(label: string) => `Дата: ${label}`}
+                   formatter={(value: any, name: any) => ([`${value}${name === 'p' ? ' %' : ' шт'}`])}/>
           <Line style={hiddenVal ? {display: 'none'} : {}}
                 yAxisId='left'
                 type='monotone'

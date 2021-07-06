@@ -17,8 +17,9 @@ const GraphArea: FC<PropsType> = ({graphAreaData, extendedStyle = {}}) => {
         <AreaChart data={data} margin={{top: -10, right: 30}}>
           <XAxis dataKey="d"/>
           <YAxis tickFormatter={tick => `${tick * 100}`} tickCount={2}/>
-          {/*// @ts-ignore*/}
-          <Tooltip formatter={(value: Array<number>, name: any) => ([`${percents[name]}: ${value[2] * 100} %`])}/>
+          <Tooltip labelFormatter={(label: string) => `Дата: ${label}`}
+                   // @ts-ignore
+                   formatter={(value: Array<number>, name: string) => ([`${percents[name]}: ${value[2] * 100} %`])}/>
           <Area dataKey="p1" stroke="#8884d8" fill="#8884d8"/>
           <Area dataKey="p3" stroke="#FF0000" fill="#FF0000"/>
           <Area dataKey="p2" stroke="#82ca9d" fill="#82ca9d"/>
