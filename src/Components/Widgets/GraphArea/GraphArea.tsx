@@ -10,7 +10,7 @@ type PropsType = {
 
 const GraphArea: FC<PropsType> = ({graphAreaData, extendedStyle = {}}) => {
   const {title, data, percents} = graphAreaData;
-console.log(data)
+
   return (
     <div className={classes.graphs} style={extendedStyle}>
       <ResponsiveContainer>

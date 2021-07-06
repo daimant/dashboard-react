@@ -72,14 +72,19 @@ export const PipeGraphArea = (graphs: RawGraphAreaType[]) => {
       title: graphs[i].title,
       percents: {
         p1: 'Процент установки/назначения человеком',
+        p3: 'Процент ошибок бота',
         p2: 'Процент установки/назначения ботом',
-        p3: 'Процент ошибок бота'
       },
-      data: []
+      data: [],
     };
 
     for (let day of rawGraph.data) {
-      const newDay = {d: day.d, p1: [day.p2 + day.p3, 1, day.p1], p2: [0, day.p2, day.p2], p3: [day.p2, day.p2 + day.p3, day.p3]};
+      const newDay = {
+        d: day.d,
+        p1: [day.p2 + day.p3, 1, day.p1],
+        p3: [day.p2, day.p2 + day.p3, day.p3],
+        p2: [0, day.p2, day.p2],
+      };
       graph.data.push(newDay);
     }
 
