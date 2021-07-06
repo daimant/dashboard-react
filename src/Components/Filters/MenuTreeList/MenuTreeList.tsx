@@ -50,8 +50,9 @@ const TEMPTreeListRZD = {
 };
 
 const MenuTreeList: React.FC<PropsType> = ({treeList, title, orgOid, period, periodType, setter, acceptFilters, altTreeList, isFetchingWidgets}) => {
+  // @ts-ignore
+  const [expanded, setExpanded] = React.useState<string[]>(title === 'период' ? [treeList.oid, ...treeList.children.map((org: any) => org.oid)] : [treeList.oid]);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [selected, setSelected] = React.useState<string>('');
   const [checkedInfotransRZD, setCheckedInfotransRZD] = React.useState(localStorage.getItem('checkedInfotransRZD') === '1' || false);
   const [checkedOSKZNO, setCheckedOSKZNO] = React.useState(localStorage.getItem('checkedOrgZNO') === '1' || false);
 
@@ -88,7 +89,13 @@ const MenuTreeList: React.FC<PropsType> = ({treeList, title, orgOid, period, per
   };
 
   const handleSelect = (event: React.ChangeEvent<{}>, nodeIds: string) => {
-    setSelected(nodeIds);
+    if (nodeIds && typeof nodeIds !== 'object')
+      setter(nodeIds);
+
+    if ((nodeIds && title === 'оргструктура' && nodeIds !== orgOid) || (nodeIds && title === 'период' && nodeIds !== `${periodType}:${period}`))
+      acceptFilters(title, nodeIds);
+
+    handleClose();
   };
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -97,18 +104,26 @@ const MenuTreeList: React.FC<PropsType> = ({treeList, title, orgOid, period, per
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
 
-    if (selected && typeof selected !== 'object')
-      setter(selected);
+  const handleExpand = (event: React.ChangeEvent<{}>, nodeIds: string) => {
+    const newExpanded = expanded.includes(nodeIds)
+      ? expanded.filter((el: string) => el !== nodeIds)
+      : [...expanded, nodeIds];
 
-    if ((selected && title === 'оргструктура' && selected !== orgOid) || (selected && title === 'период' && selected !== `${periodType}:${period}`))
-      acceptFilters(title, selected);
+    setExpanded(newExpanded);
   };
 
   const classes = useStyles();
 
   const renderTree = (nodes: OrgListType | PeriodListType) => (
-    <TreeItem key={nodes.oid} nodeId={nodes.oid} label={nodes.name}>
+    <TreeItem key={nodes.oid} nodeId={nodes.oid} label={nodes.name}
+              onLabelClick={(event) => {
+                handleSelect(event, nodes.oid)
+              }}
+              onIconClick={(event) => {
+                handleExpand(event, nodes.oid)
+              }}>
       {
         Array.isArray(nodes.children)
           ? nodes.children.map((node: any) => renderTree(node)) // что-то надо придумать
@@ -162,10 +177,8 @@ const MenuTreeList: React.FC<PropsType> = ({treeList, title, orgOid, period, per
         <TreeView
           className={classes.root}
           defaultCollapseIcon={<ExpandMoreIcon component={'svg'}/>}
-          // @ts-ignore
-          defaultExpanded={title === 'период' ? [treeList.oid, ...treeList.children.map((org: any) => org.oid)] : [treeList.oid]}
           defaultExpandIcon={<ChevronRightIcon component={'svg'}/>}
-          onNodeSelect={handleSelect}
+          expanded={expanded}
         >
           {title === 'оргструктура'
             ? (checkedInfotransRZD
