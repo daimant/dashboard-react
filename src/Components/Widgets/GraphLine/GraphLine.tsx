@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import classes from './GraphLine.module.scss';
-import {ComposedChart, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, Line} from 'recharts';
+import {ComposedChart, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, Line, ReferenceLine} from 'recharts';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import {GraphLineType} from '../../Common/Types';
@@ -77,6 +77,8 @@ const GraphLine: FC<PropsType> = ({graphLineData, extendedStyle = {}}) => {
                 dataKey='p'
                 stroke='#82ca9d'
                 strokeWidth={3}/>
+          <ReferenceLine y={98} stroke='#FF0000' yAxisId='right' style={hiddenProc ? {display: 'none'} : {}}
+                         strokeDasharray="3 3" alwaysShow={true}/>
           <Legend iconSize={0}
                   verticalAlign='top'
                   formatter={(line) => (<div className={classes.headGraph}>
@@ -88,6 +90,8 @@ const GraphLine: FC<PropsType> = ({graphLineData, extendedStyle = {}}) => {
                         : <CheckedValueGraph
                           description={showPercentLine || (showValueLine && showPercentLine) !== undefined ? '%' : ''}
                           hidden={hiddenProc} line={line} hideLineClick={hideLineClick}/>}
+                      {line === 'p' &&
+                      <h3 className={`${classes.checkBoxGroup} ${classes.targetLine}`}> &emsp;целевое значение</h3>}
                     </div>
                   )}/>
         </ComposedChart>
