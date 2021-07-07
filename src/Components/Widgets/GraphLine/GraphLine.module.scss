@@ -39,3 +39,10 @@
 .targetLine {
   color: #FF0000;
 }
+
+.settingsIcon {
+  position: absolute;
+  z-index: 1;
+  cursor: pointer;
+  margin: 5px;
+}

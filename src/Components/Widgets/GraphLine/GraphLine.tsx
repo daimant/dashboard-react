@@ -4,11 +4,13 @@ import {ComposedChart, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, Line,
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import {GraphLineType} from '../../Common/Types';
+import SettingsIcon from '../../../Assets/Icons/SettingsIcon.svg';
 
 type CheckedValueGraphType = {
   description: string
   hidden: boolean
   line: string
+  showGraphFilters:boolean
 
   hideLineClick: (line: string) => void
 }
@@ -17,8 +19,8 @@ type PropsType = {
   extendedStyle?: object
 }
 
-const CheckedValueGraph: FC<CheckedValueGraphType> = ({description, hidden, hideLineClick, line}) => {
-  if (description === '') return <></>;
+const CheckedValueGraph: FC<CheckedValueGraphType> = ({description, hidden, hideLineClick, line, showGraphFilters}) => {
+  if (description === '' || !showGraphFilters) return <></>;
 
   return (
     <h3 className={classes.checkBoxGroup} onClick={() => hideLineClick(line)}>{description} {!hidden
@@ -34,6 +36,7 @@ const GraphLine: FC<PropsType> = ({graphLineData, extendedStyle = {}}) => {
   const showPercentLine = data?.length && !data[0].p;
   const [hiddenVal, setHiddenVal] = React.useState(localStorage.getItem(`hiddenValGraph-${title}`) === '1' || false);
   const [hiddenProc, setHiddenProc] = React.useState(localStorage.getItem(`hiddenProcGraph-${title}`) === '1' || false);
+  const [showGraphSettings, setShowGraphSettings] = React.useState(localStorage.getItem(`showGraphSettings-${title}`) === '1' || false);
 
   const hideLineClick = (line: string) => {
     if (line === 'v1') {
@@ -46,8 +49,14 @@ const GraphLine: FC<PropsType> = ({graphLineData, extendedStyle = {}}) => {
     }
   };
 
+  const changeShowGraphSettings = () => {
+    localStorage.setItem(`showGraphSettings-${title}`, showGraphSettings ? '0' : '1');
+    setShowGraphSettings(!showGraphSettings)
+  };
+
   return (
     <div className={classes.graphs} style={extendedStyle}>
+      <img src={SettingsIcon} loading='lazy' alt='' className={classes.settingsIcon} onClick={changeShowGraphSettings}/>
       <ResponsiveContainer>
         <ComposedChart data={data} margin={{top: -10}}>
           <XAxis dataKey='d' allowDataOverflow={false} tickCount={10} axisLine={false}/>
@@ -77,13 +86,13 @@ const GraphLine: FC<PropsType> = ({graphLineData, extendedStyle = {}}) => {
                 type='monotone'
                 dataKey='v1'
                 stroke='#8884d8'
-                strokeWidth={3}/>
+                strokeWidth={2}/>
           <Line style={hiddenProc ? {display: 'none'} : {}}
                 yAxisId='right'
                 type='monotone'
                 dataKey='p'
                 stroke='#82ca9d'
-                strokeWidth={3}/>
+                strokeWidth={2}/>
           <ReferenceLine y={98} stroke='#FF0000' yAxisId='right' style={hiddenProc ? {display: 'none'} : {}}
                          strokeDasharray="3 3" alwaysShow={true}/>
           <Legend iconSize={0}
@@ -93,11 +102,11 @@ const GraphLine: FC<PropsType> = ({graphLineData, extendedStyle = {}}) => {
                       {line === 'v1'
                         ? <CheckedValueGraph
                           description={showValueLine || (showValueLine && showPercentLine) !== undefined ? 'значение' : ''}
-                          hidden={hiddenVal} line={line} hideLineClick={hideLineClick}/>
+                          hidden={hiddenVal} line={line} hideLineClick={hideLineClick} showGraphFilters={showGraphSettings}/>
                         : <CheckedValueGraph
                           description={showPercentLine || (showValueLine && showPercentLine) !== undefined ? '%' : ''}
-                          hidden={hiddenProc} line={line} hideLineClick={hideLineClick}/>}
-                      {line === 'p' &&
+                          hidden={hiddenProc} line={line} hideLineClick={hideLineClick} showGraphFilters={showGraphSettings}/>}
+                      {line === 'p' && showGraphSettings &&
                       <h3 className={`${classes.checkBoxGroup} ${classes.targetLine}`}> &emsp;целевое значение</h3>}
                     </div>
                   )}/>
