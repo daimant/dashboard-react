@@ -50,18 +50,25 @@ const GraphLine: FC<PropsType> = ({graphLineData, extendedStyle = {}}) => {
     <div className={classes.graphs} style={extendedStyle}>
       <ResponsiveContainer>
         <ComposedChart data={data} margin={{top: -10}}>
-          <XAxis dataKey='d'/>
+          <XAxis dataKey='d' allowDataOverflow={false} tickCount={10} axisLine={false}/>
           <YAxis style={hiddenVal ? {display: 'none'} : {}}
+                 tickFormatter={tick => tick < 100
+                   ? `${Math.round(tick / 10) * 10}`
+                   : tick < 1000
+                     ? `${Math.round(tick / 100) * 100}`
+                     : `${Math.round(tick / 1000) * 1000}`}
                  yAxisId='left'
                  domain={['dataMin', 'dataMax']}
                  tickCount={3}
+                 axisLine={false}
                  stroke='#8884d8'/>
           <YAxis style={hiddenProc ? {display: 'none'} : {}}
-                 tickFormatter={tick => `${(Math.round(tick * 10) / 10)}`}
+                 tickFormatter={tick => `${Math.round(tick * 10) / 10}`}
                  yAxisId='right'
-                 orientation='right'
-                 tickCount={3}
                  domain={['dataMin', 'dataMax']}
+                 tickCount={2}
+                 axisLine={false}
+                 orientation='right'
                  stroke='#82ca9d'/>
           <Tooltip labelFormatter={(label: string) => `Дата: ${label}`}
                    formatter={(value: any, name: any) => ([`${value}${name === 'p' ? ' %' : ' шт'}`])}/>
