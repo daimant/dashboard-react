@@ -67,9 +67,9 @@ export const PipeGraphArea = (graphs: RawGraphAreaType[]) => {
       parsedGraphs[i] = {
         title: 'Ошибка при загрузке',
         percents: {
-          p1: 'Процент установки/назначения человеком',
-          p3: 'Процент ошибок бота',
-          p2: 'Процент установки/назначения ботом',
+          p1: 'Установка сотрудником',
+          p3: 'Ошибка бота',
+          p2: 'Установка ботом',
         },
         data: [],
       };
@@ -79,9 +79,9 @@ export const PipeGraphArea = (graphs: RawGraphAreaType[]) => {
     const graph: GraphAreaType = {
       title: graphs[i].title,
       percents: {
-        p1: 'Процент установки/назначения человеком',
-        p3: 'Процент ошибок бота',
-        p2: 'Процент установки/назначения ботом',
+        p1: 'Установка сотрудником',
+        p3: 'Ошибка бота',
+        p2: 'Установка ботом',
       },
       data: [],
     };
