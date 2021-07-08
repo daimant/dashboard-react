@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import classes from './GraphLine.module.scss';
-import {ComposedChart, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, Line, ReferenceLine} from 'recharts';
+import {ComposedChart, XAxis, YAxis, Tooltip, ResponsiveContainer, Line, ReferenceLine} from 'recharts';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import {GraphLineType} from '../../Common/Types';
@@ -10,7 +10,6 @@ type CheckedValueGraphType = {
   description: string
   hidden: boolean
   line: string
-  showGraphFilters:boolean
 
   hideLineClick: (line: string) => void
 }
@@ -19,13 +18,12 @@ type PropsType = {
   extendedStyle?: object
 }
 
-const CheckedValueGraph: FC<CheckedValueGraphType> = ({description, hidden, hideLineClick, line, showGraphFilters}) => {
-  if (description === '' || !showGraphFilters) return <></>;
-
+const CheckedValueGraph: FC<CheckedValueGraphType> = ({description, hidden, hideLineClick, line}) => {
   return (
-    <h3 className={classes.checkBoxGroup} onClick={() => hideLineClick(line)}>{description} {!hidden
-      ? <CheckBoxIcon className={classes.iconCheckBox} color='action' fontSize='small' component={'svg'}/>
-      : <CheckBoxOutlineBlankIcon className={classes.iconCheckBox} color='action' fontSize='small' component={'svg'}/>}
+    <h3 className={`${classes.checkBoxGroup} ${classes.clickable} ${classes[line === 'v1' ? 'valueLine' : 'percentLine']}`}
+        onClick={() => hideLineClick(line)}>{description} {!hidden
+      ? <CheckBoxIcon className={classes.iconCheckBox} color='action' component={'svg'} style={{fontSize: '100%'}}/>
+      : <CheckBoxOutlineBlankIcon className={classes.iconCheckBox} color='action' component={'svg'} style={{fontSize: '100%'}}/>}
     </h3>
   )
 };
@@ -56,9 +54,22 @@ const GraphLine: FC<PropsType> = ({graphLineData, extendedStyle = {}}) => {
 
   return (
     <div className={classes.graphs} style={extendedStyle}>
-      <img src={SettingsIcon} loading='lazy' alt='' className={classes.settingsIcon} onClick={changeShowGraphSettings}/>
+      <div className={classes.headGraph}>
+        <img src={SettingsIcon} loading='lazy' alt='' className={classes.clickable}
+             onClick={changeShowGraphSettings}/>
+        <h3 className={classes.title}>{title}</h3>
+        {showGraphSettings && <div className={classes.settings}>
+            <CheckedValueGraph
+                description={showValueLine || (showValueLine && showPercentLine) !== undefined ? 'значение' : ''}
+                hidden={hiddenVal} line={'v1'} hideLineClick={hideLineClick}/>&emsp;
+            <CheckedValueGraph
+                description={showPercentLine || (showValueLine && showPercentLine) !== undefined ? '%' : ''}
+                hidden={hiddenProc} line={'p'} hideLineClick={hideLineClick}/>&emsp;
+            <h3 className={`${classes.checkBoxGroup} ${classes.targetLine}`}>целевое значение</h3>&emsp;
+        </div>}
+      </div>
       <ResponsiveContainer>
-        <ComposedChart data={data} margin={{top: -10}}>
+        <ComposedChart data={data} margin={{top: 5, bottom: 30}}>
           <XAxis dataKey='d' allowDataOverflow={false} tickCount={10} axisLine={false}/>
           <YAxis style={hiddenVal ? {display: 'none'} : {}}
                  tickFormatter={tick => tick < 100
@@ -94,22 +105,7 @@ const GraphLine: FC<PropsType> = ({graphLineData, extendedStyle = {}}) => {
                 stroke='#82ca9d'
                 strokeWidth={2}/>
           <ReferenceLine y={98} stroke='#FF0000' yAxisId='right' style={hiddenProc ? {display: 'none'} : {}}
-                         strokeDasharray="3 3" alwaysShow={true}/>
-          <Legend iconSize={0}
-                  verticalAlign='top'
-                  formatter={(line) => (<div className={classes.headGraph}>
-                      <h3 className={line === 'v1' ? classes.titleName : classes.hiddenTitleName}>{title}&emsp;</h3>
-                      {line === 'v1'
-                        ? <CheckedValueGraph
-                          description={showValueLine || (showValueLine && showPercentLine) !== undefined ? 'значение' : ''}
-                          hidden={hiddenVal} line={line} hideLineClick={hideLineClick} showGraphFilters={showGraphSettings}/>
-                        : <CheckedValueGraph
-                          description={showPercentLine || (showValueLine && showPercentLine) !== undefined ? '%' : ''}
-                          hidden={hiddenProc} line={line} hideLineClick={hideLineClick} showGraphFilters={showGraphSettings}/>}
-                      {line === 'p' && showGraphSettings &&
-                      <h3 className={`${classes.checkBoxGroup} ${classes.targetLine}`}> &emsp;целевое значение</h3>}
-                    </div>
-                  )}/>
+                         strokeDasharray="3 3" ifOverflow="extendDomain"/>
         </ComposedChart>
       </ResponsiveContainer>
     </div>

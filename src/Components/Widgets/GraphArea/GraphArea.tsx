@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import {AreaChart, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, Area} from 'recharts';
 import {GraphAreaType} from "../../Common/Types";
-import classes from "../GraphLine/GraphLine.module.scss";
+import classes from "./GraphArea.module.scss";
 
 type PropsType = {
   graphAreaData: GraphAreaType

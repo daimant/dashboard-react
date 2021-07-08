@@ -9,40 +9,35 @@
   font-size: 1.7vh;
   overflow: hidden;
 }
-
-.titleName {
-  color: black;
-}
-
-.hiddenTitleName {
-  display: none;
-}
-
-.checkBoxGroup {
+.clickable {
   cursor: pointer;
+}
+.checkBoxGroup {
   font-weight: normal;
 }
-
 .iconCheckBox {
   vertical-align: middle;
 }
-
 .headGraph {
   display: flex;
-  margin-bottom: 2%;
+  justify-content: space-between;
+  margin: 5px;
+  position: center;
 }
-
-.hiddenIDontNowHowDoItElse {
-  font-size: 6px;
+.title {
+  position: absolute;
+  margin-left: 26%;
+  transform: translate(-50%,0);
 }
-
+.settings {
+ display: flex;
+}
+.valueLine {
+  color: #8884d8;
+}
+.percentLine {
+   color: #82ca9d;
+ }
 .targetLine {
   color: #FF0000;
-}
-
-.settingsIcon {
-  position: absolute;
-  z-index: 1;
-  cursor: pointer;
-  margin: 5px;
 }
