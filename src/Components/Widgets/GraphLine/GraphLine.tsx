@@ -22,8 +22,8 @@ const CheckedValueGraph: FC<CheckedValueGraphType> = ({description, hidden, hide
   return (
     <h3 className={`${classes.checkBoxGroup} ${classes.clickable} ${classes[line === 'v1' ? 'valueLine' : 'percentLine']}`}
         onClick={() => hideLineClick(line)}>{description} {!hidden
-      ? <CheckBoxIcon className={classes.iconCheckBox} color='action' component={'svg'} style={{fontSize: '100%'}}/>
-      : <CheckBoxOutlineBlankIcon className={classes.iconCheckBox} color='action' component={'svg'} style={{fontSize: '100%'}}/>}
+      ? <CheckBoxIcon className={classes.iconCheckBox} color='action' component={'svg'} fontSize={'small'}/>
+      : <CheckBoxOutlineBlankIcon className={classes.iconCheckBox} color='action' component={'svg'} fontSize={'small'}/>}
     </h3>
   )
 };
@@ -69,7 +69,7 @@ const GraphLine: FC<PropsType> = ({graphLineData, extendedStyle = {}}) => {
         </div>}
       </div>
       <ResponsiveContainer>
-        <ComposedChart data={data} margin={{top: 5, bottom: 30}}>
+        <ComposedChart data={data} margin={{top: 10, bottom: 30}}>
           <XAxis dataKey='d' allowDataOverflow={false} tickCount={10} axisLine={false}/>
           <YAxis style={hiddenVal ? {display: 'none'} : {}}
                  tickFormatter={tick => tick < 100
