@@ -24,6 +24,9 @@ export const PipeKPK = (kpk: RawKPKType) => {
         if (typeof kpk.data[i][j] === 'number')
           kpk.data[i][j] += '';
 
+        if (kpk.data[i][j] === null)
+          kpk.data[i][j] = '-';
+
         let currVal = kpk.data[i][j].replace(/,/, '.');
 
         currObj[kpk.name_col[j]] = +currVal && +currVal % 1
