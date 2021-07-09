@@ -141,7 +141,7 @@ const KPKTable: FC<PropsType> = ({kpk, requestKPKChild, removeKPKChild, orgOid, 
                           className={`${classes[row[`${key}_good`] ? 'greenColor' : 'redColor']} ${classes.tableHead}`}
                           key={i}>
                           {/*// @ts-ignore*/}
-                          {nameColsDetails[key]}: {row[key]} {!row[`${key}_good`] ? `(отклонение: ${row[key + '_l'] - row[key]})` : ''}
+                          {nameColsDetails[key]}: {row[key]} {!row[`${key}_good`] ? `(отклонение: ${(row[key + '_l'] - row[key]).toFixed(2)})` : ''}
                         </span>
                       ))}
                     </div>
