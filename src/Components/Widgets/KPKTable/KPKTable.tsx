@@ -81,13 +81,13 @@ const KPKTable: FC<PropsType> = ({kpk, requestKPKChild, removeKPKChild, orgOid, 
     localStorage.setItem('KPKRowHidden', hiddenUnusedKPK ? "0" : '1');
     setHiddenUnusedKPK(!hiddenUnusedKPK);
   };
-  const randomValuesArrs = [
-    ['Своевременность', (Math.random() * 5 + 95).toFixed(2)],
-    ['Оперативность', (Math.random() * 5 + 95).toFixed(2)],
-    ['Качество работы', (Math.random() * 5 + 95).toFixed(2)],
-    ['Четвертый параметр', (Math.random() * 5 + 95).toFixed(2)],
-    ['Пятый параметр', (Math.random() * 5 + 95).toFixed(2)]
-  ];
+  const nameColsDetails = {
+    k1: 'Своевременность',
+    k2: 'Оперативность',
+    k3: 'Качество работы',
+    k4: 'Удовлетворенность',
+    k5: 'ППР'
+  };
 
   return (
     <div className={classes.kpkTable}>
@@ -136,12 +136,13 @@ const KPKTable: FC<PropsType> = ({kpk, requestKPKChild, removeKPKChild, orgOid, 
                   title={row[value] !== '-'
                     ? <div className={`${classes.blackColor}`} style={{}}>
                       {`${row[value]} состоит из:`}
-                      {randomValuesArrs.map((arr: any, i: number) => (
+                      {cols.slice(3, 8).map((key: string, i: number) => (
                         <span
-                          className={`${classes[arr[1] > 98 ? 'greenColor' : 'redColor']} ${classes.tableHead}`}
-                          key={i}
-                        >{arr[0]}: {arr[1]}
-                            </span>
+                          className={`${classes[row[`${key}_good`] ? 'greenColor' : 'redColor']} ${classes.tableHead}`}
+                          key={i}>
+                          {/*// @ts-ignore*/}
+                          {nameColsDetails[key]}: {row[key]} {!row[`${key}_good`] ? `(отклонение: ${row[key + '_l'] - row[key]})` : ''}
+                        </span>
                       ))}
                     </div>
                     : ''

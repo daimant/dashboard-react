@@ -16,18 +16,22 @@ export const PipeKPK = (kpk: RawKPKType) => {
 
     // идем по элеентам в строках
     for (let j = 0; j < kpk.name_col.length; j++) {
+      let currVal: any = kpk.data[i][j];
       //пропускаем оид в каждой строке
       if (j === 0)
-        currObj[kpk.name_col[j]] = kpk.data[i][j];
+        currObj[kpk.name_col[j]] = currVal;
       else {
         //конвертируем в стринг значения для построения таблицы кпк
-        if (typeof kpk.data[i][j] === 'number')
-          kpk.data[i][j] += '';
+        if (j > 1 && j < 13) {
+          if (typeof currVal === 'number') {
+            currVal *= 100;
+          }
+          currVal += '';
+          currVal = currVal.replace(/,/, '.');
+        }
 
-        if (kpk.data[i][j] === null)
-          kpk.data[i][j] = '-';
-
-        let currVal = kpk.data[i][j].replace(/,/, '.');
+        if (currVal === null)
+          currVal = '-';
 
         currObj[kpk.name_col[j]] = +currVal && +currVal % 1
           ? (+currVal).toFixed(2)
