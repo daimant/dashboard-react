@@ -24,13 +24,13 @@ type PropsType = {
 
 const CheckedValueGraph: FC<CheckedValueGraphType> = ({description, hidden, hideLineClick, line, hider}) => {
   return (
-    <h3
+    <p
       className={`${classes.checkBoxGroup} ${classes.clickable} ${classes[`color${line}`]}`}
       onClick={() => hideLineClick(line, hidden, hider)}>{description} {!hidden
       ? <CheckBoxIcon className={classes.iconCheckBox} color='action' component={'svg'} fontSize={'small'}/>
       :
       <CheckBoxOutlineBlankIcon className={classes.iconCheckBox} color='action' component={'svg'} fontSize={'small'}/>}
-    </h3>
+    </p>
   )
 };
 

@@ -14,20 +14,18 @@
 }
 .checkBoxGroup {
   margin: .5rem;
-  font-weight: normal;
 }
 .iconCheckBox {
   vertical-align: middle;
 }
 .headGraph {
   display: flex;
-  justify-content: space-between;
   margin: 5px;
   height: 10%;
 }
 .title {
-  position: absolute;
-  margin-left: 26%;
+  position: relative;
+  margin-left: 42%;
   transform: translate(-50%,0);
 }
 .menu {
