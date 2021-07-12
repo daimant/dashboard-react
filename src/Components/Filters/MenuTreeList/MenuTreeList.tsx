@@ -196,7 +196,7 @@ const MenuTreeList: React.FC<PropsType> = ({
       overflow: 'auto',
     },
     menu: {
-      margin: `${title === 'оргструктура' ? '8vh' : '4vh'} ${title === 'оргструктура' ? '6.5vw' : '4vw'}`,
+      margin: `${title === 'оргструктура' ? '8vh' : '14vh'} ${title === 'оргструктура' ? '6.5vw' : '4vw'}`,
     },
     toggle: {
       '& .Mui-checked + .MuiSwitch-track': {
@@ -265,21 +265,20 @@ const MenuTreeList: React.FC<PropsType> = ({
 
   return (
     <div>
-      <Button aria-controls='simple-menu' variant='outlined' onClick={handleClick} disabled={isFetchingWidgets}
+      <Button aria-controls='menu' variant='outlined' onClick={handleClick} disabled={isFetchingWidgets}
               href={''}>
         {title}
       </Button>
       <Menu
         className={classes.menu}
-        id='simple-menu'
+        id='menu'
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <div className={classes.selectParams}>
+        {title === 'оргструктура' && <div className={classes.selectParams}>
           <span>
-            {title === 'оргструктура' &&
             <FormControlLabel
                 control={<Switch size='medium'
                                  checked={checkedInfotransRZD}
@@ -289,10 +288,10 @@ const MenuTreeList: React.FC<PropsType> = ({
                 />}
                 labelPlacement='start'
                 label={`Оргструктура Инфотранс / РЖД`}
-            />}
+            />
           </span>
           <span>
-            {title === 'оргструктура' && !checkedInfotransRZD &&
+            { !checkedInfotransRZD &&
             <FormControlLabel
                 control={<Switch size='medium'
                                  checked={checkedOSKZNO}
@@ -304,7 +303,7 @@ const MenuTreeList: React.FC<PropsType> = ({
                 label={`Все организации / Организации выполняющие ЗНО`}
             />}
           </span>
-        </div>
+        </div>}
         <TreeView
           className={classes.tree}
           defaultCollapseIcon={<ExpandMoreIcon component={'svg'}/>}
