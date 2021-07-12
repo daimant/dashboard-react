@@ -22,34 +22,166 @@ type PropsType = {
   setter: (oid: string) => void
   acceptFilters: (type: string, selected: any) => void
 }
-
 const TEMPTreeListRZD = {
-  children: [{
-    children: [],
-    name: "Дальневосточная ж.д.",
-    oid: "281586771165001",
-    parent: "281586771165316",
-    zno: 1,
-  }, {
-    children: [],
-    name: "Забайкальская ж.д.",
-    oid: "281586771165002",
-    parent: "281586771165316",
-    zno: 1,
-  }, {
-    children: [],
-    name: "Октябрьская ж.д.",
-    oid: "281586771165003",
-    parent: "281586771165316",
-    zno: 1,
-  }],
+  children: [
+    {
+      children: [],
+      name: "Дальневосточная ж.д.",
+      oid: "281586771165001",
+      parent: "281586771165315",
+      zno: 1,
+    },
+    {
+      children: [],
+      name: "Забайкальская ж.д.",
+      oid: "281586771165002",
+      parent: "281586771165315",
+      zno: 1,
+    },
+    {
+      children: [],
+      name: "Октябрьская ж.д.",
+      oid: "281586771165003",
+      parent: "281586771165315",
+      zno: 1,
+    },
+    {
+      children: [],
+      name: "Дальневосточная ж.д.",
+      oid: "281586771165001",
+      parent: "281586771165315",
+      zno: 1,
+    },
+    {
+      children: [],
+      name: "Забайкальская ж.д.",
+      oid: "281586771165002",
+      parent: "281586771165315",
+      zno: 1,
+    },
+    {
+      children: [],
+      name: "Октябрьская ж.д.",
+      oid: "281586771165003",
+      parent: "281586771165315",
+      zno: 1,
+    },
+    {
+      children: [],
+      name: "Дальневосточная ж.д.",
+      oid: "281586771165001",
+      parent: "281586771165315",
+      zno: 1,
+    },
+    {
+      children: [],
+      name: "Забайкальская ж.д.",
+      oid: "281586771165002",
+      parent: "281586771165315",
+      zno: 1,
+    },
+    {
+      children: [],
+      name: "Октябрьская ж.д.",
+      oid: "281586771165003",
+      parent: "281586771165315",
+      zno: 1,
+    },
+    {
+      children: [],
+      name: "Дальневосточная ж.д.",
+      oid: "281586771165001",
+      parent: "281586771165315",
+      zno: 1,
+    },
+    {
+      children: [],
+      name: "Забайкальская ж.д.",
+      oid: "281586771165002",
+      parent: "281586771165315",
+      zno: 1,
+    },
+    {
+      children: [],
+      name: "Октябрьская ж.д.",
+      oid: "281586771165003",
+      parent: "281586771165315",
+      zno: 1,
+    },
+    {
+      children: [],
+      name: "Дальневосточная ж.д.",
+      oid: "281586771165001",
+      parent: "281586771165315",
+      zno: 1,
+    },
+    {
+      children: [],
+      name: "Забайкальская ж.д.",
+      oid: "281586771165002",
+      parent: "281586771165315",
+      zno: 1,
+    },
+    {
+      children: [],
+      name: "Октябрьская ж.д.",
+      oid: "281586771165003",
+      parent: "281586771165315",
+      zno: 1,
+    },
+    {
+      children: [],
+      name: "Дальневосточная ж.д.",
+      oid: "281586771165001",
+      parent: "281586771165315",
+      zno: 1,
+    },
+    {
+      children: [],
+      name: "Забайкальская ж.д.",
+      oid: "281586771165002",
+      parent: "281586771165315",
+      zno: 1,
+    },
+    {
+      children: [],
+      name: "Октябрьская ж.д.",
+      oid: "281586771165003",
+      parent: "281586771165315",
+      zno: 1,
+    },
+    {
+      children: [],
+      name: "Дальневосточная ж.д.",
+      oid: "281586771165001",
+      parent: "281586771165315",
+      zno: 1,
+    },
+    {
+      children: [],
+      name: "Забайкальская ж.д.",
+      oid: "281586771165002",
+      parent: "281586771165315",
+      zno: 1,
+    },
+    {
+      children: [],
+      name: "Октябрьская ж.д.",
+      oid: "281586771165003",
+      parent: "281586771165315",
+      zno: 1,
+    }
+  ],
   name: "ОАО РЖД",
-  oid: "281586771165316",
+  oid: "281586771165315",
   parent: "0",
   zno: 1,
 };
 
-const MenuTreeList: React.FC<PropsType> = ({treeList, title, orgOid, period, periodType, setter, acceptFilters, altTreeList, isFetchingWidgets}) => {
+const MenuTreeList: React.FC<PropsType> = ({
+                                             treeList, title, orgOid, period, periodType, setter, acceptFilters,
+                                             altTreeList, isFetchingWidgets
+                                           }) => {
   // @ts-ignore
   const [expanded, setExpanded] = React.useState<string[]>(title === 'период' ? [treeList.oid, ...treeList.children.map((org: any) => org.oid)] : [treeList.oid]);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -57,23 +189,22 @@ const MenuTreeList: React.FC<PropsType> = ({treeList, title, orgOid, period, per
   const [checkedOSKZNO, setCheckedOSKZNO] = React.useState(localStorage.getItem('checkedOrgZNO') === '1' || false);
 
   const useStyles = makeStyles({
-    root: {
+    tree: {
       margin: '.5rem',
       height: title === 'оргструктура' ? 400 : 250,
-      flexGrow: 1,
       width: title === 'оргструктура' ? 550 : 200,
       overflow: 'auto',
     },
     menu: {
       margin: `${title === 'оргструктура' ? '8vh' : '4vh'} ${title === 'оргструктура' ? '6.5vw' : '4vw'}`,
-      // margin: `${title === 'оргструктура' ? '4vh' : '9vh'} ${title === 'оргструктура' ? '6vw' : '4vw'}`,
     },
     toggle: {
       '& .Mui-checked + .MuiSwitch-track': {
         backgroundColor: '#52d869'
       },
     },
-    flexDisplay: {
+    selectParams: {
+      height: '76px',
       display: 'flex',
       flexDirection: 'column',
     },
@@ -146,7 +277,7 @@ const MenuTreeList: React.FC<PropsType> = ({treeList, title, orgOid, period, per
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <div className={classes.flexDisplay}>
+        <div className={classes.selectParams}>
           <span>
             {title === 'оргструктура' &&
             <FormControlLabel
@@ -161,7 +292,7 @@ const MenuTreeList: React.FC<PropsType> = ({treeList, title, orgOid, period, per
             />}
           </span>
           <span>
-            {title === 'оргструктура' &&
+            {title === 'оргструктура' && !checkedInfotransRZD &&
             <FormControlLabel
                 control={<Switch size='medium'
                                  checked={checkedOSKZNO}
@@ -175,7 +306,7 @@ const MenuTreeList: React.FC<PropsType> = ({treeList, title, orgOid, period, per
           </span>
         </div>
         <TreeView
-          className={classes.root}
+          className={classes.tree}
           defaultCollapseIcon={<ExpandMoreIcon component={'svg'}/>}
           defaultExpandIcon={<ChevronRightIcon component={'svg'}/>}
           expanded={expanded}
@@ -183,8 +314,7 @@ const MenuTreeList: React.FC<PropsType> = ({treeList, title, orgOid, period, per
           {title === 'оргструктура'
             ? (checkedInfotransRZD
               ? renderTree(TEMPTreeListRZD)
-              : (checkedOSKZNO
-                  // @ts-ignore хз как чинить
+              : (checkedOSKZNO  // @ts-ignore хз как чинить
                   ? renderTree(altTreeList)
                   : renderTree(treeList)
               ))
