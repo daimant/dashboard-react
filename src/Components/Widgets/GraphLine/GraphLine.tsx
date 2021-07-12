@@ -5,68 +5,80 @@ import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import {GraphLineType} from '../../Common/Types';
 import SettingsIcon from '../../../Assets/Icons/SettingsIcon.svg';
+import {IconButton} from "@material-ui/core";
+import Menu from "@material-ui/core/Menu/Menu";
+
 
 type CheckedValueGraphType = {
   description: string
   hidden: boolean
   line: string
 
-  hideLineClick: (line: string) => void
+  hideLineClick: (line: string, hidden: boolean, hider: (hidden: boolean) => void) => void
+  hider: (hidden: boolean) => void
 }
 type PropsType = {
   graphLineData: GraphLineType
   extendedStyle?: object
 }
 
-const CheckedValueGraph: FC<CheckedValueGraphType> = ({description, hidden, hideLineClick, line}) => {
+const CheckedValueGraph: FC<CheckedValueGraphType> = ({description, hidden, hideLineClick, line, hider}) => {
   return (
-    <h3 className={`${classes.checkBoxGroup} ${classes.clickable} ${classes[line === 'v1' ? 'valueLine' : 'percentLine']}`}
-        onClick={() => hideLineClick(line)}>{description} {!hidden
+    <h3
+      className={`${classes.checkBoxGroup} ${classes.clickable} ${classes[`color${line}`]}`}
+      onClick={() => hideLineClick(line, hidden, hider)}>{description} {!hidden
       ? <CheckBoxIcon className={classes.iconCheckBox} color='action' component={'svg'} fontSize={'small'}/>
-      : <CheckBoxOutlineBlankIcon className={classes.iconCheckBox} color='action' component={'svg'} fontSize={'small'}/>}
+      :
+      <CheckBoxOutlineBlankIcon className={classes.iconCheckBox} color='action' component={'svg'} fontSize={'small'}/>}
     </h3>
   )
 };
 
 const GraphLine: FC<PropsType> = ({graphLineData, extendedStyle = {}}) => {
   const {title, data} = graphLineData;
-  const showValueLine = data?.length && data[0].v1;
-  const showPercentLine = data?.length && !data[0].p;
   const [hiddenVal, setHiddenVal] = React.useState(localStorage.getItem(`hiddenValGraph-${title}`) === '1' || false);
   const [hiddenProc, setHiddenProc] = React.useState(localStorage.getItem(`hiddenProcGraph-${title}`) === '1' || false);
-  const [showGraphSettings, setShowGraphSettings] = React.useState(localStorage.getItem(`showGraphSettings-${title}`) === '1' || false);
+  const [hiddenTar, setHiddenTar] = React.useState(localStorage.getItem(`hiddenTarGraph-${title}`) === '1' || false);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
-  const hideLineClick = (line: string) => {
-    if (line === 'v1') {
-      localStorage.setItem(`hiddenValGraph-${title}`, hiddenVal ? '0' : '1');
-      setHiddenVal(!hiddenVal);
-    }
-    if (line === 'p') {
-      localStorage.setItem(`hiddenProcGraph-${title}`, hiddenProc ? '0' : '1');
-      setHiddenProc(!hiddenProc);
-    }
+
+  const hideLineClick = (line: string, hidden: boolean, hider: (hidden: boolean) => void) => {
+    localStorage.setItem(`hidden${line}Graph-${title}`, hidden ? '0' : '1');
+    hider(!hidden);
   };
 
-  const changeShowGraphSettings = () => {
-    localStorage.setItem(`showGraphSettings-${title}`, showGraphSettings ? '0' : '1');
-    setShowGraphSettings(!showGraphSettings)
+  const handleClickMenu = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
   };
 
   return (
     <div className={classes.graphs} style={extendedStyle}>
       <div className={classes.headGraph}>
-        <img src={SettingsIcon} loading='lazy' alt='' className={classes.clickable}
-             onClick={changeShowGraphSettings}/>
+        <IconButton aria-controls="menu" className={classes.clickable} href={''} onClick={handleClickMenu}>
+          <img src={SettingsIcon} alt=''/>
+        </IconButton>
+        <Menu
+          className={classes.menu}
+          id='menu'
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleCloseMenu}
+        >
+          <CheckedValueGraph
+            description={'значение'} hidden={hiddenVal} line={'Val'} hideLineClick={hideLineClick}
+            hider={setHiddenVal}/>
+          <CheckedValueGraph
+            description={'%'} hidden={hiddenProc} line={'Proc'} hideLineClick={hideLineClick} hider={setHiddenProc}/>
+          <CheckedValueGraph
+            description={'целевое значение'} hidden={hiddenTar} line={'Tar'} hideLineClick={hideLineClick}
+            hider={setHiddenTar}/>
+        </Menu>
         <h3 className={classes.title}>{title}</h3>
-        {showGraphSettings && <div className={classes.settings}>
-            <CheckedValueGraph
-                description={showValueLine || (showValueLine && showPercentLine) !== undefined ? 'значение' : ''}
-                hidden={hiddenVal} line={'v1'} hideLineClick={hideLineClick}/>&emsp;
-            <CheckedValueGraph
-                description={showPercentLine || (showValueLine && showPercentLine) !== undefined ? '%' : ''}
-                hidden={hiddenProc} line={'p'} hideLineClick={hideLineClick}/>&emsp;
-            <h3 className={`${classes.checkBoxGroup} ${classes.targetLine}`}>целевое значение</h3>&emsp;
-        </div>}
       </div>
       <ResponsiveContainer>
         <ComposedChart data={data} margin={{top: 10, bottom: 30}}>
@@ -104,7 +116,7 @@ const GraphLine: FC<PropsType> = ({graphLineData, extendedStyle = {}}) => {
                 dataKey='p'
                 stroke='#82ca9d'
                 strokeWidth={2}/>
-          <ReferenceLine y={98} stroke='#FF0000' yAxisId='right' style={hiddenProc ? {display: 'none'} : {}}
+          <ReferenceLine y={98} stroke='#FF0000' yAxisId='right' style={hiddenTar ? {display: 'none'} : {}}
                          strokeDasharray="3 3" ifOverflow="extendDomain"/>
         </ComposedChart>
       </ResponsiveContainer>

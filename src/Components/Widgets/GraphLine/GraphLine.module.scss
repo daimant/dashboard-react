@@ -13,6 +13,7 @@
   cursor: pointer;
 }
 .checkBoxGroup {
+  margin: .5rem;
   font-weight: normal;
 }
 .iconCheckBox {
@@ -29,15 +30,15 @@
   margin-left: 26%;
   transform: translate(-50%,0);
 }
-.settings {
- display: flex;
+.menu {
+  margin: 1.5rem;
 }
-.valueLine {
+.colorVal {
   color: #8884d8;
 }
-.percentLine {
+.colorProc{
    color: #82ca9d;
  }
-.targetLine {
+.colorTar {
   color: #FF0000;
 }
