@@ -69,7 +69,7 @@ export const PipeGraphArea = (graphs: RawGraphAreaType[]) => {
 
   for (let i in graphs) {
     const rawGraph = graphs[i];
-    const [p1Name, p3Name, p2Name] = graphs[i]?.title === 'Назначение заявок'
+    const [p1Name, p2Name, p3Name] = graphs[i]?.title === 'Назначение заявок'
       ? ['Назначено сотрудником', 'Назначено ботом', 'Переназначено за ботом']
       : graphs[i]?.title === 'Установка ПО'
         ? ['Выполнено сотрудником УПП' , 'Выполнено ботом', 'Ошибки бота']
@@ -80,8 +80,8 @@ export const PipeGraphArea = (graphs: RawGraphAreaType[]) => {
         title: 'Ошибка при загрузке',
         percents: {
           p1: p1Name,
-          p3: p3Name,
           p2: p2Name,
+          p3: p3Name,
         },
         data: [],
       };
@@ -92,8 +92,8 @@ export const PipeGraphArea = (graphs: RawGraphAreaType[]) => {
       title: graphs[i].title,
       percents: {
         p1: p1Name,
-        p3: p3Name,
         p2: p2Name,
+        p3: p3Name,
       },
       data: [],
     };
@@ -102,8 +102,8 @@ export const PipeGraphArea = (graphs: RawGraphAreaType[]) => {
       const newDay = {
         d: day.d,
         p1: [day.p2 + day.p3, 1, day.p1],
-        p3: [day.p2, day.p2 + day.p3, day.p3],
-        p2: [0, day.p2, day.p2],
+        p2: [day.p3, day.p3 + day.p2, day.p2],
+        p3: [0, day.p3, day.p3],
       };
       graph.data.push(newDay);
     }

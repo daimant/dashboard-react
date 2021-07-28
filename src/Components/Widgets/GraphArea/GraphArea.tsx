@@ -24,8 +24,8 @@ const GraphArea: FC<PropsType> = ({graphAreaData, extendedStyle = {}}) => {
                    // @ts-ignore
                    formatter={(value: Array<number>, name: string) => ([`${percents[name]}: ${Math.trunc(value[2] * 100)} %`])}/>
           <Area dataKey="p1" stroke="#8884d8" fill="#8884d8"/>
-          <Area dataKey="p3" stroke="#82ca9d" fill="#82ca9d"/>
-          <Area dataKey="p2" stroke="#FF0000" fill="#FF0000"/>
+          <Area dataKey="p2" stroke="#82ca9d" fill="#82ca9d"/>
+          <Area dataKey="p3" stroke="#FF0000" fill="#FF0000"/>
         </AreaChart>
       </ResponsiveContainer>
     </div>
