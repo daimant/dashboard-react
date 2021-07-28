@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {AreaChart, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, Area} from 'recharts';
+import {AreaChart, XAxis, YAxis, Tooltip, ResponsiveContainer, Area} from 'recharts';
 import {GraphAreaType} from "../../Common/Types";
 import classes from "./GraphArea.module.scss";
 
