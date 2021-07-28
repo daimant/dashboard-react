@@ -13,22 +13,19 @@ const GraphArea: FC<PropsType> = ({graphAreaData, extendedStyle = {}}) => {
 
   return (
     <div className={classes.graphs} style={extendedStyle}>
+      <div className={classes.headGraph}>
+      <h3 className={classes.title}>{title}</h3>
+      </div>
       <ResponsiveContainer>
-        <AreaChart data={data} margin={{top: -10, right: 30}}>
-          <XAxis dataKey="d"/>
-          <YAxis tickFormatter={tick => `${tick * 100}`} tickCount={2}/>
+        <AreaChart data={data} margin={{top: 10, bottom: 30, right: 50}}>
+          <XAxis dataKey="d" axisLine={false}/>
+          <YAxis tickFormatter={tick => `${tick * 100}`} axisLine={false} tickCount={2}/>
           <Tooltip labelFormatter={(label: string) => `Дата: ${label}`}
                    // @ts-ignore
                    formatter={(value: Array<number>, name: string) => ([`${percents[name]}: ${Math.trunc(value[2] * 100)} %`])}/>
           <Area dataKey="p1" stroke="#8884d8" fill="#8884d8"/>
-          <Area dataKey="p3" stroke="#FF0000" fill="#FF0000"/>
-          <Area dataKey="p2" stroke="#82ca9d" fill="#82ca9d"/>
-          <Legend iconSize={0}
-                  verticalAlign='top'
-                  formatter={(line) => (<div className={classes.headGraph}>
-                      <h3 className={line === 'p1' ? classes.titleName : classes.hiddenTitleName}>{title}&emsp;</h3>
-                    </div>
-                  )}/>
+          <Area dataKey="p3" stroke="#82ca9d" fill="#82ca9d"/>
+          <Area dataKey="p2" stroke="#FF0000" fill="#FF0000"/>
         </AreaChart>
       </ResponsiveContainer>
     </div>

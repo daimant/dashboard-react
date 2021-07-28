@@ -69,14 +69,19 @@ export const PipeGraphArea = (graphs: RawGraphAreaType[]) => {
 
   for (let i in graphs) {
     const rawGraph = graphs[i];
+    const [p1Name, p3Name, p2Name] = graphs[i]?.title === 'Назначение заявок'
+      ? ['Назначено сотрудником', 'Назначено ботом', 'Переназначено за ботом']
+      : graphs[i]?.title === 'Установка ПО'
+        ? ['Выполнено сотрудником УПП' , 'Выполнено ботом', 'Ошибки бота']
+        : ['', '', ''];
 
     if (!rawGraph) {
       parsedGraphs[i] = {
         title: 'Ошибка при загрузке',
         percents: {
-          p1: 'Установка сотрудником',
-          p3: 'Ошибка бота',
-          p2: 'Установка ботом',
+          p1: p1Name,
+          p3: p3Name,
+          p2: p2Name,
         },
         data: [],
       };
@@ -86,9 +91,9 @@ export const PipeGraphArea = (graphs: RawGraphAreaType[]) => {
     const graph: GraphAreaType = {
       title: graphs[i].title,
       percents: {
-        p1: 'Установка сотрудником',
-        p3: 'Ошибка бота',
-        p2: 'Установка ботом',
+        p1: p1Name,
+        p3: p3Name,
+        p2: p2Name,
       },
       data: [],
     };
