@@ -26,10 +26,11 @@ const CheckedValueGraph: FC<CheckedValueGraphType> = ({description, hidden, hide
   return (
     <p
       className={`${classes.checkBoxGroup} ${classes.clickable} ${classes[`color${line}`]}`}
-      onClick={() => hideLineClick(line, hidden, hider)}>{description} {!hidden
+      onClick={() => hideLineClick(line, hidden, hider)}>{!hidden
       ? <CheckBoxIcon className={classes.iconCheckBox} color='action' component={'svg'} fontSize={'small'}/>
       :
-      <CheckBoxOutlineBlankIcon className={classes.iconCheckBox} color='action' component={'svg'} fontSize={'small'}/>}
+      <CheckBoxOutlineBlankIcon className={classes.iconCheckBox} color='action' component={'svg'}
+                                fontSize={'small'}/>} {description}
     </p>
   )
 };
@@ -41,16 +42,13 @@ const GraphLine: FC<PropsType> = ({graphLineData, extendedStyle = {}}) => {
   const [hiddenTar, setHiddenTar] = React.useState(localStorage.getItem(`hiddenTarGraph-${title}`) === '1' || false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
-
   const hideLineClick = (line: string, hidden: boolean, hider: (hidden: boolean) => void) => {
     localStorage.setItem(`hidden${line}Graph-${title}`, hidden ? '0' : '1');
     hider(!hidden);
   };
-
   const handleClickMenu = (event: React.MouseEvent<HTMLAnchorElement>) => {
     setAnchorEl(event.currentTarget);
   };
-
   const handleCloseMenu = () => {
     setAnchorEl(null);
   };
@@ -70,12 +68,13 @@ const GraphLine: FC<PropsType> = ({graphLineData, extendedStyle = {}}) => {
           onClose={handleCloseMenu}
         >
           <CheckedValueGraph
-            description={'значение'} hidden={hiddenVal} line={'Val'} hideLineClick={hideLineClick}
+            description={'Количество'} hidden={hiddenVal} line={'Val'} hideLineClick={hideLineClick}
             hider={setHiddenVal}/>
           <CheckedValueGraph
-            description={'%'} hidden={hiddenProc} line={'Proc'} hideLineClick={hideLineClick} hider={setHiddenProc}/>
+            description={'Значение'} hidden={hiddenProc} line={'Proc'} hideLineClick={hideLineClick}
+            hider={setHiddenProc}/>
           <CheckedValueGraph
-            description={'целевое значение'} hidden={hiddenTar} line={'Tar'} hideLineClick={hideLineClick}
+            description={'Целевое значение'} hidden={hiddenTar} line={'Tar'} hideLineClick={hideLineClick}
             hider={setHiddenTar}/>
         </Menu>
         <h3 className={classes.title}>{title}</h3>
