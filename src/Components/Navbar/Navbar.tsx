@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import Logo from '../../Assets/img/oskRZDLogo.png'
 import classes from './Navbar.module.scss';
 import IconButton from '@material-ui/core/IconButton';
@@ -26,10 +26,10 @@ const options = [
   'Статистика по объектам обслуживания'
 ];
 
-const Navbar: FC<PropsType> = ({
-                           /*showFilters,*/ setShowFilters, orgOid, period, periodType, orgMapList, periodNameMapList,
-                           isFetchingFilters
-                         }) => {
+const Navbar = ({
+                  /*showFilters,*/ setShowFilters, orgOid, period, periodType, orgMapList, periodNameMapList,
+                  isFetchingFilters
+                }: PropsType) => {
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -91,7 +91,6 @@ const Navbar: FC<PropsType> = ({
             </MenuItem>
           ))}
         </Menu>
-
       </div>
     </div>
   )

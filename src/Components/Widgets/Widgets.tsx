@@ -4,7 +4,7 @@ import KPKTable from './KPKTable/KPKTable';
 import GraphLine from './GraphLine/GraphLine';
 import {Preloader} from '../Common/Preloader/Preloader';
 import CircularBar from './CircularBar/CircularBar';
-import {GraphAreaType, GraphLineType, KPKType, TodaysType} from '../Common/Types';
+import {GraphAreaType, GraphLineType, KPKType, TodaysType} from '../../Types/Types';
 import GraphArea from "./GraphArea/GraphArea";
 
 type PropsType = {

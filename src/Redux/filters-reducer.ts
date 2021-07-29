@@ -1,10 +1,10 @@
-import {filtersAPI} from '../../API/API';
+import {filtersAPI} from '../API/API';
 import {requestWidgets} from './widgets-reducer';
 import {PipeOrgList} from './pipes';
 import {ThunkAction} from 'redux-thunk';
 import {RootStateType} from './store';
 import {AnyAction} from 'redux';
-import {OrgListType, PeriodListType} from '../Common/Types';
+import {OrgListType, PeriodListType} from '../Types/Types';
 
 type ActionsFiltersType = {
   type: string

@@ -4,8 +4,8 @@ import {
   TodaysType,
   OrgListType,
   RawGraphAreaType,
-  GraphAreaType,
-} from '../Common/Types';
+  // GraphAreaType,
+} from '../Types/Types';
 
 // Widgets
 export const PipeKPK = (kpk: RawKPKType) => {
@@ -62,21 +62,26 @@ export const PipeGraphLine = (graphs: GraphLineType[]) => {
 
   return graphs
 };
+
+const dict: {[key: string]: Array<string>} = {
+  'Назначение заявок': ['Назначено сотрудником', 'Назначено ботом', 'Переназначено за ботом'],
+  'Установка ПО': ['Выполнено сотрудником УПП' , 'Выполнено ботом', 'Ошибки бота'],
+  default: ['', '', '']
+};
+
+// @ts-ignore
+const getNames = (key: String) => dict[key] || dict.default;
+
 export const PipeGraphArea = (graphs: RawGraphAreaType[]) => {
   if (!graphs) return [];
 
-  const parsedGraphs: GraphAreaType[] = [];
+  // const parsedGraphs: GraphAreaType[] = [];
 
-  for (let i in graphs) {
-    const rawGraph = graphs[i];
-    const [p1Name, p2Name, p3Name] = graphs[i]?.title === 'Назначение заявок'
-      ? ['Назначено сотрудником', 'Назначено ботом', 'Переназначено за ботом']
-      : graphs[i]?.title === 'Установка ПО'
-        ? ['Выполнено сотрудником УПП' , 'Выполнено ботом', 'Ошибки бота']
-        : ['', '', ''];
+  return graphs.map((curGraph) => {
+    const [p1Name, p2Name, p3Name] = getNames(curGraph.title);
 
-    if (!rawGraph) {
-      parsedGraphs[i] = {
+    if (!curGraph) {
+      return {
         title: 'Ошибка при загрузке',
         percents: {
           p1: p1Name,
@@ -84,34 +89,24 @@ export const PipeGraphArea = (graphs: RawGraphAreaType[]) => {
           p3: p3Name,
         },
         data: [],
-      };
-      continue;
+      }
     }
 
-    const graph: GraphAreaType = {
-      title: graphs[i].title,
+    return {
+      title: curGraph.title,
       percents: {
         p1: p1Name,
         p2: p2Name,
         p3: p3Name,
       },
-      data: [],
-    };
-
-    for (let day of rawGraph.data) {
-      const newDay = {
+      data: curGraph.data.map((day) => ({
         d: day.d,
         p1: [day.p2 + day.p3, 1, day.p1],
         p2: [day.p3, day.p3 + day.p2, day.p2],
         p3: [0, day.p3, day.p3],
-      };
-      graph.data.push(newDay);
+      })),
     }
-
-    parsedGraphs.push(graph);
-  }
-
-  return parsedGraphs;
+  })
 };
 export const PipeTodays = (todays: Array<TodaysType>) => {
   for (let i in todays) {

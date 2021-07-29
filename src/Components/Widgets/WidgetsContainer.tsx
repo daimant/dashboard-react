@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {requestServicesChild, removeServicesChild, requestWidgets} from '../Redux/widgets-reducer';
+import {requestServicesChild, removeServicesChild, requestWidgets} from '../../Redux/widgets-reducer';
 import {
   /*selectInf, */ selectIsFetchingWidgets, selectKPK, selectOrgOid, selectPeriod, selectPeriodType, selectTodays,
   selectKPKChild, selectTops, selectSC, selectSCChild, selectTodaysChild
-} from '../Redux/selectors';
+} from '../../Redux/selectors';
 import Widgets from './Widgets';
-import {RootStateType} from '../Redux/store';
-import {KPKType, GraphLineType, TodaysType, GraphAreaType} from '../Common/Types';
+import {RootStateType} from '../../Redux/store';
+import {KPKType, GraphLineType, TodaysType, GraphAreaType} from '../../Types/Types';
 
 type MapStatePropsType = {
   kpk: KPKType
@@ -29,35 +29,38 @@ type MapDispatchPropsType = {
 }
 type PropsType = MapStatePropsType & MapDispatchPropsType
 
-class WidgetsContainer extends Component<PropsType> {
-  componentDidMount() {
-    this.props.requestWidgets(this.props.orgOid, this.props.period, this.props.periodType);
-  }
+const WidgetsContainer = ({
+                            kpk, kpkChild, sc, scChild, todays, todaysChild, tops, isFetchingWidgets, orgOid, period,
+                            periodType, requestWidgets, requestServicesChild, removeServicesChild
+                          }: PropsType) => {
 
-  render() {
-    return (
-      <Widgets
-        kpk={this.props.kpk}
-        kpkChild={this.props.kpkChild}
-        sc={this.props.sc}
-        scChild={this.props.scChild}
-        todays={this.props.todays}
-        todaysChild={this.props.todaysChild}
-        tops={this.props.tops}
-        isFetchingWidgets={this.props.isFetchingWidgets}
-        orgOid={this.props.orgOid}
-        period={this.props.period}
-        periodType={this.props.periodType}
-        /*
-                inf={this.props.inf}
-        */
+  useEffect(() => {
+    requestWidgets(orgOid, period, periodType);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-        requestServicesChild={this.props.requestServicesChild}
-        removeServicesChild={this.props.removeServicesChild}
-      />
-    );
-  }
-}
+  return (
+    <Widgets
+      kpk={kpk}
+      kpkChild={kpkChild}
+      sc={sc}
+      scChild={scChild}
+      todays={todays}
+      todaysChild={todaysChild}
+      tops={tops}
+      isFetchingWidgets={isFetchingWidgets}
+      orgOid={orgOid}
+      period={period}
+      periodType={periodType}
+      /*
+              inf={inf}
+      */
+
+      requestServicesChild={requestServicesChild}
+      removeServicesChild={removeServicesChild}
+    />
+  )
+};
 
 const mapState = (state: RootStateType): MapStatePropsType => ({
   kpk: selectKPK(state),

@@ -4,7 +4,7 @@ import {Preloader} from '../Common/Preloader/Preloader';
 import MenuTreeList from './MenuTreeList/MenuTreeList';
 import {Button} from '@material-ui/core';
 import {FetchError} from '../Common/FetchError/FetchError';
-import {OrgListType, PeriodListType} from '../Common/Types';
+import {OrgListType, PeriodListType} from '../../Types/Types';
 
 type PropsType = {
   orgList: OrgListType
@@ -29,7 +29,7 @@ const Filters: React.FC<PropsType> = props => {
     setPeriod, setOrgOid, perList, period, periodType, requestSetFiltersDefault, showFilters
   } = props;
 
-  if (!showFilters) return <></>;
+  if (!showFilters) return null;
   if (isFetchingFilters) return <Preloader/>;
 
   const acceptFilters = (type: string = 'def', selected: any = '') => {
@@ -66,7 +66,7 @@ const Filters: React.FC<PropsType> = props => {
                         isFetchingWidgets={isFetchingWidgets}
           /></>
       }
-      <Button variant='outlined' onClick={requestSetFiltersDefault} disabled={isFetchingWidgets} href={''}>
+      <Button variant='outlined' onClick={requestSetFiltersDefault} disabled={isFetchingWidgets} href=''>
         сбросить фильтры
       </Button>
     </div>

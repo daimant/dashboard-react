@@ -8,7 +8,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import {OrgListType, PeriodListType} from '../../Common/Types';
+import {OrgListType, PeriodListType} from '../../../Types/Types';
 
 type PropsType = {
   treeList: OrgListType | PeriodListType

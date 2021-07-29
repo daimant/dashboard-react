@@ -1,9 +1,9 @@
-import {widgetsAPI} from '../../API/API';
+import {widgetsAPI} from '../API/API';
 import {PipeKPK, PipeGraphLine, PipeTodays, PipeGraphArea} from './pipes';
 import {AnyAction} from 'redux';
 import {ThunkAction} from 'redux-thunk';
 import {RootStateType} from './store';
-import {GraphAreaType, GraphLineType, KPKType, RawGraphAreaType, RawKPKType, TodaysType} from '../Common/Types';
+import {GraphAreaType, GraphLineType, KPKType, RawGraphAreaType, RawKPKType, TodaysType} from '../Types/Types';
 
 type ActionsWidgetsType = {
   type: string

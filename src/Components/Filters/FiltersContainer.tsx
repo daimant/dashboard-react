@@ -7,13 +7,13 @@ import {
   requestSetFiltersDefault,
   setOrgOid,
   setPeriod
-} from '../Redux/filters-reducer';
+} from '../../Redux/filters-reducer';
 import {
   selectIsFetchingFilters, /*selectVal, selectKTL,*/ selectOrgList, selectOrgOid, selectPeriod, selectPeriodType,
   selectPerList, selectShowFilters, selectAltOrgList, selectIsFetchingWidgets
-} from '../Redux/selectors';
-import {RootStateType} from '../Redux/store';
-import {OrgListType, PeriodListType} from '../Common/Types';
+} from '../../Redux/selectors';
+import {RootStateType} from '../../Redux/store';
+import {OrgListType, PeriodListType} from '../../Types/Types';
 
 type MapStatePropsType = {
   orgList: OrgListType

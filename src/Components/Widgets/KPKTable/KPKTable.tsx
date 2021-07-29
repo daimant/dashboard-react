@@ -10,7 +10,7 @@ import classes from './KPKTable.module.scss';
 import CloseIcon from '@material-ui/icons/Close';
 import Switch from '@material-ui/core/Switch/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel/FormControlLabel';
-import {KPKType} from '../../Common/Types';
+import {KPKType} from '../../../Types/Types';
 import {FetchError} from '../../Common/FetchError/FetchError';
 import Tooltip from '@material-ui/core/Tooltip';
 import {withStyles, Theme, makeStyles} from '@material-ui/core/styles';

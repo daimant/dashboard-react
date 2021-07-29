@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import Navbar from './Navbar';
 import {
   selectIsFetchingFilters, selectOrgMapList, selectOrgOid, selectPeriod, selectPeriodNameMapList, selectPeriodType,
   selectShowFilters
-} from '../Redux/selectors';
-import {setShowFilters} from '../Redux/filters-reducer';
-import {RootStateType} from '../Redux/store';
+} from '../../Redux/selectors';
+import {setShowFilters} from '../../Redux/filters-reducer';
+import {RootStateType} from '../../Redux/store';
 
 type MapStatePropsType = {
   showFilters: boolean
@@ -22,26 +22,20 @@ type MapDispatchPropsType = {
 }
 type PropsType = MapStatePropsType & MapDispatchPropsType
 
-class NavbarContainer extends Component<PropsType> {
-  componentDidMount() {
-  }
-
-  render() {
-    return (
-      <Navbar
-        showFilters={this.props.showFilters}
-        orgOid={this.props.orgOid}
-        period={this.props.period}
-        periodType={this.props.periodType}
-        orgMapList={this.props.orgMapList}
-        periodNameMapList={this.props.periodNameMapList}
-        isFetchingFilters={this.props.isFetchingFilters}
-
-        setShowFilters={this.props.setShowFilters}
-      />
-    );
-  }
-}
+const NavbarContainer = ({ showFilters, orgOid, period, periodType, orgMapList, periodNameMapList, isFetchingFilters, setShowFilters }: PropsType) => {
+  return (
+    <Navbar
+      showFilters={showFilters}
+      orgOid={orgOid}
+      period={period}
+      periodType={periodType}
+      orgMapList={orgMapList}
+      periodNameMapList={periodNameMapList}
+      isFetchingFilters={isFetchingFilters}
+      setShowFilters={setShowFilters}
+    />
+  )
+};
 
 const mapState = (state: RootStateType) => ({
   showFilters: selectShowFilters(state),

@@ -3,7 +3,7 @@ import classes from './GraphLine.module.scss';
 import {ComposedChart, XAxis, YAxis, Tooltip, ResponsiveContainer, Line, ReferenceLine} from 'recharts';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import {GraphLineType} from '../../Common/Types';
+import {GraphLineType} from '../../../Types/Types';
 import SettingsIcon from '../../../Assets/Icons/SettingsIcon.svg';
 import {IconButton} from "@material-ui/core";
 import Menu from "@material-ui/core/Menu/Menu";
