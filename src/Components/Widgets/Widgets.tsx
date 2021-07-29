@@ -11,28 +11,29 @@ type PropsType = {
   kpk: KPKType
   kpkChild: KPKType
   sc: Array<GraphLineType>
-  tops: Array<GraphAreaType>
+  scChild: Array<GraphLineType>
   todays: Array<TodaysType>
+  tops: Array<GraphAreaType>
   isFetchingWidgets: boolean
   orgOid: string
   period: string
   periodType: string
 
-  requestKPKChild: (orgOid: string, period: string, periodType: string, serviceOid: number) => void
-  removeKPKChild: () => void
+  requestServicesChild: (orgOid: string, period: string, periodType: string, serviceOid: number) => void
+  removeServicesChild: () => void
 }
 
 const Widgets: FC<PropsType> = ({
-                                  kpk, sc, isFetchingWidgets, requestKPKChild, removeKPKChild, orgOid, period,
-                                  periodType, kpkChild, todays, tops
+                                  kpk, kpkChild, sc, scChild, isFetchingWidgets, requestServicesChild, removeServicesChild, orgOid, period,
+                                  periodType, todays, tops
                                 }) => {
   if (isFetchingWidgets) return <Preloader/>;
 
   return (
     <div>
       <main>
-        <KPKTable kpk={kpkChild.rows?.length ? kpkChild : kpk} requestKPKChild={requestKPKChild}
-                  removeKPKChild={removeKPKChild} orgOid={orgOid} period={period} periodType={periodType}/>
+        <KPKTable kpk={kpkChild.rows?.length ? kpkChild : kpk} requestServicesChild={requestServicesChild}
+                  removeServicesChild={removeServicesChild} orgOid={orgOid} period={period} periodType={periodType}/>
         <div className={classes.graphs}>
           <h4 className={classes.headCircularBar}>СЕГОДНЯ</h4>
           {todays.map((el: TodaysType, i: number) =>
@@ -40,7 +41,7 @@ const Widgets: FC<PropsType> = ({
           )}
         </div>
         <div className={classes.graphs}>
-          {sc.map((graphLineData: GraphLineType, i: number) =>
+          {(scChild.length ? scChild : sc).map((graphLineData: GraphLineType, i: number) =>
             <GraphLine graphLineData={graphLineData} key={i}/>
           )}
         </div>

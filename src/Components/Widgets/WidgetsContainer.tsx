@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {requestKPKChild, removeKPKChild, requestWidgets} from '../Redux/widgets-reducer';
+import {requestServicesChild, removeServicesChild, requestWidgets} from '../Redux/widgets-reducer';
 import {
   /*selectInf, */ selectIsFetchingWidgets, selectKPK, selectOrgOid, selectPeriod, selectPeriodType, selectTodays,
-  selectKPKChild, selectTops, selectSC
+  selectKPKChild, selectTops, selectSC, selectSCChild
 } from '../Redux/selectors';
 import Widgets from './Widgets';
 import {RootStateType} from '../Redux/store';
@@ -13,8 +13,9 @@ type MapStatePropsType = {
   kpk: KPKType
   kpkChild: KPKType
   sc: Array<GraphLineType>
-  tops: Array<GraphAreaType>
+  scChild: Array<GraphLineType>
   todays: Array<TodaysType>
+  tops: Array<GraphAreaType>
   isFetchingWidgets: boolean
   orgOid: string
   period: string
@@ -22,8 +23,8 @@ type MapStatePropsType = {
 }
 type MapDispatchPropsType = {
   requestWidgets: (oid: string, period: string, periodType: string) => void
-  requestKPKChild: (orgOid: string, period: string, periodType: string, serviceOid: number) => void
-  removeKPKChild: () => void
+  requestServicesChild: (orgOid: string, period: string, periodType: string, serviceOid: number) => void
+  removeServicesChild: () => void
 }
 type PropsType = MapStatePropsType & MapDispatchPropsType
 
@@ -36,20 +37,21 @@ class WidgetsContainer extends Component<PropsType> {
     return (
       <Widgets
         kpk={this.props.kpk}
+        kpkChild={this.props.kpkChild}
         sc={this.props.sc}
+        scChild={this.props.scChild}
         todays={this.props.todays}
         tops={this.props.tops}
-        /*
-                inf={this.props.inf}
-        */
         isFetchingWidgets={this.props.isFetchingWidgets}
         orgOid={this.props.orgOid}
         period={this.props.period}
         periodType={this.props.periodType}
-        kpkChild={this.props.kpkChild}
+        /*
+                inf={this.props.inf}
+        */
 
-        requestKPKChild={this.props.requestKPKChild}
-        removeKPKChild={this.props.removeKPKChild}
+        requestServicesChild={this.props.requestServicesChild}
+        removeServicesChild={this.props.removeServicesChild}
       />
     );
   }
@@ -59,19 +61,20 @@ const mapState = (state: RootStateType): MapStatePropsType => ({
   kpk: selectKPK(state),
   kpkChild: selectKPKChild(state),
   sc: selectSC(state),
-  tops: selectTops(state),
+  scChild: selectSCChild(state),
   todays: selectTodays(state),
-  /*
-    inf: selectInf(state),
-  */
+  tops: selectTops(state),
   isFetchingWidgets: selectIsFetchingWidgets(state),
   orgOid: selectOrgOid(state),
   period: selectPeriod(state),
   periodType: selectPeriodType(state),
+  /*
+    inf: selectInf(state),
+  */
 });
 
 export default connect<MapStatePropsType, MapDispatchPropsType, {}, RootStateType>(mapState, {
   requestWidgets,
-  requestKPKChild,
-  removeKPKChild
+  requestServicesChild,
+  removeServicesChild
 })(WidgetsContainer);

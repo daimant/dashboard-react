@@ -21,8 +21,8 @@ type PropsType = {
   periodType: string
   kpk: KPKType
 
-  requestKPKChild: (orgOid: string, period: string, periodType: string, serviceOid: number) => void
-  removeKPKChild: () => void
+  requestServicesChild: (orgOid: string, period: string, periodType: string, serviceOid: number) => void
+  removeServicesChild: () => void
 }
 type CheckedValueKPKType = {
   hidden: boolean
@@ -65,7 +65,7 @@ const LightTooltip = withStyles((theme: Theme) => ({
   },
 }))(Tooltip);
 
-const KPKTable: FC<PropsType> = ({kpk, requestKPKChild, removeKPKChild, orgOid, period, periodType}) => {
+const KPKTable: FC<PropsType> = ({kpk, requestServicesChild, removeServicesChild, orgOid, period, periodType}) => {
   const [hiddenUnusedKPK, setHiddenUnusedKPK] = React.useState(localStorage.getItem('KPKRowHidden') === "1" || false);
 
   if (!kpk?.cols?.length)
@@ -100,7 +100,7 @@ const KPKTable: FC<PropsType> = ({kpk, requestKPKChild, removeKPKChild, orgOid, 
                   {colsHead === 'Услуга' || colsHead === 'Ошибка при загрузке'
                     ? <span>{colsHead}</span>
                     : <span className={classes.tableHead}>
-                        <CloseIcon fontSize='small' onClick={removeKPKChild} component={'svg'}/>{colsHead}
+                        <CloseIcon fontSize='small' onClick={removeServicesChild} component={'svg'}/>{colsHead}
                       </span>
                   }
                   <CheckedValueKPK hidden={hiddenUnusedKPK} requestSetHiddenUnusedKPK={requestSetHiddenUnusedKPK}/>
@@ -123,7 +123,7 @@ const KPKTable: FC<PropsType> = ({kpk, requestKPKChild, removeKPKChild, orgOid, 
                         onClick={
                           row[value] !== '-' && colsHead === 'Услуга'
                             ? () => {
-                              requestKPKChild(orgOid, period, periodType, row[id])
+                              requestServicesChild(orgOid, period, periodType, row[id])
                             }
                             : () => {
                             }

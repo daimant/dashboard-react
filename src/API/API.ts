@@ -5,32 +5,17 @@ const instance = axios.create({
   // baseURL: 'http://10.248.40.236:7755/api/', // prod mode
   baseURL: 'http://localhost:4000/',
 });
+type GetWidgetsType = {
+  oid: string, period: string, periodType: string, serviceOid: number, numSC: number[], numTodays: number[], numTops: number[]
+}
 
 export const widgetsAPI = {
-  getKPK: (oid: string, period: string, period_type: string, serviceOid: number) => {
-    // const payload = {
-    //   "org_oid": +oid,
-    //   "srv_oid": serviceOid,
-    //   "period": period,
-    //   "period_type": period_type,
-    //   "ktl": {
-    //     "ka_atr": "ka", // or mct 
-    //     "ktl_oid": 281586771165316,
-    //   },
-    //   "val": "percent",
-    // };
-    return instance
-      .get(`kpk`)
-      // .post(`kpk`, payload) // prod mode
-      .then((response: AxiosResponse) => response.data)
-      .catch(() => {});
-  },
-  getWidgets: (oid: string, period: string, period_type: string, numSC: number[], numTodays: number[], numTops: number[]) => {
+  getWidgets: ({oid, period, periodType, serviceOid = 0, numSC = [], numTodays = [], numTops = []}: GetWidgetsType) => {
     // const payload = {
     //   'org_oid': +oid,
-    //   'srv_oid': 0,
+    //   'srv_oid': serviceOid,
     //   'period': period,
-    //   'period_type': period_type,
+    //   'period_type': periodType,
     //   'ktl': {
     //     'ka_atr': 'ka', // or mct 
     //     'ktl_oid': 281586771165316,
