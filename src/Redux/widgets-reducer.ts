@@ -97,7 +97,7 @@ const widgetsReducer = (state = initialStateWidgets, action: ActionsWidgetsType)
       return {...state, isFetchingWidgets: false};
 
     case REMOVE_SERVICES_CHILD:
-      return {...state, kpkChild: {cols: [], rows: []}, scChild: []};
+      return {...state, kpkChild: {cols: [], rows: []}, scChild: [], todaysChild: []};
 
     default:
       return state;
