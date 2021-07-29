@@ -13,6 +13,7 @@ type PropsType = {
   sc: Array<GraphLineType>
   scChild: Array<GraphLineType>
   todays: Array<TodaysType>
+  todaysChild: Array<TodaysType>
   tops: Array<GraphAreaType>
   isFetchingWidgets: boolean
   orgOid: string
@@ -24,8 +25,8 @@ type PropsType = {
 }
 
 const Widgets: FC<PropsType> = ({
-                                  kpk, kpkChild, sc, scChild, isFetchingWidgets, requestServicesChild, removeServicesChild, orgOid, period,
-                                  periodType, todays, tops
+                                  kpk, kpkChild, sc, scChild, todays, todaysChild, isFetchingWidgets, requestServicesChild,
+                                  removeServicesChild, orgOid, period, periodType, tops
                                 }) => {
   if (isFetchingWidgets) return <Preloader/>;
 
@@ -36,7 +37,7 @@ const Widgets: FC<PropsType> = ({
                   removeServicesChild={removeServicesChild} orgOid={orgOid} period={period} periodType={periodType}/>
         <div className={classes.graphs}>
           <h4 className={classes.headCircularBar}>СЕГОДНЯ</h4>
-          {todays.map((el: TodaysType, i: number) =>
+          {(todaysChild.length ? todaysChild : todays).map((el: TodaysType, i: number) =>
             <CircularBar today={el.v1} diff={el.p} key={i} err={el.err}/>
           )}
         </div>
@@ -51,7 +52,7 @@ const Widgets: FC<PropsType> = ({
           <GraphArea graphAreaData={graphAreaData} key={i} extendedStyle={{height: '100%'}}/>
         )}
       </div>
-{/*      <div className={`${classes.secondMain}`}>
+      {/*      <div className={`${classes.secondMain}`}>
         <GraphArea graphAreaData={tops[0]} extendedStyle={{height: '100%'}}/>
         <GraphArea graphAreaData={tops[1]} extendedStyle={{height: '100%'}}/>
       </div>*/}

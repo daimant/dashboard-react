@@ -6,6 +6,7 @@ export const selectKPKChild = (state: RootStateType) => state.widgets.kpkChild;
 export const selectSC = (state: RootStateType) => state.widgets.sc;
 export const selectSCChild = (state: RootStateType) => state.widgets.scChild;
 export const selectTodays = (state: RootStateType) => state.widgets.todays;
+export const selectTodaysChild = (state: RootStateType) => state.widgets.todaysChild;
 export const selectTops = (state: RootStateType) => state.widgets.tops;
 /*
 export const selectInf = (state: any) => {

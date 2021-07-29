@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {requestServicesChild, removeServicesChild, requestWidgets} from '../Redux/widgets-reducer';
 import {
   /*selectInf, */ selectIsFetchingWidgets, selectKPK, selectOrgOid, selectPeriod, selectPeriodType, selectTodays,
-  selectKPKChild, selectTops, selectSC, selectSCChild
+  selectKPKChild, selectTops, selectSC, selectSCChild, selectTodaysChild
 } from '../Redux/selectors';
 import Widgets from './Widgets';
 import {RootStateType} from '../Redux/store';
@@ -15,6 +15,7 @@ type MapStatePropsType = {
   sc: Array<GraphLineType>
   scChild: Array<GraphLineType>
   todays: Array<TodaysType>
+  todaysChild: Array<TodaysType>
   tops: Array<GraphAreaType>
   isFetchingWidgets: boolean
   orgOid: string
@@ -41,6 +42,7 @@ class WidgetsContainer extends Component<PropsType> {
         sc={this.props.sc}
         scChild={this.props.scChild}
         todays={this.props.todays}
+        todaysChild={this.props.todaysChild}
         tops={this.props.tops}
         isFetchingWidgets={this.props.isFetchingWidgets}
         orgOid={this.props.orgOid}
@@ -63,6 +65,7 @@ const mapState = (state: RootStateType): MapStatePropsType => ({
   sc: selectSC(state),
   scChild: selectSCChild(state),
   todays: selectTodays(state),
+  todaysChild: selectTodaysChild(state),
   tops: selectTops(state),
   isFetchingWidgets: selectIsFetchingWidgets(state),
   orgOid: selectOrgOid(state),

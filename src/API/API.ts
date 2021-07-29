@@ -10,7 +10,7 @@ type GetWidgetsType = {
 }
 
 export const widgetsAPI = {
-  getWidgets: ({oid, period, periodType, serviceOid = 0, numSC = [], numTodays = [], numTops = []}: GetWidgetsType) => {
+  getWidgets: ({oid, period, periodType, serviceOid, numSC, numTodays, numTops}: GetWidgetsType) => {
     // const payload = {
     //   'org_oid': +oid,
     //   'srv_oid': serviceOid,
