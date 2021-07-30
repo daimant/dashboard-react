@@ -4,7 +4,6 @@ import {
   TodaysType,
   OrgListType,
   RawGraphAreaType,
-  // GraphAreaType,
 } from '../Types/Types';
 
 // Widgets
@@ -63,22 +62,19 @@ export const PipeGraphLine = (graphs: GraphLineType[]) => {
   return graphs
 };
 
-const dict: {[key: string]: Array<string>} = {
+const dictForPipeGraphArea: { [key: string]: Array<string> } = {
   'Назначение заявок': ['Назначено сотрудником', 'Назначено ботом', 'Переназначено за ботом'],
-  'Установка ПО': ['Выполнено сотрудником УПП' , 'Выполнено ботом', 'Ошибки бота'],
+  'Установка ПО': ['Выполнено сотрудником УПП', 'Выполнено ботом', 'Ошибки бота'],
   default: ['', '', '']
 };
-
 // @ts-ignore
-const getNames = (key: String) => dict[key] || dict.default;
+const getNamesForPipeGraphArea = (key: String) => dictForPipeGraphArea[key] || dictForPipeGraphArea.default;
 
 export const PipeGraphArea = (graphs: RawGraphAreaType[]) => {
   if (!graphs) return [];
 
-  // const parsedGraphs: GraphAreaType[] = [];
-
   return graphs.map((curGraph) => {
-    const [p1Name, p2Name, p3Name] = getNames(curGraph.title);
+    const [p1Name, p2Name, p3Name] = getNamesForPipeGraphArea(curGraph.title);
 
     if (!curGraph) {
       return {
@@ -108,15 +104,13 @@ export const PipeGraphArea = (graphs: RawGraphAreaType[]) => {
     }
   })
 };
-export const PipeTodays = (todays: Array<TodaysType>) => {
-  for (let i in todays) {
-    if (todays.hasOwnProperty(i) && (todays[i].v1 === null || todays[i].p === null))
-      todays[i] = {title: 'Ошибка при загрузке', v1: 0, p: 0, err: true};
-    else if (todays[i].p <= 1)
-      todays[i].p = +(todays[i].p * 100).toFixed(1);
-  }
-  return todays;
-};
+export const PipeTodays = (todays: Array<TodaysType>) => todays.map(today => {
+  if (today.v1 === null || today.p === null)
+    today = {title: 'Ошибка при загрузке', v1: 0, p: 0, err: true};
+  else if (today.p <= 1)
+    today.p = +(today.p * 100).toFixed(1);
+  return today;
+});
 
 // filters
 export const PipeOrgList = (orgList: Array<OrgListType>) => {
