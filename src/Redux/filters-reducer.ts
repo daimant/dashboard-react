@@ -110,7 +110,7 @@ const defaultFilters = {
   periodType: 'm',
 };
 
-let initialStateFilters = {
+const initialStateFilters = {
   orgList: {} as OrgListType,
   altOrgList: {} as OrgListType,
   orgMapList: new Map() as Map<string, string>,
@@ -128,32 +128,43 @@ let initialStateFilters = {
     },*/
 };
 
-const filtersReducer = (state = initialStateFilters, action: ActionsFiltersType): InitialStateFiltersType => {
-  switch (action.type) {
-    case SET_ORG_LIST:
-      const {orgList, altOrgList, orgMapList} = action.orgList;
-      return orgList && altOrgList && orgMapList
-        ? {...state, orgList: orgList[0], altOrgList, orgMapList, isFetchingFilters: false}
-        : {...state, isFetchingFilters: false};
+// action types
+const SET_ORG_LIST = 'SET_ORG_LIST';
+const SET_PERIOD = 'SET_PERIOD';
+const SET_ORG_OID = 'SET_ORG_OID';
+const SET_ORG_NAME = 'SET_ORG_NAME';
+const SET_FILTERS_DEFAULT = 'SET_FILTERS_DEFAULT';
+const SET_SHOW_FILTERS = 'SET_SHOW_FILTERS';
 
-    case SET_PERIOD:
+const actionHandlerFilters: any = {
+     [SET_ORG_LIST]: (state: InitialStateFiltersType, action: ActionsFiltersType) => {
+       const {orgList, altOrgList, orgMapList} = action.orgList;
+       return orgList && altOrgList && orgMapList
+         ? {...state, orgList: orgList[0], altOrgList, orgMapList, isFetchingFilters: false}
+         : {...state, isFetchingFilters: false};
+     },
+
+    [SET_PERIOD]: (state: InitialStateFiltersType, action: ActionsFiltersType) => {
       const [periodType, period] = action.per.split(':');
       if (periodType === 'root') return state;
       localStorage.setItem('periodType', periodType);
       localStorage.setItem('period', period);
       return {...state, periodType, period};
+    },
 
-    case SET_ORG_OID:
+    [SET_ORG_OID]:  (state: InitialStateFiltersType, action: ActionsFiltersType) => {
       localStorage.setItem('orgOid', action.oid);
       return action.oid ? {...state, orgOid: action.oid} : state;
+    },
 
-    case SET_ORG_NAME:
+    [SET_ORG_NAME]: (state: InitialStateFiltersType, action: ActionsFiltersType) => {
       const newName = state.orgMapList.get(action.oid);
       if (newName !== undefined)
         localStorage.setItem('orgName', newName);
       return newName ? {...state, orgName: newName} : state;
+    },
 
-    case SET_FILTERS_DEFAULT:
+    [SET_FILTERS_DEFAULT]:  (state: InitialStateFiltersType) => {
       localStorage.removeItem('orgOid');
       localStorage.removeItem('periodType');
       localStorage.removeItem('period');
@@ -164,14 +175,17 @@ const filtersReducer = (state = initialStateFilters, action: ActionsFiltersType)
         period: defaultFilters.period,
         periodType: defaultFilters.periodType
       };
+    },
 
-    case SET_SHOW_FILTERS:
+    [SET_SHOW_FILTERS]:  (state: InitialStateFiltersType) => {
       localStorage.setItem('showFilters', String(!state.showFilters));
       return {...state, showFilters: !state.showFilters};
+    }
+};
 
-    default:
-      return state;
-  }
+const filtersReducer = (state = initialStateFilters, action: ActionsFiltersType): InitialStateFiltersType => {
+  const handlerFilters = actionHandlerFilters[action.type];
+  return handlerFilters ? handlerFilters(state, action) : state;
 };
 
 // action creator types
@@ -181,14 +195,6 @@ type SetOrgOidACType = { type: typeof SET_ORG_OID, oid: string };
 type SetOrgNameACType = { type: typeof SET_ORG_NAME, oid: string };
 type SetFiltersDefaultACType = { type: typeof SET_FILTERS_DEFAULT };
 type SetShowFiltersACType = { type: typeof SET_SHOW_FILTERS };
-
-// action types
-const SET_ORG_LIST = 'SET_ORG_LIST';
-const SET_PERIOD = 'SET_PERIOD';
-const SET_ORG_OID = 'SET_ORG_OID';
-const SET_ORG_NAME = 'SET_ORG_NAME';
-const SET_FILTERS_DEFAULT = 'SET_FILTERS_DEFAULT';
-const SET_SHOW_FILTERS = 'SET_SHOW_FILTERS';
 
 // action creators
 export const setOrgList = (orgList: object): SetOrgListACType => ({type: SET_ORG_LIST, orgList});
