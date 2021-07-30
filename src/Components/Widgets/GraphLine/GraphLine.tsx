@@ -1,4 +1,4 @@
-import React, {MouseEvent, useState} from 'react';
+import React, {forwardRef, MouseEvent, useState} from 'react';
 import classes from './GraphLine.module.scss';
 import {ComposedChart, XAxis, YAxis, Tooltip, ResponsiveContainer, Line, ReferenceLine} from 'recharts';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
@@ -7,7 +7,6 @@ import {GraphLineType} from '../../../Types/Types';
 import SettingsIcon from '../../../Assets/Icons/SettingsIcon.svg';
 import {IconButton} from '@material-ui/core';
 import Menu from '@material-ui/core/Menu/Menu';
-
 
 type CheckedValueGraphType = {
   description: string
@@ -22,18 +21,20 @@ type PropsType = {
   extendedStyle?: object
 }
 
-const CheckedValueGraph = ({description, hidden, hideLineClick, line, hider}: CheckedValueGraphType) => {
+const CheckedValueGraph = forwardRef(({description, hidden, hideLineClick, line, hider}: CheckedValueGraphType, ref: any) => {
   return (
     <p
       className={`${classes.checkBoxGroup} ${classes.clickable} ${classes[`color${line}`]}`}
-      onClick={() => hideLineClick(line, hidden, hider)}>{!hidden
-      ? <CheckBoxIcon className={classes.iconCheckBox} color='action' component={'svg'} fontSize={'small'}/>
-      :
-      <CheckBoxOutlineBlankIcon className={classes.iconCheckBox} color='action' component={'svg'}
-                                fontSize={'small'}/>} {description}
+      ref={ref}
+      onClick={() => hideLineClick(line, hidden, hider)}>
+      {!hidden
+        ? <CheckBoxIcon className={classes.iconCheckBox} color='action' component={'svg'} fontSize={'small'}/>
+        : <CheckBoxOutlineBlankIcon className={classes.iconCheckBox} color='action' component={'svg'}
+                                    fontSize={'small'}/>
+      } {description}
     </p>
   )
-};
+});
 
 const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
   const {title, data} = graphLineData;
