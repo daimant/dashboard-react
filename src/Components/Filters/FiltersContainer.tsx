@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import Filters from './Filters';
 import {
@@ -35,35 +35,38 @@ type MapDispatchPropsType = {
 }
 type PropsType = MapStatePropsType & MapDispatchPropsType
 
-class FiltersContainer extends Component<PropsType> {
-  componentDidMount() {
-    if (!this.props.orgList.oid)
-      this.props.requestOrg()
-  }
+const FiltersContainer = ({
+                            orgList, altOrgList, isFetchingFilters, isFetchingWidgets, orgOid, perList, period,
+                            periodType, showFilters, requestOrg, requestWidgetsFromFilters, setPeriod, setOrgOid,
+                            requestSetFiltersDefault
+                          }: PropsType) => {
+  useEffect(() => {
+    if (!orgList.oid)
+      requestOrg()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  render() {
-    return (
-      <Filters
-        orgList={this.props.orgList}
-        altOrgList={this.props.altOrgList}
-        isFetchingFilters={this.props.isFetchingFilters}
-        isFetchingWidgets={this.props.isFetchingWidgets}
-        orgOid={this.props.orgOid}
-        // ktl={this.props.ktl}
-        // val={this.props.val}
-        perList={this.props.perList}
-        period={this.props.period}
-        periodType={this.props.periodType}
-        showFilters={this.props.showFilters}
+  return (
+    <Filters
+      orgList={orgList}
+      altOrgList={altOrgList}
+      isFetchingFilters={isFetchingFilters}
+      isFetchingWidgets={isFetchingWidgets}
+      orgOid={orgOid}
+      // ktl={ktl}
+      // val={val}
+      perList={perList}
+      period={period}
+      periodType={periodType}
+      showFilters={showFilters}
 
-        requestWidgetsFromFilters={this.props.requestWidgetsFromFilters}
-        setPeriod={this.props.setPeriod}
-        setOrgOid={this.props.setOrgOid}
-        requestSetFiltersDefault={this.props.requestSetFiltersDefault}
-      />
-    );
-  }
-}
+      requestWidgetsFromFilters={requestWidgetsFromFilters}
+      setPeriod={setPeriod}
+      setOrgOid={setOrgOid}
+      requestSetFiltersDefault={requestSetFiltersDefault}
+    />
+  )
+};
 
 const mapState = (state: RootStateType) => ({
   orgList: selectOrgList(state),
