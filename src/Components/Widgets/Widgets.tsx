@@ -1,11 +1,11 @@
-import React, {FC} from 'react';
+import React from 'react';
 import classes from './Widgets.module.scss';
 import KPKTable from './KPKTable/KPKTable';
 import GraphLine from './GraphLine/GraphLine';
 import {Preloader} from '../Common/Preloader/Preloader';
 import CircularBar from './CircularBar/CircularBar';
 import {GraphAreaType, GraphLineType, KPKType, TodaysType} from '../../Types/Types';
-import GraphArea from "./GraphArea/GraphArea";
+import GraphArea from './GraphArea/GraphArea';
 
 type PropsType = {
   kpk: KPKType
@@ -24,10 +24,10 @@ type PropsType = {
   removeServicesChild: () => void
 }
 
-const Widgets: FC<PropsType> = ({
-                                  kpk, kpkChild, sc, scChild, todays, todaysChild, isFetchingWidgets, requestServicesChild,
-                                  removeServicesChild, orgOid, period, periodType, tops
-                                }) => {
+const Widgets = ({
+                   kpk, kpkChild, sc, scChild, todays, todaysChild, isFetchingWidgets, requestServicesChild,
+                   removeServicesChild, orgOid, period, periodType, tops
+                 }: PropsType) => {
   if (isFetchingWidgets) return <Preloader/>;
 
   return (

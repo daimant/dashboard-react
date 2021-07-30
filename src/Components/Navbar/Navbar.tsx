@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {MouseEvent, useState} from 'react';
 import Logo from '../../Assets/img/oskRZDLogo.png'
 import classes from './Navbar.module.scss';
 import IconButton from '@material-ui/core/IconButton';
@@ -27,14 +27,13 @@ const options = [
 ];
 
 const Navbar = ({
-                  /*showFilters,*/ setShowFilters, orgOid, period, periodType, orgMapList, periodNameMapList,
-                  isFetchingFilters
+                  setShowFilters, orgOid, period, periodType, orgMapList, periodNameMapList, isFetchingFilters, /*showFilters,*/
                 }: PropsType) => {
 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {

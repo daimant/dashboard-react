@@ -36,6 +36,7 @@ const apiWidgetsProd = {
       })),
       instance.post(`kpk`, payload).catch(() => {
       }), // prod mode
+
     ])
       .then((response: AxiosResponse[]) => response.map(res => res.data));
   }

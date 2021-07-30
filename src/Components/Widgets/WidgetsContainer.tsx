@@ -2,8 +2,8 @@ import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {requestServicesChild, removeServicesChild, requestWidgets} from '../../Redux/widgets-reducer';
 import {
-  /*selectInf, */ selectIsFetchingWidgets, selectKPK, selectOrgOid, selectPeriod, selectPeriodType, selectTodays,
-  selectKPKChild, selectTops, selectSC, selectSCChild, selectTodaysChild
+  selectIsFetchingWidgets, selectKPK, selectOrgOid, selectPeriod, selectPeriodType, selectTodays, selectKPKChild,
+  selectTops, selectSC, selectSCChild, selectTodaysChild, /*selectInf, */
 } from '../../Redux/selectors';
 import Widgets from './Widgets';
 import {RootStateType} from '../../Redux/store';
@@ -80,7 +80,5 @@ const mapState = (state: RootStateType): MapStatePropsType => ({
 });
 
 export default connect<MapStatePropsType, MapDispatchPropsType, {}, RootStateType>(mapState, {
-  requestWidgets,
-  requestServicesChild,
-  removeServicesChild
+  requestWidgets, requestServicesChild, removeServicesChild
 })(WidgetsContainer);

@@ -23,17 +23,16 @@ type PropsType = {
   requestSetFiltersDefault: () => void
 }
 
-const Filters: React.FC<PropsType> = props => {
-  const {
-    orgList, altOrgList, isFetchingFilters, isFetchingWidgets, orgOid, /*ktl, val,*/ requestWidgetsFromFilters,
-    setPeriod, setOrgOid, perList, period, periodType, requestSetFiltersDefault, showFilters
-  } = props;
+const Filters = ({
+                   orgList, altOrgList, isFetchingFilters, isFetchingWidgets, orgOid, requestWidgetsFromFilters,
+                   setPeriod, setOrgOid, perList, period, periodType, requestSetFiltersDefault, showFilters, /*ktl, val,*/
+                 }: PropsType) => {
 
   if (!showFilters) return null;
   if (isFetchingFilters) return <Preloader/>;
 
   const acceptFilters = (type: string = 'def', selected: any = '') => {
-    const [newPeriodType, newPeriod] = type === 'период' ? selected.split(":") : ['', ''];
+    const [newPeriodType, newPeriod] = type === 'период' ? selected.split(':') : ['', ''];
     requestWidgetsFromFilters(
       type === 'оргструктура' ? selected : orgOid,
       type === 'период' ? newPeriod : period,

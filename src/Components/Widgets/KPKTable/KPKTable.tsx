@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {useState} from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -29,7 +29,7 @@ type CheckedValueKPKType = {
   requestSetHiddenUnusedKPK: () => void
 }
 
-const CheckedValueKPK: FC<CheckedValueKPKType> = ({hidden, requestSetHiddenUnusedKPK}) => {
+const CheckedValueKPK = ({hidden, requestSetHiddenUnusedKPK}: CheckedValueKPKType) => {
   const useStyles = makeStyles(() => ({
       toggle: {
         '& .Mui-checked + .MuiSwitch-track': {
@@ -45,13 +45,13 @@ const CheckedValueKPK: FC<CheckedValueKPKType> = ({hidden, requestSetHiddenUnuse
       <FormControlLabel
         control={
           <Switch
-            size="medium"
+            size='medium'
             checked={hidden}
             onChange={() => requestSetHiddenUnusedKPK()}
-            color="default"
+            color='default'
             className={classesMUI.toggle}
           />}
-        labelPlacement="start"
+        labelPlacement='start'
         label={<span className={`${classes.textAroundSwitcher} ${classes.tableHead}`}>Все услуги / Услуги с ЗНО</span>}
       />
     }</span>
@@ -65,8 +65,8 @@ const LightTooltip = withStyles((theme: Theme) => ({
   },
 }))(Tooltip);
 
-const KPKTable: FC<PropsType> = ({kpk, requestServicesChild, removeServicesChild, orgOid, period, periodType}) => {
-  const [hiddenUnusedKPK, setHiddenUnusedKPK] = React.useState(localStorage.getItem('KPKRowHidden') === "1" || false);
+const KPKTable = ({kpk, requestServicesChild, removeServicesChild, orgOid, period, periodType}: PropsType) => {
+  const [hiddenUnusedKPK, setHiddenUnusedKPK] = useState(localStorage.getItem('KPKRowHidden') === '1' || false);
 
   if (!kpk?.cols?.length)
     return (
@@ -78,7 +78,7 @@ const KPKTable: FC<PropsType> = ({kpk, requestServicesChild, removeServicesChild
   const {cols, rows} = kpk;
   const [id, colsHead, value] = cols;
   const requestSetHiddenUnusedKPK = () => {
-    localStorage.setItem('KPKRowHidden', hiddenUnusedKPK ? "0" : '1');
+    localStorage.setItem('KPKRowHidden', hiddenUnusedKPK ? '0' : '1');
     setHiddenUnusedKPK(!hiddenUnusedKPK);
   };
   const nameColsDetails = {
@@ -92,9 +92,9 @@ const KPKTable: FC<PropsType> = ({kpk, requestServicesChild, removeServicesChild
   return (
     <div className={classes.kpkTable}>
       <TableContainer component={Paper} className={classes.tableContainer}>
-        <Table size="small" stickyHeader aria-label="a dense table" component={'table'}>
+        <Table size='small' stickyHeader aria-label='a dense table' component={'table'}>
           <TableHead component={'thead'}>
-            <TableRow component={"tr"}>
+            <TableRow component={'tr'}>
               <TableCell className={classes.cell}>
                 <div className={classes.tableHead}>
                   {colsHead === 'Услуга' || colsHead === 'Ошибка при загрузке'
@@ -113,7 +113,7 @@ const KPKTable: FC<PropsType> = ({kpk, requestServicesChild, removeServicesChild
             {rows.map((row: any) => ( // тут мои полномочия всё
 
               <TableRow key={row[id]}
-                        component={"tr"}
+                        component={'tr'}
                         style={row[value] === '-' && hiddenUnusedKPK ? {display: 'none'} : {}}
                         className={
                           row[value] !== '-' && colsHead === 'Услуга'

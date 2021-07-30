@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -7,7 +7,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import classes from './InfTable.module.scss';
 
-const InfTable: FC<any> = ({inf: rows, widgetsTitle}) => {
+const InfTable = ({inf: rows, widgetsTitle}: any) => {
   return (
     <div className={classes.infTable}>
       <TableContainer component={Paper} className={classes.tableContainer}>

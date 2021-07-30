@@ -55,7 +55,7 @@ const createPeriodTree = (st: Date, end: number): PeriodListType => {
 
   // перебираем от начального года до конечного
   for (let y = d1.getFullYear(); y <= d2.getFullYear(); y++) {
-    // type: "y"
+    // type: 'y'
     let ny = createNode(y + ' год', `y:${y}-01`, []);
 
     // сохраняем год в коллекцию названий периодов
@@ -67,7 +67,7 @@ const createPeriodTree = (st: Date, end: number): PeriodListType => {
 
     // перебираем от начального квартала до конечного
     for (let q = curr_q1; q <= curr_q2; q++) {
-      // type: "q"
+      // type: 'q'
       let nq = createNode(q + ' квартал', `q:${y}-0${q}`, []);
 
       // сохраняем квартал в коллекцию названий периодов
@@ -82,7 +82,7 @@ const createPeriodTree = (st: Date, end: number): PeriodListType => {
 
       // перебираем от начального месяца до конечного
       for (let m = curr_m1; m <= curr_m2; m++) {
-        // type: "m"
+        // type: 'm'
         let nm = createNode(months[m], `m:${y}-${pad((m + 1), 2)}`, []);
 
         // сохраняем месяц в коллекцию названий периодов
@@ -135,7 +135,7 @@ const filtersReducer = (state = initialStateFilters, action: ActionsFiltersType)
         : {...state, isFetchingFilters: false};
 
     case SET_PERIOD:
-      const [periodType, period] = action.per.split(":");
+      const [periodType, period] = action.per.split(':');
       if (periodType === 'root') return state;
       localStorage.setItem('periodType', periodType);
       localStorage.setItem('period', period);

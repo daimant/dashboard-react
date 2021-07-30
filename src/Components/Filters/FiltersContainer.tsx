@@ -2,15 +2,11 @@ import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import Filters from './Filters';
 import {
-  requestOrg,
-  requestWidgetsFromFilters,
-  requestSetFiltersDefault,
-  setOrgOid,
-  setPeriod
+  requestOrg, requestWidgetsFromFilters, requestSetFiltersDefault, setOrgOid, setPeriod
 } from '../../Redux/filters-reducer';
 import {
-  selectIsFetchingFilters, /*selectVal, selectKTL,*/ selectOrgList, selectOrgOid, selectPeriod, selectPeriodType,
-  selectPerList, selectShowFilters, selectAltOrgList, selectIsFetchingWidgets
+  selectIsFetchingFilters, selectOrgList, selectOrgOid, selectPeriod, selectPeriodType, selectPerList,
+  selectShowFilters, selectAltOrgList, selectIsFetchingWidgets, /*selectVal, selectKTL,*/
 } from '../../Redux/selectors';
 import {RootStateType} from '../../Redux/store';
 import {OrgListType, PeriodListType} from '../../Types/Types';
@@ -53,12 +49,12 @@ const FiltersContainer = ({
       isFetchingFilters={isFetchingFilters}
       isFetchingWidgets={isFetchingWidgets}
       orgOid={orgOid}
-      // ktl={ktl}
-      // val={val}
       perList={perList}
       period={period}
       periodType={periodType}
       showFilters={showFilters}
+      // ktl={ktl}
+      // val={val}
 
       requestWidgetsFromFilters={requestWidgetsFromFilters}
       setPeriod={setPeriod}
@@ -74,18 +70,14 @@ const mapState = (state: RootStateType) => ({
   isFetchingFilters: selectIsFetchingFilters(state),
   isFetchingWidgets: selectIsFetchingWidgets(state),
   orgOid: selectOrgOid(state),
-  // ktl: selectKTL(state),
-  // val: selectVal(state),
   perList: selectPerList(state),
   period: selectPeriod(state),
   periodType: selectPeriodType(state),
   showFilters: selectShowFilters(state),
+  // ktl: selectKTL(state),
+  // val: selectVal(state),
 });
 
 export default connect<MapStatePropsType, MapDispatchPropsType, {}, RootStateType>(mapState, {
-  requestOrg,
-  requestWidgetsFromFilters,
-  setPeriod,
-  setOrgOid,
-  requestSetFiltersDefault
+  requestOrg, requestWidgetsFromFilters, setPeriod, setOrgOid, requestSetFiltersDefault
 })(FiltersContainer);

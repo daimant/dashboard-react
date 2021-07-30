@@ -5,12 +5,12 @@ export type OrgListType = {
   name: string
   parent: any
   zno: number
-  children?: Array<OrgListType>
+  children: Array<OrgListType>
 };
 export type PeriodListType = {
   name: string
   oid: string
-  children?: Array<object>
+  children: Array<object>
 };
 
 // from widgets reducer

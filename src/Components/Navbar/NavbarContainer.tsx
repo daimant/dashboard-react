@@ -22,7 +22,10 @@ type MapDispatchPropsType = {
 }
 type PropsType = MapStatePropsType & MapDispatchPropsType
 
-const NavbarContainer = ({ showFilters, orgOid, period, periodType, orgMapList, periodNameMapList, isFetchingFilters, setShowFilters }: PropsType) => {
+const NavbarContainer = ({
+                           showFilters, orgOid, period, periodType, orgMapList, periodNameMapList, isFetchingFilters,
+                           setShowFilters
+                         }: PropsType) => {
   return (
     <Navbar
       showFilters={showFilters}

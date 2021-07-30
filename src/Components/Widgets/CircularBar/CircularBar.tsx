@@ -9,7 +9,7 @@ type PropsType = {
   err: boolean
 }
 
-const CircularBar: React.FC<PropsType> = ({today, diff, err}) => {
+const CircularBar = ({today, diff, err}: PropsType) => {
   return (
     <div className={classes.graphs}>
       <CircularProgressbarWithChildren
