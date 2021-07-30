@@ -64,6 +64,13 @@ const LightTooltip = withStyles((theme: Theme) => ({
     fontSize: 12,
   },
 }))(Tooltip);
+const nameColsDetails = {
+  k1: 'Своевременность',
+  k2: 'Оперативность',
+  k3: 'Качество работы',
+  k4: 'Удовлетворенность',
+  k5: 'ППР'
+};
 
 const KPKTable = ({kpk, requestServicesChild, removeServicesChild, orgOid, period, periodType}: PropsType) => {
   const [hiddenUnusedKPK, setHiddenUnusedKPK] = useState(localStorage.getItem('KPKRowHidden') === '1' || false);
@@ -80,13 +87,6 @@ const KPKTable = ({kpk, requestServicesChild, removeServicesChild, orgOid, perio
   const requestSetHiddenUnusedKPK = () => {
     localStorage.setItem('KPKRowHidden', hiddenUnusedKPK ? '0' : '1');
     setHiddenUnusedKPK(!hiddenUnusedKPK);
-  };
-  const nameColsDetails = {
-    k1: 'Своевременность',
-    k2: 'Оперативность',
-    k3: 'Качество работы',
-    k4: 'Удовлетворенность',
-    k5: 'ППР'
   };
 
   return (
@@ -136,10 +136,10 @@ const KPKTable = ({kpk, requestServicesChild, removeServicesChild, orgOid, perio
                   title={row[value] !== '-'
                     ? <div className={`${classes.blackColor}`} style={{}}>
                       {`${row[value]} состоит из:`}
-                      {cols.slice(3, 8).map((key: string, i: number) => (
+                      {cols.slice(3, 8).map((key: string) => (
                         <span
                           className={`${classes[row[`${key}_good`] ? 'greenColor' : 'redColor']} ${classes.tableHead}`}
-                          key={i}>
+                          key={key}>
                           {/*// @ts-ignore*/}
                           {nameColsDetails[key]}: {row[key]} {!row[`${key}_good`] ? `(отклонение: ${(row[key + '_l'] - row[key]).toFixed(2)})` : ''}
                         </span>

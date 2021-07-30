@@ -37,19 +37,19 @@ const Widgets = ({
                   removeServicesChild={removeServicesChild} orgOid={orgOid} period={period} periodType={periodType}/>
         <div className={classes.graphs}>
           <h4 className={classes.headCircularBar}>СЕГОДНЯ</h4>
-          {(todaysChild.length ? todaysChild : todays).map((el: TodaysType, i: number) =>
-            <CircularBar today={el.v1} diff={el.p} key={i} err={el.err}/>
+          {(todaysChild.length ? todaysChild : todays).map((el: TodaysType) =>
+            <CircularBar today={el.v1} diff={el.p} key={`${el.title}${el.v1}`} err={el.err}/>
           )}
         </div>
         <div className={classes.graphs}>
-          {(scChild.length ? scChild : sc).map((graphLineData: GraphLineType, i: number) =>
-            <GraphLine graphLineData={graphLineData} key={i}/>
+          {(scChild.length ? scChild : sc).map((graphLineData: GraphLineType) =>
+            <GraphLine graphLineData={graphLineData} key={`${graphLineData.title}${graphLineData.id}`}/>
           )}
         </div>
       </main>
       <div className={`${classes.secondMain}`}>
-        {tops.map((graphAreaData: GraphAreaType, i: number) =>
-          <GraphArea graphAreaData={graphAreaData} key={i} extendedStyle={{height: '100%'}}/>
+        {tops.map((graphAreaData: GraphAreaType) =>
+          <GraphArea graphAreaData={graphAreaData} key={graphAreaData.title} extendedStyle={{height: '100%'}}/>
         )}
       </div>
       {/*      <div className={`${classes.secondMain}`}>
