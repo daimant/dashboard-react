@@ -9,7 +9,9 @@ import {OrgListType, PeriodListType} from '../Types/Types';
 type ActionsFiltersType = {
   type: string
   orgList: {
-    data: []
+    orgList: OrgListType[]
+    altOrgList: OrgListType
+    orgMapList: Map<string, string>
   }
   oid: string
   per: string
@@ -129,7 +131,7 @@ let initialStateFilters = {
 const filtersReducer = (state = initialStateFilters, action: ActionsFiltersType): InitialStateFiltersType => {
   switch (action.type) {
     case SET_ORG_LIST:
-      const {orgList, altOrgList, orgMapList} = PipeOrgList(action.orgList.data);
+      const {orgList, altOrgList, orgMapList} = action.orgList;
       return orgList && altOrgList && orgMapList
         ? {...state, orgList: orgList[0], altOrgList, orgMapList, isFetchingFilters: false}
         : {...state, isFetchingFilters: false};
@@ -198,7 +200,7 @@ export const setShowFilters = (): SetShowFiltersACType => ({type: SET_SHOW_FILTE
 
 export const requestOrg = (): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
   const response = await filtersAPI.getOrg();
-  dispatch(setOrgList(response));
+  dispatch(setOrgList(PipeOrgList(response.data)));
 };
 export const requestWidgetsFromFilters = (
   oid: string, period: string, periodType: string

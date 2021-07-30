@@ -3,7 +3,7 @@ import {PipeKPK, PipeGraphLine, PipeTodays, PipeGraphArea} from './pipes';
 import {AnyAction} from 'redux';
 import {ThunkAction} from 'redux-thunk';
 import {RootStateType} from './store';
-import {GraphAreaType, GraphLineType, KPKType, RawGraphAreaType, RawKPKType, TodaysType} from '../Types/Types';
+import {GraphAreaType, GraphLineType, KPKType, RawKPKType, TodaysType} from '../Types/Types';
 
 type ActionsWidgetsType = {
   type: string
@@ -13,7 +13,7 @@ type ActionsWidgetsType = {
   scChild: Array<GraphLineType>
   todays: Array<TodaysType>
   todaysChild: Array<TodaysType>
-  tops: Array<RawGraphAreaType>
+  tops: Array<GraphAreaType>
 }
 type InitialStateWidgetsType = typeof initialStateWidgets;
 
@@ -76,19 +76,19 @@ const widgetsReducer = (state = initialStateWidgets, action: ActionsWidgetsType)
       return {...state, kpkChild};
 
     case SET_SC:
-      return action.sc.length ? {...state, sc: PipeGraphLine(action.sc)} : state;
+      return action.sc.length ? {...state, sc: action.sc} : state;
 
     case SET_SC_CHILD:
-      return action.scChild.length ? {...state, scChild: PipeGraphLine(action.scChild)} : state;
+      return action.scChild.length ? {...state, scChild: action.scChild} : state;
 
     case SET_TODAYS:
-      return action.todays.length ? {...state, todays: PipeTodays(action.todays)} : state;
+      return action.todays.length ? {...state, todays: action.todays} : state;
 
     case SET_TODAYS_CHILD:
-      return action.todaysChild.length ? {...state, todaysChild: PipeTodays(action.todaysChild)} : state;
+      return action.todaysChild.length ? {...state, todaysChild: action.todaysChild} : state;
 
     case SET_TOPS:
-      return action.tops.length ? {...state, tops: PipeGraphArea(action.tops)} : state;
+      return action.tops.length ? {...state, tops: action.tops} : state;
 
     case SET_IS_FETCHING_WIDGETS_STARTED:
       return {...state, isFetchingWidgets: true};
@@ -135,7 +135,7 @@ export const setSC = (sc: Array<GraphLineType>): SetSCACType => ({type: SET_SC, 
 export const setSCChild = (scChild: Array<GraphLineType>): SetSCChildACType => ({type: SET_SC_CHILD, scChild});
 export const setTodays = (todays: Array<TodaysType>): SetTodaysACType => ({type: SET_TODAYS, todays});
 export const setTodaysChild = (todaysChild: Array<TodaysType>): SetTodaysChildACType => ({type: SET_TODAYS_CHILD, todaysChild});
-export const setTops = (tops: Array<RawGraphAreaType>): SetTopsACType => ({type: SET_TOPS, tops});
+export const setTops = (tops: Array<GraphAreaType>): SetTopsACType => ({type: SET_TOPS, tops});
 export const setIsFetchingWidgetsStarted = (): SetIsFetchingWidgetsStartedACType => ({type: SET_IS_FETCHING_WIDGETS_STARTED});
 export const setIsFetchingWidgetsEnded = (): SetIsFetchingWidgetsEndedACType => ({type: SET_IS_FETCHING_WIDGETS_ENDED});
 export const removeServicesChild = (): RemoveServicesChildACType => ({type: REMOVE_SERVICES_CHILD});
@@ -147,9 +147,9 @@ export const requestWidgets = (
   dispatch(setIsFetchingWidgetsStarted());
 
   const response = await widgetsAPI.getWidgets({serviceOid: 0, oid, period, periodType, numSC, numTodays, numTops});
-  dispatch(setSC(response.splice(0, numSC.length)));
-  dispatch(setTodays(response.splice(0, numTodays.length)));
-  dispatch(setTops(response.splice(0, numTops.length)));
+  dispatch(setSC(PipeGraphLine(response.splice(0, numSC.length))));
+  dispatch(setTodays(PipeTodays(response.splice(0, numTodays.length))));
+  dispatch(setTops(PipeGraphArea(response.splice(0, numTops.length))));
   dispatch(setKPK(response.pop()));
 
   dispatch(setIsFetchingWidgetsEnded());
@@ -161,8 +161,8 @@ export const requestServicesChild = (
   dispatch(setIsFetchingWidgetsStarted());
 
   const response = await widgetsAPI.getWidgets({oid, period, periodType, serviceOid, numSC, numTodays, numTops: []});
-  dispatch(setSCChild(response.splice(0, numSC.length)));
-  dispatch(setTodaysChild(response.splice(0, numTodays.length)));
+  dispatch(setSCChild(PipeGraphLine(response.splice(0, numSC.length))));
+  dispatch(setTodaysChild(PipeTodays(response.splice(0, numTodays.length))));
   dispatch(setKPKChild(response.pop()));
 
   dispatch(setIsFetchingWidgetsEnded());
