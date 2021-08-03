@@ -14,6 +14,7 @@ import {KPKType} from '../../../Types/Types';
 import {FetchError} from '../../Common/FetchError/FetchError';
 import Tooltip from '@material-ui/core/Tooltip';
 import {withStyles, Theme, makeStyles} from '@material-ui/core/styles';
+import cn from 'classnames'
 
 type PropsType = {
   orgOid: string
@@ -77,7 +78,7 @@ const KPKTable = ({kpk, requestServicesChild, removeServicesChild, orgOid, perio
 
   if (!kpk?.cols?.length)
     return (
-      <div className={`${classes.kpkTable} ${classes.cell}`}>
+      <div className={cn(classes.kpkTable, classes.cell)}>
         <FetchError/>
       </div>
     );
@@ -115,19 +116,13 @@ const KPKTable = ({kpk, requestServicesChild, removeServicesChild, orgOid, perio
               <TableRow key={row[id]}
                         component={'tr'}
                         style={row[value] === '-' && hiddenUnusedKPK ? {display: 'none'} : {}}
-                        className={
-                          row[value] !== '-' && colsHead === 'Услуга'
-                            ? classes.clickable
-                            : ''
-                        }
-                        onClick={
-                          row[value] !== '-' && colsHead === 'Услуга'
-                            ? () => {
-                              requestServicesChild(orgOid, period, periodType, row[id])
-                            }
-                            : () => {
-                            }
-                        }>
+                        className={cn({[classes.clickable]: row[value] !== '-' && colsHead === 'Услуга'})}
+                        onClick={() => {
+                              if (row[value] !== '-' && colsHead === 'Услуга') {
+                                requestServicesChild(orgOid, period, periodType, row[id], isOrgRZD)
+                              }
+                        }}
+              >
                 <TableCell component='th' scope='row' className={classes.cell}>{
                   row[colsHead]
                 }</TableCell>
@@ -139,7 +134,8 @@ const KPKTable = ({kpk, requestServicesChild, removeServicesChild, orgOid, perio
                       {cols.slice(3, 8).map((key: string) => (
                         <span
                           className={`${classes[row[`${key}_good`] ? 'greenColor' : 'redColor']} ${classes.tableHead}`}
-                          key={key}>
+                          key={key}
+                        >
                           {/*// @ts-ignore*/}
                           {nameColsDetails[key]}: {row[key]} {!row[`${key}_good`] ? `(отклонение: ${(row[key + '_l'] - row[key]).toFixed(2)})` : ''}
                         </span>
@@ -147,7 +143,7 @@ const KPKTable = ({kpk, requestServicesChild, removeServicesChild, orgOid, perio
                     </div>
                     : ''
                   }>
-                  <TableCell className={`${classes.cell} ${classes.rightColumn}`}>{
+                  <TableCell className={cn(classes.cell, classes.rightColumn)}>{
                     row[value]
                   }</TableCell>
                 </LightTooltip>
