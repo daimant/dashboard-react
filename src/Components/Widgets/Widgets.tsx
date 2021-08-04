@@ -23,7 +23,8 @@ import {
   selectSC,
   selectSCChild,
   selectTodays,
-  selectTodaysChild, selectTops
+  selectTodaysChild,
+  selectTops
 } from "../../Redux/selectors";
 import {connect} from "react-redux";
 import {

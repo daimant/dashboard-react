@@ -9,12 +9,15 @@ import {Preloader} from '../Common/Preloader/Preloader';
 import FilterIcon from '../../Assets/Icons/FilterIcon.svg';
 import {connect} from "react-redux";
 import {RootStateType} from "../../Redux/store";
-import {setShowFilters} from "../../Redux/filters-reducer";
+import {setShowFilters} from "../../Redux/filters";
 import {
-  selectIsFetchingFilters, selectIsOrgRZD,
-  selectOrgMapListOSK, selectOrgMapListRZD,
+  selectIsFetchingFilters,
+  selectIsOrgRZD,
+  selectOrgMapListOSK,
+  selectOrgMapListRZD,
   selectOrgOid,
-  selectPeriod, selectPeriodNameMapList,
+  selectPeriod,
+  selectPeriodNameMapList,
   selectPeriodType,
   selectShowFilters
 } from "../../Redux/selectors";

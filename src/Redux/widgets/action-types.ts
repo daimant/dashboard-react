@@ -1,4 +1,3 @@
-// action types
 export const SET_KPK = 'SET_KPK';
 export const SET_KPK_CHILD = 'SET_KPK_CHILD';
 export const SET_SC = 'SET_SC';

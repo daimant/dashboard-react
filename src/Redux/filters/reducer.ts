@@ -1,10 +1,18 @@
-import {filtersAPI} from '../API/API';
-import {requestWidgets} from './widgets';
-import {PipeOrgListOSK, PipeOrgListRZD} from './pipes';
-import {ThunkAction} from 'redux-thunk';
-import {RootStateType} from './store';
-import {AnyAction} from 'redux';
-import {OrgListOSKType, OrgListRZDType, PeriodListType} from '../Types/Types';
+import {
+  OrgListOSKType,
+  OrgListRZDType,
+  PeriodListType
+} from '../../Types/Types';
+import {
+  SET_FILTERS_DEFAULT,
+  SET_IS_ORG_RZD,
+  SET_ORG_LIST_OSK,
+  SET_ORG_LIST_RZD,
+  SET_ORG_NAME,
+  SET_ORG_OID,
+  SET_PERIOD,
+  SET_SHOW_FILTERS
+} from "./action-types";
 
 type ActionsFiltersType = {
   type: string
@@ -20,9 +28,11 @@ type ActionsFiltersType = {
   oid: string
   per: string
 };
+
 type InitialStateFiltersType = typeof initialStateFilters;
 
 const tempPeriodNameMapList = new Map();
+
 const createPeriodTree = (st: Date, end: number): PeriodListType => {
   //получить квартал по номеру месяца (от 0 - янв.)
   const getQuarter = (month: number) => {
@@ -107,7 +117,8 @@ const createPeriodTree = (st: Date, end: number): PeriodListType => {
   //возврат всего дерева
   return rootNode;
 };
-const defaultFilters = {
+
+export const defaultFilters = {
   orgOid: '281586771165316',
   orgName: 'ООО ОСК ИнфоТранс',
   period: `${new Date().getFullYear()}-${new Date().getMonth() - 1 < 10 ? `0${new Date().getMonth() + 1}` : new Date().getMonth() + 1}`,
@@ -135,16 +146,6 @@ const initialStateFilters = {
       ktlOid: '281586771165316',
     },*/
 };
-
-// action types
-const SET_ORG_LIST_OSK = 'SET_ORG_LIST';
-const SET_ORG_LIST_RZD = 'SET_ORG_LIST_RZD';
-const SET_PERIOD = 'SET_PERIOD';
-const SET_ORG_OID = 'SET_ORG_OID';
-const SET_ORG_NAME = 'SET_ORG_NAME';
-const SET_FILTERS_DEFAULT = 'SET_FILTERS_DEFAULT';
-const SET_SHOW_FILTERS = 'SET_SHOW_FILTERS';
-const SET_IS_ORG_RZD = 'SET_IS_ORG_RZD';
 
 const actionHandlerFilters: any = {
   [SET_ORG_LIST_OSK]: (state: InitialStateFiltersType, action: ActionsFiltersType) => {
@@ -212,45 +213,10 @@ const actionHandlerFilters: any = {
     isOrgRZD: !state.isOrgRZD
   })
 };
+
 const filtersReducer = (state = initialStateFilters, action: ActionsFiltersType): InitialStateFiltersType => {
   const handlerFilters = actionHandlerFilters[action.type];
   return handlerFilters ? handlerFilters(state, action) : state;
-};
-
-// action creator types
-type SetOrgListOSKACType = { type: typeof SET_ORG_LIST_OSK, orgListOSK: object };
-type SetOrgListRZDACType = { type: typeof SET_ORG_LIST_RZD, orgListRZD: object };
-type SetPeriodACType = { type: typeof SET_PERIOD, per: string };
-type SetOrgOidACType = { type: typeof SET_ORG_OID, oid: string };
-type SetOrgNameACType = { type: typeof SET_ORG_NAME, oid: string };
-type SetFiltersDefaultACType = { type: typeof SET_FILTERS_DEFAULT };
-type SetShowFiltersACType = { type: typeof SET_SHOW_FILTERS };
-type SetIsOrgRZD = { type: typeof SET_IS_ORG_RZD };
-
-// action creators
-export const setOrgListOSK = (orgListOSK: object): SetOrgListOSKACType => ({type: SET_ORG_LIST_OSK, orgListOSK});
-export const setOrgListRZD = (orgListRZD: object): SetOrgListRZDACType => ({type: SET_ORG_LIST_RZD, orgListRZD});
-export const setPeriod = (per: string): SetPeriodACType => ({type: SET_PERIOD, per});
-export const setOrgOid = (oid: string): SetOrgOidACType => ({type: SET_ORG_OID, oid});
-export const setOrgName = (oid: string): SetOrgNameACType => ({type: SET_ORG_NAME, oid});
-export const setFiltersDefault = (): SetFiltersDefaultACType => ({type: SET_FILTERS_DEFAULT});
-export const setShowFilters = (): SetShowFiltersACType => ({type: SET_SHOW_FILTERS});
-export const setIsOrgRZD = (): SetIsOrgRZD => ({type: SET_IS_ORG_RZD});
-
-export const requestOrg = (): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
-  const response = await filtersAPI.getOrg();
-  dispatch(setOrgListOSK(PipeOrgListOSK(response[0].data)));
-  dispatch(setOrgListRZD(PipeOrgListRZD(response[1].data)));
-};
-export const requestWidgetsFromFilters = (
-  oid: string, period: string, periodType: string, isOrgRZD: boolean
-): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
-  dispatch(requestWidgets(oid, period, periodType, isOrgRZD));
-  dispatch(setOrgName(oid))
-};
-export const requestSetFiltersDefault = (): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
-  dispatch(requestWidgets(defaultFilters.orgOid, defaultFilters.period, defaultFilters.periodType, defaultFilters.isOrgRZD));
-  dispatch(setFiltersDefault());
 };
 
 export default filtersReducer;

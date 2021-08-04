@@ -4,23 +4,34 @@ import {Preloader} from '../Common/Preloader/Preloader';
 import MenuTreeList from './MenuTreeList/MenuTreeList';
 import {Button} from '@material-ui/core';
 import {FetchError} from '../Common/FetchError/FetchError';
-import {OrgListOSKType, OrgListRZDType, PeriodListType} from '../../Types/Types';
+import {
+  OrgListOSKType,
+  OrgListRZDType,
+  PeriodListType
+} from '../../Types/Types';
 import {RootStateType} from "../../Redux/store";
 import {
   selectAltOrgListOSK,
   selectIsFetchingFilters,
-  selectIsFetchingWidgets, selectIsOrgRZD,
+  selectIsFetchingWidgets,
+  selectIsOrgRZD,
   selectOrgListOSK,
-  selectOrgListRZD, selectOrgOid, selectPeriod, selectPeriodType, selectPerList, selectShowFilters
+  selectOrgListRZD,
+  selectOrgOid,
+  selectPeriod,
+  selectPeriodType,
+  selectPerList,
+  selectShowFilters
 } from "../../Redux/selectors";
 import {connect} from "react-redux";
 import {
   requestOrg,
   requestSetFiltersDefault,
-  requestWidgetsFromFilters, setIsOrgRZD,
+  requestWidgetsFromFilters,
+  setIsOrgRZD,
   setOrgOid,
   setPeriod
-} from "../../Redux/filters-reducer";
+} from "../../Redux/filters";
 
 type MapStatePropsType = {
   orgListOSK: OrgListOSKType
@@ -34,7 +45,7 @@ type MapStatePropsType = {
   periodType: string
   showFilters: boolean
   isOrgRZD: boolean
-}
+};
 
 type MapDispatchPropsType = {
   requestOrg: () => void
@@ -43,9 +54,9 @@ type MapDispatchPropsType = {
   setOrgOid: (oid: string) => void
   requestSetFiltersDefault: () => void
   setIsOrgRZD: () => void
-}
+};
 
-type PropsType = MapStatePropsType & MapDispatchPropsType
+type PropsType = MapStatePropsType & MapDispatchPropsType;
 
 const Filters = ({
                    orgListOSK, altOrgListOSK, orgListRZD, isFetchingFilters, isFetchingWidgets, orgOid,

@@ -17,7 +17,6 @@ import {
   SET_TOPS
 } from './action-types'
 
-// action creators types
 type SetKPKACType = { type: typeof SET_KPK, kpk: object };
 type SetKPKChildACType = { type: typeof SET_KPK_CHILD, kpkChild: object };
 type SetSCACType = { type: typeof SET_SC, sc: object[] };
@@ -29,7 +28,6 @@ type SetIsFetchingWidgetsStartedACType = { type: typeof SET_IS_FETCHING_WIDGETS_
 type SetIsFetchingWidgetsEndedACType = { type: typeof SET_IS_FETCHING_WIDGETS_ENDED };
 type RemoveServicesChildACType = { type: typeof REMOVE_SERVICES_CHILD };
 
-// action creators
 const setKPK = (kpk: KPKType): SetKPKACType => ({type: SET_KPK, kpk});
 const setKPKChild = (kpkChild: KPKType): SetKPKChildACType => ({type: SET_KPK_CHILD, kpkChild});
 const setSC = (sc: Array<GraphLineType>): SetSCACType => ({type: SET_SC, sc});
@@ -45,7 +43,6 @@ const setIsFetchingWidgetsEnded = (): SetIsFetchingWidgetsEndedACType => ({type:
 
 export const removeServicesChild = (): RemoveServicesChildACType => ({type: REMOVE_SERVICES_CHILD});
 
-// thunks
 export const requestWidgets = (
   oid: string, period: string, periodType: string, isOrgRZD: boolean, numSC: number[] = [1, 2, 3], numTodays: number[] = [1, 2, 3], numTops: number[] = [1, 2]
 ): ThunkAction<void, RootStateType, unknown, AnyAction> => async (dispatch) => {

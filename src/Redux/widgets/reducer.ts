@@ -126,5 +126,4 @@ const widgetsReducer = (state = initialStateWidgets, action: ActionsWidgetsType)
   return handlerWidgets ? handlerWidgets(state, action) : state;
 };
 
-
 export default widgetsReducer;
