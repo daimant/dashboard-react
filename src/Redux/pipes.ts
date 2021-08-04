@@ -152,6 +152,6 @@ export const PipeOrgListRZD = (orgListRZD: Array<OrgListRZDType>) => ({
     name: 'ОАО РЖД',
     children: orgListRZD.map(org => ({name: org.name, oid: `${org.oid}`, children: []}))
   },
-  orgMapListRZD: new Map(orgListRZD.map(org => [`${org.oid}`, org.name]))
+  orgMapListRZD: new Map(orgListRZD.map(org => [`${org.oid}`, org.name])).set('0', 'ОАО РЖД')
 });
 
