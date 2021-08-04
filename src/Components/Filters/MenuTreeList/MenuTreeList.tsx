@@ -28,7 +28,7 @@ type RenderTreePropsType = {
   handleExpand: (event: ChangeEvent<{}>, oid: string) => void
 }
 const renderTree = ({nodes, handleSelect, handleExpand}: RenderTreePropsType) => (
-  <TreeItem key={nodes.oid} nodeId={nodes.oid} label={nodes.name}
+  <TreeItem key={`${nodes.oid}${nodes.name}`} nodeId={nodes.oid} label={nodes.name}
             onLabelClick={(event) => {
               handleSelect(event, nodes.oid)
             }}
