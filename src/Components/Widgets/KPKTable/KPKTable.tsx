@@ -14,7 +14,7 @@ import {KPKType} from '../../../Types/Types';
 import {FetchError} from '../../Common/FetchError/FetchError';
 import Tooltip from '@material-ui/core/Tooltip';
 import {withStyles, Theme, makeStyles} from '@material-ui/core/styles';
-import cn from 'classnames'
+import cn from 'classnames';
 
 type PropsType = {
   orgOid: string
@@ -54,7 +54,7 @@ const CheckedValueKPK = ({hidden, requestSetHiddenUnusedKPK}: CheckedValueKPKTyp
             className={classesMUI.toggle}
           />}
         labelPlacement='start'
-        label={<span className={`${classes.textAroundSwitcher} ${classes.tableHead}`}>Все услуги / Услуги с ЗНО</span>}
+        label={<span className={cn(classes.textAroundSwitcher, classes.tableHead)}>Все услуги / Услуги с ЗНО</span>}
       />
     }</span>
   )
