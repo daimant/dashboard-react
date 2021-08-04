@@ -5,7 +5,7 @@ const instance = axios.create({
   baseURL: modeProd ? 'http://10.248.40.236:7755/api/' : 'http://localhost:4000/',
 });
 type GetWidgetsType = {
-  oid: string
+  orgOid: string
   period: string
   periodType: string
   numSC: number[]
@@ -16,9 +16,9 @@ type GetWidgetsType = {
 }
 
 const apiWidgetsProd = {
-  getWidgets: ({oid, period, periodType, serviceOid, numSC, numTodays, numTops, isOrgRZD}: GetWidgetsType) => {
+  getWidgets: ({orgOid, period, periodType, serviceOid, numSC, numTodays, numTops, isOrgRZD}: GetWidgetsType) => {
     const payload = {
-      'org_oid': Number(oid),
+      'org_oid': Number(orgOid),
       'srv_oid': serviceOid,
       'period': period,
       'period_type': periodType,
@@ -38,7 +38,7 @@ const apiWidgetsProd = {
   }
 };
 const apiWidgetsDev = {
-  getWidgets: ({oid, period, periodType, serviceOid, numSC, numTodays, numTops, isOrgRZD}: GetWidgetsType) => {
+  getWidgets: ({orgOid, period, periodType, serviceOid, numSC, numTodays, numTops, isOrgRZD}: GetWidgetsType) => {
     return Promise.all<any>([
       ...numSC.map(num => instance.get(`sc/${num}`).catch(() => ({}))),
       ...numTodays.map(num => instance.get(`today/${num}`).catch(() => ({}))),

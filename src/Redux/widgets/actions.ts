@@ -44,12 +44,12 @@ const setIsFetchingWidgetsEnded = (): SetIsFetchingWidgetsEndedACType => ({type:
 export const removeServicesChild = (): RemoveServicesChildACType => ({type: REMOVE_SERVICES_CHILD});
 
 export const requestWidgets = (
-  oid: string, period: string, periodType: string, serviceOid: number, isOrgRZD: boolean, numSC: number[] = [1, 2, 3],
+  orgOid: string, period: string, periodType: string, serviceOid: number, isOrgRZD: boolean, numSC: number[] = [1, 2, 3],
   numTodays: number[] = [1, 2, 3], numTops: number[] = [1, 2]
 ): ThunkAction<void, RootStateType, unknown, AnyAction> => async (dispatch) => {
   dispatch(setIsFetchingWidgetsStarted());
 
-  const response = await widgetsAPI.getWidgets({serviceOid, oid, period, periodType, numSC, numTodays, numTops, isOrgRZD});
+  const response = await widgetsAPI.getWidgets({serviceOid, orgOid, period, periodType, numSC, numTodays, numTops, isOrgRZD});
   dispatch(setSC(PipeGraphLine(response.splice(0, numSC.length))));
   dispatch(setTodays(PipeTodays(response.splice(0, numTodays.length))));
   dispatch(setTops(PipeGraphArea(response.splice(0, numTops.length))));
@@ -59,12 +59,12 @@ export const requestWidgets = (
 };
 
 export const requestServicesChild = (
-  oid: string, period: string, periodType: string, serviceOid: number, isOrgRZD: boolean, numSC: number[] = [1, 2, 3],
+  orgOid: string, period: string, periodType: string, serviceOid: number, isOrgRZD: boolean, numSC: number[] = [1, 2, 3],
   numTodays: number[] = [1, 2, 3]
 ): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
   dispatch(setIsFetchingWidgetsStarted());
 
-  const response = await widgetsAPI.getWidgets({oid, period, periodType, serviceOid, numSC, isOrgRZD, numTodays, numTops: []});
+  const response = await widgetsAPI.getWidgets({orgOid, period, periodType, serviceOid, numSC, isOrgRZD, numTodays, numTops: []});
   dispatch(setSCChild(PipeGraphLine(response.splice(0, numSC.length))));
   dispatch(setTodaysChild(PipeTodays(response.splice(0, numTodays.length))));
   dispatch(setKPKChild(PipeKPK(response.pop())));
