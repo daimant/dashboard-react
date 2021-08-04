@@ -36,10 +36,12 @@ type MapStatePropsType = {
   isFetchingFilters: boolean
   isOrgRZD: boolean
 }
+
 type MapDispatchPropsType = {
   setShowFilters: () => void
 }
-type PropsType = MapStatePropsType & MapDispatchPropsType
+
+type PropsType = MapStatePropsType & MapDispatchPropsType;
 
 const Navbar = ({
                   setShowFilters, orgOid, period, periodType, orgMapListOSK, orgMapListRZD, periodNameMapList,
@@ -124,8 +126,10 @@ const mapState = (state: RootStateType) => ({
   isOrgRZD: selectIsOrgRZD(state)
 });
 
-export default connect<MapStatePropsType, MapDispatchPropsType, {}, RootStateType>(mapState, {
+const mapDispatch = {
   setShowFilters
-})(Navbar);
+};
+
+export default connect<MapStatePropsType, MapDispatchPropsType, {}, RootStateType>(mapState, mapDispatch)(Navbar);
 
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './App.module.scss';
-import WidgetsContainer from './Components/Widgets/WidgetsContainer';
-import FiltersContainer from './Components/Filters/FiltersContainer';
+import Widgets from './Components/Widgets/Widgets';
+import Filters from './Components/Filters/Filters';
 import Navbar from './Components/Navbar/Navbar';
 
 function App() {
@@ -9,9 +9,9 @@ function App() {
     <div className={classes.container}>
       <header>
         <Navbar/>
-        <FiltersContainer/>
+        <Filters/>
       </header>
-      <WidgetsContainer/>
+      <Widgets/>
     </div>
   );
 }

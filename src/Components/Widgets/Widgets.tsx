@@ -1,13 +1,38 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import classes from './Widgets.module.scss';
 import KPKTable from './KPKTable/KPKTable';
 import GraphLine from './GraphLine/GraphLine';
 import {Preloader} from '../Common/Preloader/Preloader';
 import CircularBar from './CircularBar/CircularBar';
-import {GraphAreaType, GraphLineType, KPKType, TodaysType} from '../../Types/Types';
+import {
+  GraphAreaType,
+  GraphLineType,
+  KPKType,
+  TodaysType
+} from '../../Types/Types';
 import GraphArea from './GraphArea/GraphArea';
+import {RootStateType} from "../../Redux/store";
+import {
+  selectIsFetchingWidgets,
+  selectIsOrgRZD,
+  selectKPK,
+  selectKPKChild,
+  selectOrgOid,
+  selectPeriod,
+  selectPeriodType,
+  selectSC,
+  selectSCChild,
+  selectTodays,
+  selectTodaysChild, selectTops
+} from "../../Redux/selectors";
+import {connect} from "react-redux";
+import {
+  removeServicesChild,
+  requestServicesChild,
+  requestWidgets
+} from "../../Redux/widgets";
 
-type PropsType = {
+type MapStatePropsType = {
   kpk: KPKType
   kpkChild: KPKType
   sc: Array<GraphLineType>
@@ -20,15 +45,25 @@ type PropsType = {
   period: string
   periodType: string
   isOrgRZD: boolean
+}
 
+type MapDispatchPropsType = {
+  requestWidgets: (oid: string, period: string, periodType: string, isOrgRZD: boolean) => void
   requestServicesChild: (orgOid: string, period: string, periodType: string, serviceOid: number, isOrgRZD: boolean) => void
   removeServicesChild: () => void
 }
 
+type PropsType = MapStatePropsType & MapDispatchPropsType;
+
 const Widgets = ({
                    kpk, kpkChild, sc, scChild, todays, todaysChild, isFetchingWidgets, requestServicesChild,
-                   removeServicesChild, orgOid, period, periodType, tops, isOrgRZD
+                   removeServicesChild, orgOid, period, periodType, tops, isOrgRZD, requestWidgets
                  }: PropsType) => {
+
+  useEffect(() => {
+    requestWidgets(orgOid, period, periodType, isOrgRZD);
+  }, []);
+
   if (isFetchingWidgets) return <Preloader/>;
 
   return (
@@ -66,4 +101,28 @@ const Widgets = ({
   )
 };
 
-export default Widgets;
+const mapState = (state: RootStateType): MapStatePropsType => ({
+  kpk: selectKPK(state),
+  kpkChild: selectKPKChild(state),
+  sc: selectSC(state),
+  scChild: selectSCChild(state),
+  todays: selectTodays(state),
+  todaysChild: selectTodaysChild(state),
+  tops: selectTops(state),
+  isFetchingWidgets: selectIsFetchingWidgets(state),
+  orgOid: selectOrgOid(state),
+  period: selectPeriod(state),
+  periodType: selectPeriodType(state),
+  isOrgRZD: selectIsOrgRZD(state),
+  /*
+    inf: selectInf(state),
+  */
+});
+
+const mapDispatch = {
+  removeServicesChild,
+  requestServicesChild,
+  requestWidgets
+};
+
+export default connect<MapStatePropsType, MapDispatchPropsType, {}, RootStateType>(mapState, mapDispatch)(Widgets);
