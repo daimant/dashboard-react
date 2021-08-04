@@ -37,5 +37,7 @@ export const selectPeriod = (state: RootStateType) => state.filters.period;
 export const selectPeriodType = (state: RootStateType) => state.filters.periodType;
 export const selectShowFilters = (state: RootStateType) => state.filters.showFilters;
 export const selectPeriodNameMapList = (state: RootStateType) => state.filters.periodNameMapList;
+export const selectServiceOid = (state: RootStateType) => state.filters.serviceOid;
+
 // export const selectKTL = (state: any) => state.filters.ktl;
 // export const selectVal = (state: any) => state.filters.val;

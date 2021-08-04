@@ -64,13 +64,10 @@ const initialStateWidgets = {
       '100%'
     ]
   ],*/
-  /* srvOid: 0,*/
 };
 
 const actionHandlerWidgets: any = {
   [SET_KPK]: (state: InitialStateWidgetsType, action: ActionsWidgetsType) => {
-    if (!action.kpk.cols)
-      return state;
     const kpk = (action.kpk)
       ? action.kpk
       : {cols: ['Сервис_oid', 'Ошибка при загрузке'], rows: []};

@@ -16,11 +16,11 @@ import {
   selectIsFetchingWidgets,
   selectIsOrgRZD,
   selectOrgListOSK,
-  selectOrgListRZD,
+  selectOrgListRZD, selectOrgMapListOSK,
   selectOrgOid,
   selectPeriod,
   selectPeriodType,
-  selectPerList,
+  selectPerList, selectServiceOid,
   selectShowFilters
 } from "../../Redux/selectors";
 import {connect} from "react-redux";
@@ -36,6 +36,7 @@ import {
 type MapStatePropsType = {
   orgListOSK: OrgListOSKType
   altOrgListOSK: OrgListOSKType
+  orgMapListOSK: Map<string, string>
   orgListRZD: OrgListRZDType
   isFetchingFilters: boolean
   isFetchingWidgets: boolean
@@ -44,16 +45,17 @@ type MapStatePropsType = {
   period: string
   periodType: string
   showFilters: boolean
+  serviceOid: number
   isOrgRZD: boolean
 };
 
 type MapDispatchPropsType = {
   requestOrg: () => void
-  requestWidgetsFromFilters: (oid: string, period: string, periodType: string, isOrgRZD: boolean) => void
+  requestWidgetsFromFilters: (oid: string, period: string, periodType: string, serviceOid: number, isOrgRZD: boolean) => void
   setPeriod: (per: string) => void
   setOrgOid: (oid: string) => void
   requestSetFiltersDefault: () => void
-  setIsOrgRZD: () => void
+  setIsOrgRZD: (isOrgRZD: boolean) => void
 };
 
 type PropsType = MapStatePropsType & MapDispatchPropsType;
@@ -61,12 +63,15 @@ type PropsType = MapStatePropsType & MapDispatchPropsType;
 const Filters = ({
                    orgListOSK, altOrgListOSK, orgListRZD, isFetchingFilters, isFetchingWidgets, orgOid,
                    requestWidgetsFromFilters, setPeriod, setOrgOid, perList, period, periodType,
-                   requestSetFiltersDefault, showFilters, isOrgRZD, setIsOrgRZD, requestOrg /*ktl, val,*/
+                   requestSetFiltersDefault, showFilters, isOrgRZD, setIsOrgRZD, requestOrg, orgMapListOSK,
+                   serviceOid, /*ktl, val,*/
                  }: PropsType) => {
 
   useEffect(() => {
-    if (!orgListOSK.oid)
+    if (!orgListOSK.oid) {
       requestOrg()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!showFilters) return null;
@@ -74,11 +79,21 @@ const Filters = ({
 
   const acceptFilters = (type: string = 'def', selected: any = '') => {
     const [newPeriodType, newPeriod] = type === 'период' ? selected.split(':') : ['', ''];
+    let newIsOrgRZD = isOrgRZD;
+
+    if (type !== 'период') {
+      if ((newIsOrgRZD && orgMapListOSK.has(selected)) || (!newIsOrgRZD && !orgMapListOSK.has(selected))) {
+        setIsOrgRZD(newIsOrgRZD);
+        newIsOrgRZD = !newIsOrgRZD;
+        localStorage.setItem('isOrgRZD', `${newIsOrgRZD}`)
+      }
+    }
     requestWidgetsFromFilters(
       type === 'оргструктура' ? selected : orgOid,
       type === 'период' ? newPeriod : period,
       type === 'период' ? newPeriodType : periodType,
-      isOrgRZD
+      serviceOid,
+      newIsOrgRZD
     );
   };
 
@@ -119,6 +134,7 @@ const Filters = ({
 const mapState = (state: RootStateType) => ({
   orgListOSK: selectOrgListOSK(state),
   altOrgListOSK: selectAltOrgListOSK(state),
+  orgMapListOSK: selectOrgMapListOSK(state),
   orgListRZD: selectOrgListRZD(state),
   isFetchingFilters: selectIsFetchingFilters(state),
   isFetchingWidgets: selectIsFetchingWidgets(state),
@@ -127,6 +143,7 @@ const mapState = (state: RootStateType) => ({
   period: selectPeriod(state),
   periodType: selectPeriodType(state),
   showFilters: selectShowFilters(state),
+  serviceOid: selectServiceOid(state),
   isOrgRZD: selectIsOrgRZD(state)
   // ktl: selectKTL(state),
   // val: selectVal(state),

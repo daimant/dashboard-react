@@ -27,6 +27,7 @@ type ActionsFiltersType = {
   }
   oid: string
   per: string
+  isOrgRZD: boolean
 };
 
 type InitialStateFiltersType = typeof initialStateFilters;
@@ -124,6 +125,7 @@ export const defaultFilters = {
   period: `${new Date().getFullYear()}-${new Date().getMonth() - 1 < 10 ? `0${new Date().getMonth() + 1}` : new Date().getMonth() + 1}`,
   periodType: 'm',
   isOrgRZD: false,
+  serviceOid: 0,
 };
 
 const initialStateFilters = {
@@ -140,7 +142,8 @@ const initialStateFilters = {
   period: localStorage.getItem('period') || defaultFilters.period as string,
   periodType: localStorage.getItem('periodType') || defaultFilters.periodType as string,
   showFilters: localStorage.getItem('showFilters') === 'true' ? true : false as boolean,
-  isOrgRZD: false as boolean,
+  isOrgRZD: localStorage.getItem('isOrgRZD') === 'true' ? true : false as boolean,
+  serviceOid: Number(localStorage.getItem('serviceOid')) || defaultFilters.serviceOid as number,
   /*  ktl: {
       kaAtr: 'ka', // or mct
       ktlOid: '281586771165316',
@@ -168,26 +171,47 @@ const actionHandlerFilters: any = {
         orgMapListRZD: action.orgListRZD.orgMapListRZD,
         isFetchingFilters: false
       }
-      : {...state, isFetchingFilters: false},
+      : {
+        ...state,
+        isFetchingFilters: false
+      },
 
   [SET_PERIOD]: (state: InitialStateFiltersType, action: ActionsFiltersType) => {
     const [periodType, period] = action.per.split(':');
     if (periodType === 'root') return state;
     localStorage.setItem('periodType', periodType);
     localStorage.setItem('period', period);
-    return {...state, periodType, period};
+    return {
+      ...state,
+      periodType,
+      period
+    };
   },
 
   [SET_ORG_OID]: (state: InitialStateFiltersType, action: ActionsFiltersType) => {
     localStorage.setItem('orgOid', action.oid);
-    return action.oid ? {...state, orgOid: action.oid} : state;
+    return action.oid
+      ? {
+        ...state,
+        orgOid: action.oid
+      }
+      : state;
   },
 
   [SET_ORG_NAME]: (state: InitialStateFiltersType, action: ActionsFiltersType) => {
-    const newName = state.orgMapListOSK.get(action.oid);
-    if (newName !== undefined)
+    const newName = state[
+      state.orgMapListOSK.has(action.oid)
+        ? 'orgMapListOSK'
+        : 'orgMapListRZD'
+      ].get(action.oid);
+    if (newName !== undefined) {
       localStorage.setItem('orgName', newName);
-    return newName ? {...state, orgName: newName} : state;
+    }
+    return newName ? {
+        ...state,
+        orgName: newName
+      }
+      : state;
   },
 
   [SET_FILTERS_DEFAULT]: (state: InitialStateFiltersType) => {
@@ -195,22 +219,27 @@ const actionHandlerFilters: any = {
     localStorage.removeItem('periodType');
     localStorage.removeItem('period');
     localStorage.removeItem('orgName');
+    localStorage.removeItem('isOrgRZD');
     return {
       ...state,
       orgOid: defaultFilters.orgOid,
       period: defaultFilters.period,
-      periodType: defaultFilters.periodType
+      periodType: defaultFilters.periodType,
+      isOrgRZD: defaultFilters.isOrgRZD
     };
   },
 
   [SET_SHOW_FILTERS]: (state: InitialStateFiltersType) => {
     localStorage.setItem('showFilters', String(!state.showFilters));
-    return {...state, showFilters: !state.showFilters};
+    return {
+      ...state,
+      showFilters: !state.showFilters
+    };
   },
 
-  [SET_IS_ORG_RZD]: (state: InitialStateFiltersType) => ({
+  [SET_IS_ORG_RZD]: (state: InitialStateFiltersType, action: ActionsFiltersType) => ({
     ...state,
-    isOrgRZD: !state.isOrgRZD
+    isOrgRZD: !action.isOrgRZD
   })
 };
 

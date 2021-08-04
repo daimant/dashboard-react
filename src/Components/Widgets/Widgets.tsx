@@ -21,7 +21,7 @@ import {
   selectPeriod,
   selectPeriodType,
   selectSC,
-  selectSCChild,
+  selectSCChild, selectServiceOid,
   selectTodays,
   selectTodaysChild,
   selectTops
@@ -45,11 +45,12 @@ type MapStatePropsType = {
   orgOid: string
   period: string
   periodType: string
+  serviceOid: number
   isOrgRZD: boolean
 }
 
 type MapDispatchPropsType = {
-  requestWidgets: (oid: string, period: string, periodType: string, isOrgRZD: boolean) => void
+  requestWidgets: (orgOid: string, period: string, periodType: string, serviceOid: number, isOrgRZD: boolean) => void
   requestServicesChild: (orgOid: string, period: string, periodType: string, serviceOid: number, isOrgRZD: boolean) => void
   removeServicesChild: () => void
 }
@@ -58,11 +59,12 @@ type PropsType = MapStatePropsType & MapDispatchPropsType;
 
 const Widgets = ({
                    kpk, kpkChild, sc, scChild, todays, todaysChild, isFetchingWidgets, requestServicesChild,
-                   removeServicesChild, orgOid, period, periodType, tops, isOrgRZD, requestWidgets
+                   removeServicesChild, orgOid, period, periodType, tops, isOrgRZD, requestWidgets, serviceOid
                  }: PropsType) => {
 
   useEffect(() => {
-    requestWidgets(orgOid, period, periodType, isOrgRZD);
+    requestWidgets(orgOid, period, periodType, serviceOid, isOrgRZD);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (isFetchingWidgets) return <Preloader/>;
@@ -114,7 +116,8 @@ const mapState = (state: RootStateType): MapStatePropsType => ({
   orgOid: selectOrgOid(state),
   period: selectPeriod(state),
   periodType: selectPeriodType(state),
-  isOrgRZD: selectIsOrgRZD(state),
+  serviceOid: selectServiceOid(state),
+  isOrgRZD: selectIsOrgRZD(state)
   /*
     inf: selectInf(state),
   */

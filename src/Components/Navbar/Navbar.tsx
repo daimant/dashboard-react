@@ -63,10 +63,10 @@ const Navbar = ({
   const changeShowFilters = () => {
     setShowFilters();
   };
-  // console.log(orgMapListOSK,orgMapListRZD)
-  const shortNameOrg = (isOrgRZD ? orgMapListRZD : orgMapListOSK).has(orgOid)
+  const currMapList = isOrgRZD ? orgMapListRZD : orgMapListOSK;
+  const shortNameOrg = currMapList.has(orgOid)
     // @ts-ignore хз как ему это объяснить
-    ? (isOrgRZD ? orgMapListRZD : orgMapListOSK)
+    ? currMapList
       .get(orgOid)
       .replace(/Региональный центр сервиса/, 'РЦС')
       .replace(/Территориальное управление технической поддержки/, 'ТУТП')
