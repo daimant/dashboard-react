@@ -1,11 +1,16 @@
 // from filters reducer
 
-export type OrgListType = {
+export type OrgListOSKType = {
   oid: any
   name: string
   parent: any
   zno: number
-  children: Array<OrgListType>
+  children: Array<OrgListOSKType>
+};
+export type OrgListRZDType = {
+  oid: any
+  name: string
+  children: Array<OrgListRZDType>
 };
 export type PeriodListType = {
   name: string

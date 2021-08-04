@@ -4,11 +4,12 @@ import {Preloader} from '../Common/Preloader/Preloader';
 import MenuTreeList from './MenuTreeList/MenuTreeList';
 import {Button} from '@material-ui/core';
 import {FetchError} from '../Common/FetchError/FetchError';
-import {OrgListType, PeriodListType} from '../../Types/Types';
+import {OrgListOSKType, OrgListRZDType, PeriodListType} from '../../Types/Types';
 
 type PropsType = {
-  orgList: OrgListType
-  altOrgList: OrgListType
+  orgListOSK: OrgListOSKType
+  altOrgListOSK: OrgListOSKType
+  orgListRZD: OrgListRZDType
   isFetchingFilters: boolean
   isFetchingWidgets: boolean
   orgOid: string
@@ -16,16 +17,19 @@ type PropsType = {
   period: string
   periodType: string
   showFilters: boolean
+  isOrgRZD: boolean
 
-  requestWidgetsFromFilters: (oid: string, period: string, periodType: string) => void
+  requestWidgetsFromFilters: (oid: string, period: string, periodType: string, isOrgRZD: boolean) => void
   setPeriod: (per: string) => void
   setOrgOid: (oid: string) => void
   requestSetFiltersDefault: () => void
+  setIsOrgRZD: () => void
 }
 
 const Filters = ({
-                   orgList, altOrgList, isFetchingFilters, isFetchingWidgets, orgOid, requestWidgetsFromFilters,
-                   setPeriod, setOrgOid, perList, period, periodType, requestSetFiltersDefault, showFilters, /*ktl, val,*/
+                   orgListOSK, altOrgListOSK, orgListRZD, isFetchingFilters, isFetchingWidgets, orgOid,
+                   requestWidgetsFromFilters, setPeriod, setOrgOid, perList, period, periodType,
+                   requestSetFiltersDefault, showFilters, isOrgRZD, setIsOrgRZD /*ktl, val,*/
                  }: PropsType) => {
 
   if (!showFilters) return null;
@@ -36,16 +40,18 @@ const Filters = ({
     requestWidgetsFromFilters(
       type === 'оргструктура' ? selected : orgOid,
       type === 'период' ? newPeriod : period,
-      type === 'период' ? newPeriodType : periodType
+      type === 'период' ? newPeriodType : periodType,
+      isOrgRZD
     );
   };
 
   return (
     <div className={classes.filters}>
-      {(!orgList || !orgList.oid)
+      {(!orgListOSK || !orgListOSK.oid)
         ? <FetchError/>
-        : <><MenuTreeList treeList={orgList}
-                          altTreeList={altOrgList}
+        : <><MenuTreeList treeList={orgListOSK}
+                          altOrgListOSK={altOrgListOSK}
+                          orgListRZD={orgListRZD}
                           title={'оргструктура'}
                           setter={setOrgOid}
                           orgOid={orgOid}
@@ -55,7 +61,8 @@ const Filters = ({
                           isFetchingWidgets={isFetchingWidgets}
         />
           <MenuTreeList treeList={perList}
-                        altTreeList={{}}
+                        altOrgListOSK={{}}
+                        orgListRZD={{}}
                         title={'период'}
                         orgOid={orgOid}
                         setter={setPeriod}

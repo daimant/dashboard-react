@@ -2,18 +2,19 @@ import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import Filters from './Filters';
 import {
-  requestOrg, requestWidgetsFromFilters, requestSetFiltersDefault, setOrgOid, setPeriod
+  requestOrg, requestWidgetsFromFilters, requestSetFiltersDefault, setOrgOid, setPeriod, setIsOrgRZD
 } from '../../Redux/filters-reducer';
 import {
-  selectIsFetchingFilters, selectOrgList, selectOrgOid, selectPeriod, selectPeriodType, selectPerList,
-  selectShowFilters, selectAltOrgList, selectIsFetchingWidgets, /*selectVal, selectKTL,*/
+  selectIsFetchingFilters, selectOrgOid, selectPeriod, selectPeriodType, selectPerList,
+  selectShowFilters, selectIsFetchingWidgets, selectOrgListRZD, selectAltOrgListOSK, selectOrgListOSK, selectIsOrgRZD, /*selectVal, selectKTL,*/
 } from '../../Redux/selectors';
 import {RootStateType} from '../../Redux/store';
-import {OrgListType, PeriodListType} from '../../Types/Types';
+import {OrgListOSKType, OrgListRZDType, PeriodListType} from '../../Types/Types';
 
 type MapStatePropsType = {
-  orgList: OrgListType
-  altOrgList: OrgListType
+  orgListOSK: OrgListOSKType
+  altOrgListOSK: OrgListOSKType
+  orgListRZD: OrgListRZDType
   isFetchingFilters: boolean
   isFetchingWidgets: boolean
   orgOid: string
@@ -21,31 +22,34 @@ type MapStatePropsType = {
   period: string
   periodType: string
   showFilters: boolean
+  isOrgRZD: boolean
 }
 type MapDispatchPropsType = {
   requestOrg: () => void
-  requestWidgetsFromFilters: (oid: string, period: string, periodType: string) => void
+  requestWidgetsFromFilters: (oid: string, period: string, periodType: string, isOrgRZD: boolean) => void
   setPeriod: (per: string) => void
   setOrgOid: (oid: string) => void
   requestSetFiltersDefault: () => void
+  setIsOrgRZD: () => void
 }
 type PropsType = MapStatePropsType & MapDispatchPropsType
 
 const FiltersContainer = ({
-                            orgList, altOrgList, isFetchingFilters, isFetchingWidgets, orgOid, perList, period,
-                            periodType, showFilters, requestOrg, requestWidgetsFromFilters, setPeriod, setOrgOid,
-                            requestSetFiltersDefault
+                            orgListOSK, altOrgListOSK, orgListRZD, isFetchingFilters, isFetchingWidgets, orgOid,
+                            perList, period, periodType, showFilters, requestOrg, requestWidgetsFromFilters, setPeriod,
+                            setOrgOid, requestSetFiltersDefault, isOrgRZD, setIsOrgRZD
                           }: PropsType) => {
   useEffect(() => {
-    if (!orgList.oid)
+    if (!orgListOSK.oid)
       requestOrg()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <Filters
-      orgList={orgList}
-      altOrgList={altOrgList}
+      orgListOSK={orgListOSK}
+      altOrgListOSK={altOrgListOSK}
+      orgListRZD={orgListRZD}
       isFetchingFilters={isFetchingFilters}
       isFetchingWidgets={isFetchingWidgets}
       orgOid={orgOid}
@@ -53,6 +57,7 @@ const FiltersContainer = ({
       period={period}
       periodType={periodType}
       showFilters={showFilters}
+      isOrgRZD={isOrgRZD}
       // ktl={ktl}
       // val={val}
 
@@ -60,13 +65,15 @@ const FiltersContainer = ({
       setPeriod={setPeriod}
       setOrgOid={setOrgOid}
       requestSetFiltersDefault={requestSetFiltersDefault}
+      setIsOrgRZD={setIsOrgRZD}
     />
   )
 };
 
 const mapState = (state: RootStateType) => ({
-  orgList: selectOrgList(state),
-  altOrgList: selectAltOrgList(state),
+  orgListOSK: selectOrgListOSK(state),
+  altOrgListOSK: selectAltOrgListOSK(state),
+  orgListRZD: selectOrgListRZD(state),
   isFetchingFilters: selectIsFetchingFilters(state),
   isFetchingWidgets: selectIsFetchingWidgets(state),
   orgOid: selectOrgOid(state),
@@ -74,10 +81,11 @@ const mapState = (state: RootStateType) => ({
   period: selectPeriod(state),
   periodType: selectPeriodType(state),
   showFilters: selectShowFilters(state),
+  isOrgRZD: selectIsOrgRZD(state)
   // ktl: selectKTL(state),
   // val: selectVal(state),
 });
 
 export default connect<MapStatePropsType, MapDispatchPropsType, {}, RootStateType>(mapState, {
-  requestOrg, requestWidgetsFromFilters, setPeriod, setOrgOid, requestSetFiltersDefault
+  requestOrg, requestWidgetsFromFilters, setPeriod, setOrgOid, requestSetFiltersDefault, setIsOrgRZD
 })(FiltersContainer);

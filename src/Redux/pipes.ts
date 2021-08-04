@@ -2,8 +2,8 @@ import {
   GraphLineType,
   RawKPKType,
   TodaysType,
-  OrgListType,
-  RawGraphAreaType,
+  OrgListOSKType,
+  RawGraphAreaType, OrgListRZDType,
 } from '../Types/Types';
 
 // Widgets
@@ -113,36 +113,45 @@ export const PipeTodays = (todays: Array<TodaysType>) => todays.map(today => {
 });
 
 // filters
-export const PipeOrgList = (orgList: Array<OrgListType>) => {
-  if (!orgList || !orgList[0] || orgList[0]?.oid !== 281586771165316) return {};
+export const PipeOrgListOSK = (orgListOSK: Array<OrgListOSKType>) => {
+  if (!orgListOSK || !orgListOSK[0] || orgListOSK[0]?.oid !== 281586771165316) return {};
 
-  const orgPosition = new Map(orgList.map((el: any, i: any) => [el['oid'], i]));
-  const orgMapList = new Map([['281586771165316', 'ООО ОСК ИнфоТранс']]);
+  const orgPosition = new Map(orgListOSK.map((el: any, i: any) => [el['oid'], i]));
+  const orgMapListOSK = new Map([['281586771165316', 'ООО ОСК ИнфоТранс']]);
 
-  for (let i = orgList.length - 1; i > 0; i--) {
-    orgMapList.set(orgList[i].oid + '', orgList[i].name);
-    const parentInList = orgPosition.get(orgList[i].parent);
-    if (!orgList[parentInList]['children']) orgList[parentInList]['children'] = [];
+  for (let i = orgListOSK.length - 1; i > 0; i--) {
+    orgMapListOSK.set(orgListOSK[i].oid + '', orgListOSK[i].name);
+    const parentInList = orgPosition.get(orgListOSK[i].parent);
+    if (!orgListOSK[parentInList]['children']) orgListOSK[parentInList]['children'] = [];
     // @ts-ignore
-    orgList[parentInList]['children'] = [...orgList[parentInList]['children'], orgList[i]]
+    orgListOSK[parentInList]['children'] = [...orgListOSK[parentInList]['children'], orgListOSK[i]]
   }
 
-  for (let org of orgList) {
+  for (let org of orgListOSK) {
     org.oid += '';
     org.parent += '';
   }
 
-  for (let org of orgList) {
+  for (let org of orgListOSK) {
     if (org?.children?.length)
       org.children.sort((a: any, b: any) => a.name > b.name ? 1 : -1)
   }
 
-  const altOrgList = JSON.parse(JSON.stringify(orgList[0]));
+  const altOrgListOSK = JSON.parse(JSON.stringify(orgListOSK[0]));
 
-  for (let i = altOrgList.children.length - 1; altOrgList.name && i >= 0; i--) {
-    if (!altOrgList.children[i].zno)
-      altOrgList.children.splice(i, 1);
+  for (let i = altOrgListOSK.children.length - 1; altOrgListOSK.name && i >= 0; i--) {
+    if (!altOrgListOSK.children[i].zno)
+      altOrgListOSK.children.splice(i, 1);
   }
 
-  return {orgList, altOrgList, orgMapList};
+  return {orgListOSK, altOrgListOSK, orgMapListOSK};
 };
+export const PipeOrgListRZD = (orgListRZD: Array<OrgListRZDType>) => ({
+  orgListRZD: {
+    oid: '0',
+    name: 'ОАО РЖД',
+    children: orgListRZD.map(org => ({name: org.name, oid: `${org.oid}`, children: []}))
+  },
+  orgMapListRZD: new Map(orgListRZD.map(org => [`${org.oid}`, org.name]))
+});
+

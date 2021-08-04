@@ -8,11 +8,12 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import {OrgListType, PeriodListType} from '../../../Types/Types';
+import {OrgListOSKType, OrgListRZDType, PeriodListType} from '../../../Types/Types';
 
 type PropsType = {
-  treeList: OrgListType | PeriodListType
-  altTreeList: OrgListType | {}
+  treeList: OrgListOSKType | PeriodListType
+  altOrgListOSK: OrgListOSKType | {}
+  orgListRZD: OrgListRZDType | {}
   title: string
   orgOid: string
   period: string
@@ -23,7 +24,7 @@ type PropsType = {
   acceptFilters: (type: string, selected: any) => void
 }
 type RenderTreePropsType = {
-  nodes: OrgListType | PeriodListType,
+  nodes: OrgListOSKType | PeriodListType | OrgListRZDType,
   handleSelect: (event: ChangeEvent<{}>, oid: string) => void,
   handleExpand: (event: ChangeEvent<{}>, oid: string) => void
 }
@@ -42,166 +43,12 @@ const renderTree = ({nodes, handleSelect, handleExpand}: RenderTreePropsType) =>
     }
   </TreeItem>
 );
-const TEMPTreeListRZD = {
-  children: [
-    {
-      children: [],
-      name: 'Дальневосточная ж.д.',
-      oid: '281586771165001',
-      parent: '281586771165315',
-      zno: 1,
-    },
-    {
-      children: [],
-      name: 'Забайкальская ж.д.',
-      oid: '281586771165002',
-      parent: '281586771165315',
-      zno: 1,
-    },
-    {
-      children: [],
-      name: 'Октябрьская ж.д.',
-      oid: '281586771165003',
-      parent: '281586771165315',
-      zno: 1,
-    },
-    {
-      children: [],
-      name: 'Дальневосточная ж.д.',
-      oid: '281586771165001',
-      parent: '281586771165315',
-      zno: 1,
-    },
-    {
-      children: [],
-      name: 'Забайкальская ж.д.',
-      oid: '281586771165002',
-      parent: '281586771165315',
-      zno: 1,
-    },
-    {
-      children: [],
-      name: 'Октябрьская ж.д.',
-      oid: '281586771165003',
-      parent: '281586771165315',
-      zno: 1,
-    },
-    {
-      children: [],
-      name: 'Дальневосточная ж.д.',
-      oid: '281586771165001',
-      parent: '281586771165315',
-      zno: 1,
-    },
-    {
-      children: [],
-      name: 'Забайкальская ж.д.',
-      oid: '281586771165002',
-      parent: '281586771165315',
-      zno: 1,
-    },
-    {
-      children: [],
-      name: 'Октябрьская ж.д.',
-      oid: '281586771165003',
-      parent: '281586771165315',
-      zno: 1,
-    },
-    {
-      children: [],
-      name: 'Дальневосточная ж.д.',
-      oid: '281586771165001',
-      parent: '281586771165315',
-      zno: 1,
-    },
-    {
-      children: [],
-      name: 'Забайкальская ж.д.',
-      oid: '281586771165002',
-      parent: '281586771165315',
-      zno: 1,
-    },
-    {
-      children: [],
-      name: 'Октябрьская ж.д.',
-      oid: '281586771165003',
-      parent: '281586771165315',
-      zno: 1,
-    },
-    {
-      children: [],
-      name: 'Дальневосточная ж.д.',
-      oid: '281586771165001',
-      parent: '281586771165315',
-      zno: 1,
-    },
-    {
-      children: [],
-      name: 'Забайкальская ж.д.',
-      oid: '281586771165002',
-      parent: '281586771165315',
-      zno: 1,
-    },
-    {
-      children: [],
-      name: 'Октябрьская ж.д.',
-      oid: '281586771165003',
-      parent: '281586771165315',
-      zno: 1,
-    },
-    {
-      children: [],
-      name: 'Дальневосточная ж.д.',
-      oid: '281586771165001',
-      parent: '281586771165315',
-      zno: 1,
-    },
-    {
-      children: [],
-      name: 'Забайкальская ж.д.',
-      oid: '281586771165002',
-      parent: '281586771165315',
-      zno: 1,
-    },
-    {
-      children: [],
-      name: 'Октябрьская ж.д.',
-      oid: '281586771165003',
-      parent: '281586771165315',
-      zno: 1,
-    },
-    {
-      children: [],
-      name: 'Дальневосточная ж.д.',
-      oid: '281586771165001',
-      parent: '281586771165315',
-      zno: 1,
-    },
-    {
-      children: [],
-      name: 'Забайкальская ж.д.',
-      oid: '281586771165002',
-      parent: '281586771165315',
-      zno: 1,
-    },
-    {
-      children: [],
-      name: 'Октябрьская ж.д.',
-      oid: '281586771165003',
-      parent: '281586771165315',
-      zno: 1,
-    }
-  ],
-  name: 'ОАО РЖД',
-  oid: '281586771165315',
-  parent: '0',
-  zno: 1,
-};
 
 const MenuTreeList = ({
-                        treeList, title, orgOid, period, periodType, setter, acceptFilters, altTreeList, isFetchingWidgets
+                        treeList, altOrgListOSK, orgListRZD, title, orgOid, period, periodType, setter, acceptFilters,
+                        isFetchingWidgets
                       }: PropsType) => {
-  const [expanded, setExpanded] = useState<string[]>(title === 'период' ? [treeList.oid, ...treeList.children.map((org: any) => org.oid)] : [treeList.oid]);
+  const [expanded, setExpanded] = useState<string[]>(title === 'период' ? [treeList.oid, ...treeList.children.map((org: any) => org.oid)] : [treeList.oid, '0']);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [checkedInfotransRZD, setCheckedInfotransRZD] = useState(localStorage.getItem('checkedInfotransRZD') === '1' || false);
   const [checkedOSKZNO, setCheckedOSKZNO] = useState(localStorage.getItem('checkedOrgZNO') === '1' || false);
@@ -313,9 +160,9 @@ const MenuTreeList = ({
           expanded={expanded}
         >
           {title === 'оргструктура'
-            ? (checkedInfotransRZD
-                ? renderTree({nodes: TEMPTreeListRZD, handleSelect, handleExpand})// @ts-ignore хз как чинить
-                : renderTree({nodes: (checkedOSKZNO ? altTreeList : treeList), handleSelect, handleExpand})
+            ? (checkedInfotransRZD// @ts-ignore хз как чинить
+                ? renderTree({nodes: orgListRZD, handleSelect, handleExpand})// @ts-ignore хз как чинить
+                : renderTree({nodes: (checkedOSKZNO ? altOrgListOSK : treeList), handleSelect, handleExpand})
             )
             : renderTree({nodes: treeList, handleSelect, handleExpand})}
         </TreeView>

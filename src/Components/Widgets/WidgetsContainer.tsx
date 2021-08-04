@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {requestServicesChild, removeServicesChild, requestWidgets} from '../../Redux/widgets-reducer';
+import {requestServicesChild, removeServicesChild, requestWidgets} from '../../Redux/widgets';
 import {
   selectIsFetchingWidgets, selectKPK, selectOrgOid, selectPeriod, selectPeriodType, selectTodays, selectKPKChild,
-  selectTops, selectSC, selectSCChild, selectTodaysChild, /*selectInf, */
+  selectTops, selectSC, selectSCChild, selectTodaysChild, selectIsOrgRZD, /*selectInf, */
 } from '../../Redux/selectors';
 import Widgets from './Widgets';
 import {RootStateType} from '../../Redux/store';
@@ -21,21 +21,22 @@ type MapStatePropsType = {
   orgOid: string
   period: string
   periodType: string
+  isOrgRZD: boolean
 }
 type MapDispatchPropsType = {
-  requestWidgets: (oid: string, period: string, periodType: string) => void
-  requestServicesChild: (orgOid: string, period: string, periodType: string, serviceOid: number) => void
+  requestWidgets: (oid: string, period: string, periodType: string, isOrgRZD: boolean) => void
+  requestServicesChild: (orgOid: string, period: string, periodType: string, serviceOid: number, isOrgRZD: boolean) => void
   removeServicesChild: () => void
 }
 type PropsType = MapStatePropsType & MapDispatchPropsType
 
 const WidgetsContainer = ({
                             kpk, kpkChild, sc, scChild, todays, todaysChild, tops, isFetchingWidgets, orgOid, period,
-                            periodType, requestWidgets, requestServicesChild, removeServicesChild
+                            periodType, requestWidgets, requestServicesChild, removeServicesChild, isOrgRZD
                           }: PropsType) => {
 
   useEffect(() => {
-    requestWidgets(orgOid, period, periodType);
+    requestWidgets(orgOid, period, periodType, isOrgRZD);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -52,6 +53,7 @@ const WidgetsContainer = ({
       orgOid={orgOid}
       period={period}
       periodType={periodType}
+      isOrgRZD={isOrgRZD}
       /*
               inf={inf}
       */
@@ -74,6 +76,7 @@ const mapState = (state: RootStateType): MapStatePropsType => ({
   orgOid: selectOrgOid(state),
   period: selectPeriod(state),
   periodType: selectPeriodType(state),
+  isOrgRZD: selectIsOrgRZD(state),
   /*
     inf: selectInf(state),
   */

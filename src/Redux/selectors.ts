@@ -8,6 +8,8 @@ export const selectSCChild = (state: RootStateType) => state.widgets.scChild;
 export const selectTodays = (state: RootStateType) => state.widgets.todays;
 export const selectTodaysChild = (state: RootStateType) => state.widgets.todaysChild;
 export const selectTops = (state: RootStateType) => state.widgets.tops;
+export const selectIsFetchingWidgets = (state: RootStateType) => state.widgets.isFetchingWidgets;
+export const selectIsOrgRZD = (state: RootStateType) => state.filters.isOrgRZD;
 /*
 export const selectInf = (state: any) => {
   const {inf} = state.widgets;
@@ -21,18 +23,19 @@ export const selectInf = (state: any) => {
   return parsedInf;
 };
 */
-export const selectIsFetchingWidgets = (state: RootStateType) => state.widgets.isFetchingWidgets;
 
 //filters
-export const selectOrgList = (state: RootStateType) => state.filters.orgList;
+export const selectOrgListOSK = (state: RootStateType) => state.filters.orgListOSK;
+export const selectAltOrgListOSK = (state: RootStateType) => state.filters.altOrgListOSK;
+export const selectOrgMapListOSK = (state: RootStateType) => state.filters.orgMapListOSK;
+export const selectOrgListRZD = (state: RootStateType) => state.filters.orgListRZD;
+export const selectOrgMapListRZD = (state: RootStateType) => state.filters.orgMapListRZD;
 export const selectIsFetchingFilters = (state: RootStateType) => state.filters.isFetchingFilters;
 export const selectOrgOid = (state: RootStateType) => state.filters.orgOid;
-// export const selectKTL = (state: any) => state.filters.ktl;
-// export const selectVal = (state: any) => state.filters.val;
 export const selectPerList = (state: RootStateType) => state.filters.perList;
 export const selectPeriod = (state: RootStateType) => state.filters.period;
 export const selectPeriodType = (state: RootStateType) => state.filters.periodType;
 export const selectShowFilters = (state: RootStateType) => state.filters.showFilters;
-export const selectOrgMapList = (state: RootStateType) => state.filters.orgMapList;
 export const selectPeriodNameMapList = (state: RootStateType) => state.filters.periodNameMapList;
-export const selectAltOrgList = (state: RootStateType) => state.filters.altOrgList;
+// export const selectKTL = (state: any) => state.filters.ktl;
+// export const selectVal = (state: any) => state.filters.val;

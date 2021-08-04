@@ -19,22 +19,28 @@ type PropsType = {
   orgOid: string
   period: string
   periodType: string
+  isOrgRZD: boolean
 
-  requestServicesChild: (orgOid: string, period: string, periodType: string, serviceOid: number) => void
+  requestServicesChild: (orgOid: string, period: string, periodType: string, serviceOid: number, isOrgRZD: boolean) => void
   removeServicesChild: () => void
 }
 
 const Widgets = ({
                    kpk, kpkChild, sc, scChild, todays, todaysChild, isFetchingWidgets, requestServicesChild,
-                   removeServicesChild, orgOid, period, periodType, tops
+                   removeServicesChild, orgOid, period, periodType, tops, isOrgRZD
                  }: PropsType) => {
   if (isFetchingWidgets) return <Preloader/>;
 
   return (
     <div>
       <main>
-        <KPKTable kpk={kpkChild.rows?.length ? kpkChild : kpk} requestServicesChild={requestServicesChild}
-                  removeServicesChild={removeServicesChild} orgOid={orgOid} period={period} periodType={periodType}/>
+        <KPKTable kpk={kpkChild.rows?.length ? kpkChild : kpk}
+                  requestServicesChild={requestServicesChild}
+                  removeServicesChild={removeServicesChild}
+                  orgOid={orgOid}
+                  period={period}
+                  periodType={periodType}
+                  isOrgRZD={isOrgRZD}/>
         <div className={classes.graphs}>
           <h4 className={classes.headCircularBar}>СЕГОДНЯ</h4>
           {(todaysChild.length ? todaysChild : todays).map((el: TodaysType) =>

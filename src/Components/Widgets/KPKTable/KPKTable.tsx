@@ -21,8 +21,9 @@ type PropsType = {
   period: string
   periodType: string
   kpk: KPKType
+  isOrgRZD: boolean
 
-  requestServicesChild: (orgOid: string, period: string, periodType: string, serviceOid: number) => void
+  requestServicesChild: (orgOid: string, period: string, periodType: string, serviceOid: number, isOrgRZD: boolean) => void
   removeServicesChild: () => void
 }
 type CheckedValueKPKType = {
@@ -73,7 +74,7 @@ const nameColsDetails = {
   k5: 'ППР'
 };
 
-const KPKTable = ({kpk, requestServicesChild, removeServicesChild, orgOid, period, periodType}: PropsType) => {
+const KPKTable = ({kpk, requestServicesChild, removeServicesChild, orgOid, period, periodType, isOrgRZD}: PropsType) => {
   const [hiddenUnusedKPK, setHiddenUnusedKPK] = useState(localStorage.getItem('KPKRowHidden') === '1' || false);
 
   if (!kpk?.cols?.length)
@@ -134,8 +135,7 @@ const KPKTable = ({kpk, requestServicesChild, removeServicesChild, orgOid, perio
                       {cols.slice(3, 8).map((key: string) => (
                         <span
                           className={`${classes[row[`${key}_good`] ? 'greenColor' : 'redColor']} ${classes.tableHead}`}
-                          key={key}
-                        >
+                          key={key}>
                           {/*// @ts-ignore*/}
                           {nameColsDetails[key]}: {row[key]} {!row[`${key}_good`] ? `(отклонение: ${(row[key + '_l'] - row[key]).toFixed(2)})` : ''}
                         </span>

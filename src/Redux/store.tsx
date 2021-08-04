@@ -1,5 +1,5 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux';
-import widgetsReducer from './widgets-reducer';
+import { widgetsReducer } from './widgets';
 import filtersReducer from './filters-reducer';
 import thunkMiddleware from 'redux-thunk';
 import {composeWithDevTools} from 'redux-devtools-extension';

@@ -7,18 +7,17 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
 import {Preloader} from '../Common/Preloader/Preloader';
 import FilterIcon from '../../Assets/Icons/FilterIcon.svg';
-
-type PropsType = {
-  showFilters: boolean
-  orgOid: string
-  period: string
-  periodType: string
-  orgMapList: Map<string, string>
-  periodNameMapList: Map<string, string>
-  isFetchingFilters: boolean
-
-  setShowFilters: () => void
-}
+import {connect} from "react-redux";
+import {RootStateType} from "../../Redux/store";
+import {setShowFilters} from "../../Redux/filters-reducer";
+import {
+  selectIsFetchingFilters, selectIsOrgRZD,
+  selectOrgMapListOSK, selectOrgMapListRZD,
+  selectOrgOid,
+  selectPeriod, selectPeriodNameMapList,
+  selectPeriodType,
+  selectShowFilters
+} from "../../Redux/selectors";
 
 const options = [
   'Ключевые показатели эффективности (текущий дашборд)',
@@ -26,8 +25,25 @@ const options = [
   'Статистика по объектам обслуживания'
 ];
 
+type MapStatePropsType = {
+  showFilters: boolean
+  orgOid: string
+  period: string
+  periodType: string
+  orgMapListOSK: Map<string, string>
+  orgMapListRZD: Map<string, string>
+  periodNameMapList: Map<string, string>
+  isFetchingFilters: boolean
+  isOrgRZD: boolean
+}
+type MapDispatchPropsType = {
+  setShowFilters: () => void
+}
+type PropsType = MapStatePropsType & MapDispatchPropsType
+
 const Navbar = ({
-                  setShowFilters, orgOid, period, periodType, orgMapList, periodNameMapList, isFetchingFilters, /*showFilters,*/
+                  setShowFilters, orgOid, period, periodType, orgMapListOSK, orgMapListRZD, periodNameMapList,
+                  isFetchingFilters, isOrgRZD, /*showFilters,*/
                 }: PropsType) => {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -42,9 +58,10 @@ const Navbar = ({
   const changeShowFilters = () => {
     setShowFilters();
   };
-  const shortNameOrg = orgMapList.has(orgOid)
+  // console.log(orgMapListOSK,orgMapListRZD)
+  const shortNameOrg = (isOrgRZD ? orgMapListRZD : orgMapListOSK).has(orgOid)
     // @ts-ignore хз как ему это объяснить
-    ? orgMapList
+    ? (isOrgRZD ? orgMapListRZD : orgMapListOSK)
       .get(orgOid)
       .replace(/Региональный центр сервиса/, 'РЦС')
       .replace(/Территориальное управление технической поддержки/, 'ТУТП')
@@ -95,6 +112,20 @@ const Navbar = ({
   )
 };
 
-export default Navbar;
+const mapState = (state: RootStateType) => ({
+  showFilters: selectShowFilters(state),
+  orgOid: selectOrgOid(state),
+  period: selectPeriod(state),
+  periodType: selectPeriodType(state),
+  orgMapListOSK: selectOrgMapListOSK(state),
+  orgMapListRZD: selectOrgMapListRZD(state),
+  periodNameMapList: selectPeriodNameMapList(state),
+  isFetchingFilters: selectIsFetchingFilters(state),
+  isOrgRZD: selectIsOrgRZD(state)
+});
+
+export default connect<MapStatePropsType, MapDispatchPropsType, {}, RootStateType>(mapState, {
+  setShowFilters
+})(Navbar);
 
 
