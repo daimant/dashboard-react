@@ -6,7 +6,7 @@ import {
   PipeOrgListOSK,
   PipeOrgListRZD
 } from "../pipes";
-import {requestWidgets} from "../widgets";
+import {removeServicesChild, requestWidgets} from "../widgets";
 import {defaultFilters} from "./reducer";
 import {
   SET_FILTERS_DEFAULT,
@@ -54,5 +54,6 @@ export const requestWidgetsFromFilters = (
 };
 export const requestSetFiltersDefault = (): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
   dispatch(requestWidgets(defaultFilters.orgOid, defaultFilters.period, defaultFilters.periodType, defaultFilters.serviceOid, defaultFilters.isOrgRZD));
+  dispatch(removeServicesChild());
   dispatch(setFiltersDefault());
 };
