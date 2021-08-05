@@ -90,7 +90,7 @@ const KPKTable = ({kpk, requestServicesChild, removeServicesChild, orgOid, perio
     localStorage.setItem('KPKRowHidden', hiddenUnusedKPK ? '0' : '1');
     setHiddenUnusedKPK(!hiddenUnusedKPK);
   };
-
+// console.log(rows)
   return (
     <div className={classes.kpkTable}>
       <TableContainer component={Paper} className={classes.tableContainer}>
@@ -119,9 +119,9 @@ const KPKTable = ({kpk, requestServicesChild, removeServicesChild, orgOid, perio
                         style={row[value] === '-' && hiddenUnusedKPK ? {display: 'none'} : {}}
                         className={cn({[classes.clickable]: row[value] !== '-' && colsHead === 'Услуга'})}
                         onClick={() => {
-                              if (row[value] !== '-' && colsHead === 'Услуга') {
-                                requestServicesChild(orgOid, period, periodType, row[id], isOrgRZD)
-                              }
+                          if (row[value] !== '-' && colsHead === 'Услуга') {
+                            requestServicesChild(orgOid, period, periodType, row[id], isOrgRZD)
+                          }
                         }}
               >
                 <TableCell component='th' scope='row' className={classes.cell}>{
@@ -134,10 +134,14 @@ const KPKTable = ({kpk, requestServicesChild, removeServicesChild, orgOid, perio
                       {`${row[value]} состоит из:`}
                       {cols.slice(3, 8).map((key: string) => (
                         <span
-                          className={`${classes[row[`${key}_good`] ? 'greenColor' : 'redColor']} ${classes.tableHead}`}
+                          className={classes.tableHead}
+                          // className={`${classes[row[`${key}_good`] ? 'greenColor' : 'redColor']} ${classes.tableHead}`}
                           key={key}>
                           {/*// @ts-ignore*/}
-                          {nameColsDetails[key]}: {row[key]} {!row[`${key}_good`] ? `(отклонение: ${(row[key + '_l'] - row[key]).toFixed(2)})` : ''}
+                          {nameColsDetails[key]}: {row[key]}
+                          {/*{nameColsDetails[key]}: {row[key]} {!row[`${key}_good`]*/}
+                          {/*? `(отклонение: ${(row[key + '_l'] - row[key]).toFixed(2)})`*/}
+                          {/*: ''}*/}
                         </span>
                       ))}
                     </div>
