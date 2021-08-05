@@ -7,9 +7,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
 import {Preloader} from '../Common/Preloader/Preloader';
 import FilterIcon from '../../Assets/Icons/FilterIcon.svg';
-import {connect} from "react-redux";
-import {RootStateType} from "../../Redux/store";
-import {setShowFilters} from "../../Redux/filters";
+import {connect} from 'react-redux';
+import {RootStateType} from '../../Redux/store';
+import {setShowFilters} from '../../Redux/filters';
 import {
   selectIsFetchingFilters,
   selectIsOrgRZD,
@@ -20,7 +20,7 @@ import {
   selectPeriodNameMapList,
   selectPeriodType,
   selectShowFilters
-} from "../../Redux/selectors";
+} from '../../Redux/selectors';
 
 const options = [
   'Ключевые показатели эффективности (текущий дашборд)',

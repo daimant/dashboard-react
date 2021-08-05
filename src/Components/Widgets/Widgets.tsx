@@ -11,7 +11,7 @@ import {
   TodaysType
 } from '../../Types/Types';
 import GraphArea from './GraphArea/GraphArea';
-import {RootStateType} from "../../Redux/store";
+import {RootStateType} from '../../Redux/store';
 import {
   selectIsFetchingWidgets,
   selectIsOrgRZD,
@@ -25,13 +25,13 @@ import {
   selectTodays,
   selectTodaysChild,
   selectTops
-} from "../../Redux/selectors";
-import {connect} from "react-redux";
+} from '../../Redux/selectors';
+import {connect} from 'react-redux';
 import {
   removeServicesChild,
   requestServicesChild,
   requestWidgets
-} from "../../Redux/widgets";
+} from '../../Redux/widgets';
 
 type MapStatePropsType = {
   kpk: KPKType

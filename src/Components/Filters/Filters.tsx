@@ -9,7 +9,7 @@ import {
   OrgListRZDType,
   PeriodListType
 } from '../../Types/Types';
-import {RootStateType} from "../../Redux/store";
+import {RootStateType} from '../../Redux/store';
 import {
   selectAltOrgListOSK,
   selectIsFetchingFilters,
@@ -22,8 +22,8 @@ import {
   selectPeriodType,
   selectPerList, selectServiceOid,
   selectShowFilters
-} from "../../Redux/selectors";
-import {connect} from "react-redux";
+} from '../../Redux/selectors';
+import {connect} from 'react-redux';
 import {
   requestOrg,
   requestSetFiltersDefault,
@@ -31,7 +31,7 @@ import {
   setIsOrgRZD,
   setOrgOid,
   setPeriod
-} from "../../Redux/filters";
+} from '../../Redux/filters';
 
 type MapStatePropsType = {
   orgListOSK: OrgListOSKType

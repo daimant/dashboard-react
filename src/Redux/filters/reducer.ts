@@ -12,7 +12,7 @@ import {
   SET_ORG_OID,
   SET_PERIOD,
   SET_SHOW_FILTERS
-} from "./action-types";
+} from './action-types';
 
 type ActionsFiltersType = {
   type: string

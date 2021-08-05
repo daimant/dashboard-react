@@ -3,7 +3,7 @@ import {PipeKPK, PipeGraphLine, PipeTodays, PipeGraphArea} from '../pipes';
 import {AnyAction} from 'redux';
 import {ThunkAction} from 'redux-thunk';
 import {RootStateType} from '../store';
-import { GraphAreaType, GraphLineType, KPKType, TodaysType } from "../../Types/Types";
+import { GraphAreaType, GraphLineType, KPKType, TodaysType } from '../../Types/Types';
 import {
   SET_KPK,
   SET_TODAYS_CHILD,

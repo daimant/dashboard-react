@@ -1,13 +1,13 @@
-import {ThunkAction} from "redux-thunk";
-import {RootStateType} from "../store";
-import {AnyAction} from "redux";
-import {filtersAPI} from "../../API/API";
+import {ThunkAction} from 'redux-thunk';
+import {RootStateType} from '../store';
+import {AnyAction} from 'redux';
+import {filtersAPI} from '../../API/API';
 import {
   PipeOrgListOSK,
   PipeOrgListRZD
-} from "../pipes";
-import {removeServicesChild, requestWidgets} from "../widgets";
-import {defaultFilters} from "./reducer";
+} from '../pipes';
+import {removeServicesChild, requestWidgets} from '../widgets';
+import {defaultFilters} from './reducer';
 import {
   SET_FILTERS_DEFAULT,
   SET_IS_ORG_RZD,
@@ -17,7 +17,7 @@ import {
   SET_ORG_OID,
   SET_PERIOD,
   SET_SHOW_FILTERS
-} from "./action-types";
+} from './action-types';
 
 type SetOrgListOSKACType = { type: typeof SET_ORG_LIST_OSK, orgListOSK: object };
 type SetOrgListRZDACType = { type: typeof SET_ORG_LIST_RZD, orgListRZD: object };

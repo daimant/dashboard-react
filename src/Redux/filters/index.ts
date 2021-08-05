@@ -1,4 +1,4 @@
-import filtersReducer from "./reducer";
+import filtersReducer from './reducer';
 
 export {
   setPeriod,

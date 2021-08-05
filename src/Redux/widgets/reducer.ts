@@ -1,4 +1,4 @@
-import {GraphAreaType, GraphLineType, KPKType, TodaysType} from "../../Types/Types";
+import {GraphAreaType, GraphLineType, KPKType, TodaysType} from '../../Types/Types';
 import {
   SET_TOPS,
   SET_TODAYS,
