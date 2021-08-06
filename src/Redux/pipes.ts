@@ -6,6 +6,8 @@ import {
   RawGraphAreaType,
   OrgListRZDType,
 } from '../Types/Types';
+import {selectOrgMapListOSK} from './selectors';
+import {RootStateType} from './store';
 
 // Widgets
 export const PipeKPK = (kpk: RawKPKType) => {
@@ -37,21 +39,19 @@ export const PipeKPK = (kpk: RawKPKType) => {
   return {cols: kpk.name_col, rows: parsedKPK};
 };
 export const PipeGraphLine = (graphs: GraphLineType[]) => {
-  if (!graphs) return [];
-  for (let i in graphs) {
-    if (!graphs[i]) {
-      graphs[i] = {title: 'Ошибка при загрузке', data: []};
-      continue;
+  return !graphs ? [] : graphs.map(graph => {
+    if (!graph) {
+      graph = {title: 'Ошибка при загрузке', data: []};
+      return graph;
     }
 
-    const graph = graphs[i];
-    for (let i in graph.data) {
-      if (graph.data.hasOwnProperty(i) && graph.data[i]['p'] <= 1)
-        graph.data[i]['p'] = +(graph.data[i]['p'] * 100).toFixed(2);
-    }
-  }
+    graph.data = graph.data.map(day => {
+      day['p'] = (Number(day['p']) * 100).toFixed(2);
+      return day;
+    });
 
-  return graphs
+    return graph;
+  });
 };
 
 const dictForPipeGraphArea: { [key: string]: Array<string> } = {

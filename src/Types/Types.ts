@@ -36,9 +36,9 @@ export type GraphLineType = {
 };
 type GraphLineElementsType = {
   d: string
-  v1: number
-  v2: number
-  p: number
+  v1: string
+  v2: string
+  p: string
 };
 
 export type RawGraphAreaType = {
