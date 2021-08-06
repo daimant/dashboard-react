@@ -25,14 +25,8 @@ export type RawKPKType = {
   data: Array<[number, string, any, number]>
 }
 export type KPKType = {
-  cols: [string, string, string, string] | Array<string>
-  rows: Array<KPKRowsType>
-}
-type KPKRowsType = {
-  Период: string
-  Сегодня: string
-  Сервис_oid: number
-  Услуга: string
+  cols: Array<string>
+  rows: {[index: string]: string | number}[]
 }
 
 export type GraphLineType = {

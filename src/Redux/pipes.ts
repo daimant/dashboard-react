@@ -3,44 +3,36 @@ import {
   RawKPKType,
   TodaysType,
   OrgListOSKType,
-  RawGraphAreaType, OrgListRZDType,
+  RawGraphAreaType,
+  OrgListRZDType,
 } from '../Types/Types';
 
 // Widgets
 export const PipeKPK = (kpk: RawKPKType) => {
-  const parsedKPK = [];
-  // идем по строкам сервисов
-  for (let i = 0; i < kpk.data.length; i++) {
-    const currObj: any = {};
+  if (!kpk) return kpk;
 
-    // идем по элеентам в строках
-    for (let j = 0; j < kpk.name_col.length; j++) {
-      let currVal: any = kpk.data[i][j];
-      //пропускаем оид в каждой строке
-      if (j === 0)
-        currObj[kpk.name_col[j]] = currVal;
-      else {
-        //конвертируем в стринг значения для построения таблицы кпк
-        if (j > 1 && j < 13) {
-          if (typeof currVal === 'number') {
-            currVal *= 100;
+  const parsedKPK = kpk.data.map((row) => {
+    const newRow: { [index: string]: string | number } = {};
+
+    kpk.name_col.forEach((colName, i) => {
+      let currColVal = row[i];
+
+      if ((colName === 'Значение' || colName[0] === 'k') && currColVal !== '-') {
+        if (currColVal === null)
+          currColVal = '-';
+        else {
+          currColVal *= 100;
+          if (currColVal % 1) {
+            currColVal = currColVal.toFixed(2);
           }
-          currVal += '';
-          currVal = currVal.replace(/,/, '.');
         }
-
-        if (currVal === null)
-          currVal = '-';
-
-        currObj[kpk.name_col[j]] = +currVal && +currVal % 1
-          ? (+currVal).toFixed(2)
-          : +currVal
-            ? +currVal
-            : currVal;
       }
-    }
-    parsedKPK.push(currObj);
-  }
+
+      newRow[colName] = `${currColVal}`
+    });
+
+    return newRow;
+  });
 
   return {cols: kpk.name_col, rows: parsedKPK};
 };
