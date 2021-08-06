@@ -22,20 +22,20 @@ import {
 type SetOrgListOSKACType = { type: typeof SET_ORG_LIST_OSK, orgListOSK: object };
 type SetOrgListRZDACType = { type: typeof SET_ORG_LIST_RZD, orgListRZD: object };
 type SetPeriodACType = { type: typeof SET_PERIOD, per: string };
-type SetOrgOidACType = { type: typeof SET_ORG_OID, oid: string };
-type SetOrgNameACType = { type: typeof SET_ORG_NAME, oid: string };
+type SetOrgOidACType = { type: typeof SET_ORG_OID, orgOid: string };
+type SetOrgNameACType = { type: typeof SET_ORG_NAME, orgOid: string };
 type SetFiltersDefaultACType = { type: typeof SET_FILTERS_DEFAULT };
 type SetShowFiltersACType = { type: typeof SET_SHOW_FILTERS };
 type SetIsOrgRZD = { type: typeof SET_IS_ORG_RZD, isOrgRZD: boolean };
 
 const setOrgListOSK = (orgListOSK: object): SetOrgListOSKACType => ({type: SET_ORG_LIST_OSK, orgListOSK});
 const setOrgListRZD = (orgListRZD: object): SetOrgListRZDACType => ({type: SET_ORG_LIST_RZD, orgListRZD});
-const setOrgName = (oid: string): SetOrgNameACType => ({type: SET_ORG_NAME, oid});
+const setOrgName = (orgOid: string): SetOrgNameACType => ({type: SET_ORG_NAME, orgOid});
 const setFiltersDefault = (): SetFiltersDefaultACType => ({type: SET_FILTERS_DEFAULT});
 
 export const setPeriod = (per: string): SetPeriodACType => ({type: SET_PERIOD, per});
 
-export const setOrgOid = (oid: string): SetOrgOidACType => ({type: SET_ORG_OID, oid});
+export const setOrgOid = (orgOid: string): SetOrgOidACType => ({type: SET_ORG_OID, orgOid});
 
 export const setShowFilters = (): SetShowFiltersACType => ({type: SET_SHOW_FILTERS});
 

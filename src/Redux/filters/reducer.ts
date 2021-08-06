@@ -25,7 +25,7 @@ type ActionsFiltersType = {
     orgListRZD: OrgListRZDType
     orgMapListRZD: Map<string, string>
   }
-  oid: string
+  orgOid: string
   per: string
   isOrgRZD: boolean
 };
@@ -156,9 +156,9 @@ const actionHandlerFilters: any = {
     return orgListOSK && altOrgListOSK && orgMapListOSK
       ? {
         ...state,
-        orgListOSK: orgListOSK[0],
-        altOrgListOSK: altOrgListOSK,
-        orgMapListOSK: orgMapListOSK,
+        orgListOSK,
+        altOrgListOSK,
+        orgMapListOSK,
       }
       : state;
   },
@@ -189,21 +189,21 @@ const actionHandlerFilters: any = {
   },
 
   [SET_ORG_OID]: (state: InitialStateFiltersType, action: ActionsFiltersType) => {
-    localStorage.setItem('orgOid', action.oid);
-    return action.oid
+    localStorage.setItem('orgOid', action.orgOid);
+    return action.orgOid
       ? {
         ...state,
-        orgOid: action.oid
+        orgOid: action.orgOid
       }
       : state;
   },
 
   [SET_ORG_NAME]: (state: InitialStateFiltersType, action: ActionsFiltersType) => {
     const newName = state[
-      state.orgMapListOSK.has(action.oid)
+      state.orgMapListOSK.has(action.orgOid)
         ? 'orgMapListOSK'
         : 'orgMapListRZD'
-      ].get(action.oid);
+      ].get(action.orgOid);
     if (newName !== undefined) {
       localStorage.setItem('orgName', newName);
     }

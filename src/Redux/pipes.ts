@@ -6,8 +6,6 @@ import {
   RawGraphAreaType,
   OrgListRZDType,
 } from '../Types/Types';
-import {selectOrgMapListOSK} from './selectors';
-import {RootStateType} from './store';
 
 // Widgets
 export const PipeKPK = (kpk: RawKPKType) => {
@@ -59,8 +57,7 @@ const dictForPipeGraphArea: { [key: string]: Array<string> } = {
   'Установка ПО': ['Выполнено сотрудником УПП', 'Выполнено ботом', 'Ошибки бота'],
   default: ['', '', '']
 };
-// @ts-ignore
-const getNamesForPipeGraphArea = (key: String) => dictForPipeGraphArea[key] || dictForPipeGraphArea.default;
+const getNamesForPipeGraphArea = (key: string) => dictForPipeGraphArea[key] || dictForPipeGraphArea.default;
 
 export const PipeGraphArea = (graphs: RawGraphAreaType[]) => {
   if (!graphs) return [];
@@ -136,7 +133,7 @@ export const PipeOrgListOSK = (orgListOSK: Array<OrgListOSKType>) => {
       altOrgListOSK.children.splice(i, 1);
   }
 
-  return {orgListOSK, altOrgListOSK, orgMapListOSK};
+  return {orgListOSK: orgListOSK[0], altOrgListOSK, orgMapListOSK};
 };
 export const PipeOrgListRZD = (orgListRZD: Array<OrgListRZDType>) => ({
   orgListRZD: {
