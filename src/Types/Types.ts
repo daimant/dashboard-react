@@ -3,7 +3,7 @@
 export type OrgListOSKType = {
   oid: any
   name: string
-  parent: any
+  parent: string
   zno: number
   children: Array<OrgListOSKType>
 };

@@ -105,33 +105,33 @@ export const PipeTodays = (todays: Array<TodaysType>) => todays.map(today => {
 export const PipeOrgListOSK = (orgListOSK: Array<OrgListOSKType>) => {
   if (!orgListOSK || !orgListOSK[0] || orgListOSK[0]?.oid !== 281586771165316) return {};
 
-  const orgPosition = new Map(orgListOSK.map((el: any, i: any) => [el['oid'], i]));
+  const orgPosition = new Map(orgListOSK.map((org: {oid: number}, i: any) => [`${org['oid']}`, i]));
   const orgMapListOSK = new Map([['281586771165316', 'ООО ОСК ИнфоТранс']]);
 
-  for (let i = orgListOSK.length - 1; i > 0; i--) {
-    orgMapListOSK.set(orgListOSK[i].oid + '', orgListOSK[i].name);
-    const parentInList = orgPosition.get(orgListOSK[i].parent);
-    if (!orgListOSK[parentInList]['children']) orgListOSK[parentInList]['children'] = [];
-    // @ts-ignore
-    orgListOSK[parentInList]['children'] = [...orgListOSK[parentInList]['children'], orgListOSK[i]]
-  }
+  orgListOSK = orgListOSK.map(org => {
+    org.oid = `${org.oid}`;
+    org.parent = `${org.parent}`;
 
-  for (let org of orgListOSK) {
-    org.oid += '';
-    org.parent += '';
-  }
+    orgMapListOSK.set(org.oid, org.name);
 
-  for (let org of orgListOSK) {
-    if (org?.children?.length)
+    return {...org, children: []}
+  });
+
+  orgListOSK.forEach(org => {
+    const parentInList = orgPosition.get(org.parent);
+    if (org.parent !== '0') {
+      orgListOSK[parentInList].children = [...orgListOSK[parentInList].children, org];
+    }
+  });
+
+  orgListOSK.forEach(org => {
+    if (org.children.length) {
       org.children.sort((a: any, b: any) => a.name > b.name ? 1 : -1)
-  }
+    }
+  });
 
   const altOrgListOSK = JSON.parse(JSON.stringify(orgListOSK[0]));
-
-  for (let i = altOrgListOSK.children.length - 1; altOrgListOSK.name && i >= 0; i--) {
-    if (!altOrgListOSK.children[i].zno)
-      altOrgListOSK.children.splice(i, 1);
-  }
+  altOrgListOSK.children = altOrgListOSK.children.filter((el: {zno: number}) => el.zno);
 
   return {orgListOSK: orgListOSK[0], altOrgListOSK, orgMapListOSK};
 };
