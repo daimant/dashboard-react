@@ -32,90 +32,73 @@ type ActionsFiltersType = {
 
 type InitialStateFiltersType = typeof initialStateFilters;
 
-const tempPeriodNameMapList = new Map();
+const periodNameMapList = new Map();
 
 const createPeriodTree = (st: Date, end: number): PeriodListType => {
-  //получить квартал по номеру месяца (от 0 - янв.)
-  const getQuarter = (month: number) => {
-    return Math.floor((month + 3) / 3);
-  };
-  ///возвращает нумерацию месяцев в квартале (0,1,2 - 1 кв.; 2 кв. - 3,4,5; и т.д.)
-  const getMonths = (q: number) => {
-    let arr = [];
-    for (let i = (q * 3 - 3); i <= (q * 3 - 1); i++)
-      arr.push(i);
-    return arr;
-  };
-  // массив месяцев по-русски
-  const months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль',
-    'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
-  // формат числа с лидирующими нулями
-  const pad = (num: number | string, size: number) => {
-    num = num.toString();
-    while (num.length < size) num = '0' + num;
-    return num;
-  };
-  // создаем произвольный узел
-  const createNode = (name: string, oid: string, children: object[]) => {
-    return {
-      name: name,
-      oid: oid,
-      children: children
-    };
-  };
+  const getQuarter = (month: number) => Math.floor((month + 3) / 3);
 
-  let d1 = new Date(st);
-  let d2 = new Date(end);
+  const getMonthsInQuarter = (quarter: number) => {
+    const arrMonth = [];
 
-  //создаем корень дерева
-  let rootNode = createNode('Период', 'root', []);
-
-  // перебираем от начального года до конечного
-  for (let y = d1.getFullYear(); y <= d2.getFullYear(); y++) {
-    // type: 'y'
-    let ny = createNode(y + ' год', `y:${y}-01`, []);
-
-    // сохраняем год в коллекцию названий периодов
-    tempPeriodNameMapList.set(`y:${y}-01`, `${y} год`);
-
-    // для добавления кварталов необходимо понять какой минимальный и максимальный квартал
-    let curr_q1 = (d1.getFullYear() === y ? Math.max(1, getQuarter(d1.getMonth())) : 1);
-    let curr_q2 = (d2.getFullYear() === y ? Math.min(4, getQuarter(d2.getMonth())) : 4);
-
-    // перебираем от начального квартала до конечного
-    for (let q = curr_q1; q <= curr_q2; q++) {
-      // type: 'q'
-      let nq = createNode(q + ' квартал', `q:${y}-0${q}`, []);
-
-      // сохраняем квартал в коллекцию названий периодов
-      tempPeriodNameMapList.set(`q:${y}-0${q}`, `${y} год - ${q} квартал`);
-
-      //получаем доступные месяцы для выбранного квартала
-      let mm = getMonths(q);
-
-      // для добавления месяцев, необходимо понять какой минимальный и максимальный
-      let curr_m1 = (d1.getFullYear() === y && q === curr_q1 ? Math.max(mm[0], d1.getMonth()) : mm[0]);
-      let curr_m2 = (d2.getFullYear() === y && q === curr_q2 ? Math.min(mm[mm.length - 1], d2.getMonth()) : mm[mm.length - 1]);
-
-      // перебираем от начального месяца до конечного
-      for (let m = curr_m1; m <= curr_m2; m++) {
-        // type: 'm'
-        let nm = createNode(months[m], `m:${y}-${pad((m + 1), 2)}`, []);
-
-        // сохраняем месяц в коллекцию названий периодов
-        tempPeriodNameMapList.set(`m:${y}-${pad((m + 1), 2)}`, `${y} год - ${months[m]}`);
-
-        //добавляем месяцы
-        nq.children.push(nm);
-      }
-      //добавляем кварталы
-      ny.children.push(nq);
+    for (let i = (quarter * 3 - 3); i <= (quarter * 3 - 1); i++) {
+      arrMonth.push(i);
     }
-    //добавляем годы в корень
-    rootNode.children.push(ny);
+
+    return arrMonth;
+  };
+
+  const months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+
+  const createNode = (name: string, oid: string, children: object[]) => ({
+    name: name,
+    oid: oid,
+    children: children
+  });
+
+  const dateSt = new Date(st);
+
+  const dateEnd = new Date(end);
+
+  const rootNode = createNode('Период', 'root', []);
+
+  for (let year = dateSt.getFullYear(); year <= dateEnd.getFullYear(); year++) {
+    const newYears = createNode(`${year} год`, `y:${year}-01`, []);
+
+    periodNameMapList.set(`y:${year}-01`, `${year} год`);
+
+    const currQuarterSt = (dateSt.getFullYear() === year
+      ? Math.max(1, getQuarter(dateSt.getMonth()))
+      : 1);
+    const currQuarterEnd = (dateEnd.getFullYear() === year
+      ? Math.min(4, getQuarter(dateEnd.getMonth()))
+      : 4);
+
+    for (let quarter = currQuarterSt; quarter <= currQuarterEnd; quarter++) {
+      const newQuarters = createNode(`${quarter} квартал`, `q:${year}-0${quarter}`, []);
+
+      periodNameMapList.set(`q:${year}-0${quarter}`, `${year} год - ${quarter} квартал`);
+
+      const availableMonths = getMonthsInQuarter(quarter);
+
+      const currMonthSt = (dateSt.getFullYear() === year && quarter === currQuarterSt
+        ? Math.max(availableMonths[0], dateSt.getMonth())
+        : availableMonths[0]);
+      const currMonthEnd = (dateEnd.getFullYear() === year && quarter === currQuarterEnd
+        ? Math.min(availableMonths[availableMonths.length - 1], dateEnd.getMonth())
+        : availableMonths[availableMonths.length - 1]);
+
+      for (let month = currMonthSt; month <= currMonthEnd; month++) {
+        const newMonths = createNode(months[month], `m:${year}-${(month + 1).toString().padStart(2, '0')}`, []);
+
+        periodNameMapList.set(`m:${year}-${(month + 1).toString().padStart(2, '0')}`, `${year} год - ${months[month]}`);
+
+        newQuarters.children.push(newMonths);
+      }
+      newYears.children.push(newQuarters);
+    }
+    rootNode.children.push(newYears);
   }
 
-  //возврат всего дерева
   return rootNode;
 };
 
@@ -134,7 +117,7 @@ const initialStateFilters = {
   orgMapListOSK: new Map() as Map<string, string>,
   orgListRZD: {} as OrgListRZDType,
   orgMapListRZD: new Map() as Map<string, string>,
-  periodNameMapList: tempPeriodNameMapList as Map<string, string>,
+  periodNameMapList: periodNameMapList as Map<string, string>,
   perList: createPeriodTree(new Date(2020, 0, 1), Date.now()) as PeriodListType,
   isFetchingFilters: true as boolean,
   orgOid: localStorage.getItem('orgOid') || defaultFilters.orgOid as string,
