@@ -1,4 +1,5 @@
 import React, {ChangeEvent, MouseEvent, useState} from 'react';
+import classes from './MenuTreeList.module.scss';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import {makeStyles} from '@material-ui/core/styles';
@@ -23,11 +24,13 @@ type PropsType = {
   setter: (oid: string) => void
   acceptFilters: (type: string, selected: any) => void
 }
+
 type RenderTreePropsType = {
   nodes: OrgListOSKType | PeriodListType | OrgListRZDType,
   handleSelect: (event: ChangeEvent<{}>, oid: string) => void,
   handleExpand: (event: ChangeEvent<{}>, oid: string) => void
 }
+
 const renderTree = ({nodes, handleSelect, handleExpand}: RenderTreePropsType) => (
   <TreeItem key={`${nodes.oid}${nodes.name}`} nodeId={nodes.oid} label={nodes.name}
             onLabelClick={(event) => {
@@ -68,17 +71,13 @@ const MenuTreeList = ({
         backgroundColor: '#52d869'
       },
     },
-    selectParams: {
-      height: '76px',
-      display: 'flex',
-      flexDirection: 'column',
-    },
   });
 
   const toggleCheckedInfotransRZD = () => {
     localStorage.setItem('checkedInfotransRZD', checkedInfotransRZD ? '0' : '1');
     setCheckedInfotransRZD(!checkedInfotransRZD);
   };
+
   const toggleCheckedOSKZNO = () => {
     localStorage.setItem('checkedOrgZNO', checkedOSKZNO ? '0' : '1');
     setCheckedOSKZNO(!checkedOSKZNO);
@@ -110,7 +109,7 @@ const MenuTreeList = ({
     setExpanded(newExpanded);
   };
 
-  const classes = useStyles();
+  const classesMUI = useStyles();
 
   return (
     <div>
@@ -119,7 +118,7 @@ const MenuTreeList = ({
         {title}
       </Button>
       <Menu
-        className={classes.menu}
+        className={classesMUI.menu}
         id='menu'
         anchorEl={anchorEl}
         keepMounted
@@ -133,7 +132,7 @@ const MenuTreeList = ({
                                  checked={checkedInfotransRZD}
                                  onChange={toggleCheckedInfotransRZD}
                                  color='default'
-                                 className={classes.toggle}
+                                 className={classesMUI.toggle}
                 />}
                 labelPlacement='start'
                 label={`Оргструктура Инфотранс / РЖД`}
@@ -146,7 +145,7 @@ const MenuTreeList = ({
                                  checked={checkedOSKZNO}
                                  onChange={toggleCheckedOSKZNO}
                                  color='default'
-                                 className={classes.toggle}
+                                 className={classesMUI.toggle}
                 />}
                 labelPlacement='start'
                 label={`Все организации / Организации выполняющие ЗНО`}
@@ -154,7 +153,7 @@ const MenuTreeList = ({
           </span>
         </div>}
         <TreeView
-          className={classes.tree}
+          className={classesMUI.tree}
           defaultCollapseIcon={<ExpandMoreIcon component={'svg'}/>}
           defaultExpandIcon={<ChevronRightIcon component={'svg'}/>}
           expanded={expanded}

@@ -7,6 +7,7 @@ import {GraphLineType} from '../../../Types/Types';
 import SettingsIcon from '../../../Assets/Icons/SettingsIcon.svg';
 import {IconButton} from '@material-ui/core';
 import Menu from '@material-ui/core/Menu/Menu';
+import cn from 'classnames';
 
 type CheckedValueGraphType = {
   description: string
@@ -24,7 +25,7 @@ type PropsType = {
 const CheckedValueGraph = forwardRef(({description, hidden, hideLineClick, line, hider}: CheckedValueGraphType, ref: any) => {
   return (
     <p
-      className={`${classes.checkBoxGroup} ${classes.clickable} ${classes[`color${line}`]}`}
+      className={cn(classes.checkBoxGroup, classes.clickable, classes.unselectable, classes[`color${line}`])}
       ref={ref}
       onClick={() => hideLineClick(line, hidden, hider)}>
       {!hidden

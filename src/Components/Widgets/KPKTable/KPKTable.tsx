@@ -26,24 +26,26 @@ type PropsType = {
   requestServicesChild: (orgOid: string, period: string, periodType: string, serviceOid: number, isOrgRZD: boolean) => void
   removeServicesChild: () => void
 }
+
 type CheckedValueKPKType = {
   hidden: boolean
   requestSetHiddenUnusedKPK: () => void
 }
 
-const CheckedValueKPK = ({hidden, requestSetHiddenUnusedKPK}: CheckedValueKPKType) => {
-  const useStyles = makeStyles(() => ({
-      toggle: {
-        '& .Mui-checked + .MuiSwitch-track': {
-          backgroundColor: '#52d869'
-        },
+const useStyles = makeStyles(() => ({
+    toggle: {
+      '& .Mui-checked + .MuiSwitch-track': {
+        backgroundColor: '#52d869'
       },
-    })
-  );
+    },
+  })
+);
+
+const CheckedValueKPK = ({hidden, requestSetHiddenUnusedKPK}: CheckedValueKPKType) => {
   const classesMUI = useStyles();
 
   return (
-    <span className={classes.clickable}>{
+    <span className={cn(classes.clickable, classes.unselectable)}>{
       <FormControlLabel
         control={
           <Switch
@@ -59,6 +61,7 @@ const CheckedValueKPK = ({hidden, requestSetHiddenUnusedKPK}: CheckedValueKPKTyp
     }</span>
   )
 };
+
 const LightTooltip = withStyles((theme: Theme) => ({
   tooltip: {
     backgroundColor: theme.palette.common.white,
@@ -66,6 +69,7 @@ const LightTooltip = withStyles((theme: Theme) => ({
     fontSize: 12,
   },
 }))(Tooltip);
+
 const nameColsDetails = {
   k1: 'Своевременность',
   k2: 'Оперативность',
@@ -85,12 +89,14 @@ const KPKTable = ({kpk, requestServicesChild, removeServicesChild, orgOid, perio
     );
 
   const {cols, rows} = kpk;
+
   const [id, colsHead, value] = cols;
+
   const requestSetHiddenUnusedKPK = () => {
     localStorage.setItem('KPKRowHidden', hiddenUnusedKPK ? '0' : '1');
     setHiddenUnusedKPK(!hiddenUnusedKPK);
   };
-// console.log(rows)
+
   return (
     <div className={classes.kpkTable}>
       <TableContainer component={Paper} className={classes.tableContainer}>
@@ -113,7 +119,6 @@ const KPKTable = ({kpk, requestServicesChild, removeServicesChild, orgOid, perio
           </TableHead>
           <TableBody component={'tbody'}>
             {rows.map((row: any) => ( // тут мои полномочия всё
-
               <TableRow key={row[id]}
                         component={'tr'}
                         style={row[value] === '-' && hiddenUnusedKPK ? {display: 'none'} : {}}

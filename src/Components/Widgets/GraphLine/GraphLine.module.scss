@@ -2,41 +2,62 @@
   box-shadow: 0 0 1.6rem rgba(0, 0, 0, 0.1);
   border-radius: .4rem;
   width: 55vw;
-  @media (max-width: 2000px) { height: 31.3% }
-  @media (min-width: 2000px) { height: 30.4% }
+  @media (max-width: 2000px) {
+    height: 31.3%
+  }
+  @media (min-width: 2000px) {
+    height: 30.4%
+  }
   background: #FFFFFF;
   margin: 0 .6vw 2%;
   font-size: 1.7vh;
   overflow: hidden;
 }
+
 .clickable {
   cursor: pointer;
 }
+
+.unselectable {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Chrome/Safari/Opera */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently not supported by any browser */
+}
+
 .checkBoxGroup {
   margin: .5rem;
 }
+
 .iconCheckBox {
   vertical-align: middle;
 }
+
 .headGraph {
   display: flex;
   margin: 5px;
   height: 10%;
 }
+
 .title {
   position: relative;
   margin-left: 42%;
-  transform: translate(-50%,0);
+  transform: translate(-50%, 0);
 }
+
 .menu {
   margin: 1.5rem;
 }
+
 .colorVal {
   color: #8884d8;
 }
-.colorProc{
-   color: #82ca9d;
- }
+
+.colorProc {
+  color: #82ca9d;
+}
+
 .colorTar {
   color: #FF0000;
 }
