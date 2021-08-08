@@ -135,12 +135,12 @@ const KPKTable = ({kpk, requestServicesChild, removeServicesChild, orgOid, perio
                 <LightTooltip
                   placement='right'
                   title={row[value] !== '-'
-                    ? <div className={`${classes.blackColor}`} style={{}}>
+                    ? <div className={classes.blackColor}>
                       {`${row[value]} состоит из:`}
                       {cols.slice(3, 8).map((key: string) => (
                         <span
                           className={classes.tableHead}
-                          // className={`${classes[row[`${key}_good`] ? 'greenColor' : 'redColor']} ${classes.tableHead}`}
+                          // className={cn(classes[row[`${key}_good`] ? 'greenColor' : 'redColor'], classes.tableHead)}
                           key={key}>
                           {/*// @ts-ignore*/}
                           {nameColsDetails[key]}: {row[key]}

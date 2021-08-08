@@ -91,12 +91,12 @@ const Widgets = ({
           )}
         </div>
       </main>
-      <div className={`${classes.secondMain}`}>
+      <div className={classes.secondMain}>
         {tops.map((graphAreaData: GraphAreaType) =>
           <GraphArea graphAreaData={graphAreaData} key={graphAreaData.title} extendedStyle={{height: '100%'}}/>
         )}
       </div>
-      {/*      <div className={`${classes.secondMain}`}>
+      {/*      <div className={classes.secondMain}>
         <GraphArea graphAreaData={tops[0]} extendedStyle={{height: '100%'}}/>
         <GraphArea graphAreaData={tops[1]} extendedStyle={{height: '100%'}}/>
       </div>*/}

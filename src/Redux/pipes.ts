@@ -105,11 +105,13 @@ export const PipeTodays = (todays: Array<TodaysType>) => todays.map(today => {
 export const PipeOrgListOSK = (orgListOSK: Array<OrgListOSKType>) => {
   if (!orgListOSK || !orgListOSK[0] || orgListOSK[0]?.oid !== 281586771165316) return {};
 
-  const orgPosition = new Map(orgListOSK.map((org: {oid: number}, i: any) => [`${org['oid']}`, i]));
+  const orgPosition = new Map(orgListOSK.map((org: OrgListOSKType, i: any) => {
+    org.oid = `${org.oid}`;
+    return[`${org.oid}`, i];
+  }));
   const orgMapListOSK = new Map([['281586771165316', 'ООО ОСК ИнфоТранс']]);
 
   orgListOSK = orgListOSK.map(org => {
-    org.oid = `${org.oid}`;
     org.parent = `${org.parent}`;
 
     orgMapListOSK.set(org.oid, org.name);
