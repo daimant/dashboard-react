@@ -13,15 +13,12 @@ const GraphArea = ({graphAreaData, extendedStyle = {}}: PropsType) => {
 
   return (
     <div className={classes.graphs} style={extendedStyle}>
-      <div className={classes.headGraph}>
-      <h3 className={classes.title}>{title}</h3>
-      </div>
+      <h3 className={classes.headGraph}>{title}</h3>
       <ResponsiveContainer>
         <AreaChart data={data} margin={{top: 10, bottom: 30, right: 50}}>
           <XAxis dataKey='d' axisLine={false}/>
           <YAxis tickFormatter={tick => `${tick * 100}`} axisLine={false} tickCount={2}/>
-          <Tooltip labelFormatter={(label: string) => `Дата: ${label}`}
-                   // @ts-ignore
+          <Tooltip labelFormatter={(label: string) => `Дата: ${label}`} // @ts-ignore
                    formatter={(value: Array<number>, name: string) => ([`${percents[name]}: ${Math.trunc(value[2] * 100)} %`])}/>
           <Area dataKey='p1' stroke='#8884d8' fill='#8884d8'/>
           <Area dataKey='p2' stroke='#82ca9d' fill='#82ca9d'/>
