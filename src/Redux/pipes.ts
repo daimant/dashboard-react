@@ -156,6 +156,10 @@ export const PipeOrgListOSK = (orgListOSK: OrgListOSKType[]) => {
   const orgMapListOSK = new Map([['281586771165316', 'ООО ОСК ИнфоТранс']]);
 
   orgListOSK = orgListOSK.map(org => {
+    if (!org.parent) {
+      org.parent = '0';
+    }
+
     org.parent = `${org.parent}`;
 
     orgMapListOSK.set(org.oid, org.name);
