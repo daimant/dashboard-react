@@ -18,21 +18,21 @@ type ActionsWidgetsType = {
   type: string
   kpk: KPKType
   kpkChild: KPKType
-  sc: Array<GraphLineType>
-  scChild: Array<GraphLineType>
-  todays: Array<TodaysType>
-  todaysChild: Array<TodaysType>
-  tops: Array<GraphAreaType>
+  sc: GraphLineType[]
+  scChild: GraphLineType[]
+  todays: TodaysType[]
+  todaysChild: TodaysType[]
+  tops: GraphAreaType[]
 }
 
 const initialStateWidgets = {
   kpk: {} as KPKType,
   kpkChild: {} as KPKType,
-  sc: [] as Array<GraphLineType>,
-  scChild: [] as Array<GraphLineType>,
-  todays: [] as Array<TodaysType>,
-  todaysChild: [] as Array<TodaysType>,
-  tops: [] as Array<GraphAreaType>,
+  sc: [] as GraphLineType[],
+  scChild: [] as GraphLineType[],
+  todays: [] as TodaysType[],
+  todaysChild: [] as TodaysType[],
+  tops: [] as GraphAreaType[],
   isFetchingWidgets: true as boolean,
   /*inf: [
     [

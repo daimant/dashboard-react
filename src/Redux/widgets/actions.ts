@@ -3,7 +3,7 @@ import {PipeKPK, PipeGraphLine, PipeTodays, PipeGraphArea} from '../pipes';
 import {AnyAction} from 'redux';
 import {ThunkAction} from 'redux-thunk';
 import {RootStateType} from '../store';
-import { GraphAreaType, GraphLineType, KPKType, TodaysType } from '../../Types/Types';
+import {GraphAreaType, GraphLineType, KPKType, TodaysType} from '../../Types/Types';
 import {
   SET_KPK,
   SET_TODAYS_CHILD,
@@ -30,14 +30,14 @@ type RemoveServicesChildACType = { type: typeof REMOVE_SERVICES_CHILD };
 
 const setKPK = (kpk: KPKType): SetKPKACType => ({type: SET_KPK, kpk});
 const setKPKChild = (kpkChild: KPKType): SetKPKChildACType => ({type: SET_KPK_CHILD, kpkChild});
-const setSC = (sc: Array<GraphLineType>): SetSCACType => ({type: SET_SC, sc});
-const setSCChild = (scChild: Array<GraphLineType>): SetSCChildACType => ({type: SET_SC_CHILD, scChild});
-const setTodays = (todays: Array<TodaysType>): SetTodaysACType => ({type: SET_TODAYS, todays});
-const setTodaysChild = (todaysChild: Array<TodaysType>): SetTodaysChildACType => ({
+const setSC = (sc: GraphLineType[]): SetSCACType => ({type: SET_SC, sc});
+const setSCChild = (scChild: GraphLineType[]): SetSCChildACType => ({type: SET_SC_CHILD, scChild});
+const setTodays = (todays: TodaysType[]): SetTodaysACType => ({type: SET_TODAYS, todays});
+const setTodaysChild = (todaysChild: TodaysType[]): SetTodaysChildACType => ({
   type: SET_TODAYS_CHILD,
   todaysChild
 });
-const setTops = (tops: Array<GraphAreaType>): SetTopsACType => ({type: SET_TOPS, tops});
+const setTops = (tops: GraphAreaType[]): SetTopsACType => ({type: SET_TOPS, tops});
 const setIsFetchingWidgetsStarted = (): SetIsFetchingWidgetsStartedACType => ({type: SET_IS_FETCHING_WIDGETS_STARTED});
 const setIsFetchingWidgetsEnded = (): SetIsFetchingWidgetsEndedACType => ({type: SET_IS_FETCHING_WIDGETS_ENDED});
 
@@ -49,7 +49,16 @@ export const requestWidgets = (
 ): ThunkAction<void, RootStateType, unknown, AnyAction> => async (dispatch) => {
   dispatch(setIsFetchingWidgetsStarted());
 
-  const response = await widgetsAPI.getWidgets({serviceOid, orgOid, period, periodType, numSC, numTodays, numTops, isOrgRZD});
+  const response = await widgetsAPI.getWidgets({
+    serviceOid,
+    orgOid,
+    period,
+    periodType,
+    numSC,
+    numTodays,
+    numTops,
+    isOrgRZD
+  });
   dispatch(setSC(PipeGraphLine(response.splice(0, numSC.length))));
   dispatch(setTodays(PipeTodays(response.splice(0, numTodays.length))));
   dispatch(setTops(PipeGraphArea(response.splice(0, numTops.length))));
@@ -64,7 +73,16 @@ export const requestServicesChild = (
 ): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
   dispatch(setIsFetchingWidgetsStarted());
 
-  const response = await widgetsAPI.getWidgets({orgOid, period, periodType, serviceOid, numSC, isOrgRZD, numTodays, numTops: []});
+  const response = await widgetsAPI.getWidgets({
+    orgOid,
+    period,
+    periodType,
+    serviceOid,
+    numSC,
+    isOrgRZD,
+    numTodays,
+    numTops: []
+  });
   dispatch(setSCChild(PipeGraphLine(response.splice(0, numSC.length))));
   dispatch(setTodaysChild(PipeTodays(response.splice(0, numTodays.length))));
   dispatch(setKPKChild(PipeKPK(response.pop())));

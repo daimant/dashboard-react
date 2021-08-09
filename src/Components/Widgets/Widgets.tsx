@@ -36,11 +36,11 @@ import {
 type MapStatePropsType = {
   kpk: KPKType
   kpkChild: KPKType
-  sc: Array<GraphLineType>
-  scChild: Array<GraphLineType>
-  todays: Array<TodaysType>
-  todaysChild: Array<TodaysType>
-  tops: Array<GraphAreaType>
+  sc: GraphLineType[]
+  scChild: GraphLineType[]
+  todays: TodaysType[]
+  todaysChild: TodaysType[]
+  tops: GraphAreaType[]
   isFetchingWidgets: boolean
   orgOid: string
   period: string

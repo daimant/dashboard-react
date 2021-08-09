@@ -94,7 +94,7 @@ export const PipeGraphLine = (graphs: GraphLineType[]) => {
   });
 };
 
-const dictForPipeGraphArea: { [key: string]: Array<string> } = {
+const dictForPipeGraphArea: { [key: string]: string[] } = {
   'Назначение заявок': ['Назначено сотрудником', 'Назначено ботом', 'Переназначено за ботом'],
   'Установка ПО': ['Выполнено сотрудником УПП', 'Выполнено ботом', 'Ошибки бота'],
   default: ['', '', '']
@@ -137,7 +137,7 @@ export const PipeGraphArea = (graphs: RawGraphAreaType[]) => {
   })
 };
 
-export const PipeTodays = (todays: Array<TodaysType>) => todays.map(today => {
+export const PipeTodays = (todays: TodaysType[]) => todays.map(today => {
   if (today.v1 === null || today.p === null)
     today = {title: 'Ошибка при загрузке', v1: 0, p: 0, err: true};
   else if (today.p <= 1)
@@ -146,7 +146,7 @@ export const PipeTodays = (todays: Array<TodaysType>) => todays.map(today => {
 });
 
 // filters
-export const PipeOrgListOSK = (orgListOSK: Array<OrgListOSKType>) => {
+export const PipeOrgListOSK = (orgListOSK: OrgListOSKType[]) => {
   if (!orgListOSK || !orgListOSK[0] || orgListOSK[0]?.oid !== 281586771165316) return {};
 
   const orgPosition = new Map(orgListOSK.map((org: OrgListOSKType, i: any) => {
@@ -182,7 +182,7 @@ export const PipeOrgListOSK = (orgListOSK: Array<OrgListOSKType>) => {
   return {orgListOSK: orgListOSK[0], altOrgListOSK, orgMapListOSK};
 };
 
-export const PipeOrgListRZD = (orgListRZD: Array<OrgListRZDType>) => ({
+export const PipeOrgListRZD = (orgListRZD: OrgListRZDType[]) => ({
   orgListRZD: {
     oid: '0',
     name: 'ОАО РЖД',
