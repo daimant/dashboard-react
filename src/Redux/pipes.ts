@@ -36,6 +36,46 @@ export const PipeKPK = (kpk: RawKPKType) => {
 
   return {cols: kpk.name_col, rows: parsedKPK};
 };
+
+const CompressGraph = (graph: GraphLineType) => {
+  if (graph.data.length < 14) return graph;
+
+  const currCompressType = graph.data.length < 6 * 30 ? 'week' : 'month';
+
+  let stPeriod = null;
+  let numberOfPeriod = null;
+
+  for (let iOfDays = graph.data.length - 1; iOfDays >= 0; iOfDays--) {
+    const currDate = graph.data[iOfDays];
+    const currFullDate = new Date(
+      2021,
+      Number(currDate.d.slice(3, 5)) - 1,
+      Number(currDate.d.slice(0, 2))
+    );
+    const firstDayOfPeriod = currCompressType === 'week' ? currFullDate.getDay() : Number(currDate.d.slice(0, 2));
+
+    if (!stPeriod) {
+      stPeriod = currDate.d;
+      numberOfPeriod = iOfDays;
+    }
+
+    if (iOfDays === 0 || firstDayOfPeriod === 1) {
+      currDate.d += ` - ${stPeriod}`;
+      if (numberOfPeriod) {
+        currDate.p /= numberOfPeriod - iOfDays + 1;
+      }
+      stPeriod = null;
+      numberOfPeriod = null;
+    } else {
+      graph.data[iOfDays - 1].p += currDate.p;
+      graph.data[iOfDays - 1].v1 += currDate.v1;
+      graph.data.splice(iOfDays, 1);
+    }
+  }
+
+  return graph;
+};
+
 export const PipeGraphLine = (graphs: GraphLineType[]) => {
   return !graphs ? [] : graphs.map(graph => {
     if (!graph) {
@@ -43,8 +83,10 @@ export const PipeGraphLine = (graphs: GraphLineType[]) => {
       return graph;
     }
 
+    CompressGraph(graph);
+
     graph.data = graph.data.map(day => {
-      day['p'] = (Number(day['p']) * 100).toFixed(2);
+      day.p = Number((Number(day.p) * 100).toFixed(2));
       return day;
     });
 
@@ -57,6 +99,7 @@ const dictForPipeGraphArea: { [key: string]: Array<string> } = {
   'Установка ПО': ['Выполнено сотрудником УПП', 'Выполнено ботом', 'Ошибки бота'],
   default: ['', '', '']
 };
+
 const getNamesForPipeGraphArea = (key: string) => dictForPipeGraphArea[key] || dictForPipeGraphArea.default;
 
 export const PipeGraphArea = (graphs: RawGraphAreaType[]) => {
@@ -93,6 +136,7 @@ export const PipeGraphArea = (graphs: RawGraphAreaType[]) => {
     }
   })
 };
+
 export const PipeTodays = (todays: Array<TodaysType>) => todays.map(today => {
   if (today.v1 === null || today.p === null)
     today = {title: 'Ошибка при загрузке', v1: 0, p: 0, err: true};
@@ -107,7 +151,7 @@ export const PipeOrgListOSK = (orgListOSK: Array<OrgListOSKType>) => {
 
   const orgPosition = new Map(orgListOSK.map((org: OrgListOSKType, i: any) => {
     org.oid = `${org.oid}`;
-    return[`${org.oid}`, i];
+    return [`${org.oid}`, i];
   }));
   const orgMapListOSK = new Map([['281586771165316', 'ООО ОСК ИнфоТранс']]);
 
@@ -133,10 +177,11 @@ export const PipeOrgListOSK = (orgListOSK: Array<OrgListOSKType>) => {
   });
 
   const altOrgListOSK = JSON.parse(JSON.stringify(orgListOSK[0]));
-  altOrgListOSK.children = altOrgListOSK.children.filter((el: {zno: number}) => el.zno);
+  altOrgListOSK.children = altOrgListOSK.children.filter((el: { zno: number }) => el.zno);
 
   return {orgListOSK: orgListOSK[0], altOrgListOSK, orgMapListOSK};
 };
+
 export const PipeOrgListRZD = (orgListRZD: Array<OrgListRZDType>) => ({
   orgListRZD: {
     oid: '0',

@@ -48,13 +48,15 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
     localStorage.setItem(`hidden${line}Graph-${title}`, hidden ? '0' : '1');
     hider(!hidden);
   };
+
   const handleClickMenu = (event: MouseEvent<HTMLAnchorElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleCloseMenu = () => {
     setAnchorEl(null);
   };
-
+// console.log(data)
   return (
     <div className={classes.graphs} style={extendedStyle}>
       <div className={classes.headGraph}>
@@ -83,7 +85,7 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
       </div>
       <ResponsiveContainer>
         <ComposedChart data={data} margin={{top: 10, bottom: 30}}>
-          <XAxis dataKey='d' allowDataOverflow={false} tickCount={10} axisLine={false}/>
+          <XAxis dataKey='d' allowDataOverflow={false} axisLine={false}/>
           <YAxis style={hiddenVal ? {display: 'none'} : {}}
                  tickFormatter={tick => tick < 100
                    ? `${Math.round(tick / 10) * 10}`
@@ -96,14 +98,15 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                  axisLine={false}
                  stroke='#8884d8'/>
           <YAxis style={hiddenProc ? {display: 'none'} : {}}
-                 tickFormatter={tick => `${Math.round(tick * 10) / 10}`}
+                 tickFormatter={tick => tick.toFixed(1)}
                  yAxisId='right'
                  domain={['dataMin', 'dataMax']}
-                 tickCount={2}
+                 tickCount={3}
                  axisLine={false}
                  orientation='right'
                  stroke='#82ca9d'/>
-          <Tooltip labelFormatter={(label: string) => `Дата: ${label}`}
+          {/*<Tooltip labelFormatter={(label: string, payload: any) => `Период: ${payload[0]?.payload?.description}`}*/}
+          <Tooltip labelFormatter={(label: string) => `Период: ${label}`}
                    formatter={(value: any, name: any) => ([`${value}${name === 'p' ? ' %' : ' шт'}`])}/>
           <Line style={hiddenVal ? {display: 'none'} : {}}
                 yAxisId='left'
