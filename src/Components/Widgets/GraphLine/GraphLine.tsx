@@ -36,6 +36,7 @@ const CheckedValueGraph = forwardRef(({description, hidden, hideLineClick, line,
     </p>
   )
 });
+const monthsDict = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
 
 const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
   const {title, data} = graphLineData;
@@ -85,7 +86,10 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
       </div>
       <ResponsiveContainer>
         <ComposedChart data={data} margin={{top: 10, bottom: 30}}>
-          <XAxis dataKey='d' allowDataOverflow={false} axisLine={false}/>
+          <XAxis dataKey='d'
+                 tickFormatter={tick => monthsDict[Number(tick.slice(3,5) - 1)]}
+                 allowDataOverflow={false}
+                 axisLine={false} />
           <YAxis style={hiddenVal ? {display: 'none'} : {}}
                  tickFormatter={tick => tick < 100
                    ? `${Math.round(tick / 10) * 10}`

@@ -61,9 +61,11 @@ const CompressGraph = (graph: GraphLineType) => {
 
     if (iOfDays === 0 || firstDayOfPeriod === 1) {
       currDate.d += ` - ${stPeriod}`;
+
       if (numberOfPeriod) {
         currDate.p /= numberOfPeriod - iOfDays + 1;
       }
+
       stPeriod = null;
       numberOfPeriod = null;
     } else {
