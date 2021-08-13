@@ -48,7 +48,7 @@ const CompressGraph = (graph: GraphLineType) => {
   for (let iOfDays = graph.data.length - 1; iOfDays >= 0; iOfDays--) {
     const currDate = graph.data[iOfDays];
     const currFullDate = new Date(
-      2021,
+      Number(currDate.d.slice(6, 8)),
       Number(currDate.d.slice(3, 5)) - 1,
       Number(currDate.d.slice(0, 2))
     );

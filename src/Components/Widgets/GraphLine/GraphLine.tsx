@@ -36,7 +36,7 @@ const CheckedValueGraph = forwardRef(({description, hidden, hideLineClick, line,
     </p>
   )
 });
-const monthsDict = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
+const monthsDict = ['янв', 'фев', 'март', 'апр', 'май', 'июнь', 'июль', 'авг', 'сент', 'окт', 'нояб', 'дек'];
 
 const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
   const {title, data} = graphLineData;
