@@ -124,7 +124,10 @@ const Filters = ({
                         isFetchingWidgets={isFetchingWidgets}
           /></>
       }
-      <Button variant='outlined' onClick={requestSetFiltersDefault} disabled={isFetchingWidgets} href=''>
+      <Button variant='outlined'
+              onClick={requestSetFiltersDefault}
+              disabled={isFetchingWidgets}
+              href=''>
         сбросить фильтры
       </Button>
     </div>

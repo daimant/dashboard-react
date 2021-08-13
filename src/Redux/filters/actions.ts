@@ -43,8 +43,8 @@ export const setIsOrgRZD = (isOrgRZD: boolean): SetIsOrgRZD => ({type: SET_IS_OR
 
 export const requestOrg = (): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
   const response = await filtersAPI.getOrg();
-  dispatch(setOrgListOSK(PipeOrgListOSK(response[0].data)));
-  dispatch(setOrgListRZD(PipeOrgListRZD(response[1].data)));
+  dispatch(setOrgListOSK(PipeOrgListOSK(response[0]?.data)));
+  dispatch(setOrgListRZD(PipeOrgListRZD(response[1]?.data)));
 };
 export const requestWidgetsFromFilters = (
   oid: string, period: string, periodType: string, serviceOid: number, isOrgRZD: boolean

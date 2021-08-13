@@ -29,8 +29,13 @@ const CheckedValueGraph = forwardRef(({description, hidden, hideLineClick, line,
       ref={ref}
       onClick={() => hideLineClick(line, hidden, hider)}>
       {!hidden
-        ? <CheckBoxIcon className={classes.iconCheckBox} color='action' component={'svg'} fontSize={'small'}/>
-        : <CheckBoxOutlineBlankIcon className={classes.iconCheckBox} color='action' component={'svg'}
+        ? <CheckBoxIcon className={classes.iconCheckBox}
+                        color='action'
+                        component={'svg'}
+                        fontSize={'small'}/>
+        : <CheckBoxOutlineBlankIcon className={classes.iconCheckBox}
+                                    color='action'
+                                    component={'svg'}
                                     fontSize={'small'}/>
       } {description}
     </p>
@@ -57,39 +62,54 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
   const handleCloseMenu = () => {
     setAnchorEl(null);
   };
-// console.log(data)
+
   return (
     <div className={classes.graphs} style={extendedStyle}>
       <div className={classes.headGraph}>
-        <IconButton aria-controls='menu' className={classes.clickable} href={''} onClick={handleClickMenu}>
+        <IconButton aria-controls='menu'
+                    className={classes.clickable}
+                    href=''
+                    onClick={handleClickMenu}>
           <img src={SettingsIcon} alt=''/>
         </IconButton>
-        <Menu
-          className={classes.menu}
-          id='menu'
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleCloseMenu}
+        <Menu className={classes.menu}
+              id='menu'
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleCloseMenu}
         >
-          <CheckedValueGraph
-            description={'Количество'} hidden={hiddenVal} line={'Val'} hideLineClick={hideLineClick}
-            hider={setHiddenVal}/>
-          <CheckedValueGraph
-            description={'Значение'} hidden={hiddenProc} line={'Proc'} hideLineClick={hideLineClick}
-            hider={setHiddenProc}/>
-          <CheckedValueGraph
-            description={'Целевое значение'} hidden={hiddenTar} line={'Tar'} hideLineClick={hideLineClick}
-            hider={setHiddenTar}/>
+          <CheckedValueGraph description={'Количество'}
+                             hidden={hiddenVal}
+                             line={'Val'}
+                             hideLineClick={hideLineClick}
+                             hider={setHiddenVal}/>
+          <CheckedValueGraph description={'Значение'}
+                             hidden={hiddenProc}
+                             line={'Proc'}
+                             hideLineClick={hideLineClick}
+                             hider={setHiddenProc}/>
+          <CheckedValueGraph description={'Целевое значение'}
+                             hidden={hiddenTar}
+                             line={'Tar'}
+                             hideLineClick={hideLineClick}
+                             hider={setHiddenTar}/>
         </Menu>
         <h3 className={classes.title}>{title}</h3>
       </div>
       <ResponsiveContainer>
-        <ComposedChart data={data} margin={{top: 10, bottom: 30}}>
+        <ComposedChart data={data}
+                       margin={{top: 10, bottom: 30}}
+                       style={!data.length ? {display: 'none'} : {}}>
           <XAxis dataKey='d'
-                 tickFormatter={tick => tick.indexOf('-') < 0 ? tick : monthsDict[Number(tick.slice(3,5) - 1)]}
+                 tickFormatter={tick => {
+                   if (typeof tick !== 'string') {
+                     tick = `${tick}`;
+                   }
+                   return tick.indexOf('-') > -1 ? monthsDict[Number(tick.slice(3, 5) - 1)] : tick;
+                 }}
                  allowDataOverflow={false}
-                 axisLine={false} />
+                 axisLine={false}/>
           <YAxis style={hiddenVal ? {display: 'none'} : {}}
                  tickFormatter={tick => tick < 100
                    ? `${Math.round(tick / 10) * 10}`
@@ -110,7 +130,7 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                  orientation='right'
                  stroke='#82ca9d'/>
           {/*<Tooltip labelFormatter={(label: string, payload: any) => `Период: ${payload[0]?.payload?.description}`}*/}
-          <Tooltip labelFormatter={(label: string) => `${label.indexOf('-') > 0 ? 'Период' : 'Дата'}: ${label}`}
+          <Tooltip labelFormatter={label => `${label.indexOf('-') > 0 ? 'Период' : 'Дата'}: ${label}`}
                    formatter={(value: any, name: any) => ([`${value}${name === 'p' ? ' %' : ' шт'}`])}/>
           <Line style={hiddenVal ? {display: 'none'} : {}}
                 yAxisId='left'
@@ -124,8 +144,12 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                 dataKey='p'
                 stroke='#82ca9d'
                 strokeWidth={2}/>
-          <ReferenceLine y={98} stroke='#FF0000' yAxisId='right' style={hiddenTar ? {display: 'none'} : {}}
-                         strokeDasharray='3 3' ifOverflow='extendDomain'/>
+          <ReferenceLine y={98}
+                         stroke='#FF0000'
+                         yAxisId='right'
+                         style={hiddenTar ? {display: 'none'} : {}}
+                         strokeDasharray='3 3'
+                         ifOverflow='extendDomain'/>
         </ComposedChart>
       </ResponsiveContainer>
     </div>

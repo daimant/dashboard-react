@@ -113,8 +113,11 @@ const MenuTreeList = ({
 
   return (
     <div>
-      <Button aria-controls='menu' variant='outlined' onClick={handleClick} disabled={isFetchingWidgets}
-              href={''}>
+      <Button aria-controls='menu'
+              variant='outlined'
+              onClick={handleClick}
+              disabled={isFetchingWidgets}
+              href=''>
         {title}
       </Button>
       <Menu

@@ -11,10 +11,10 @@ import {
 export const PipeKPK = (kpk: RawKPKType) => {
   if (!kpk) return kpk;
 
-  const parsedKPK = kpk.data.map((row) => {
+  const parsedKPK = kpk.data?.map((row) => {
     const newRow: { [index: string]: string | number } = {};
 
-    kpk.name_col.forEach((colName, i) => {
+    kpk.name_col?.forEach((colName, i) => {
       let currColVal = row[i];
 
       if ((colName === 'Значение' || colName[0] === 'k') && currColVal !== '-') {
@@ -80,8 +80,8 @@ const CompressGraph = (graph: GraphLineType) => {
 
 export const PipeGraphLine = (graphs: GraphLineType[]) => {
   return !graphs ? [] : graphs.map(graph => {
-    if (!graph) {
-      graph = {title: 'Ошибка при загрузке', data: []};
+    if (!graph || !graph.data?.length) {
+      graph = {title: `${graph?.title ? `${graph?.title} - ` : ''}Ошибка при загрузке`, data: []};
       return graph;
     }
 
@@ -108,19 +108,19 @@ export const PipeGraphArea = (graphs: RawGraphAreaType[]) => {
   if (!graphs) return [];
 
   return graphs.map((curGraph) => {
-    const [p1Name, p2Name, p3Name] = getNamesForPipeGraphArea(curGraph.title);
-
     if (!curGraph) {
       return {
         title: 'Ошибка при загрузке',
         percents: {
-          p1: p1Name,
-          p2: p2Name,
-          p3: p3Name,
+          p1: '',
+          p2: '',
+          p3: '',
         },
         data: [],
       }
     }
+
+    const [p1Name, p2Name, p3Name] = getNamesForPipeGraphArea(curGraph.title);
 
     return {
       title: curGraph.title,
@@ -140,8 +140,8 @@ export const PipeGraphArea = (graphs: RawGraphAreaType[]) => {
 };
 
 export const PipeTodays = (todays: TodaysType[]) => todays.map(today => {
-  if (today.v1 === null || today.p === null)
-    today = {title: 'Ошибка при загрузке', v1: 0, p: 0, err: true};
+  if (!today || today.v1 === null || today.p === null)
+    today = {title: '', v1: 0, p: 0, err: true};
   else if (today.p <= 1)
     today.p = +(today.p * 100).toFixed(1);
   return today;
@@ -192,8 +192,8 @@ export const PipeOrgListRZD = (orgListRZD: OrgListRZDType[]) => ({
   orgListRZD: {
     oid: '0',
     name: 'ОАО РЖД',
-    children: orgListRZD.map(org => ({name: org.name, oid: `${org.oid}`, children: []}))
+    children: orgListRZD ? orgListRZD.map(org => ({name: org.name, oid: `${org.oid}`, children: []})) : []
   },
-  orgMapListRZD: new Map(orgListRZD.map(org => [`${org.oid}`, org.name])).set('0', 'ОАО РЖД')
+  orgMapListRZD: new Map(orgListRZD ? orgListRZD.map(org => [`${org.oid}`, org.name]) : []).set('0', 'ОАО РЖД')
 });
 

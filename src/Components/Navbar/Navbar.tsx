@@ -91,23 +91,25 @@ const Navbar = ({
       </div>
       <div>
         <span>Пользователь</span>
-        <IconButton
-          aria-label='more'
-          aria-controls='long-menu'
-          aria-haspopup='true'
-          onClick={handleClick}
-          href={''}>
+        <IconButton aria-label='more'
+                    aria-controls='long-menu'
+                    aria-haspopup='true'
+                    onClick={handleClick}
+                    href=''>
           <MenuIcon component={'svg'}/>
         </IconButton>
-        <Menu
-          id='long-menu'
-          anchorEl={anchorEl}
-          keepMounted
-          open={open}
-          onClose={handleClose}
+        <Menu id='long-menu'
+              anchorEl={anchorEl}
+              keepMounted
+              open={open}
+              onClose={handleClose}
         >
           {options.map((option) => (
-            <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose} button={true} component={'li'}>
+            <MenuItem key={option}
+                      selected={option === 'Pyxis'}
+                      onClick={handleClose}
+                      button={true}
+                      component={'li'}>
               {option}
             </MenuItem>
           ))}

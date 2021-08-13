@@ -81,7 +81,7 @@ const nameColsDetails = {
 const KPKTable = ({kpk, requestServicesChild, removeServicesChild, orgOid, period, periodType, isOrgRZD}: PropsType) => {
   const [hiddenUnusedKPK, setHiddenUnusedKPK] = useState(localStorage.getItem('KPKRowHidden') === '1' || false);
 
-  if (!kpk?.cols?.length)
+  if (!kpk?.cols?.length || !kpk?.rows?.length)
     return (
       <div className={cn(classes.kpkTable, classes.cell)}>
         <FetchError/>
