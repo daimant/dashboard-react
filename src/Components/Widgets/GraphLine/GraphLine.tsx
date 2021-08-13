@@ -87,7 +87,7 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
       <ResponsiveContainer>
         <ComposedChart data={data} margin={{top: 10, bottom: 30}}>
           <XAxis dataKey='d'
-                 tickFormatter={tick => monthsDict[Number(tick.slice(3,5) - 1)]}
+                 tickFormatter={tick => tick.indexOf('-') < 0 ? tick : monthsDict[Number(tick.slice(3,5) - 1)]}
                  allowDataOverflow={false}
                  axisLine={false} />
           <YAxis style={hiddenVal ? {display: 'none'} : {}}
@@ -110,7 +110,7 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                  orientation='right'
                  stroke='#82ca9d'/>
           {/*<Tooltip labelFormatter={(label: string, payload: any) => `Период: ${payload[0]?.payload?.description}`}*/}
-          <Tooltip labelFormatter={(label: string) => `Период: ${label}`}
+          <Tooltip labelFormatter={(label: string) => `${label.indexOf('-') > 0 ? 'Период' : 'Дата'}: ${label}`}
                    formatter={(value: any, name: any) => ([`${value}${name === 'p' ? ' %' : ' шт'}`])}/>
           <Line style={hiddenVal ? {display: 'none'} : {}}
                 yAxisId='left'

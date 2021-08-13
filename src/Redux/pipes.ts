@@ -38,7 +38,7 @@ export const PipeKPK = (kpk: RawKPKType) => {
 };
 
 const CompressGraph = (graph: GraphLineType) => {
-  if (graph.data.length < 14) return graph;
+  if (graph.data.length <= 21) return graph;
 
   const currCompressType = graph.data.length < 6 * 30 ? 'week' : 'month';
 
