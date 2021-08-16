@@ -130,8 +130,9 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                  orientation='right'
                  stroke='#82ca9d'/>
           {/*<Tooltip labelFormatter={(label: string, payload: any) => `Период: ${payload[0]?.payload?.description}`}*/}
-          <Tooltip labelFormatter={label => `${label.indexOf('-') > 0 ? 'Период' : 'Дата'}: ${label}`}
-                   formatter={(value: any, name: any) => ([`${value}${name === 'p' ? ' %' : ' шт'}`])}/>
+          <Tooltip
+            labelFormatter={label => `${typeof label === 'string' && label.indexOf('-') > 0 ? 'Период' : 'Дата'}: ${label}`}
+            formatter={(value: any, name: any) => ([`${value}${name === 'p' ? ' %' : ' шт'}`])}/>
           <Line style={hiddenVal ? {display: 'none'} : {}}
                 yAxisId='left'
                 type='monotone'
