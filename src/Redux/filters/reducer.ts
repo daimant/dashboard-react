@@ -126,7 +126,8 @@ const initialStateFilters = {
   orgName: localStorage.getItem('orgName') || defaultFilters.orgName as string,
   period: localStorage.getItem('period') || defaultFilters.period as string,
   periodType: localStorage.getItem('periodType') || defaultFilters.periodType as string,
-  showFilters: localStorage.getItem('showFilters') === 'true' ? true : false as boolean,
+  showFilters: localStorage.getItem('showFilters') === 'true'
+  || localStorage.getItem('showFilters') === null ? true : false as boolean,
   isOrgRZD: localStorage.getItem('isOrgRZD') === 'true' ? true : false as boolean,
   serviceOid: Number(localStorage.getItem('serviceOid')) || defaultFilters.serviceOid as number,
   /*  ktl: {
