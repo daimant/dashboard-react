@@ -11,7 +11,7 @@ type GetWidgetsType = {
   numSC: number[]
   numTodays: number[]
   numTops: number[]
-  serviceOid: number
+  serviceOid: string
   isOrgRZD: boolean
 }
 
@@ -19,7 +19,7 @@ const apiWidgetsProd = {
   getWidgets: ({orgOid, period, periodType, serviceOid, numSC, numTodays, numTops, isOrgRZD}: GetWidgetsType) => {
     const payload = {
       'org_oid': Number(orgOid),
-      'srv_oid': serviceOid,
+      'srv_oid': Number(serviceOid),
       'period': period,
       'period_type': periodType,
       'ktl': {

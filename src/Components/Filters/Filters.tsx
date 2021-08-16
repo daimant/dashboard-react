@@ -23,7 +23,7 @@ import {
   selectPeriodType,
   selectPerList,
   selectServiceOid,
-  selectShowFilters
+  selectShowFilters,
 } from '../../Redux/selectors';
 import {connect} from 'react-redux';
 import {
@@ -47,13 +47,13 @@ type MapStatePropsType = {
   period: string
   periodType: string
   showFilters: boolean
-  serviceOid: number
+  serviceOid: string
   isOrgRZD: boolean
 };
 
 type MapDispatchPropsType = {
   requestOrg: () => void
-  requestWidgetsFromFilters: (oid: string, period: string, periodType: string, serviceOid: number, isOrgRZD: boolean) => void
+  requestWidgetsFromFilters: (oid: string, period: string, periodType: string, isOrgRZD: boolean) => void
   setPeriod: (per: string) => void
   setOrgOid: (oid: string) => void
   requestSetFiltersDefault: () => void
@@ -80,7 +80,7 @@ const Filters = ({
   if (isFetchingFilters) return <Preloader/>;
 
   const acceptFilters = (type: string = 'def', selected: any = '') => {
-    const [newPeriodType, newPeriod] = type === 'период' ? selected.split(':') : ['', ''];
+    const [newPeriodType, newPeriod] = (type === 'период') ? selected.split(':') : ['', ''];
     let newIsOrgRZD = isOrgRZD;
 
     if (type !== 'период') {
@@ -94,7 +94,6 @@ const Filters = ({
       type === 'оргструктура' ? selected : orgOid,
       type === 'период' ? newPeriod : period,
       type === 'период' ? newPeriodType : periodType,
-      serviceOid,
       newIsOrgRZD
     );
   };
@@ -112,8 +111,7 @@ const Filters = ({
                           period={period}
                           periodType={periodType}
                           acceptFilters={acceptFilters}
-                          isFetchingWidgets={isFetchingWidgets}
-        />
+                          blockedButton={(isFetchingWidgets || serviceOid !== '0')}/>
           <MenuTreeList treeList={perList}
                         altOrgListOSK={{}}
                         orgListRZD={{}}
@@ -123,8 +121,7 @@ const Filters = ({
                         period={period}
                         periodType={periodType}
                         acceptFilters={acceptFilters}
-                        isFetchingWidgets={isFetchingWidgets}
-          /></>
+                        blockedButton={(isFetchingWidgets || serviceOid !== '0')}/></>
       }
       <Button variant='outlined'
               onClick={requestSetFiltersDefault}

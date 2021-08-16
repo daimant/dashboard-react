@@ -23,9 +23,9 @@ type PropsType = {
   kpk: KPKType
   isOrgRZD: boolean
 
-  requestServicesChild: (orgOid: string, period: string, periodType: string, serviceOid: number, isOrgRZD: boolean) => void
+  requestServicesChild: (orgOid: string, period: string, periodType: string, isOrgRZD: boolean, serviceOid: string) => void
   removeServicesChild: () => void
-  setServiceOid: (serviceOid?: number) => void
+  setServiceOid: (serviceOid?: string) => void
 }
 
 type CheckedValueKPKType = {
@@ -100,9 +100,9 @@ const KPKTable = ({
     setHiddenUnusedKPK(!hiddenUnusedKPK);
   };
 
-  const clickRequestServicesChild = (newServiceOid: number) => {
+  const clickRequestServicesChild = (newServiceOid: string) => {
     setServiceOid(newServiceOid);
-    requestServicesChild(orgOid, period, periodType, newServiceOid, isOrgRZD);
+    requestServicesChild(orgOid, period, periodType, isOrgRZD, newServiceOid);
   };
 
   const clickRemoveServicesChild = () => {

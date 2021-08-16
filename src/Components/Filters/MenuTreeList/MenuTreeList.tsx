@@ -19,7 +19,7 @@ type PropsType = {
   orgOid: string
   period: string
   periodType: string
-  isFetchingWidgets: boolean
+  blockedButton: boolean
 
   setter: (oid: string) => void
   acceptFilters: (type: string, selected: any) => void
@@ -51,7 +51,7 @@ const renderTree = ({tree, handleSelect, handleExpand}: RenderTreePropsType) => 
 
 const MenuTreeList = ({
                         treeList, altOrgListOSK, orgListRZD, title, orgOid, period, periodType, setter, acceptFilters,
-                        isFetchingWidgets
+                        blockedButton
                       }: PropsType) => {
   const [expanded, setExpanded] = useState<string[]>(title === 'период'
     ? [treeList.oid, ...treeList.children.map((org: any) => org.oid)]
@@ -123,7 +123,7 @@ const MenuTreeList = ({
       <Button aria-controls='menu'
               variant='outlined'
               onClick={handleClick}
-              disabled={isFetchingWidgets}
+              disabled={blockedButton}
               href=''>
         {title}
       </Button>

@@ -29,7 +29,7 @@ type ActionsFiltersType = {
   orgOid: string
   per: string
   isOrgRZD: boolean
-  serviceOid?: number
+  serviceOid?: string
 };
 
 type InitialStateFiltersType = typeof initialStateFilters;
@@ -110,7 +110,6 @@ export const defaultFilters = {
   period: `${new Date().getFullYear()}-${new Date().getMonth() - 1 < 10 ? `0${new Date().getMonth() + 1}` : new Date().getMonth() + 1}`,
   periodType: 'm',
   isOrgRZD: false,
-  serviceOid: 0,
 };
 
 const initialStateFilters = {
@@ -129,7 +128,7 @@ const initialStateFilters = {
   showFilters: localStorage.getItem('showFilters') === 'true'
   || localStorage.getItem('showFilters') === null ? true : false as boolean,
   isOrgRZD: localStorage.getItem('isOrgRZD') === 'true' ? true : false as boolean,
-  serviceOid: Number(localStorage.getItem('serviceOid')) || defaultFilters.serviceOid as number,
+  serviceOid: '0' as string,
   /*  ktl: {
       kaAtr: 'ka', // or mct
       ktlOid: '281586771165316',
@@ -206,7 +205,6 @@ const actionHandlerFilters: any = {
     localStorage.removeItem('periodType');
     localStorage.removeItem('orgName');
     localStorage.removeItem('isOrgRZD');
-    localStorage.removeItem('serviceOid');
     return {
       ...state,
       orgOid: defaultFilters.orgOid,
@@ -214,7 +212,6 @@ const actionHandlerFilters: any = {
       periodType: defaultFilters.periodType,
       orgName: defaultFilters.orgName,
       isOrgRZD: defaultFilters.isOrgRZD,
-      serviceOid: defaultFilters.serviceOid,
     };
   },
 
@@ -232,11 +229,11 @@ const actionHandlerFilters: any = {
   }),
 
   [SET_SERVICE_OID]: (state: InitialStateFiltersType, action: ActionsFiltersType) => {
-    localStorage.setItem('serviceOid', `${action.serviceOid ? action.serviceOid : 0}`);
     return {
       ...state,
-      serviceOid: (action.serviceOid ? action.serviceOid : 0)
-    }},
+      serviceOid: (action.serviceOid ? action.serviceOid : '0')
+    }
+  },
 };
 
 const filtersReducer = (state = initialStateFilters, action: ActionsFiltersType): InitialStateFiltersType => {
