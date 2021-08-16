@@ -25,6 +25,7 @@ type PropsType = {
 
   requestServicesChild: (orgOid: string, period: string, periodType: string, serviceOid: number, isOrgRZD: boolean) => void
   removeServicesChild: () => void
+  setServiceOid: (serviceOid?: number) => void
 }
 
 type CheckedValueKPKType = {
@@ -75,10 +76,12 @@ const nameColsDetails = {
   k2: 'Оперативность',
   k3: 'Качество работы',
   k4: 'Удовлетворенность',
-  k5: 'ППР'
+  k5: 'ППР',
 };
 
-const KPKTable = ({kpk, requestServicesChild, removeServicesChild, orgOid, period, periodType, isOrgRZD}: PropsType) => {
+const KPKTable = ({
+                    kpk, requestServicesChild, removeServicesChild, orgOid, period, periodType, isOrgRZD, setServiceOid
+                  }: PropsType) => {
   const [hiddenUnusedKPK, setHiddenUnusedKPK] = useState(localStorage.getItem('KPKRowHidden') === '1' || false);
 
   if (!kpk?.cols?.length || !kpk?.rows?.length)
@@ -97,10 +100,24 @@ const KPKTable = ({kpk, requestServicesChild, removeServicesChild, orgOid, perio
     setHiddenUnusedKPK(!hiddenUnusedKPK);
   };
 
+  const clickRequestServicesChild = (newServiceOid: number) => {
+    setServiceOid(newServiceOid);
+    requestServicesChild(orgOid, period, periodType, newServiceOid, isOrgRZD);
+  };
+
+  const clickRemoveServicesChild = () => {
+    setServiceOid();
+    removeServicesChild();
+  };
+
   return (
     <div className={classes.kpkTable}>
-      <TableContainer component={Paper} className={classes.tableContainer}>
-        <Table size='small' stickyHeader aria-label='a dense table' component={'table'}>
+      <TableContainer component={Paper}
+                      className={classes.tableContainer}>
+        <Table size='small'
+               stickyHeader
+               aria-label='a dense table'
+               component={'table'}>
           <TableHead component={'thead'}>
             <TableRow component={'tr'}>
               <TableCell className={classes.cell}>
@@ -108,10 +125,15 @@ const KPKTable = ({kpk, requestServicesChild, removeServicesChild, orgOid, perio
                   {colsHead === 'Услуга' || colsHead === 'Ошибка при загрузке'
                     ? <span>{colsHead}</span>
                     : <span className={classes.tableHead}>
-                        <CloseIcon fontSize='small' onClick={removeServicesChild} component={'svg'}/>{colsHead}
+                        <CloseIcon fontSize='small'
+                                   onClick={clickRemoveServicesChild}
+                                   component={'svg'}/>
+                      {colsHead}
                       </span>
                   }
-                  <CheckedValueKPK hidden={hiddenUnusedKPK} requestSetHiddenUnusedKPK={requestSetHiddenUnusedKPK}/>
+                  <CheckedValueKPK
+                    hidden={hiddenUnusedKPK}
+                    requestSetHiddenUnusedKPK={requestSetHiddenUnusedKPK}/>
                 </div>
               </TableCell>
               <TableCell className={classes.cell}>{value}</TableCell>
@@ -125,11 +147,13 @@ const KPKTable = ({kpk, requestServicesChild, removeServicesChild, orgOid, perio
                         className={cn({[classes.clickable]: row[value] !== '-' && colsHead === 'Услуга'})}
                         onClick={() => {
                           if (row[value] !== '-' && colsHead === 'Услуга') {
-                            requestServicesChild(orgOid, period, periodType, row[id], isOrgRZD)
+                            clickRequestServicesChild(row[id]);
                           }
                         }}
               >
-                <TableCell component='th' scope='row' className={classes.cell}>{
+                <TableCell component='th'
+                           scope='row'
+                           className={classes.cell}>{
                   row[colsHead]
                 }</TableCell>
                 <LightTooltip

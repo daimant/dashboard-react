@@ -16,11 +16,13 @@ import {
   selectIsFetchingWidgets,
   selectIsOrgRZD,
   selectOrgListOSK,
-  selectOrgListRZD, selectOrgMapListOSK,
+  selectOrgListRZD,
+  selectOrgMapListOSK,
   selectOrgOid,
   selectPeriod,
   selectPeriodType,
-  selectPerList, selectServiceOid,
+  selectPerList,
+  selectServiceOid,
   selectShowFilters
 } from '../../Redux/selectors';
 import {connect} from 'react-redux';
@@ -158,7 +160,7 @@ const mapDispatch = {
   setPeriod,
   setOrgOid,
   requestSetFiltersDefault,
-  setIsOrgRZD
+  setIsOrgRZD,
 };
 
 export default connect<MapStatePropsType, MapDispatchPropsType, {}, RootStateType>(mapState, mapDispatch)(Filters);

@@ -11,6 +11,7 @@ import {
   SET_ORG_NAME,
   SET_ORG_OID,
   SET_PERIOD,
+  SET_SERVICE_OID,
   SET_SHOW_FILTERS
 } from './action-types';
 
@@ -28,6 +29,7 @@ type ActionsFiltersType = {
   orgOid: string
   per: string
   isOrgRZD: boolean
+  serviceOid?: number
 };
 
 type InitialStateFiltersType = typeof initialStateFilters;
@@ -199,16 +201,19 @@ const actionHandlerFilters: any = {
 
   [SET_FILTERS_DEFAULT]: (state: InitialStateFiltersType) => {
     localStorage.removeItem('orgOid');
-    localStorage.removeItem('periodType');
     localStorage.removeItem('period');
+    localStorage.removeItem('periodType');
     localStorage.removeItem('orgName');
     localStorage.removeItem('isOrgRZD');
+    localStorage.removeItem('serviceOid');
     return {
       ...state,
       orgOid: defaultFilters.orgOid,
       period: defaultFilters.period,
       periodType: defaultFilters.periodType,
-      isOrgRZD: defaultFilters.isOrgRZD
+      orgName: defaultFilters.orgName,
+      isOrgRZD: defaultFilters.isOrgRZD,
+      serviceOid: defaultFilters.serviceOid,
     };
   },
 
@@ -223,7 +228,14 @@ const actionHandlerFilters: any = {
   [SET_IS_ORG_RZD]: (state: InitialStateFiltersType, action: ActionsFiltersType) => ({
     ...state,
     isOrgRZD: !action.isOrgRZD
-  })
+  }),
+
+  [SET_SERVICE_OID]: (state: InitialStateFiltersType, action: ActionsFiltersType) => {
+    localStorage.setItem('serviceOid', `${action.serviceOid ? action.serviceOid : 0}`);
+    return {
+      ...state,
+      serviceOid: (action.serviceOid ? action.serviceOid : 0)
+    }},
 };
 
 const filtersReducer = (state = initialStateFilters, action: ActionsFiltersType): InitialStateFiltersType => {

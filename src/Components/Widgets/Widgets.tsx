@@ -32,6 +32,7 @@ import {
   requestServicesChild,
   requestWidgets
 } from '../../Redux/widgets';
+import {setServiceOid} from "../../Redux/filters/actions";
 
 type MapStatePropsType = {
   kpk: KPKType
@@ -53,13 +54,15 @@ type MapDispatchPropsType = {
   requestWidgets: (orgOid: string, period: string, periodType: string, serviceOid: number, isOrgRZD: boolean) => void
   requestServicesChild: (orgOid: string, period: string, periodType: string, serviceOid: number, isOrgRZD: boolean) => void
   removeServicesChild: () => void
+  setServiceOid: (serviceOid?: number) => void
 }
 
 type PropsType = MapStatePropsType & MapDispatchPropsType;
 
 const Widgets = ({
                    kpk, kpkChild, sc, scChild, todays, todaysChild, isFetchingWidgets, requestServicesChild,
-                   removeServicesChild, orgOid, period, periodType, tops, isOrgRZD, requestWidgets, serviceOid
+                   removeServicesChild, orgOid, period, periodType, tops, isOrgRZD, requestWidgets, serviceOid,
+                   setServiceOid
                  }: PropsType) => {
 
   useEffect(() => {
@@ -78,7 +81,8 @@ const Widgets = ({
                   orgOid={orgOid}
                   period={period}
                   periodType={periodType}
-                  isOrgRZD={isOrgRZD}/>
+                  isOrgRZD={isOrgRZD}
+                  setServiceOid={setServiceOid}/>
         <div className={classes.graphs}>
           <h4 className={classes.headCircularBar}>СЕГОДНЯ</h4>
           {(todaysChild.length ? todaysChild : todays).map((el: TodaysType) =>
@@ -117,7 +121,7 @@ const mapState = (state: RootStateType): MapStatePropsType => ({
   period: selectPeriod(state),
   periodType: selectPeriodType(state),
   serviceOid: selectServiceOid(state),
-  isOrgRZD: selectIsOrgRZD(state)
+  isOrgRZD: selectIsOrgRZD(state),
   /*
     inf: selectInf(state),
   */
@@ -126,7 +130,8 @@ const mapState = (state: RootStateType): MapStatePropsType => ({
 const mapDispatch = {
   removeServicesChild,
   requestServicesChild,
-  requestWidgets
+  requestWidgets,
+  setServiceOid,
 };
 
 export default connect<MapStatePropsType, MapDispatchPropsType, {}, RootStateType>(mapState, mapDispatch)(Widgets);

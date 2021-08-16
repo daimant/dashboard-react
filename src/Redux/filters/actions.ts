@@ -16,6 +16,7 @@ import {
   SET_ORG_NAME,
   SET_ORG_OID,
   SET_PERIOD,
+  SET_SERVICE_OID,
   SET_SHOW_FILTERS
 } from './action-types';
 
@@ -27,6 +28,7 @@ type SetOrgNameACType = { type: typeof SET_ORG_NAME, orgOid: string };
 type SetFiltersDefaultACType = { type: typeof SET_FILTERS_DEFAULT };
 type SetShowFiltersACType = { type: typeof SET_SHOW_FILTERS };
 type SetIsOrgRZD = { type: typeof SET_IS_ORG_RZD, isOrgRZD: boolean };
+type SetServiceOid = { type: typeof SET_SERVICE_OID, serviceOid?: number };
 
 const setOrgListOSK = (orgListOSK: object): SetOrgListOSKACType => ({type: SET_ORG_LIST_OSK, orgListOSK});
 const setOrgListRZD = (orgListRZD: object): SetOrgListRZDACType => ({type: SET_ORG_LIST_RZD, orgListRZD});
@@ -41,6 +43,8 @@ export const setShowFilters = (): SetShowFiltersACType => ({type: SET_SHOW_FILTE
 
 export const setIsOrgRZD = (isOrgRZD: boolean): SetIsOrgRZD => ({type: SET_IS_ORG_RZD, isOrgRZD});
 
+export const setServiceOid = (serviceOid?: number): SetServiceOid => ({type: SET_SERVICE_OID, serviceOid});
+
 export const requestOrg = (): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
   const response = await filtersAPI.getOrg();
   dispatch(setOrgListOSK(PipeOrgListOSK(response[0]?.data)));
@@ -50,7 +54,7 @@ export const requestWidgetsFromFilters = (
   oid: string, period: string, periodType: string, serviceOid: number, isOrgRZD: boolean
 ): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
   dispatch(requestWidgets(oid, period, periodType, serviceOid, isOrgRZD));
-  dispatch(setOrgName(oid))
+  dispatch(setOrgName(oid));
 };
 export const requestSetFiltersDefault = (): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
   dispatch(requestWidgets(defaultFilters.orgOid, defaultFilters.period, defaultFilters.periodType, defaultFilters.serviceOid, defaultFilters.isOrgRZD));
