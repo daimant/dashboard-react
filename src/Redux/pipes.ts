@@ -87,10 +87,21 @@ export const PipeGraphLine = (graphs: GraphLineType[]) => {
 
     CompressGraph(graph);
 
+    let sumVal = 0;
+    let countProc = 0;
+    let sumProc = 0;
+
     graph.data = graph.data.map(day => {
+      sumVal += day.v1;
+      sumProc += day.p;
+      countProc++;
+
       day.p = Number((Number(day.p) * 100).toFixed(2));
       return day;
     });
+
+    graph.sumVal = sumVal;
+    graph.avrProc = Number((Number(sumProc / countProc) * 100).toFixed(2));
 
     return graph;
   });

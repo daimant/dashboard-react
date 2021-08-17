@@ -32,6 +32,8 @@ export type GraphLineType = {
   id?: number
   title: string
   data: GraphLineElementsType[]
+  sumVal?: number
+  avrProc?: number
 };
 
 type GraphLineElementsType = {

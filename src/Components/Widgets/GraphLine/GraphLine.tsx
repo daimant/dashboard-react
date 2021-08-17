@@ -25,7 +25,7 @@ type PropsType = {
 const CheckedValueGraph = forwardRef(({description, hidden, hideLineClick, line, hider}: CheckedValueGraphType, ref: any) => {
   return (
     <p
-      className={cn(classes.checkBoxGroup, classes.clickable, classes.unselectable, classes[`color${line}`])}
+      className={cn(classes.propertiesGroup, classes.clickable, classes.unselectable, classes[`color${line}`])}
       ref={ref}
       onClick={() => hideLineClick(line, hidden, hider)}>
       {!hidden
@@ -44,7 +44,7 @@ const CheckedValueGraph = forwardRef(({description, hidden, hideLineClick, line,
 const monthsDict = ['янв', 'фев', 'март', 'апр', 'май', 'июнь', 'июль', 'авг', 'сент', 'окт', 'нояб', 'дек'];
 
 const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
-  const {title, data} = graphLineData;
+  const {title, data, sumVal, avrProc} = graphLineData;
   const [hiddenVal, setHiddenVal] = useState(localStorage.getItem(`hiddenValGraph-${title}`) === '1' || false);
   const [hiddenProc, setHiddenProc] = useState(localStorage.getItem(`hiddenProcGraph-${title}`) === '1' || false);
   const [hiddenTar, setHiddenTar] = useState(localStorage.getItem(`hiddenTarGraph-${title}`) === '1' || false);
@@ -94,6 +94,8 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                              line={'Tar'}
                              hideLineClick={hideLineClick}
                              hider={setHiddenTar}/>
+          {sumVal && <p className={classes.propertiesGroup}>Общее количество за период: {sumVal} шт</p>}
+          {avrProc && <p className={classes.propertiesGroup}>Средний процент за период: {avrProc} %</p>}
         </Menu>
         <h3 className={classes.title}>{title}</h3>
       </div>
