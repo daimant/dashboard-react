@@ -108,7 +108,7 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                    if (typeof tick !== 'string') {
                      tick = `${tick}`;
                    }
-                   return tick.indexOf('-') > -1 ? monthsDict[Number(tick.slice(3, 5) - 1)] : tick;
+                   return tick.indexOf('-') > -1 ? monthsDict[Number(tick.slice(3, 5) - 1)] : tick.slice(0,5);
                  }}
                  allowDataOverflow={false}
                  axisLine={false}/>
