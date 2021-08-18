@@ -49,6 +49,30 @@ const renderTree = ({tree, handleSelect, handleExpand}: RenderTreePropsType) => 
   </TreeItem>
 );
 
+const useStylesCommon = makeStyles({
+  toggle: {
+    '& .Mui-checked + .MuiSwitch-track': {
+      backgroundColor: '#e21a1a',
+      opacity: 1,
+    },
+  },
+});
+
+const SwitchGroup = ({changer, checked, description}: { changer: () => void, checked: boolean, description: string }) => {
+  const classesMUISwitchGroup = useStylesCommon();
+
+  return <FormControlLabel
+    control={<Switch size='medium'
+                     checked={checked}
+                     onChange={changer}
+                     color='default'
+                     className={classesMUISwitchGroup.toggle}
+    />}
+    labelPlacement='start'
+    label={description}
+  />
+};
+
 const MenuTreeList = ({
                         treeList, altOrgListOSK, orgListRZD, title, orgOid, period, periodType, setter, acceptFilters,
                         blockedButton
@@ -70,11 +94,6 @@ const MenuTreeList = ({
     },
     menu: {
       margin: `${title === 'оргструктура' ? '8vh' : '14vh'} ${title === 'оргструктура' ? '6.5vw' : '4vw'}`,
-    },
-    toggle: {
-      '& .Mui-checked + .MuiSwitch-track': {
-        backgroundColor: '#52d869'
-      },
     },
   });
 
@@ -134,31 +153,18 @@ const MenuTreeList = ({
             open={Boolean(anchorEl)}
             onClose={handleClose}
       >
-        {title === 'оргструктура' && <div className={classes.selectParams}>
+        {title === 'оргструктура' &&
+        <div className={classes.selectParams}>
           <span>
-            <FormControlLabel
-                control={<Switch size='medium'
-                                 checked={checkedInfotransRZD}
-                                 onChange={toggleCheckedInfotransRZD}
-                                 color='default'
-                                 className={classesMUI.toggle}
-                />}
-                labelPlacement='start'
-                label={`Оргструктура Инфотранс / РЖД`}
-            />
+            <SwitchGroup changer={toggleCheckedInfotransRZD}
+                         checked={checkedInfotransRZD}
+                         description={`Оргструктура Инфотранс / РЖД`}/>
           </span>
             <span>
             {!checkedInfotransRZD &&
-            <FormControlLabel
-                control={<Switch size='medium'
-                                 checked={checkedOSKZNO}
-                                 onChange={toggleCheckedOSKZNO}
-                                 color='default'
-                                 className={classesMUI.toggle}
-                />}
-                labelPlacement='start'
-                label={`Все организации / Организации выполняющие ЗНО`}
-            />}
+            <SwitchGroup changer={toggleCheckedOSKZNO}
+                         checked={checkedOSKZNO}
+                         description={`Все организации / Организации выполняющие ЗНО`}/>}
           </span>
         </div>}
         <TreeView className={classesMUI.tree}

@@ -75,7 +75,6 @@ const apiFiltersDev = {
   }
 };
 
-//@ts-ignore
-export const widgetsAPI = modeProd ? apiWidgetsProd : apiWidgetsDev;//@ts-ignore
+export const widgetsAPI = modeProd ? apiWidgetsProd : apiWidgetsDev;
 export const filtersAPI = modeProd ? apiFiltersProd : apiFiltersDev;
 

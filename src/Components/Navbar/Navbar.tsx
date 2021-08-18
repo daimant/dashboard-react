@@ -64,8 +64,7 @@ const Navbar = ({
     setShowFilters();
   };
   const currMapList = isOrgRZD ? orgMapListRZD : orgMapListOSK;
-  const shortNameOrg = currMapList.has(orgOid)
-    // @ts-ignore хз как ему это объяснить
+  const shortNameOrg = currMapList.has(orgOid) // @ts-ignore он олень
     ? currMapList
       .get(orgOid)
       .replace(/Региональный центр сервиса/, 'РЦС')

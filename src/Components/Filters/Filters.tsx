@@ -66,7 +66,7 @@ const Filters = ({
                    orgListOSK, altOrgListOSK, orgListRZD, isFetchingFilters, isFetchingWidgets, orgOid,
                    requestWidgetsFromFilters, setPeriod, setOrgOid, perList, period, periodType,
                    requestSetFiltersDefault, showFilters, isOrgRZD, setIsOrgRZD, requestOrg, orgMapListOSK,
-                   serviceOid, /*ktl, val,*/
+                   serviceOid, /*ktl,*/
                  }: PropsType) => {
 
   useEffect(() => {
@@ -148,7 +148,6 @@ const mapState = (state: RootStateType) => ({
   serviceOid: selectServiceOid(state),
   isOrgRZD: selectIsOrgRZD(state)
   // ktl: selectKTL(state),
-  // val: selectVal(state),
 });
 
 const mapDispatch = {

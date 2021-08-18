@@ -35,8 +35,9 @@ type CheckedValueKPKType = {
 
 const useStyles = makeStyles(() => ({
     toggle: {
-      '& .Mui-checked + .MuiSwitch-track': {
-        backgroundColor: '#52d869'
+      '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+        opacity: 1,
+        backgroundColor: '#e21a1a',
       },
     },
   })
@@ -47,17 +48,15 @@ const CheckedValueKPK = ({hidden, requestSetHiddenUnusedKPK}: CheckedValueKPKTyp
 
   return (
     <span className={cn(classes.clickable, classes.unselectable)}>{
-      <FormControlLabel
-        control={
-          <Switch
-            size='medium'
-            checked={hidden}
-            onChange={() => requestSetHiddenUnusedKPK()}
-            color='default'
-            className={classesMUI.toggle}
-          />}
-        labelPlacement='start'
-        label={<span className={cn(classes.textAroundSwitcher, classes.tableHead)}>Все услуги / Услуги с ЗНО</span>}
+      <FormControlLabel control={<Switch size='medium'
+                                         checked={hidden}
+                                         onChange={() => requestSetHiddenUnusedKPK()}
+                                         color='default'
+                                         className={classesMUI.toggle}/>}
+                        labelPlacement='start'
+                        label={<span className={cn(classes.textAroundSwitcher, classes.tableHead)}>
+                          Все услуги / Услуги с ЗНО
+                        </span>}
       />
     }</span>
   )
@@ -71,7 +70,7 @@ const LightTooltip = withStyles((theme: Theme) => ({
   },
 }))(Tooltip);
 
-const nameColsDetails = {
+const nameColsDetails: any = {
   k1: 'Своевременность',
   k2: 'Оперативность',
   k3: 'Качество работы',
@@ -131,16 +130,15 @@ const KPKTable = ({
                       {colsHead}
                       </span>
                   }
-                  <CheckedValueKPK
-                    hidden={hiddenUnusedKPK}
-                    requestSetHiddenUnusedKPK={requestSetHiddenUnusedKPK}/>
+                  <CheckedValueKPK hidden={hiddenUnusedKPK}
+                                   requestSetHiddenUnusedKPK={requestSetHiddenUnusedKPK}/>
                 </div>
               </TableCell>
               <TableCell className={classes.cell}>{value}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody component={'tbody'}>
-            {rows.map((row: any) => ( // тут мои полномочия всё
+            {rows.map((row: any) => (
               <TableRow key={row[id]}
                         component={'tr'}
                         style={row[value] === '-' && hiddenUnusedKPK ? {display: 'none'} : {}}
@@ -149,36 +147,29 @@ const KPKTable = ({
                           if (row[value] !== '-' && colsHead === 'Услуга') {
                             clickRequestServicesChild(row[id]);
                           }
-                        }}
-              >
+                        }}>
                 <TableCell component='th'
                            scope='row'
                            className={classes.cell}>{
                   row[colsHead]
                 }</TableCell>
-                <LightTooltip
-                  placement='right'
-                  title={row[value] !== '-'
-                    ? <div className={classes.blackColor}>
-                      {`${row[value]} состоит из:`}
-                      {cols.slice(3, 8).map((key: string) => (
-                        <span
-                          className={classes.tableHead}
-                          // className={cn(classes[row[`${key}_good`] ? 'greenColor' : 'redColor'], classes.tableHead)}
-                          key={key}>
-                          {/*// @ts-ignore*/}
-                          {nameColsDetails[key]}: {row[key]}
-                          {/*{nameColsDetails[key]}: {row[key]} {!row[`${key}_good`]*/}
-                          {/*? `(отклонение: ${(row[key + '_l'] - row[key]).toFixed(2)})`*/}
-                          {/*: ''}*/}
-                        </span>
-                      ))}
-                    </div>
-                    : ''
-                  }>
-                  <TableCell className={cn(classes.cell, classes.rightColumn)}>{
-                    row[value]
-                  }</TableCell>
+                <LightTooltip placement='right'
+                              title={row[value] !== '-'
+                                ? <div className={classes.blackColor}>
+                                  {`${row[value]} состоит из:`}
+                                  {cols.slice(3, 8).map((key: any) => (
+                                    <span className={classes.tableHead}
+                                      // className={cn(classes[row[`${key}_good`] ? 'greenColor' : 'redColor'], classes.tableHead)}
+                                          key={key}>
+                                        {nameColsDetails[key]}: {row[key]}
+                                      {/*{nameColsDetails[key]}: {row[key]} {!row[`${key}_good`]*/}
+                                      {/*? `(отклонение: ${(row[key + '_l'] - row[key]).toFixed(2)})`*/}
+                                      {/*: ''}*/}
+                                      </span>
+                                  ))}
+                                </div>
+                                : ''}>
+                  <TableCell className={cn(classes.cell, classes.rightColumn)}>{row[value]}</TableCell>
                 </LightTooltip>
               </TableRow>
             ))}
