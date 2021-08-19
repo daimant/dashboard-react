@@ -4,7 +4,7 @@ import {ComposedChart, XAxis, YAxis, Tooltip, ResponsiveContainer, Line, Referen
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import {GraphLineType} from '../../../Types/Types';
-import SettingsIcon from '../../../Assets/Icons/SettingsIcon.svg';
+import SettingsIcon from '../../../Assets/SettingsIcon.svg';
 import {IconButton} from '@material-ui/core';
 import Menu from '@material-ui/core/Menu/Menu';
 import cn from 'classnames';
