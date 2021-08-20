@@ -122,27 +122,19 @@ const Filters = ({
                         periodType={periodType}
                         acceptFilters={acceptFilters}
                         blockedButton={(isFetchingWidgets || serviceOid !== '0')}/>
-          <MenuTreeList treeList={perList}
-                        altOrgListOSK={{}}
-                        orgListRZD={{}}
-                        title={'договора'}
-                        orgOid={orgOid}
-                        setter={setPeriod}
-                        period={period}
-                        periodType={periodType}
-                        acceptFilters={acceptFilters}
-                        blockedButton={(isFetchingWidgets || serviceOid !== '0')}/>
-          <MenuTreeList treeList={perList}
-                        altOrgListOSK={{}}
-                        orgListRZD={{}}
-                        title={'персонал'}
-                        orgOid={orgOid}
-                        setter={setPeriod}
-                        period={period}
-                        periodType={periodType}
-                        acceptFilters={acceptFilters}
-                        blockedButton={(isFetchingWidgets || serviceOid !== '0')}/></>
-      }
+          <Button variant='outlined'
+                  onClick={() => {}}
+                  disabled={(isFetchingWidgets || serviceOid !== '0')}
+                  href=''>
+            договора
+          </Button>
+          <Button variant='outlined'
+                  onClick={() => {}}
+                  disabled={(isFetchingWidgets || serviceOid !== '0')}
+                  href=''>
+            персонал
+          </Button>
+                        </>}
       <Button variant='outlined'
               onClick={requestSetFiltersDefault}
               disabled={isFetchingWidgets}

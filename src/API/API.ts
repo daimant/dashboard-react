@@ -22,11 +22,8 @@ const apiWidgetsProd = {
       'srv_oid': Number(serviceOid),
       'period': period,
       'period_type': periodType,
-      'ktl': {
-        'ka_atr': 'ka', // or mct 
-        'ktl_oid': 281586771165316,
-      },
-      'val': 'percent',
+      'ktl': [],
+      'person_type': [],
     };
     return Promise.all<any>([
       ...numSC.map(num => instance.post(`sc/${num}`, payload).catch(() => ({}))),

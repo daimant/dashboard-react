@@ -128,7 +128,6 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                  tickFormatter={tick => tick.toFixed(1)}
                  yAxisId='right'
                  domain={['dataMin', 'dataMax']}
-                 interval={0}
                  tickCount={3}
                  axisLine={false}
                  orientation='right'
