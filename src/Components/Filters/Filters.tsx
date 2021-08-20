@@ -121,6 +121,26 @@ const Filters = ({
                         period={period}
                         periodType={periodType}
                         acceptFilters={acceptFilters}
+                        blockedButton={(isFetchingWidgets || serviceOid !== '0')}/>
+          <MenuTreeList treeList={perList}
+                        altOrgListOSK={{}}
+                        orgListRZD={{}}
+                        title={'договора'}
+                        orgOid={orgOid}
+                        setter={setPeriod}
+                        period={period}
+                        periodType={periodType}
+                        acceptFilters={acceptFilters}
+                        blockedButton={(isFetchingWidgets || serviceOid !== '0')}/>
+          <MenuTreeList treeList={perList}
+                        altOrgListOSK={{}}
+                        orgListRZD={{}}
+                        title={'персонал'}
+                        orgOid={orgOid}
+                        setter={setPeriod}
+                        period={period}
+                        periodType={periodType}
+                        acceptFilters={acceptFilters}
                         blockedButton={(isFetchingWidgets || serviceOid !== '0')}/></>
       }
       <Button variant='outlined'

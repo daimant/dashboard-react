@@ -108,8 +108,9 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                    if (typeof tick !== 'string') {
                      tick = `${tick}`;
                    }
-                   return tick.indexOf('-') > -1 ? monthsDict[Number(tick.slice(3, 5) - 1)] : tick.slice(0,5);
+                   return tick.indexOf('-') > -1 ? monthsDict[Number(tick.slice(3, 5) - 1)] : tick;
                  }}
+                 interval={data.length < 10 ? 0 : data.length < 25 ? 1 : 2}
                  allowDataOverflow={false}
                  axisLine={false}/>
           <YAxis style={hiddenVal ? {display: 'none'} : {}}
@@ -127,6 +128,7 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                  tickFormatter={tick => tick.toFixed(1)}
                  yAxisId='right'
                  domain={['dataMin', 'dataMax']}
+                 interval={0}
                  tickCount={3}
                  axisLine={false}
                  orientation='right'

@@ -76,8 +76,15 @@ const Navbar = ({
   return (
     <div className={classes.navbar}>
       <div className={classes.leftNav}>
-        <img src={Logo} loading='lazy' alt='' className={classes.logo}/>
-        <img src={FilterIcon} loading='lazy' alt='' className={classes.filterIcon} onClick={changeShowFilters}/>
+        <img src={Logo}
+             loading='lazy'
+             alt=''
+             className={classes.logo}/>
+        <img src={FilterIcon}
+             loading='lazy'
+             alt=''
+             className={classes.filterIcon}
+             onClick={changeShowFilters}/>
         {isFetchingFilters
           ? <Preloader/>
           : <div className={classes.aboutFilters}>
