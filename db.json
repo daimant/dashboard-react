@@ -4157,17 +4157,17 @@
   },
   "sprav_all": {
     "ok": true,
-    "sprav": [
+    "data": [
       {
         "key": "org_osk",
-        "colums": [
+        "name_col": [
           "oid",
           "name",
           "parent",
-          "ZNO",
+          "zno",
           "lvl"
         ],
-        "value": [
+        "data": [
           [
             281586771165316,
             "ООО ОСК ИнфоТранс",
@@ -5229,11 +5229,11 @@
       },
       {
         "key": "org_rzd",
-        "colums": [
-          "OID",
-          "NAME"
+        "name_col": [
+          "oid",
+          "name"
         ],
-        "value": [
+        "data": [
           [
             13,
             "Восточно-Сибирская ж.д."
@@ -5305,30 +5305,13 @@
         ]
       },
       {
-        "key": "category",
-        "colums": [
-          "OID",
-          "NAME"
-        ],
-        "value": [
-          [
-            1,
-            "Первая линия"
-          ],
-          [
-            2,
-            "Разъездной персонал"
-          ]
-        ]
-      },
-      {
         "key": "dogovor",
-        "colums": [
-          "OID",
-          "NAME",
-          "Contragent"
+        "name_col": [
+          "oid",
+          "name",
+          "contragent"
         ],
-        "value": [
+        "data": [
           [
             281612039422117,
             "№ТИ-53",
@@ -5348,6 +5331,23 @@
             281615968043185,
             "№ТИ-107",
             "ОАО \"РЖД\""
+          ]
+        ]
+      },
+      {
+        "key": "category",
+        "name_col": [
+          "oid",
+          "name"
+        ],
+        "data": [
+          [
+            1,
+            "Первая линия"
+          ],
+          [
+            2,
+            "Разъездной персонал"
           ]
         ]
       }
