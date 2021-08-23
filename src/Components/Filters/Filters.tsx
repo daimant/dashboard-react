@@ -14,7 +14,6 @@ import {
   selectAltOrgListOSK,
   selectIsFetchingFilters,
   selectIsFetchingWidgets,
-  selectIsOrgRZD,
   selectOrgListOSK,
   selectOrgListRZD,
   selectOrgMapListOSK,
@@ -30,7 +29,6 @@ import {
   requestOrg,
   requestSetFiltersDefault,
   requestWidgetsFromFilters,
-  setIsOrgRZD,
   setOrgOid,
   setPeriod
 } from '../../Redux/filters';
@@ -48,16 +46,14 @@ type MapStatePropsType = {
   periodType: string
   showFilters: boolean
   serviceOid: string
-  isOrgRZD: boolean
 };
 
 type MapDispatchPropsType = {
   requestOrg: () => void
-  requestWidgetsFromFilters: (oid: string, period: string, periodType: string, isOrgRZD: boolean) => void
+  requestWidgetsFromFilters: (oid: string, period: string, periodType: string) => void
   setPeriod: (per: string) => void
   setOrgOid: (oid: string) => void
   requestSetFiltersDefault: () => void
-  setIsOrgRZD: (isOrgRZD: boolean) => void
 };
 
 type PropsType = MapStatePropsType & MapDispatchPropsType;
@@ -65,8 +61,7 @@ type PropsType = MapStatePropsType & MapDispatchPropsType;
 const Filters = ({
                    orgListOSK, altOrgListOSK, orgListRZD, isFetchingFilters, isFetchingWidgets, orgOid,
                    requestWidgetsFromFilters, setPeriod, setOrgOid, perList, period, periodType,
-                   requestSetFiltersDefault, showFilters, isOrgRZD, setIsOrgRZD, requestOrg, orgMapListOSK,
-                   serviceOid, /*ktl,*/
+                   requestSetFiltersDefault, showFilters, requestOrg, serviceOid, /*ktl,*/
                  }: PropsType) => {
 
   useEffect(() => {
@@ -81,20 +76,11 @@ const Filters = ({
 
   const acceptFilters = (type: string = 'def', selected: any = '') => {
     const [newPeriodType, newPeriod] = (type === 'период') ? selected.split(':') : ['', ''];
-    let newIsOrgRZD = isOrgRZD;
 
-    if (type !== 'период') {
-      if ((newIsOrgRZD && orgMapListOSK.has(selected)) || (!newIsOrgRZD && !orgMapListOSK.has(selected))) {
-        setIsOrgRZD(newIsOrgRZD);
-        newIsOrgRZD = !newIsOrgRZD;
-        localStorage.setItem('isOrgRZD', `${newIsOrgRZD}`)
-      }
-    }
     requestWidgetsFromFilters(
       type === 'оргструктура' ? selected : orgOid,
       type === 'период' ? newPeriod : period,
       type === 'период' ? newPeriodType : periodType,
-      newIsOrgRZD
     );
   };
 
@@ -158,7 +144,6 @@ const mapState = (state: RootStateType) => ({
   periodType: selectPeriodType(state),
   showFilters: selectShowFilters(state),
   serviceOid: selectServiceOid(state),
-  isOrgRZD: selectIsOrgRZD(state)
   // ktl: selectKTL(state),
 });
 
@@ -168,7 +153,6 @@ const mapDispatch = {
   setPeriod,
   setOrgOid,
   requestSetFiltersDefault,
-  setIsOrgRZD,
 };
 
 export default connect<MapStatePropsType, MapDispatchPropsType, {}, RootStateType>(mapState, mapDispatch)(Filters);

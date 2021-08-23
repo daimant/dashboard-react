@@ -9,7 +9,6 @@ export const selectTodays = (state: RootStateType) => state.widgets.todays;
 export const selectTodaysChild = (state: RootStateType) => state.widgets.todaysChild;
 export const selectTops = (state: RootStateType) => state.widgets.tops;
 export const selectIsFetchingWidgets = (state: RootStateType) => state.widgets.isFetchingWidgets;
-export const selectIsOrgRZD = (state: RootStateType) => state.filters.isOrgRZD;
 /*
 export const selectInf = (state: any) => {
   const {inf} = state.widgets;

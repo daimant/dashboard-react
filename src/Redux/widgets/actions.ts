@@ -44,7 +44,7 @@ const setIsFetchingWidgetsEnded = (): SetIsFetchingWidgetsEndedACType => ({type:
 export const removeServicesChild = (): RemoveServicesChildACType => ({type: REMOVE_SERVICES_CHILD});
 
 export const requestWidgets = (
-  orgOid: string, period: string, periodType: string, isOrgRZD: boolean, serviceOid: string = '0', numSC: number[] = [1, 2, 3],
+  orgOid: string, period: string, periodType: string, serviceOid: string = '0', numSC: number[] = [1, 2, 3],
   numTodays: number[] = [1, 2, 3], numTops: number[] = [1, 2]
 ): ThunkAction<void, RootStateType, unknown, AnyAction> => async (dispatch) => {
   dispatch(setIsFetchingWidgetsStarted());
@@ -57,7 +57,6 @@ export const requestWidgets = (
     numSC,
     numTodays,
     numTops,
-    isOrgRZD
   });
   dispatch(setSC(PipeGraphLine(response.splice(0, numSC.length))));
   dispatch(setTodays(PipeTodays(response.splice(0, numTodays.length))));
@@ -68,7 +67,7 @@ export const requestWidgets = (
 };
 
 export const requestServicesChild = (
-  orgOid: string, period: string, periodType: string, isOrgRZD: boolean, serviceOid: string, numSC: number[] = [1, 2, 3],
+  orgOid: string, period: string, periodType: string, serviceOid: string, numSC: number[] = [1, 2, 3],
   numTodays: number[] = [1, 2, 3]
 ): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
   dispatch(setIsFetchingWidgetsStarted());
@@ -79,7 +78,6 @@ export const requestServicesChild = (
     periodType,
     serviceOid,
     numSC,
-    isOrgRZD,
     numTodays,
     numTops: []
   });

@@ -21,9 +21,8 @@ type PropsType = {
   period: string
   periodType: string
   kpk: KPKType
-  isOrgRZD: boolean
 
-  requestServicesChild: (orgOid: string, period: string, periodType: string, isOrgRZD: boolean, serviceOid: string) => void
+  requestServicesChild: (orgOid: string, period: string, periodType: string, serviceOid: string) => void
   removeServicesChild: () => void
   setServiceOid: (serviceOid?: string) => void
 }
@@ -79,7 +78,7 @@ const nameColsDetails: any = {
 };
 
 const KPKTable = ({
-                    kpk, requestServicesChild, removeServicesChild, orgOid, period, periodType, isOrgRZD, setServiceOid
+                    kpk, requestServicesChild, removeServicesChild, orgOid, period, periodType, setServiceOid
                   }: PropsType) => {
   const [hiddenUnusedKPK, setHiddenUnusedKPK] = useState(localStorage.getItem('KPKRowHidden') === '1' || false);
 
@@ -101,7 +100,7 @@ const KPKTable = ({
 
   const clickRequestServicesChild = (newServiceOid: string) => {
     setServiceOid(newServiceOid);
-    requestServicesChild(orgOid, period, periodType, isOrgRZD, newServiceOid);
+    requestServicesChild(orgOid, period, periodType, newServiceOid);
   };
 
   const clickRemoveServicesChild = () => {

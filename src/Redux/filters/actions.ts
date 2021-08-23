@@ -7,7 +7,6 @@ import {removeServicesChild, requestWidgets} from '../widgets';
 import {defaultFilters} from './reducer';
 import {
   SET_FILTERS_DEFAULT,
-  SET_IS_ORG_RZD,
   SET_LISTS,
   SET_ORG_NAME,
   SET_ORG_OID,
@@ -22,7 +21,6 @@ type SetOrgOidACType = { type: typeof SET_ORG_OID, orgOid: string };
 type SetOrgNameACType = { type: typeof SET_ORG_NAME, orgOid: string };
 type SetFiltersDefaultACType = { type: typeof SET_FILTERS_DEFAULT };
 type SetShowFiltersACType = { type: typeof SET_SHOW_FILTERS };
-type SetIsOrgRZD = { type: typeof SET_IS_ORG_RZD, isOrgRZD: boolean };
 type SetServiceOid = { type: typeof SET_SERVICE_OID, serviceOid?: string };
 
 const setLists = (lists: object): SetListsACType => ({type: SET_LISTS, lists});
@@ -35,8 +33,6 @@ export const setOrgOid = (orgOid: string): SetOrgOidACType => ({type: SET_ORG_OI
 
 export const setShowFilters = (): SetShowFiltersACType => ({type: SET_SHOW_FILTERS});
 
-export const setIsOrgRZD = (isOrgRZD: boolean): SetIsOrgRZD => ({type: SET_IS_ORG_RZD, isOrgRZD});
-
 export const setServiceOid = (serviceOid?: string): SetServiceOid => ({type: SET_SERVICE_OID, serviceOid});
 
 export const requestOrg = (): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
@@ -44,13 +40,13 @@ export const requestOrg = (): ThunkAction<void, RootStateType, unknown, AnyActio
   dispatch(setLists(PipeLists(response.data)))
 };
 export const requestWidgetsFromFilters = (
-  oid: string, period: string, periodType: string, isOrgRZD: boolean
+  oid: string, period: string, periodType: string
 ): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
-  dispatch(requestWidgets(oid, period, periodType, isOrgRZD));
+  dispatch(requestWidgets(oid, period, periodType));
   dispatch(setOrgName(oid));
 };
 export const requestSetFiltersDefault = (): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
-  dispatch(requestWidgets(defaultFilters.orgOid, defaultFilters.period, defaultFilters.periodType, defaultFilters.isOrgRZD));
+  dispatch(requestWidgets(defaultFilters.orgOid, defaultFilters.period, defaultFilters.periodType));
   dispatch(setServiceOid());
   dispatch(removeServicesChild());
   dispatch(setFiltersDefault());

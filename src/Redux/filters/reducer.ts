@@ -5,7 +5,6 @@ import {
 } from '../../Types/Types';
 import {
   SET_FILTERS_DEFAULT,
-  SET_IS_ORG_RZD,
   SET_LISTS,
   SET_ORG_NAME,
   SET_ORG_OID,
@@ -29,7 +28,6 @@ type ActionsFiltersType = {
   }
   orgOid: string
   per: string
-  isOrgRZD: boolean
   serviceOid?: string
 };
 
@@ -110,7 +108,6 @@ export const defaultFilters = {
   orgName: 'ООО ОСК ИнфоТранс',
   period: `${new Date().getFullYear()}-${new Date().getMonth() - 1 < 10 ? `0${new Date().getMonth() + 1}` : new Date().getMonth() + 1}`,
   periodType: 'm',
-  isOrgRZD: false,
 };
 
 const initialStateFilters = {
@@ -128,7 +125,6 @@ const initialStateFilters = {
   periodType: localStorage.getItem('periodType') || defaultFilters.periodType as string,
   showFilters: localStorage.getItem('showFilters') === 'true'
   || localStorage.getItem('showFilters') === null ? true : false as boolean,
-  isOrgRZD: localStorage.getItem('isOrgRZD') === 'true' ? true : false as boolean,
   serviceOid: '0' as string,
   ktl: [] as [],
   workersType: [] as [],
@@ -181,14 +177,12 @@ const actionHandlerFilters: any = {
     localStorage.removeItem('period');
     localStorage.removeItem('periodType');
     localStorage.removeItem('orgName');
-    localStorage.removeItem('isOrgRZD');
     return {
       ...state,
       orgOid: defaultFilters.orgOid,
       period: defaultFilters.period,
       periodType: defaultFilters.periodType,
       orgName: defaultFilters.orgName,
-      isOrgRZD: defaultFilters.isOrgRZD,
     };
   },
 
@@ -199,11 +193,6 @@ const actionHandlerFilters: any = {
       showFilters: !state.showFilters
     };
   },
-
-  [SET_IS_ORG_RZD]: (state: InitialStateFiltersType, action: ActionsFiltersType) => ({
-    ...state,
-    isOrgRZD: !action.isOrgRZD
-  }),
 
   [SET_SERVICE_OID]: (state: InitialStateFiltersType, action: ActionsFiltersType) => {
     return {

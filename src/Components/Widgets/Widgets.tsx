@@ -14,7 +14,6 @@ import GraphArea from './GraphArea/GraphArea';
 import {RootStateType} from '../../Redux/store';
 import {
   selectIsFetchingWidgets,
-  selectIsOrgRZD,
   selectKPK,
   selectKPKChild,
   selectOrgOid,
@@ -46,12 +45,11 @@ type MapStatePropsType = {
   orgOid: string
   period: string
   periodType: string
-  isOrgRZD: boolean
 }
 
 type MapDispatchPropsType = {
-  requestWidgets: (orgOid: string, period: string, periodType: string, isOrgRZD: boolean) => void
-  requestServicesChild: (orgOid: string, period: string, periodType: string, isOrgRZD: boolean, serviceOid: string) => void
+  requestWidgets: (orgOid: string, period: string, periodType: string) => void
+  requestServicesChild: (orgOid: string, period: string, periodType: string, serviceOid: string) => void
   removeServicesChild: () => void
   setServiceOid: (serviceOid?: string) => void
 }
@@ -60,12 +58,11 @@ type PropsType = MapStatePropsType & MapDispatchPropsType;
 
 const Widgets = ({
                    kpk, kpkChild, sc, scChild, todays, todaysChild, isFetchingWidgets, requestServicesChild,
-                   removeServicesChild, orgOid, period, periodType, tops, isOrgRZD, requestWidgets,
-                   setServiceOid
+                   removeServicesChild, orgOid, period, periodType, tops, requestWidgets, setServiceOid
                  }: PropsType) => {
 
   useEffect(() => {
-    requestWidgets(orgOid, period, periodType, isOrgRZD);
+    requestWidgets(orgOid, period, periodType);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -80,7 +77,6 @@ const Widgets = ({
                   orgOid={orgOid}
                   period={period}
                   periodType={periodType}
-                  isOrgRZD={isOrgRZD}
                   setServiceOid={setServiceOid}/>
         <div className={classes.graphs}>
           <h4 className={classes.headCircularBar}>СЕГОДНЯ</h4>
@@ -125,7 +121,6 @@ const mapState = (state: RootStateType): MapStatePropsType => ({
   orgOid: selectOrgOid(state),
   period: selectPeriod(state),
   periodType: selectPeriodType(state),
-  isOrgRZD: selectIsOrgRZD(state),
   /*
     inf: selectInf(state),
   */

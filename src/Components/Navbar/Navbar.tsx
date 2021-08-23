@@ -12,7 +12,6 @@ import {RootStateType} from '../../Redux/store';
 import {setShowFilters} from '../../Redux/filters';
 import {
   selectIsFetchingFilters,
-  selectIsOrgRZD,
   selectOrgMapListOSK,
   selectOrgMapListRZD,
   selectOrgOid,
@@ -37,7 +36,6 @@ type MapStatePropsType = {
   orgMapListRZD: Map<string, string>
   periodNameMapList: Map<string, string>
   isFetchingFilters: boolean
-  isOrgRZD: boolean
 }
 
 type MapDispatchPropsType = {
@@ -46,9 +44,16 @@ type MapDispatchPropsType = {
 
 type PropsType = MapStatePropsType & MapDispatchPropsType;
 
+const GetShortOrgMane = (list: any, oid: string) => list
+  .get(oid)
+  .replace(/Региональный центр сервиса/, 'РЦС')
+  .replace(/Территориальное управление технической поддержки/, 'ТУТП')
+  .replace(/Отдел поддержки пользователей/, 'ОТП')
+  .replace(/Отдел технической поддержки/, 'ОТП');
+
 const Navbar = ({
                   setShowFilters, orgOid, period, periodType, orgMapListOSK, orgMapListRZD, periodNameMapList,
-                  isFetchingFilters, isOrgRZD, /*showFilters,*/
+                  isFetchingFilters,
                 }: PropsType) => {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -63,15 +68,17 @@ const Navbar = ({
   const changeShowFilters = () => {
     setShowFilters();
   };
-  const currMapList = isOrgRZD ? orgMapListRZD : orgMapListOSK;
-  const shortNameOrg = currMapList.has(orgOid) // @ts-ignore он олень
-    ? currMapList
-      .get(orgOid)
-      .replace(/Региональный центр сервиса/, 'РЦС')
-      .replace(/Территориальное управление технической поддержки/, 'ТУТП')
-      .replace(/Отдел поддержки пользователей/, 'ОТП')
-      .replace(/Отдел технической поддержки/, 'ОТП')
-    : localStorage.getItem('orgName');
+
+  let  shortNameOrg;
+  if (orgMapListRZD.has(orgOid)) {
+    shortNameOrg = GetShortOrgMane(orgMapListRZD, orgOid)
+  }
+  else if (orgMapListOSK.has(orgOid)) {
+    shortNameOrg = GetShortOrgMane(orgMapListOSK, orgOid)
+  }
+  else {
+    shortNameOrg = localStorage.getItem('orgName');
+  }
 
   return (
     <div className={classes.navbar}>
@@ -134,7 +141,6 @@ const mapState = (state: RootStateType) => ({
   orgMapListRZD: selectOrgMapListRZD(state),
   periodNameMapList: selectPeriodNameMapList(state),
   isFetchingFilters: selectIsFetchingFilters(state),
-  isOrgRZD: selectIsOrgRZD(state)
 });
 
 const mapDispatch = {
