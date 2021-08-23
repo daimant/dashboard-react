@@ -6,8 +6,7 @@ import {
 import {
   SET_FILTERS_DEFAULT,
   SET_IS_ORG_RZD,
-  SET_ORG_LIST_OSK,
-  SET_ORG_LIST_RZD,
+  SET_LISTS,
   SET_ORG_NAME,
   SET_ORG_OID,
   SET_PERIOD,
@@ -17,14 +16,16 @@ import {
 
 type ActionsFiltersType = {
   type: string
-  orgListOSK: {
-    orgListOSK: OrgListOSKType[]
-    altOrgListOSK: OrgListOSKType
-    orgMapListOSK: Map<string, string>
-  }
-  orgListRZD: {
-    orgListRZD: OrgListRZDType
-    orgMapListRZD: Map<string, string>
+  lists: {
+    orgListOSK: {
+      orgListOSK: OrgListOSKType[]
+      altOrgListOSK: OrgListOSKType
+      orgMapListOSK: Map<string, string>
+    },
+    orgListRZD: {
+      orgListRZD: OrgListRZDType
+      orgMapListRZD: Map<string, string>
+    }
   }
   orgOid: string
   per: string
@@ -129,37 +130,13 @@ const initialStateFilters = {
   || localStorage.getItem('showFilters') === null ? true : false as boolean,
   isOrgRZD: localStorage.getItem('isOrgRZD') === 'true' ? true : false as boolean,
   serviceOid: '0' as string,
-  /*  ktl: {
-      kaAtr: 'ka', // or mct
-      ktlOid: '281586771165316',
-    },*/
+  ktl: [] as [],
+  workersType: [] as [],
 };
 
 const actionHandlerFilters: any = {
-  [SET_ORG_LIST_OSK]: (state: InitialStateFiltersType, action: ActionsFiltersType) => {
-    const {orgListOSK, altOrgListOSK, orgMapListOSK} = action.orgListOSK;
-    return orgListOSK && altOrgListOSK && orgMapListOSK
-      ? {
-        ...state,
-        orgListOSK,
-        altOrgListOSK,
-        orgMapListOSK,
-      }
-      : state;
-  },
-
-  [SET_ORG_LIST_RZD]: (state: InitialStateFiltersType, action: ActionsFiltersType) =>
-    action.orgListRZD
-      ? {
-        ...state,
-        orgListRZD: action.orgListRZD.orgListRZD,
-        orgMapListRZD: action.orgListRZD.orgMapListRZD,
-        isFetchingFilters: false
-      }
-      : {
-        ...state,
-        isFetchingFilters: false
-      },
+  [SET_LISTS]: (state: InitialStateFiltersType, action: ActionsFiltersType) =>
+    action.lists ? {...state, ...action.lists, isFetchingFilters: false} : {...state, isFetchingFilters: false},
 
   [SET_PERIOD]: (state: InitialStateFiltersType, action: ActionsFiltersType) => {
     const [periodType, period] = action.per.split(':');

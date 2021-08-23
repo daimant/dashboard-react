@@ -1,5 +1,4 @@
-export const SET_ORG_LIST_OSK = 'SET_ORG_LIST';
-export const SET_ORG_LIST_RZD = 'SET_ORG_LIST_RZD';
+export const SET_LISTS = 'SET_LISTS';
 export const SET_PERIOD = 'SET_PERIOD';
 export const SET_ORG_OID = 'SET_ORG_OID';
 export const SET_ORG_NAME = 'SET_ORG_NAME';

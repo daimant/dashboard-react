@@ -159,7 +159,27 @@ export const PipeTodays = (todays: TodaysType[]) => todays.map(today => {
 });
 
 // filters
-export const PipeOrgListOSK = (orgListOSK: OrgListOSKType[]) => {
+export const PipeLists = (lists: [OrgListOSKType[], OrgListRZDType[], any, any]): object => {
+  const [orgListOSK, orgListRZD, ktlList, workersList] = lists;
+
+  //@ts-ignore
+  return {...PipeOrgListOSK(ParserArrayToObject(orgListOSK)), ...PipeOrgListRZD(ParserArrayToObject(orgListRZD))}
+};
+type RowListType = {
+  name_col: string[]
+  data: any[]
+}
+const ParserArrayToObject = (arr: RowListType): OrgListOSKType[] => arr.data?.map((row) => {
+  const newRow: any = {};
+
+  arr.name_col?.forEach((colName, i) => {
+    newRow[colName] = row[i];
+  });
+
+  return newRow;
+});
+
+const PipeOrgListOSK = (orgListOSK: OrgListOSKType[]) => {
   if (!orgListOSK || !orgListOSK[0] || orgListOSK[0]?.oid !== 281586771165316) return {};
 
   const orgPosition = new Map(orgListOSK.map((org: OrgListOSKType, i: any) => {
@@ -199,7 +219,7 @@ export const PipeOrgListOSK = (orgListOSK: OrgListOSKType[]) => {
   return {orgListOSK: orgListOSK[0], altOrgListOSK, orgMapListOSK};
 };
 
-export const PipeOrgListRZD = (orgListRZD: OrgListRZDType[]) => ({
+const PipeOrgListRZD = (orgListRZD: OrgListRZDType[]) => ({
   orgListRZD: {
     oid: '0',
     name: 'ОАО РЖД',

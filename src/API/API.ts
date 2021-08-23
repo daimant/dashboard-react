@@ -23,7 +23,7 @@ const apiWidgetsProd = {
       'period': period,
       'period_type': periodType,
       'ktl': [],
-      'person_type': [],
+      'workers_type': [],
     };
     return Promise.all<any>([
       ...numSC.map(num => instance.post(`sc/${num}`, payload).catch(() => ({}))),
@@ -54,22 +54,16 @@ const apiWidgetsDev = {
 };
 
 const apiFiltersProd = {
-  getOrg: () => {
-    return Promise.all<any>([
-      instance.get('/sprav/org_all').catch(() => ({})),
-      instance.get('/sprav/org_rzd').catch(() => ({})),
-    ])
-      .then((response: AxiosResponse[]) => response.map(res => res.data))
-  }
+  getOrg: () => instance
+    .get('/sprav/all')
+    .catch(() => ({data: null}))
+    .then((response: AxiosResponse | {data: null}) => response.data)
 };
 const apiFiltersDev = {
-  getOrg: () => {
-    return Promise.all<any>([
-      instance.get('sprav_org_all').catch(() => ({})),
-      instance.get('sprav_org_rzd').catch(() => ({})),
-    ])
-      .then((response: AxiosResponse[]) => response.map(res => res.data))
-  }
+  getOrg: () => instance
+    .get('sprav_all')
+    .catch(() => ({data: null}))
+    .then((response: AxiosResponse | {data: null}) => response.data)
 };
 
 export const widgetsAPI = modeProd ? apiWidgetsProd : apiWidgetsDev;

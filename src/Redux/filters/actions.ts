@@ -2,17 +2,13 @@ import {ThunkAction} from 'redux-thunk';
 import {RootStateType} from '../store';
 import {AnyAction} from 'redux';
 import {filtersAPI} from '../../API/API';
-import {
-  PipeOrgListOSK,
-  PipeOrgListRZD
-} from '../pipes';
+import {PipeLists} from '../pipes';
 import {removeServicesChild, requestWidgets} from '../widgets';
 import {defaultFilters} from './reducer';
 import {
   SET_FILTERS_DEFAULT,
   SET_IS_ORG_RZD,
-  SET_ORG_LIST_OSK,
-  SET_ORG_LIST_RZD,
+  SET_LISTS,
   SET_ORG_NAME,
   SET_ORG_OID,
   SET_PERIOD,
@@ -20,8 +16,7 @@ import {
   SET_SHOW_FILTERS
 } from './action-types';
 
-type SetOrgListOSKACType = { type: typeof SET_ORG_LIST_OSK, orgListOSK: object };
-type SetOrgListRZDACType = { type: typeof SET_ORG_LIST_RZD, orgListRZD: object };
+type SetListsACType = { type: typeof SET_LISTS, lists: object };
 type SetPeriodACType = { type: typeof SET_PERIOD, per: string };
 type SetOrgOidACType = { type: typeof SET_ORG_OID, orgOid: string };
 type SetOrgNameACType = { type: typeof SET_ORG_NAME, orgOid: string };
@@ -30,8 +25,7 @@ type SetShowFiltersACType = { type: typeof SET_SHOW_FILTERS };
 type SetIsOrgRZD = { type: typeof SET_IS_ORG_RZD, isOrgRZD: boolean };
 type SetServiceOid = { type: typeof SET_SERVICE_OID, serviceOid?: string };
 
-const setOrgListOSK = (orgListOSK: object): SetOrgListOSKACType => ({type: SET_ORG_LIST_OSK, orgListOSK});
-const setOrgListRZD = (orgListRZD: object): SetOrgListRZDACType => ({type: SET_ORG_LIST_RZD, orgListRZD});
+const setLists = (lists: object): SetListsACType => ({type: SET_LISTS, lists});
 const setOrgName = (orgOid: string): SetOrgNameACType => ({type: SET_ORG_NAME, orgOid});
 const setFiltersDefault = (): SetFiltersDefaultACType => ({type: SET_FILTERS_DEFAULT});
 
@@ -47,8 +41,7 @@ export const setServiceOid = (serviceOid?: string): SetServiceOid => ({type: SET
 
 export const requestOrg = (): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
   const response = await filtersAPI.getOrg();
-  dispatch(setOrgListOSK(PipeOrgListOSK(response[0]?.data)));
-  dispatch(setOrgListRZD(PipeOrgListRZD(response[1]?.data)));
+  dispatch(setLists(PipeLists(response.data)))
 };
 export const requestWidgetsFromFilters = (
   oid: string, period: string, periodType: string, isOrgRZD: boolean
