@@ -14,6 +14,7 @@ import {
   selectAltOrgListOSK,
   selectIsFetchingFilters,
   selectIsFetchingWidgets,
+  selectKTL,
   selectOrgListOSK,
   selectOrgListRZD,
   selectOrgMapListOSK,
@@ -23,6 +24,7 @@ import {
   selectPerList,
   selectServiceOid,
   selectShowFilters,
+  selectWorkers,
 } from '../../Redux/selectors';
 import {connect} from 'react-redux';
 import {
@@ -46,7 +48,12 @@ type MapStatePropsType = {
   periodType: string
   showFilters: boolean
   serviceOid: string
+  ktl: KTLType
+  workers: WorkersType
 };
+
+export type KTLType = [][];
+export type WorkersType = [][];
 
 type MapDispatchPropsType = {
   requestOrg: () => void
@@ -61,7 +68,7 @@ type PropsType = MapStatePropsType & MapDispatchPropsType;
 const Filters = ({
                    orgListOSK, altOrgListOSK, orgListRZD, isFetchingFilters, isFetchingWidgets, orgOid,
                    requestWidgetsFromFilters, setPeriod, setOrgOid, perList, period, periodType,
-                   requestSetFiltersDefault, showFilters, requestOrg, serviceOid, /*ktl,*/
+                   requestSetFiltersDefault, showFilters, requestOrg, serviceOid, ktl, workers
                  }: PropsType) => {
 
   useEffect(() => {
@@ -114,6 +121,7 @@ const Filters = ({
                   href=''>
             договора
           </Button>
+          {console.log(ktl, workers)}
           <Button variant='outlined'
                   onClick={() => {}}
                   disabled={(isFetchingWidgets || serviceOid !== '0')}
@@ -144,7 +152,8 @@ const mapState = (state: RootStateType) => ({
   periodType: selectPeriodType(state),
   showFilters: selectShowFilters(state),
   serviceOid: selectServiceOid(state),
-  // ktl: selectKTL(state),
+  ktl: selectKTL(state),
+  workers: selectWorkers(state),
 });
 
 const mapDispatch = {

@@ -12,6 +12,7 @@ import {
   SET_SERVICE_OID,
   SET_SHOW_FILTERS
 } from './action-types';
+import {KTLType, WorkersType} from "../../Components/Filters/Filters";
 
 type ActionsFiltersType = {
   type: string
@@ -24,7 +25,9 @@ type ActionsFiltersType = {
     orgListRZD: {
       orgListRZD: OrgListRZDType
       orgMapListRZD: Map<string, string>
-    }
+    },
+    ktl: KTLType,
+    workers: WorkersType,
   }
   orgOid: string
   per: string
@@ -127,7 +130,7 @@ const initialStateFilters = {
   || localStorage.getItem('showFilters') === null ? true : false as boolean,
   serviceOid: '0' as string,
   ktl: [] as [],
-  workersType: [] as [],
+  workers: [] as [],
 };
 
 const actionHandlerFilters: any = {
