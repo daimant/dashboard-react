@@ -93,7 +93,7 @@ const MenuTreeList = ({
       overflow: title === 'оргструктура' && checkedInfotransRZD ? 'none' : 'auto',
     },
     menu: {
-      margin: `${title === 'оргструктура' ? '8vh' : '14vh'} ${title === 'оргструктура' ? '6.5vw' : '4vw'}`,
+      margin: `${title === 'оргструктура' ? '8vh' : '12.5vh'} ${title === 'оргструктура' ? '6.5vw' : '4vw'}`,
     },
   });
 
