@@ -1,7 +1,9 @@
 import {
+  KTLType,
   OrgListOSKType,
   OrgListRZDType,
-  PeriodListType
+  PeriodListType,
+  WorkersType
 } from '../../Types/Types';
 import {
   SET_FILTERS_DEFAULT,
@@ -12,7 +14,6 @@ import {
   SET_SERVICE_OID,
   SET_SHOW_FILTERS
 } from './action-types';
-import {KTLType, WorkersType} from "../../Components/Filters/Filters";
 
 type ActionsFiltersType = {
   type: string
@@ -38,7 +39,7 @@ type InitialStateFiltersType = typeof initialStateFilters;
 
 const periodNameMapList = new Map();
 
-const createPeriodTree = (st: Date, end: number): PeriodListType => {
+const createPeriodTree = (st: Date, end: number): PeriodListType[] => {
   const getQuarter = (month: number) => Math.floor((month + 3) / 3);
 
   const getMonthsInQuarter = (quarter: number) => {
@@ -63,7 +64,7 @@ const createPeriodTree = (st: Date, end: number): PeriodListType => {
 
   const dateEnd = new Date(end);
 
-  const rootNode = createNode('Период', 'root', []);
+  const rootNode = [];
 
   for (let year = dateSt.getFullYear(); year <= dateEnd.getFullYear(); year++) {
     const newYears = createNode(`${year} год`, `y:${year}-01`, []);
@@ -100,7 +101,7 @@ const createPeriodTree = (st: Date, end: number): PeriodListType => {
       }
       newYears.children.push(newQuarters);
     }
-    rootNode.children.push(newYears);
+    rootNode.push(newYears);
   }
 
   return rootNode;
@@ -120,7 +121,7 @@ const initialStateFilters = {
   orgListRZD: {} as OrgListRZDType,
   orgMapListRZD: new Map() as Map<string, string>,
   periodNameMapList: periodNameMapList as Map<string, string>,
-  perList: createPeriodTree(new Date(2020, 0, 1), Date.now()) as PeriodListType,
+  perList: createPeriodTree(new Date(2020, 0, 1), Date.now()) as PeriodListType[],
   isFetchingFilters: true as boolean,
   orgOid: localStorage.getItem('orgOid') || defaultFilters.orgOid as string,
   orgName: localStorage.getItem('orgName') || defaultFilters.orgName as string,
@@ -129,7 +130,7 @@ const initialStateFilters = {
   showFilters: localStorage.getItem('showFilters') === 'true'
   || localStorage.getItem('showFilters') === null ? true : false as boolean,
   serviceOid: '0' as string,
-  ktl: [] as [],
+  ktl: [] as KTLType[],
   workers: [] as [],
 };
 

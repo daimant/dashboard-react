@@ -5,9 +5,11 @@ import MenuTreeList from './MenuTreeList/MenuTreeList';
 import {Button} from '@material-ui/core';
 import {FetchError} from '../Common/FetchError/FetchError';
 import {
+  KTLType,
   OrgListOSKType,
   OrgListRZDType,
-  PeriodListType
+  PeriodListType,
+  WorkersType
 } from '../../Types/Types';
 import {RootStateType} from '../../Redux/store';
 import {
@@ -34,6 +36,7 @@ import {
   setOrgOid,
   setPeriod
 } from '../../Redux/filters';
+import MenuTreeCheckBoxList from "./MenuTreeCheckBoxList/MenuTreeCheckBoxList";
 
 type MapStatePropsType = {
   orgListOSK: OrgListOSKType
@@ -43,17 +46,14 @@ type MapStatePropsType = {
   isFetchingFilters: boolean
   isFetchingWidgets: boolean
   orgOid: string
-  perList: PeriodListType
+  perList: PeriodListType[]
   period: string
   periodType: string
   showFilters: boolean
   serviceOid: string
-  ktl: KTLType
+  ktl: KTLType[]
   workers: WorkersType
 };
-
-export type KTLType = [][];
-export type WorkersType = [][];
 
 type MapDispatchPropsType = {
   requestOrg: () => void
@@ -95,40 +95,35 @@ const Filters = ({
     <div className={classes.filters}>
       {(!orgListOSK || !orgListOSK.oid)
         ? <FetchError/>
-        : <><MenuTreeList treeList={orgListOSK}
-                          altOrgListOSK={altOrgListOSK}
-                          orgListRZD={orgListRZD}
-                          title={'оргструктура'}
-                          setter={setOrgOid}
-                          orgOid={orgOid}
-                          period={period}
-                          periodType={periodType}
-                          acceptFilters={acceptFilters}
-                          blockedButton={(isFetchingWidgets || serviceOid !== '0')}/>
-          <MenuTreeList treeList={perList}
-                        altOrgListOSK={{}}
-                        orgListRZD={{}}
-                        title={'период'}
+        : <>
+          <MenuTreeList treeList={orgListOSK}
+                        altOrgListOSK={altOrgListOSK}
+                        orgListRZD={orgListRZD}
+                        title={'оргструктура'}
+                        setter={setOrgOid}
                         orgOid={orgOid}
+                        acceptFilters={acceptFilters}
+                        blockedButton={(isFetchingWidgets || serviceOid !== '0')}/>
+          <MenuTreeList treeList={perList}
+                        title={'период'}
                         setter={setPeriod}
                         period={period}
                         periodType={periodType}
                         acceptFilters={acceptFilters}
                         blockedButton={(isFetchingWidgets || serviceOid !== '0')}/>
+          <MenuTreeCheckBoxList treeList={ktl}
+                        title={'договора'}
+                        acceptFilters={acceptFilters}
+                        blockedButton={(isFetchingWidgets || serviceOid !== '0')}/>
+          {console.log(workers)}
           <Button variant='outlined'
-                  onClick={() => {}}
-                  disabled={(isFetchingWidgets || serviceOid !== '0')}
-                  href=''>
-            договора
-          </Button>
-          {console.log(ktl, workers)}
-          <Button variant='outlined'
-                  onClick={() => {}}
+                  onClick={() => {
+                  }}
                   disabled={(isFetchingWidgets || serviceOid !== '0')}
                   href=''>
             персонал
           </Button>
-                        </>}
+        </>}
       <Button variant='outlined'
               onClick={requestSetFiltersDefault}
               disabled={isFetchingWidgets}

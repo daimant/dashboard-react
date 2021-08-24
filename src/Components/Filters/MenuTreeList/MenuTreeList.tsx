@@ -9,19 +9,23 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import {OrgListOSKType, OrgListRZDType, PeriodListType} from '../../../Types/Types';
+import {
+  OrgListOSKType,
+  OrgListRZDType,
+  PeriodListType
+} from '../../../Types/Types';
 
 type PropsType = {
-  treeList: OrgListOSKType | PeriodListType
-  altOrgListOSK: OrgListOSKType | {}
-  orgListRZD: OrgListRZDType | {}
+  treeList: OrgListOSKType | PeriodListType[]
+  altOrgListOSK?: OrgListOSKType | {}
+  orgListRZD?: OrgListRZDType | {}
   title: string
-  orgOid: string
-  period: string
-  periodType: string
+  orgOid?: string
+  period?: string
+  periodType?: string
   blockedButton: boolean
 
-  setter: (oid: string) => void
+  setter?: (oid: string) => void
   acceptFilters: (type: string, selected: any) => void
 }
 
@@ -31,16 +35,13 @@ type RenderTreePropsType = {
   handleExpand: (event: ChangeEvent<{}>, oid: string) => void
 }
 
+// @ts-ignore
 const renderTree = ({tree, handleSelect, handleExpand}: RenderTreePropsType) => (
   <TreeItem key={`${tree.oid}${tree.name}`}
             nodeId={tree.oid}
             label={tree.name}
-            onLabelClick={(event) => {
-              handleSelect(event, tree.oid)
-            }}
-            onIconClick={(event) => {
-              handleExpand(event, tree.oid)
-            }}>
+            onLabelClick={(event) => handleSelect(event, tree.oid)}
+            onIconClick={(event) => handleExpand(event, tree.oid)}>
     {
       Array.isArray(tree.children)
         ? tree.children.map((nextNode: any) => renderTree({tree: nextNode, handleSelect, handleExpand}))
@@ -77,9 +78,9 @@ const MenuTreeList = ({
                         treeList, altOrgListOSK, orgListRZD, title, orgOid, period, periodType, setter, acceptFilters,
                         blockedButton
                       }: PropsType) => {
-  const [expanded, setExpanded] = useState<string[]>(title === 'период'
-    ? [treeList.oid, ...treeList.children.map((org: any) => org.oid)]
-    : [treeList.oid, '0']);
+  const [expanded, setExpanded] = useState<string[]>(title === 'оргструктура' //@ts-ignore
+    ? [treeList.oid, '0'] //@ts-ignore
+    : treeList.map(el => el.oid));
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [checkedInfotransRZD, setCheckedInfotransRZD] = useState(localStorage.getItem('checkedInfotransRZD') === '1' || false);
   const [checkedOSKZNO, setCheckedOSKZNO] = useState(localStorage.getItem('checkedOrgZNO') === '1' || false);
@@ -108,7 +109,7 @@ const MenuTreeList = ({
   };
 
   const handleSelect = (event: ChangeEvent<{}>, nodeIds: string) => {
-    if (nodeIds && typeof nodeIds !== 'object') {
+    if (nodeIds && typeof nodeIds !== 'object') { // @ts-ignore
       setter(nodeIds);
     }
 
@@ -177,7 +178,9 @@ const MenuTreeList = ({
                 ? renderTree({tree: orgListRZD, handleSelect, handleExpand})// @ts-ignore хз как чинить
                 : renderTree({tree: (checkedOSKZNO ? altOrgListOSK : treeList), handleSelect, handleExpand})
             )
-            : renderTree({tree: treeList, handleSelect, handleExpand})}
+            : Array.isArray(treeList)
+              ? treeList.map(list => renderTree({tree: list, handleSelect, handleExpand}))
+              : renderTree({tree: treeList, handleSelect, handleExpand})}
         </TreeView>
       </Menu>
     </div>

@@ -78,3 +78,17 @@ export type TodaysType = {
   p: number
   err: boolean
 };
+
+export type KTLType = {
+  oid: string
+  name: string
+  children: KTLChildType[]
+}
+
+export type KTLChildType = {
+  oid: string
+  name: string
+  contragent: string
+};
+
+export type WorkersType = [][];
