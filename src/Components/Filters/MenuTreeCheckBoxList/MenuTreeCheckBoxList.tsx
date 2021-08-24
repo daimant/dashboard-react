@@ -93,10 +93,9 @@ const MenuTreeCheckBoxList = ({treeList, title, acceptFilters, blockedButton}: P
   const classesItem = useItemStyles();
   const classesMUI = useStyles();
 
-  const [expanded, setExpanded] = useState<string[]>([]);
+  const [expanded, setExpanded] = useState<string[]>(treeList.map(el => el.oid));
   const [selected, setSelected] = useState<string[]>([]);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
 
   const handleToggle = (event: any, nodeIds: string[]) => {
     if (event.target.nodeName !== "svg") {
