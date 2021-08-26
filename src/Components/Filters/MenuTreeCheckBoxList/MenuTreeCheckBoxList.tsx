@@ -12,10 +12,8 @@ type PropsType = {
   treeList: KTLType[]
   title: string
   blockedButton: boolean
-  selectedKTL: string[]
 
   acceptFilters: (type: string, selected: any) => void
-  setSelectedKTL: (selected: string[]) => void
 }
 
 type RenderTreePropsType = {

@@ -12,7 +12,7 @@ type GetWidgetsType = {
   numTodays: number[]
   numTops: number[]
   serviceOid: string
-  ktl: string[]
+  ktl: number[]
 }
 
 const apiWidgetsProd = {

@@ -79,7 +79,7 @@ const Filters = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const [selectedKTL, setSelectedKTL] = useState<string[]>([]);
+  const [selectedKTL, setSelectedKTL] = useState<number[]>([]);
 
   if (!showFilters) return null;
   if (isFetchingFilters) return <Preloader/>;
@@ -91,7 +91,9 @@ const Filters = ({
     const parentsKTL = new Set(ktl.map(el => el.oid));
 
     if (type === 'договора') {
-      selected = selected.filter((el: any) => !parentsKTL.has(el));
+      selected = selected
+        .filter((el: any) => !parentsKTL.has(el))
+        .map((el: string) => Number(el));
       setSelectedKTL(selected)
     }
 
@@ -125,8 +127,6 @@ const Filters = ({
                         blockedButton={(isFetchingWidgets || serviceOid !== '0')}/>
           <MenuTreeCheckBoxList treeList={ktl}
                                 title={'договора'}
-                                selectedKTL={selectedKTL}
-                                setSelectedKTL={setSelectedKTL}
                                 acceptFilters={acceptFilters}
                                 blockedButton={(isFetchingWidgets || serviceOid !== '0')}/>
           {/*{console.log(workers)}*/}

@@ -101,7 +101,7 @@ export type RequestServicesChildType = {
   numSC?: number[]
   numTodays?: number[]
   numTops?: number[]
-  ktl?: string[]
+  ktl?: number[]
 };
 
 export type RequestWidgetsType = {
@@ -112,12 +112,12 @@ export type RequestWidgetsType = {
   numSC?: number[]
   numTodays?: number[]
   numTops?: number[]
-  ktl?: string[]
+  ktl?: number[]
 };
 
 export type RequestWidgetsFromFiltersType = {
   orgOid: string
   period: string
   periodType: string
-  ktl: string[]
+  ktl: number[]
 }
