@@ -14,6 +14,7 @@ import {
   SET_SERVICE_OID,
   SET_SHOW_FILTERS
 } from './action-types';
+import {RequestWidgetsFromFiltersType} from '../../Types/Types';
 
 type SetListsACType = { type: typeof SET_LISTS, lists: object };
 type SetPeriodACType = { type: typeof SET_PERIOD, per: string };
@@ -39,14 +40,20 @@ export const requestOrg = (): ThunkAction<void, RootStateType, unknown, AnyActio
   const response = await filtersAPI.getOrg();
   dispatch(setLists(PipeLists(response.data)))
 };
-export const requestWidgetsFromFilters = (
-  oid: string, period: string, periodType: string
-): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
-  dispatch(requestWidgets(oid, period, periodType));
-  dispatch(setOrgName(oid));
+
+export const requestWidgetsFromFilters = ({
+                                            orgOid, period, periodType, ktl
+                                          }: RequestWidgetsFromFiltersType): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
+  dispatch(requestWidgets({orgOid, period, periodType, ktl}));
+  dispatch(setOrgName(orgOid));
 };
+
 export const requestSetFiltersDefault = (): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
-  dispatch(requestWidgets(defaultFilters.orgOid, defaultFilters.period, defaultFilters.periodType));
+  dispatch(requestWidgets({
+    orgOid: defaultFilters.orgOid,
+    period: defaultFilters.period,
+    periodType: defaultFilters.periodType
+  }));
   dispatch(setServiceOid());
   dispatch(removeServicesChild());
   dispatch(setFiltersDefault());

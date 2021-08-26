@@ -30,8 +30,8 @@ type PropsType = {
 }
 
 type RenderTreePropsType = {
-  tree: OrgListOSKType | PeriodListType | OrgListRZDType,
-  handleSelect: (event: ChangeEvent<{}>, oid: string) => void,
+  tree: OrgListOSKType | PeriodListType | OrgListRZDType
+  handleSelect: (event: ChangeEvent<{}>, oid: string) => void
   handleExpand: (event: ChangeEvent<{}>, oid: string) => void
 }
 

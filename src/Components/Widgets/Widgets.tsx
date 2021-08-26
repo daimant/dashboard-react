@@ -31,7 +31,8 @@ import {
   requestServicesChild,
   requestWidgets
 } from '../../Redux/widgets';
-import {setServiceOid} from "../../Redux/filters/actions";
+import {setServiceOid} from '../../Redux/filters/actions';
+import {RequestServicesChildType, RequestWidgetsType} from '../../Types/Types';
 
 type MapStatePropsType = {
   kpk: KPKType
@@ -48,8 +49,8 @@ type MapStatePropsType = {
 }
 
 type MapDispatchPropsType = {
-  requestWidgets: (orgOid: string, period: string, periodType: string) => void
-  requestServicesChild: (orgOid: string, period: string, periodType: string, serviceOid: string) => void
+  requestWidgets: ({orgOid, period, periodType}:RequestWidgetsType) => void
+  requestServicesChild: ({orgOid, period, periodType, serviceOid}: RequestServicesChildType) => void
   removeServicesChild: () => void
   setServiceOid: (serviceOid?: string) => void
 }
@@ -62,7 +63,7 @@ const Widgets = ({
                  }: PropsType) => {
 
   useEffect(() => {
-    requestWidgets(orgOid, period, periodType);
+    requestWidgets({orgOid, period, periodType});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -15,6 +15,7 @@ import {FetchError} from '../../Common/FetchError/FetchError';
 import Tooltip from '@material-ui/core/Tooltip';
 import {withStyles, Theme, makeStyles} from '@material-ui/core/styles';
 import cn from 'classnames';
+import {RequestServicesChildType} from '../../../Types/Types';
 
 type PropsType = {
   orgOid: string
@@ -22,7 +23,7 @@ type PropsType = {
   periodType: string
   kpk: KPKType
 
-  requestServicesChild: (orgOid: string, period: string, periodType: string, serviceOid: string) => void
+  requestServicesChild: ({orgOid, period, periodType, serviceOid}: RequestServicesChildType) => void
   removeServicesChild: () => void
   setServiceOid: (serviceOid?: string) => void
 }
@@ -100,7 +101,7 @@ const KPKTable = ({
 
   const clickRequestServicesChild = (newServiceOid: string) => {
     setServiceOid(newServiceOid);
-    requestServicesChild(orgOid, period, periodType, newServiceOid);
+    requestServicesChild({orgOid, period, periodType, serviceOid: newServiceOid});
   };
 
   const clickRemoveServicesChild = () => {

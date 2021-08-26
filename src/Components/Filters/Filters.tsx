@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import classes from './Filters.module.scss';
 import {Preloader} from '../Common/Preloader/Preloader';
 import MenuTreeList from './MenuTreeList/MenuTreeList';
@@ -9,6 +9,7 @@ import {
   OrgListOSKType,
   OrgListRZDType,
   PeriodListType,
+  RequestWidgetsFromFiltersType,
   WorkersType
 } from '../../Types/Types';
 import {RootStateType} from '../../Redux/store';
@@ -36,7 +37,7 @@ import {
   setOrgOid,
   setPeriod
 } from '../../Redux/filters';
-import MenuTreeCheckBoxList from "./MenuTreeCheckBoxList/MenuTreeCheckBoxList";
+import MenuTreeCheckBoxList from './MenuTreeCheckBoxList/MenuTreeCheckBoxList';
 
 type MapStatePropsType = {
   orgListOSK: OrgListOSKType
@@ -57,7 +58,7 @@ type MapStatePropsType = {
 
 type MapDispatchPropsType = {
   requestOrg: () => void
-  requestWidgetsFromFilters: (oid: string, period: string, periodType: string) => void
+  requestWidgetsFromFilters: ({orgOid, period, periodType, ktl}: RequestWidgetsFromFiltersType) => void
   setPeriod: (per: string) => void
   setOrgOid: (oid: string) => void
   requestSetFiltersDefault: () => void
@@ -78,17 +79,28 @@ const Filters = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const [selectedKTL, setSelectedKTL] = useState<string[]>([]);
+
   if (!showFilters) return null;
   if (isFetchingFilters) return <Preloader/>;
 
   const acceptFilters = (type: string = 'def', selected: any = '') => {
-    const [newPeriodType, newPeriod] = (type === 'период') ? selected.split(':') : ['', ''];
+    const [newPeriodType, newPeriod] = (type === 'период')
+      ? selected.split(':')
+      : ['', ''];
+    const parentsKTL = new Set(ktl.map(el => el.oid));
 
-    requestWidgetsFromFilters(
-      type === 'оргструктура' ? selected : orgOid,
-      type === 'период' ? newPeriod : period,
-      type === 'период' ? newPeriodType : periodType,
-    );
+    if (type === 'договора') {
+      selected = selected.filter((el: any) => !parentsKTL.has(el));
+      setSelectedKTL(selected)
+    }
+
+    requestWidgetsFromFilters({
+      orgOid: type === 'оргструктура' ? selected : orgOid,
+      period: type === 'период' ? newPeriod : period,
+      periodType: type === 'период' ? newPeriodType : periodType,
+      ktl: type === 'договора' ? selected : selectedKTL,
+    });
   };
 
   return (
@@ -112,10 +124,12 @@ const Filters = ({
                         acceptFilters={acceptFilters}
                         blockedButton={(isFetchingWidgets || serviceOid !== '0')}/>
           <MenuTreeCheckBoxList treeList={ktl}
-                        title={'договора'}
-                        acceptFilters={acceptFilters}
-                        blockedButton={(isFetchingWidgets || serviceOid !== '0')}/>
-          {console.log(workers)}
+                                title={'договора'}
+                                selectedKTL={selectedKTL}
+                                setSelectedKTL={setSelectedKTL}
+                                acceptFilters={acceptFilters}
+                                blockedButton={(isFetchingWidgets || serviceOid !== '0')}/>
+          {/*{console.log(workers)}*/}
           <Button variant='outlined'
                   onClick={() => {
                   }}

@@ -82,8 +82,8 @@ export type TodaysType = {
 export type KTLType = {
   oid: string
   name: string
-  children: KTLChildType[]
-}
+  children?: KTLChildType[]
+};
 
 export type KTLChildType = {
   oid: string
@@ -92,3 +92,32 @@ export type KTLChildType = {
 };
 
 export type WorkersType = [][];
+
+export type RequestServicesChildType = {
+  orgOid: string
+  period: string
+  periodType: string
+  serviceOid: string
+  numSC?: number[]
+  numTodays?: number[]
+  numTops?: number[]
+  ktl?: string[]
+};
+
+export type RequestWidgetsType = {
+  orgOid: string
+  period: string
+  periodType: string
+  serviceOid?: string
+  numSC?: number[]
+  numTodays?: number[]
+  numTops?: number[]
+  ktl?: string[]
+};
+
+export type RequestWidgetsFromFiltersType = {
+  orgOid: string
+  period: string
+  periodType: string
+  ktl: string[]
+}

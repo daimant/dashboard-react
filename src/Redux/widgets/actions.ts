@@ -3,7 +3,14 @@ import {PipeKPK, PipeGraphLine, PipeTodays, PipeGraphArea} from '../pipes';
 import {AnyAction} from 'redux';
 import {ThunkAction} from 'redux-thunk';
 import {RootStateType} from '../store';
-import {GraphAreaType, GraphLineType, KPKType, TodaysType} from '../../Types/Types';
+import {
+  GraphAreaType,
+  GraphLineType,
+  KPKType,
+  RequestServicesChildType,
+  RequestWidgetsType,
+  TodaysType
+} from '../../Types/Types';
 import {
   SET_KPK,
   SET_TODAYS_CHILD,
@@ -43,10 +50,10 @@ const setIsFetchingWidgetsEnded = (): SetIsFetchingWidgetsEndedACType => ({type:
 
 export const removeServicesChild = (): RemoveServicesChildACType => ({type: REMOVE_SERVICES_CHILD});
 
-export const requestWidgets = (
-  orgOid: string, period: string, periodType: string, serviceOid: string = '0', numSC: number[] = [1, 2, 3],
-  numTodays: number[] = [1, 2, 3], numTops: number[] = [1, 2]
-): ThunkAction<void, RootStateType, unknown, AnyAction> => async (dispatch) => {
+export const requestWidgets = ({
+                                 orgOid, period, periodType, serviceOid = '0', numSC = [1, 2, 3], numTodays = [1, 2, 3],
+                                 numTops = [1, 2], ktl = []
+                               }: RequestWidgetsType): ThunkAction<void, RootStateType, unknown, AnyAction> => async (dispatch) => {
   dispatch(setIsFetchingWidgetsStarted());
 
   const response = await widgetsAPI.getWidgets({
@@ -57,6 +64,7 @@ export const requestWidgets = (
     numSC,
     numTodays,
     numTops,
+    ktl
   });
   dispatch(setSC(PipeGraphLine(response.splice(0, numSC.length))));
   dispatch(setTodays(PipeTodays(response.splice(0, numTodays.length))));
@@ -66,10 +74,10 @@ export const requestWidgets = (
   dispatch(setIsFetchingWidgetsEnded());
 };
 
-export const requestServicesChild = (
-  orgOid: string, period: string, periodType: string, serviceOid: string, numSC: number[] = [1, 2, 3],
-  numTodays: number[] = [1, 2, 3]
-): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
+export const requestServicesChild = ({
+                                       orgOid, period, periodType, serviceOid, numSC = [1, 2, 3], numTodays = [1, 2, 3],
+                                       numTops = [], ktl = []
+                                     }: RequestServicesChildType): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
   dispatch(setIsFetchingWidgetsStarted());
 
   const response = await widgetsAPI.getWidgets({
@@ -79,7 +87,8 @@ export const requestServicesChild = (
     serviceOid,
     numSC,
     numTodays,
-    numTops: []
+    numTops,
+    ktl
   });
   dispatch(setSCChild(PipeGraphLine(response.splice(0, numSC.length))));
   dispatch(setTodaysChild(PipeTodays(response.splice(0, numTodays.length))));

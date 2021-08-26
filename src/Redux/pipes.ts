@@ -102,7 +102,7 @@ export const PipeGraphLine = (graphs: GraphLineType[]) => {
       return day;
     });
 
-    graph.sumVal = sumVal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    graph.sumVal = sumVal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
     graph.avrProc = Number((Number(sumProc / countProc) * 100).toFixed(2));
 
     return graph;
