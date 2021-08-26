@@ -95,6 +95,7 @@ const MenuTreeCheckBoxList = ({treeList, title, acceptFilters, blockedButton}: P
                                   key={tree.oid}
                                   control={
                                     <Checkbox checked={selected.some(item => item === tree.oid)}
+                                              disabled={blockedButton}
                                               onChange={event => getOnChange(event.currentTarget.checked, tree)}
                                               onClick={e => e.stopPropagation()}/>
                                   }/>

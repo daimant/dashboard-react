@@ -70,7 +70,7 @@ const actionHandlerWidgets: any = {
   [SET_KPK]: (state: InitialStateWidgetsType, action: ActionsWidgetsType) => {
     const kpk = (action.kpk)
       ? action.kpk
-      : {cols: ['Сервис_oid', 'Ошибка при загрузке'], rows: []};
+      : {cols: ['Сервис-oid', 'Ошибка при загрузке'], rows: []};
     return {...state, kpk};
   },
 
