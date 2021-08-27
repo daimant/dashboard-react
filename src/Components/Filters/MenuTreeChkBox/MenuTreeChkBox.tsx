@@ -32,7 +32,7 @@ const useStyles = makeStyles({
   },
 });
 
-const MenuTreeCheckBoxList = ({treeList, title, acceptFilters, blockedButton}: PropsType) => {
+const MenuTreeChkBox = ({treeList, title, acceptFilters, blockedButton}: PropsType) => {
   const classesMUI = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selected, setSelected] = useState<string[]>(treeList     // @ts-ignore
@@ -148,4 +148,4 @@ const MenuTreeCheckBoxList = ({treeList, title, acceptFilters, blockedButton}: P
   );
 };
 
-export default MenuTreeCheckBoxList;
+export default MenuTreeChkBox;

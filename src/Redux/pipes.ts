@@ -7,6 +7,7 @@ import {
   OrgListRZDType,
   KTLType,
   KTLChildType,
+  WorkersType,
 } from '../Types/Types';
 
 // Widgets
@@ -254,6 +255,6 @@ const PipeKTl = (rawKTL: KTLChildType[]):KTLType[] => {
   return ktl;
 };
 
-const PipeWorkers = (rawWorkers: any) => rawWorkers;
+const PipeWorkers = (rawWorkers: WorkersType[]) => rawWorkers;
 
 

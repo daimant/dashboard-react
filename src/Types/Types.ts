@@ -91,7 +91,10 @@ export type KTLChildType = {
   contragent: string
 };
 
-export type WorkersType = [][];
+export type WorkersType = {
+  oid: number
+  name: string
+};
 
 export type RequestServicesChildType = {
   orgOid: string
