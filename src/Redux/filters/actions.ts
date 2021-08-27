@@ -42,9 +42,9 @@ export const requestOrg = (): ThunkAction<void, RootStateType, unknown, AnyActio
 };
 
 export const requestWidgetsFromFilters = ({
-                                            orgOid, period, periodType, ktl
+                                            orgOid, period, periodType, ktl, workers
                                           }: RequestWidgetsFromFiltersType): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
-  dispatch(requestWidgets({orgOid, period, periodType, ktl}));
+  dispatch(requestWidgets({orgOid, period, periodType, ktl, workers}));
   dispatch(setOrgName(orgOid));
 };
 

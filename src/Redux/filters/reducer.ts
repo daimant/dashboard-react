@@ -131,7 +131,7 @@ const initialStateFilters = {
   || localStorage.getItem('showFilters') === null ? true : false as boolean,
   serviceOid: '0' as string,
   ktl: [] as KTLType[],
-  workers: [] as [],
+  workers: [] as WorkersType[],
 };
 
 const actionHandlerFilters: any = {

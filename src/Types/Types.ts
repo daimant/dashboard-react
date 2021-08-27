@@ -105,6 +105,7 @@ export type RequestServicesChildType = {
   numTodays?: number[]
   numTops?: number[]
   ktl?: number[]
+  workers?: number[]
 };
 
 export type RequestWidgetsType = {
@@ -116,6 +117,7 @@ export type RequestWidgetsType = {
   numTodays?: number[]
   numTops?: number[]
   ktl?: number[]
+  workers?: number[]
 };
 
 export type RequestWidgetsFromFiltersType = {
@@ -123,4 +125,5 @@ export type RequestWidgetsFromFiltersType = {
   period: string
   periodType: string
   ktl: number[]
+  workers: number[]
 }

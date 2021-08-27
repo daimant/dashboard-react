@@ -52,7 +52,7 @@ export const removeServicesChild = (): RemoveServicesChildACType => ({type: REMO
 
 export const requestWidgets = ({
                                  orgOid, period, periodType, serviceOid = '0', numSC = [1, 2, 3], numTodays = [1, 2, 3],
-                                 numTops = [1, 2], ktl = []
+                                 numTops = [1, 2], ktl = [], workers = []
                                }: RequestWidgetsType): ThunkAction<void, RootStateType, unknown, AnyAction> => async (dispatch) => {
   dispatch(setIsFetchingWidgetsStarted());
 
@@ -64,7 +64,8 @@ export const requestWidgets = ({
     numSC,
     numTodays,
     numTops,
-    ktl
+    ktl,
+    workers,
   });
   dispatch(setSC(PipeGraphLine(response.splice(0, numSC.length))));
   dispatch(setTodays(PipeTodays(response.splice(0, numTodays.length))));
@@ -76,7 +77,7 @@ export const requestWidgets = ({
 
 export const requestServicesChild = ({
                                        orgOid, period, periodType, serviceOid, numSC = [1, 2, 3], numTodays = [1, 2, 3],
-                                       numTops = [], ktl = []
+                                       numTops = [], ktl = [], workers = []
                                      }: RequestServicesChildType): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
   dispatch(setIsFetchingWidgetsStarted());
 
@@ -88,7 +89,8 @@ export const requestServicesChild = ({
     numSC,
     numTodays,
     numTops,
-    ktl
+    ktl,
+    workers,
   });
   dispatch(setSCChild(PipeGraphLine(response.splice(0, numSC.length))));
   dispatch(setTodaysChild(PipeTodays(response.splice(0, numTodays.length))));

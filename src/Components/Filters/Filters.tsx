@@ -59,7 +59,7 @@ type MapStatePropsType = {
 
 type MapDispatchPropsType = {
   requestOrg: () => void
-  requestWidgetsFromFilters: ({orgOid, period, periodType, ktl}: RequestWidgetsFromFiltersType) => void
+  requestWidgetsFromFilters: ({orgOid, period, periodType, ktl, workers}: RequestWidgetsFromFiltersType) => void
   setPeriod: (per: string) => void
   setOrgOid: (oid: string) => void
   requestSetFiltersDefault: () => void
@@ -81,6 +81,7 @@ const Filters = ({
   }, []);
 
   const [selectedKTL, setSelectedKTL] = useState<number[]>([]);
+  const [selectedWorkers, setSelectedWorkers] = useState<number[]>([]);
 
   if (!showFilters) return null;
   if (isFetchingFilters) return <Preloader/>;
@@ -95,7 +96,13 @@ const Filters = ({
       selected = selected
         .filter((el: any) => !parentsKTL.has(el))
         .map((el: string) => Number(el));
-      setSelectedKTL(selected)
+      setSelectedKTL(selected);
+    } else if (type === 'персонал') {
+      setSelectedWorkers(selected);
+    }
+
+    if ((type === 'договора' || type === 'персонал') && !selected.length) {
+      return;
     }
 
     requestWidgetsFromFilters({
@@ -103,6 +110,7 @@ const Filters = ({
       period: type === 'период' ? newPeriod : period,
       periodType: type === 'период' ? newPeriodType : periodType,
       ktl: type === 'договора' ? selected : selectedKTL,
+      workers: type === 'персонал' ? selected : selectedWorkers,
     });
   };
 
@@ -134,7 +142,6 @@ const Filters = ({
                        title={'персонал'}
                        acceptFilters={acceptFilters}
                        blockedButton={(isFetchingWidgets || serviceOid !== '0')}/>
-          {console.log(workers)}
         </>}
       <Button variant='outlined'
               onClick={requestSetFiltersDefault}

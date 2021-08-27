@@ -37,11 +37,10 @@ const MenuWorkers = ({workersList, title, acceptFilters, blockedButton}: PropsTy
   };
 
   const getOnChange = (event: boolean, oid: number) => {
-    if (event) {
-      setSelected([...selected, oid]);
-    } else {
-      setSelected(selected.filter(el => el !== oid))
-    }
+    const newSelected = event ? selected.concat(oid) : selected.filter(el => el !== oid)
+
+    setSelected(newSelected);
+    acceptFilters(title, newSelected);
   };
 
   return (

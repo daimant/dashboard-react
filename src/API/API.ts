@@ -13,17 +13,18 @@ type GetWidgetsType = {
   numTops: number[]
   serviceOid: string
   ktl: number[]
+  workers: number[]
 }
 
 const apiWidgetsProd = {
-  getWidgets: ({orgOid, period, periodType, serviceOid, numSC, numTodays, numTops, ktl}: GetWidgetsType) => {
+  getWidgets: ({orgOid, period, periodType, serviceOid, numSC, numTodays, numTops, ktl, workers}: GetWidgetsType) => {
     const payload = {
       'org_oid': Number(orgOid),
       'srv_oid': Number(serviceOid),
       'period': period,
       'period_type': periodType,
       'ktl': ktl,
-      'workers_type': [],
+      'workers_type': workers,
     };
     return Promise.all<any>([
       ...numSC.map(num => instance.post(`sc/${num}`, payload).catch(() => ({}))),
