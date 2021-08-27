@@ -88,13 +88,14 @@ const MenuTreeList = ({
   const useStyles = makeStyles({
     tree: {
       transform: title === 'оргструктура' && checkedInfotransRZD ? 'translate(0, -10%)' : '',
-      margin: '.5rem',
+      margin: 10,
       height: title === 'оргструктура' ? 400 : 250,
       width: title === 'оргструктура' ? 550 : 200,
       overflow: title === 'оргструктура' && checkedInfotransRZD ? 'none' : 'auto',
     },
     menu: {
-      margin: `${title === 'оргструктура' ? '8vh' : '12.5vh'} ${title === 'оргструктура' ? '6.5vw' : '4vw'}`,
+      marginTop: title === 'оргструктура' ? 75 : 120,
+      marginLeft: title === 'оргструктура' ? 132 : 82,
     },
   });
 

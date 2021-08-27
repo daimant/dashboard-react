@@ -37,8 +37,8 @@ import {
   setOrgOid,
   setPeriod
 } from '../../Redux/filters';
-import MenuTreeChkBox from './MenuTreeChkBox/MenuTreeChkBox';
-import MenuChkBox from "./MenuChkBox/MenuChkBox";
+import MenuKTL from './MenuKTL/MenuKTL';
+import MenuWorkers from "./MenuWorkers/MenuWorkers";
 
 type MapStatePropsType = {
   orgListOSK: OrgListOSKType
@@ -126,15 +126,14 @@ const Filters = ({
                         periodType={periodType}
                         acceptFilters={acceptFilters}
                         blockedButton={(isFetchingWidgets || serviceOid !== '0')}/>
-          <MenuTreeChkBox treeList={ktl}
-                          title={'договора'}
-                          acceptFilters={acceptFilters}
-                          blockedButton={(isFetchingWidgets || serviceOid !== '0')}/>
-          {/*{console.log(workers)}*/}
-          <MenuChkBox workersList={workers}
-                      title={'договора'}
-                      acceptFilters={acceptFilters}
-                      blockedButton={(isFetchingWidgets || serviceOid !== '0')}/>
+          <MenuKTL ktl={ktl}
+                   title={'договора'}
+                   acceptFilters={acceptFilters}
+                   blockedButton={(isFetchingWidgets || serviceOid !== '0')}/>
+          <MenuWorkers workersList={workers}
+                       title={'персонал'}
+                       acceptFilters={acceptFilters}
+                       blockedButton={(isFetchingWidgets || serviceOid !== '0')}/>
           {console.log(workers)}
         </>}
       <Button variant='outlined'

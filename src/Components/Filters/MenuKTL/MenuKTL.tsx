@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu/Menu';
 
 type PropsType = {
-  treeList: KTLType[]
+  ktl: KTLType[]
   title: string
   blockedButton: boolean
 
@@ -23,22 +23,23 @@ type RenderTreePropsType = {
 
 const useStyles = makeStyles({
   tree: {
-    margin: '.5rem',
+    margin: 10,
     height: 400,
     width: 200,
   },
   menu: {
-    margin: '12.5vh 5vw',
+    marginTop: 120,
+    marginLeft: 100,
   },
 });
 
-const MenuTreeChkBox = ({treeList, title, acceptFilters, blockedButton}: PropsType) => {
+const MenuKTL = ({ktl, title, acceptFilters, blockedButton}: PropsType) => {
   const classesMUI = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [selected, setSelected] = useState<string[]>(treeList     // @ts-ignore
+  const [selected, setSelected] = useState<string[]>(ktl     // @ts-ignore
     .map(list => [list.oid, ...list.children.map(child => child.oid)])
     .flat(1));
-  const [expanded, setExpanded] = useState<string[]>(treeList.map(el => el.oid));
+  const [expanded, setExpanded] = useState<string[]>(ktl.map(el => el.oid));
 
   function getChildById(node: KTLType, oid: string) {
     let array: string[] = [];
@@ -75,7 +76,7 @@ const MenuTreeChkBox = ({treeList, title, acceptFilters, blockedButton}: PropsTy
   }
 
   function getOnChange(checked: boolean, tree: KTLType) {
-    const allNode: string[] = treeList.map(list => getChildById(list, tree.oid)).flat(1);
+    const allNode: string[] = ktl.map(list => getChildById(list, tree.oid)).flat(1);
     let array = checked
       ? [...selected, ...allNode]
       : selected.filter(value => !allNode.includes(value));
@@ -141,11 +142,11 @@ const MenuTreeChkBox = ({treeList, title, acceptFilters, blockedButton}: PropsTy
                   defaultCollapseIcon={<ExpandMoreIcon component={'svg'}/>}
                   defaultExpandIcon={<ChevronRightIcon component={'svg'}/>}
                   expanded={expanded}>
-          {treeList.map(tree => renderTree({tree, handleExpand}))}
+          {ktl.map(tree => renderTree({tree, handleExpand}))}
         </TreeView>
       </Menu>
     </div>
   );
 };
 
-export default MenuTreeChkBox;
+export default MenuKTL;

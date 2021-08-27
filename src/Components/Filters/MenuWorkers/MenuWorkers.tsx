@@ -1,10 +1,6 @@
-import React, {ChangeEvent, MouseEvent, useState} from 'react';
-import TreeView from '@material-ui/lab/TreeView';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import TreeItem from '@material-ui/lab/TreeItem';
+import React, {MouseEvent, useState} from 'react';
 import {Checkbox, FormControlLabel, makeStyles} from '@material-ui/core';
-import {KTLType, WorkersType} from '../../../Types/Types';
+import {WorkersType} from '../../../Types/Types';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu/Menu';
 
@@ -18,20 +14,19 @@ type PropsType = {
 
 const useStyles = makeStyles({
   list: {
-    margin: '.5rem',
-    height: 250,
+    margin: 10,
     width: 200,
   },
   menu: {
-    margin: '12.5vh 5vw',
+    marginTop: 90,
+    marginLeft: 100,
   },
 });
 
-const MenuChkBox = ({workersList, title, acceptFilters, blockedButton}: PropsType) => {
+const MenuWorkers = ({workersList, title, acceptFilters, blockedButton}: PropsType) => {
   const classesMUI = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [selected, setSelected] = useState<string[]>(workersList.map(el => el.oid));
-  const [expanded, setExpanded] = useState<string[]>(selected);
+  const [selected, setSelected] = useState<number[]>(workersList.map(el => el.oid));
 
   const handleButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -41,28 +36,13 @@ const MenuChkBox = ({workersList, title, acceptFilters, blockedButton}: PropsTyp
     setAnchorEl(null);
   };
 
-  const handleExpand = (event: ChangeEvent<{}>, nodeIds: string) => {
-    const newExpanded = expanded.includes(nodeIds)
-      ? expanded.filter((el: string) => el !== nodeIds)
-      : [...expanded, nodeIds];
-
-    setExpanded(newExpanded);
-  };
-
-  // function getOnChange(checked: boolean, tree: KTLType) {
-  //   const allNode: string[] = workersList.map(list => getChildById(list, tree.oid)).flat(1);
-  //   let array = checked
-  //     ? [...selected, ...allNode]
-  //     : selected.filter(value => !allNode.includes(value));
-  //
-  //   array = array.filter((v, i) => array.indexOf(v) === i);
-  //
-  //   setSelected(array);
-  //   acceptFilters(title, array);
-  // }
   const getOnChange = (event: boolean, oid: number) => {
-
-  }
+    if (event) {
+      setSelected([...selected, oid]);
+    } else {
+      setSelected(selected.filter(el => el !== oid))
+    }
+  };
 
   return (
     <div>
@@ -96,4 +76,4 @@ const MenuChkBox = ({workersList, title, acceptFilters, blockedButton}: PropsTyp
   );
 };
 
-export default MenuChkBox;
+export default MenuWorkers;
