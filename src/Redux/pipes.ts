@@ -168,8 +168,8 @@ export const PipeLists = (lists: [OrgListOSKType[], OrgListRZDType[], RowListTyp
   return { //@ts-ignore
     ...PipeOrgListOSK(ParserArrayToObject(orgListOSK)), //@ts-ignore
     ...PipeOrgListRZD(ParserArrayToObject(orgListRZD)), //@ts-ignore
-    ktl: PipeKTl(ParserArrayToObject(ktlList)),
-    workers: PipeWorkers(ParserArrayToObject(workersList)),
+    ...PipeKTl(ParserArrayToObject(ktlList)),
+    ...PipeWorkers(ParserArrayToObject(workersList)),
   }
 };
 
@@ -237,9 +237,10 @@ const PipeOrgListRZD = (orgListRZD: OrgListRZDType[]) => ({
   orgMapListRZD: new Map(orgListRZD ? orgListRZD.map(org => [`${org.oid}`, org.name]) : []).set('0', 'ОАО РЖД')
 });
 
-const PipeKTl = (rawKTL: KTLChildType[]):KTLType[] => {
-  if (!rawKTL || !rawKTL[0]) return [];
+const PipeKTl = (rawKTL: KTLChildType[]): { ktl: KTLType[], selectedKTL: number[] } => {
+  if (!rawKTL || !rawKTL[0]) return {ktl: [], selectedKTL: []};
 
+  const selectedKTL = rawKTL.map(el => Number(el.oid));
   const parentsUniq = new Set(rawKTL.map(doc => doc.contragent));
   const ktl = Array.from(parentsUniq).map((doc, i) => ({name: doc, oid: `${i}`, children: []}));
   const parentsPlace = new Map(ktl.map(doc => [doc.name, doc.oid]));
@@ -252,9 +253,9 @@ const PipeKTl = (rawKTL: KTLChildType[]):KTLType[] => {
     ktl[parentOid].children = [...ktl[parentOid].children, child]
   });
 
-  return ktl;
+  return {ktl, selectedKTL};
 };
 
-const PipeWorkers = (rawWorkers: WorkersType[]) => rawWorkers;
+const PipeWorkers = (workers: WorkersType[]) => ({workers, selectedWorkers: workers.map(el => el.oid)});
 
 

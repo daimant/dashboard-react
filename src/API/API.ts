@@ -12,19 +12,19 @@ type GetWidgetsType = {
   numTodays: number[]
   numTops: number[]
   serviceOid: string
-  ktl: number[]
-  workers: number[]
+  selectedKTL: number[]
+  selectedWorkers: number[]
 }
 
 const apiWidgetsProd = {
-  getWidgets: ({orgOid, period, periodType, serviceOid, numSC, numTodays, numTops, ktl, workers}: GetWidgetsType) => {
+  getWidgets: ({orgOid, period, periodType, serviceOid, numSC, numTodays, numTops, selectedKTL, selectedWorkers}: GetWidgetsType) => {
     const payload = {
       'org_oid': Number(orgOid),
       'srv_oid': Number(serviceOid),
       'period': period,
       'period_type': periodType,
-      'ktl': ktl,
-      'workers_type': workers,
+      'ktl': selectedKTL,
+      'workers_type': selectedWorkers,
     };
     return Promise.all<any>([
       ...numSC.map(num => instance.post(`sc/${num}`, payload).catch(() => ({}))),
@@ -36,7 +36,7 @@ const apiWidgetsProd = {
   }
 };
 const apiWidgetsDev = {
-  getWidgets: ({orgOid, period, periodType, serviceOid, numSC, numTodays, numTops}: GetWidgetsType) => {
+  getWidgets: ({numSC, numTodays, numTops}: GetWidgetsType) => {
     return Promise.all<any>([
       ...numSC.map(num => instance.get(`sc/${num}`).catch(() => ({}))),
       ...numTodays.map(num => instance.get(`today/${num}`).catch(() => ({}))),
@@ -58,13 +58,13 @@ const apiFiltersProd = {
   getOrg: () => instance
     .get('/sprav/all')
     .catch(() => ({data: null}))
-    .then((response: AxiosResponse | {data: null}) => response.data)
+    .then((response: AxiosResponse | { data: null }) => response.data)
 };
 const apiFiltersDev = {
   getOrg: () => instance
     .get('sprav_all')
     .catch(() => ({data: null}))
-    .then((response: AxiosResponse | {data: null}) => response.data)
+    .then((response: AxiosResponse | { data: null }) => response.data)
 };
 
 export const widgetsAPI = modeProd ? apiWidgetsProd : apiWidgetsDev;

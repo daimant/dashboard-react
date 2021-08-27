@@ -104,8 +104,8 @@ export type RequestServicesChildType = {
   numSC?: number[]
   numTodays?: number[]
   numTops?: number[]
-  ktl?: number[]
-  workers?: number[]
+  selectedKTL?: number[]
+  selectedWorkers?: number[]
 };
 
 export type RequestWidgetsType = {
@@ -116,14 +116,14 @@ export type RequestWidgetsType = {
   numSC?: number[]
   numTodays?: number[]
   numTops?: number[]
-  ktl?: number[]
-  workers?: number[]
+  selectedKTL?: number[]
+  selectedWorkers?: number[]
 };
 
 export type RequestWidgetsFromFiltersType = {
   orgOid: string
   period: string
   periodType: string
-  ktl: number[]
-  workers: number[]
+  selectedKTL: number[]
+  selectedWorkers: number[]
 }

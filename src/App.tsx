@@ -3,17 +3,38 @@ import classes from './App.module.scss';
 import Widgets from './Components/Widgets/Widgets';
 import Filters from './Components/Filters/Filters';
 import Navbar from './Components/Navbar/Navbar';
+import {connect} from "react-redux";
+import {RootStateType} from "./Redux/store";
+import {selectSelectedKTL, selectSelectedWorkers} from "./Redux/selectors";
+import {Preloader} from "./Components/Common/Preloader/Preloader";
 
-function App() {
+type MapStatePropsType = {
+  selectedKTL: number[]
+  selectedWorkers: number[]
+};
+
+type MapDispatchPropsType = {};
+
+type PropsType = MapStatePropsType & MapDispatchPropsType;
+
+
+const App = ({selectedKTL, selectedWorkers}: PropsType) => {
   return (
     <div className={classes.container}>
       <header>
         <Navbar/>
         <Filters/>
       </header>
-      <Widgets/>
+      {selectedKTL.length || selectedWorkers.length ? <Widgets/> : <Preloader/>}
     </div>
   );
-}
+};
 
-export default App;
+const mapState = (state: RootStateType): MapStatePropsType => ({
+  selectedKTL: selectSelectedKTL(state),
+  selectedWorkers: selectSelectedWorkers(state),
+});
+
+const mapDispatch = {};
+
+export default connect<MapStatePropsType, MapDispatchPropsType, {}, RootStateType>(mapState, mapDispatch)(App);

@@ -52,9 +52,14 @@ export const removeServicesChild = (): RemoveServicesChildACType => ({type: REMO
 
 export const requestWidgets = ({
                                  orgOid, period, periodType, serviceOid = '0', numSC = [1, 2, 3], numTodays = [1, 2, 3],
-                                 numTops = [1, 2], ktl = [], workers = []
-                               }: RequestWidgetsType): ThunkAction<void, RootStateType, unknown, AnyAction> => async (dispatch) => {
+                                 numTops = [1, 2], selectedKTL = [], selectedWorkers = []
+                               }: RequestWidgetsType): ThunkAction<void, RootStateType, unknown, AnyAction> => async (dispatch, getState) => {
   dispatch(setIsFetchingWidgetsStarted());
+
+  if (!selectedKTL.length || !selectedWorkers.length) {
+    selectedKTL = getState().filters.selectedKTL;
+    selectedWorkers = getState().filters.selectedWorkers;
+  }
 
   const response = await widgetsAPI.getWidgets({
     serviceOid,
@@ -64,8 +69,8 @@ export const requestWidgets = ({
     numSC,
     numTodays,
     numTops,
-    ktl,
-    workers,
+    selectedKTL,
+    selectedWorkers,
   });
   dispatch(setSC(PipeGraphLine(response.splice(0, numSC.length))));
   dispatch(setTodays(PipeTodays(response.splice(0, numTodays.length))));
@@ -77,9 +82,14 @@ export const requestWidgets = ({
 
 export const requestServicesChild = ({
                                        orgOid, period, periodType, serviceOid, numSC = [1, 2, 3], numTodays = [1, 2, 3],
-                                       numTops = [], ktl = [], workers = []
-                                     }: RequestServicesChildType): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
+                                       numTops = [], selectedKTL = [], selectedWorkers = []
+                                     }: RequestServicesChildType): ThunkAction<void, RootStateType, unknown, AnyAction> => async (dispatch, getState) => {
   dispatch(setIsFetchingWidgetsStarted());
+
+  if (!selectedKTL.length || !selectedWorkers.length) {
+    selectedKTL = getState().filters.selectedKTL;
+    selectedWorkers = getState().filters.selectedWorkers;
+  }
 
   const response = await widgetsAPI.getWidgets({
     orgOid,
@@ -89,8 +99,8 @@ export const requestServicesChild = ({
     numSC,
     numTodays,
     numTops,
-    ktl,
-    workers,
+    selectedKTL,
+    selectedWorkers,
   });
   dispatch(setSCChild(PipeGraphLine(response.splice(0, numSC.length))));
   dispatch(setTodaysChild(PipeTodays(response.splice(0, numTodays.length))));

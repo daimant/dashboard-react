@@ -11,6 +11,8 @@ import {
   SET_ORG_NAME,
   SET_ORG_OID,
   SET_PERIOD,
+  SET_SELECTED_KTL,
+  SET_SELECTED_WORKERS,
   SET_SERVICE_OID,
   SET_SHOW_FILTERS
 } from './action-types';
@@ -33,6 +35,8 @@ type ActionsFiltersType = {
   orgOid: string
   per: string
   serviceOid?: string
+  selectedKTL: number[]
+  selectedWorkers: number[]
 };
 
 type InitialStateFiltersType = typeof initialStateFilters;
@@ -132,6 +136,8 @@ const initialStateFilters = {
   serviceOid: '0' as string,
   ktl: [] as KTLType[],
   workers: [] as WorkersType[],
+  selectedKTL: [] as number[],
+  selectedWorkers: [] as number[],
 };
 
 const actionHandlerFilters: any = {
@@ -198,12 +204,26 @@ const actionHandlerFilters: any = {
     };
   },
 
-  [SET_SERVICE_OID]: (state: InitialStateFiltersType, action: ActionsFiltersType) => {
-    return {
+  [SET_SERVICE_OID]: (state: InitialStateFiltersType, action: ActionsFiltersType) => ({
+    ...state,
+    serviceOid: (action.serviceOid ? action.serviceOid : '0')
+  }),
+
+  [SET_SELECTED_KTL]: (state: InitialStateFiltersType, action: ActionsFiltersType) => action.selectedKTL
+    ? {
       ...state,
-      serviceOid: (action.serviceOid ? action.serviceOid : '0')
+      selectedKTL: action.selectedKTL
     }
-  },
+    : state
+  ,
+
+  [SET_SELECTED_WORKERS]: (state: InitialStateFiltersType, action: ActionsFiltersType) => action.selectedWorkers
+    ? {
+      ...state,
+      selectedWorkers: action.selectedWorkers
+    }
+    : state
+  ,
 };
 
 const filtersReducer = (state = initialStateFilters, action: ActionsFiltersType): InitialStateFiltersType => {

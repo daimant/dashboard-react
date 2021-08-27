@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import classes from './Filters.module.scss';
 import {Preloader} from '../Common/Preloader/Preloader';
 import MenuTreeList from './MenuTreeList/MenuTreeList';
@@ -25,6 +25,8 @@ import {
   selectPeriod,
   selectPeriodType,
   selectPerList,
+  selectSelectedKTL,
+  selectSelectedWorkers,
   selectServiceOid,
   selectShowFilters,
   selectWorkers,
@@ -39,6 +41,7 @@ import {
 } from '../../Redux/filters';
 import MenuKTL from './MenuKTL/MenuKTL';
 import MenuWorkers from "./MenuWorkers/MenuWorkers";
+import {setSelectedKTL, setSelectedWorkers} from "../../Redux/filters/actions";
 
 type MapStatePropsType = {
   orgListOSK: OrgListOSKType
@@ -55,14 +58,18 @@ type MapStatePropsType = {
   serviceOid: string
   ktl: KTLType[]
   workers: WorkersType[]
+  selectedKTL: number[]
+  selectedWorkers: number[]
 };
 
 type MapDispatchPropsType = {
   requestOrg: () => void
-  requestWidgetsFromFilters: ({orgOid, period, periodType, ktl, workers}: RequestWidgetsFromFiltersType) => void
+  requestWidgetsFromFilters: ({orgOid, period, periodType, selectedKTL, selectedWorkers}: RequestWidgetsFromFiltersType) => void
   setPeriod: (per: string) => void
   setOrgOid: (oid: string) => void
   requestSetFiltersDefault: () => void
+  setSelectedKTL: (selectedKTL: number[]) => void
+  setSelectedWorkers: (selectedWorkers: number[]) => void
 };
 
 type PropsType = MapStatePropsType & MapDispatchPropsType;
@@ -70,7 +77,8 @@ type PropsType = MapStatePropsType & MapDispatchPropsType;
 const Filters = ({
                    orgListOSK, altOrgListOSK, orgListRZD, isFetchingFilters, isFetchingWidgets, orgOid,
                    requestWidgetsFromFilters, setPeriod, setOrgOid, perList, period, periodType,
-                   requestSetFiltersDefault, showFilters, requestOrg, serviceOid, ktl, workers
+                   requestSetFiltersDefault, showFilters, requestOrg, serviceOid, ktl, workers, selectedKTL,
+                   selectedWorkers, setSelectedKTL, setSelectedWorkers
                  }: PropsType) => {
 
   useEffect(() => {
@@ -79,9 +87,6 @@ const Filters = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const [selectedKTL, setSelectedKTL] = useState<number[]>([]);
-  const [selectedWorkers, setSelectedWorkers] = useState<number[]>([]);
 
   if (!showFilters) return null;
   if (isFetchingFilters) return <Preloader/>;
@@ -109,8 +114,8 @@ const Filters = ({
       orgOid: type === 'оргструктура' ? selected : orgOid,
       period: type === 'период' ? newPeriod : period,
       periodType: type === 'период' ? newPeriodType : periodType,
-      ktl: type === 'договора' ? selected : selectedKTL,
-      workers: type === 'персонал' ? selected : selectedWorkers,
+      selectedKTL: type === 'договора' ? selected : selectedKTL,
+      selectedWorkers: type === 'персонал' ? selected : selectedWorkers,
     });
   };
 
@@ -168,6 +173,8 @@ const mapState = (state: RootStateType) => ({
   serviceOid: selectServiceOid(state),
   ktl: selectKTL(state),
   workers: selectWorkers(state),
+  selectedKTL: selectSelectedKTL(state),
+  selectedWorkers: selectSelectedWorkers(state),
 });
 
 const mapDispatch = {
@@ -176,6 +183,8 @@ const mapDispatch = {
   setPeriod,
   setOrgOid,
   requestSetFiltersDefault,
+  setSelectedKTL,
+  setSelectedWorkers
 };
 
 export default connect<MapStatePropsType, MapDispatchPropsType, {}, RootStateType>(mapState, mapDispatch)(Filters);
