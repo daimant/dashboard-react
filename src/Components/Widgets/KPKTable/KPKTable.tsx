@@ -67,6 +67,7 @@ const LightTooltip = withStyles((theme: Theme) => ({
     backgroundColor: theme.palette.common.white,
     boxShadow: theme.shadows[1],
     fontSize: 12,
+    maxWidth: 500
   },
 }))(Tooltip);
 
@@ -77,6 +78,14 @@ const nameColsDetails: any = {
   k4: 'Удовлетворенность',
   k5: 'ППР',
 };
+const nameColsDetailsCallCentre: any = {
+  k1: 'Доля пропущенных вызовов',
+  k2: 'Доля обращений, обработанных не более чем за 15 мин.',
+  k3: 'Уровень обслуживания',
+  k4: 'Доля некорректно маршрутизируемых обращений',
+  k5: 'Доля неверно классифицированных обращений',
+};
+
 
 const KPKTable = ({
                     kpk, requestServicesChild, removeServicesChild, orgOid, period, periodType, setServiceOid
@@ -155,13 +164,13 @@ const KPKTable = ({
                 }</TableCell>
                 <LightTooltip placement='right'
                               title={row[value] !== '-'
-                                ? <div className={classes.blackColor}>
+                                ? <div className={classes.blackColor} >
                                   {`${row[value]} состоит из:`}
                                   {cols.slice(3, 8).map((key: any) => (
                                     <span className={classes.tableHead}
                                       // className={cn(classes[row[`${key}_good`] ? 'greenColor' : 'redColor'], classes.tableHead)}
                                           key={key}>
-                                        {nameColsDetails[key]}: {row[key]}
+                                      {row['Услуга'] === 'Контакт-центр' ? nameColsDetailsCallCentre[key] : nameColsDetails[key]}: {row[key]}
                                       {/*{nameColsDetails[key]}: {row[key]} {!row[`${key}_good`]*/}
                                       {/*? `(отклонение: ${(row[key + '_l'] - row[key]).toFixed(2)})`*/}
                                       {/*: ''}*/}
