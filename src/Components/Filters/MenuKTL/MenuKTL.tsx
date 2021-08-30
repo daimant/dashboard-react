@@ -83,7 +83,6 @@ const MenuKTL = ({ktl, title, acceptFilters, blockedButton, selectedKTL, setSele
     array = array.filter((v, i) => array.indexOf(v) === i);
 
     setSelectedKTL(array);
-    acceptFilters(title, array);
   }
 
   const renderTree = ({tree, handleExpand}: RenderTreePropsType) => (
@@ -111,7 +110,10 @@ const MenuKTL = ({ktl, title, acceptFilters, blockedButton, selectedKTL, setSele
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    if (selectedKTL.length) {
+      setAnchorEl(null);
+      acceptFilters(title, selectedKTL);
+    }
   };
 
   const handleExpand = (event: ChangeEvent<{}>, nodeIds: string) => {

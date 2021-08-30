@@ -34,14 +34,16 @@ const MenuWorkers = ({workersList, title, acceptFilters, blockedButton, selected
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    if (selectedWorkers.length) {
+      setAnchorEl(null);
+      acceptFilters(title, selectedWorkers);
+    }
   };
 
   const getOnChange = (event: boolean, oid: number) => {
     const newSelected = event ? selectedWorkers.concat(oid) : selectedWorkers.filter(el => el !== oid);
 
     setSelectedWorkers(newSelected);
-    acceptFilters(title, newSelected);
   };
 
   return (

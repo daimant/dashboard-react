@@ -61,10 +61,6 @@ export const requestWidgets = ({
   const parentsKTL = new Set(getState().filters.ktl.map(el => el.oid));
   selectedKTL = selectedKTL.filter((el: string) => !parentsKTL.has(el));
 
-  if (!selectedKTL.length) {
-    return
-  }
-
   dispatch(setIsFetchingWidgetsStarted());
 
   const response = await widgetsAPI.getWidgets({
