@@ -98,7 +98,7 @@ const Filters = ({
       ? selected.split(':')
       : ['', ''];
 
-    if ((type === 'договора' || type === 'персонал') && !selected.length) {
+    if ((type === 'договор' || type === 'персонал') && !selected.length) {
       return;
     }
 
@@ -106,7 +106,7 @@ const Filters = ({
       orgOid: type === 'оргструктура' ? selected : orgOid,
       period: type === 'период' ? newPeriod : period,
       periodType: type === 'период' ? newPeriodType : periodType,
-      selectedKTL: type === 'договора' ? selected : selectedKTL,
+      selectedKTL: type === 'договор' ? selected : selectedKTL,
       selectedWorkers: type === 'персонал' ? selected : selectedWorkers,
     });
   };
@@ -132,7 +132,7 @@ const Filters = ({
                         acceptFilters={acceptFilters}
                         blockedButton={(isFetchingWidgets || serviceOid !== '0')}/>
           <MenuKTL ktl={ktl}
-                   title={'договора'}
+                   title={'договор'}
                    acceptFilters={acceptFilters}
                    selectedKTL={selectedKTL}
                    setSelectedKTL={setSelectedKTL}
