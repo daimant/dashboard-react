@@ -1,6 +1,6 @@
 import React, {MouseEvent, useState} from 'react';
 import {Checkbox, FormControlLabel, makeStyles} from '@material-ui/core';
-import {WorkersType} from '../../../Types/Types';
+import {SelectedWorkersType, WorkersType} from '../../../Types/Types';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu/Menu';
 
@@ -8,8 +8,10 @@ type PropsType = {
   workersList: WorkersType[]
   title: string
   blockedButton: boolean
+  selectedWorkers: SelectedWorkersType
 
   acceptFilters: (type: string, selected: any) => void
+  setSelectedWorkers: (selectedWorkers: SelectedWorkersType) => void
 }
 
 const useStyles = makeStyles({
@@ -23,10 +25,9 @@ const useStyles = makeStyles({
   },
 });
 
-const MenuWorkers = ({workersList, title, acceptFilters, blockedButton}: PropsType) => {
+const MenuWorkers = ({workersList, title, acceptFilters, blockedButton, selectedWorkers, setSelectedWorkers}: PropsType) => {
   const classesMUI = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [selected, setSelected] = useState<number[]>(workersList.map(el => el.oid));
 
   const handleButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -37,9 +38,9 @@ const MenuWorkers = ({workersList, title, acceptFilters, blockedButton}: PropsTy
   };
 
   const getOnChange = (event: boolean, oid: number) => {
-    const newSelected = event ? selected.concat(oid) : selected.filter(el => el !== oid);
+    const newSelected = event ? selectedWorkers.concat(oid) : selectedWorkers.filter(el => el !== oid);
 
-    setSelected(newSelected);
+    setSelectedWorkers(newSelected);
     acceptFilters(title, newSelected);
   };
 
@@ -63,7 +64,7 @@ const MenuWorkers = ({workersList, title, acceptFilters, blockedButton}: PropsTy
             <FormControlLabel
               key={`${el.oid}${el.name}`}
               control={
-                <Checkbox checked={selected.some(item => item === el.oid)}
+                <Checkbox checked={selectedWorkers.some(item => item === el.oid)}
                           disabled={blockedButton}
                           onChange={event => getOnChange(event.target.checked, el.oid)}
                           onClick={e => e.stopPropagation()}/>}

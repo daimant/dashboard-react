@@ -8,6 +8,8 @@ import {
   KTLType,
   KTLChildType,
   WorkersType,
+  SelectedKTLType,
+  SelectedWorkersType,
 } from '../Types/Types';
 
 // Widgets
@@ -15,7 +17,7 @@ export const PipeKPK = (kpk: RawKPKType) => {
   if (!kpk) return kpk;
 
   const parsedKPK = kpk.data?.map((row) => {
-    const newRow: { [index: string]: string | number } = {};
+    const newRow: { [key: string]: string | number } = {};
 
     kpk.name_col?.forEach((colName, i) => {
       let currColVal = row[i];
@@ -162,7 +164,7 @@ export const PipeTodays = (todays: TodaysType[]) => todays.map(today => {
 });
 
 // filters
-export const PipeLists = (lists: [OrgListOSKType[], OrgListRZDType[], RowListType, RowListType]): object => {
+export const PipeLists = (lists: [OrgListOSKType[], OrgListRZDType[], RowListType, RowListType]) => {
   const [orgListOSK, orgListRZD, ktlList, workersList] = lists;
 
   return { //@ts-ignore
@@ -237,10 +239,9 @@ const PipeOrgListRZD = (orgListRZD: OrgListRZDType[]) => ({
   orgMapListRZD: new Map(orgListRZD ? orgListRZD.map(org => [`${org.oid}`, org.name]) : []).set('0', 'ОАО РЖД')
 });
 
-const PipeKTl = (rawKTL: KTLChildType[]): { ktl: KTLType[], selectedKTL: number[] } => {
+const PipeKTl = (rawKTL: KTLChildType[]): { ktl: KTLType[], selectedKTL: SelectedKTLType } => {
   if (!rawKTL || !rawKTL[0]) return {ktl: [], selectedKTL: []};
 
-  const selectedKTL = rawKTL.map(el => Number(el.oid));
   const parentsUniq = new Set(rawKTL.map(doc => doc.contragent));
   const ktl = Array.from(parentsUniq).map((doc, i) => ({name: doc, oid: `${i}`, children: []}));
   const parentsPlace = new Map(ktl.map(doc => [doc.name, doc.oid]));
@@ -250,12 +251,18 @@ const PipeKTl = (rawKTL: KTLChildType[]): { ktl: KTLType[], selectedKTL: number[
 
     child.oid = `${child.oid}`;
     // @ts-ignore
-    ktl[parentOid].children = [...ktl[parentOid].children, child]
+    ktl[parentOid].children = [...ktl[parentOid].children, child];
   });
+
+  const selectedKTL = ktl  // @ts-ignore
+    .map(list => [list.oid, ...list.children.map(child => child.oid)])
+    .flat(1);
 
   return {ktl, selectedKTL};
 };
 
-const PipeWorkers = (workers: WorkersType[]) => ({workers, selectedWorkers: workers.map(el => el.oid)});
+const PipeWorkers = (workers: WorkersType[]): { workers: WorkersType[], selectedWorkers: SelectedWorkersType } => ({
+  workers, selectedWorkers: workers.map(el => el.oid)
+});
 
 

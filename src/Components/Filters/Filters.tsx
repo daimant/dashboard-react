@@ -10,6 +10,8 @@ import {
   OrgListRZDType,
   PeriodListType,
   RequestWidgetsFromFiltersType,
+  SelectedKTLType,
+  SelectedWorkersType,
   WorkersType
 } from '../../Types/Types';
 import {RootStateType} from '../../Redux/store';
@@ -58,8 +60,8 @@ type MapStatePropsType = {
   serviceOid: string
   ktl: KTLType[]
   workers: WorkersType[]
-  selectedKTL: number[]
-  selectedWorkers: number[]
+  selectedKTL: SelectedKTLType
+  selectedWorkers: SelectedWorkersType
 };
 
 type MapDispatchPropsType = {
@@ -68,8 +70,8 @@ type MapDispatchPropsType = {
   setPeriod: (per: string) => void
   setOrgOid: (oid: string) => void
   requestSetFiltersDefault: () => void
-  setSelectedKTL: (selectedKTL: number[]) => void
-  setSelectedWorkers: (selectedWorkers: number[]) => void
+  setSelectedKTL: (selectedKTL: SelectedKTLType) => void
+  setSelectedWorkers: (selectedWorkers: SelectedWorkersType) => void
 };
 
 type PropsType = MapStatePropsType & MapDispatchPropsType;
@@ -91,20 +93,13 @@ const Filters = ({
   if (!showFilters) return null;
   if (isFetchingFilters) return <Preloader/>;
 
+  const parentsKTL = new Set(ktl.map(el => el.oid));
+  const removeKTLParents = (data: SelectedKTLType) => data.filter((el: string) => !parentsKTL.has(el));
+
   const acceptFilters = (type: string = 'def', selected: any = '') => {
     const [newPeriodType, newPeriod] = (type === 'период')
       ? selected.split(':')
       : ['', ''];
-    const parentsKTL = new Set(ktl.map(el => el.oid));
-
-    if (type === 'договора') {
-      selected = selected
-        .filter((el: any) => !parentsKTL.has(el))
-        .map((el: string) => Number(el));
-      setSelectedKTL(selected);
-    } else if (type === 'персонал') {
-      setSelectedWorkers(selected);
-    }
 
     if ((type === 'договора' || type === 'персонал') && !selected.length) {
       return;
@@ -114,7 +109,7 @@ const Filters = ({
       orgOid: type === 'оргструктура' ? selected : orgOid,
       period: type === 'период' ? newPeriod : period,
       periodType: type === 'период' ? newPeriodType : periodType,
-      selectedKTL: type === 'договора' ? selected : selectedKTL,
+      selectedKTL: type === 'договора' ? removeKTLParents(selected) : removeKTLParents(selectedKTL),
       selectedWorkers: type === 'персонал' ? selected : selectedWorkers,
     });
   };
@@ -142,10 +137,14 @@ const Filters = ({
           <MenuKTL ktl={ktl}
                    title={'договора'}
                    acceptFilters={acceptFilters}
+                   selectedKTL={selectedKTL}
+                   setSelectedKTL={setSelectedKTL}
                    blockedButton={(isFetchingWidgets || serviceOid !== '0')}/>
           <MenuWorkers workersList={workers}
                        title={'персонал'}
                        acceptFilters={acceptFilters}
+                       selectedWorkers={selectedWorkers}
+                       setSelectedWorkers={setSelectedWorkers}
                        blockedButton={(isFetchingWidgets || serviceOid !== '0')}/>
         </>}
       <Button variant='outlined'

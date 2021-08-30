@@ -7,10 +7,11 @@ import {connect} from "react-redux";
 import {RootStateType} from "./Redux/store";
 import {selectSelectedKTL, selectSelectedWorkers} from "./Redux/selectors";
 import {Preloader} from "./Components/Common/Preloader/Preloader";
+import {SelectedKTLType, SelectedWorkersType} from "./Types/Types";
 
 type MapStatePropsType = {
-  selectedKTL: number[]
-  selectedWorkers: number[]
+  selectedKTL: SelectedKTLType
+  selectedWorkers: SelectedWorkersType
 };
 
 type MapDispatchPropsType = {};

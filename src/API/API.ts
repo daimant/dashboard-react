@@ -1,4 +1,5 @@
 import axios, {AxiosResponse} from 'axios';
+import {SelectedKTLType, SelectedWorkersType} from "../Types/Types";
 
 const modeProd = false;
 const instance = axios.create({
@@ -12,8 +13,8 @@ type GetWidgetsType = {
   numTodays: number[]
   numTops: number[]
   serviceOid: string
-  selectedKTL: number[]
-  selectedWorkers: number[]
+  selectedKTL: SelectedKTLType
+  selectedWorkers: SelectedWorkersType
 }
 
 const apiWidgetsProd = {
@@ -23,7 +24,7 @@ const apiWidgetsProd = {
       'srv_oid': Number(serviceOid),
       'period': period,
       'period_type': periodType,
-      'ktl': selectedKTL,
+      'ktl': selectedKTL.map((el: string) => Number(el)),
       'workers_type': selectedWorkers,
     };
     return Promise.all<any>([

@@ -3,6 +3,8 @@ import {
   OrgListOSKType,
   OrgListRZDType,
   PeriodListType,
+  SelectedKTLType,
+  SelectedWorkersType,
   WorkersType
 } from '../../Types/Types';
 import {
@@ -20,23 +22,21 @@ import {
 type ActionsFiltersType = {
   type: string
   lists: {
-    orgListOSK: {
-      orgListOSK: OrgListOSKType[]
-      altOrgListOSK: OrgListOSKType
-      orgMapListOSK: Map<string, string>
-    },
-    orgListRZD: {
-      orgListRZD: OrgListRZDType
-      orgMapListRZD: Map<string, string>
-    },
-    ktl: KTLType,
-    workers: WorkersType,
+    orgListOSK: OrgListOSKType[]
+    altOrgListOSK: OrgListOSKType
+    orgMapListOSK: Map<string, string>
+    orgListRZD: OrgListRZDType
+    orgMapListRZD: Map<string, string>
+    ktl: KTLType
+    workers: WorkersType
+    selectedKTL: SelectedKTLType
+    selectedWorkers: SelectedWorkersType
   }
   orgOid: string
   per: string
   serviceOid?: string
-  selectedKTL: number[]
-  selectedWorkers: number[]
+  selectedKTL: SelectedKTLType
+  selectedWorkers: SelectedWorkersType
 };
 
 type InitialStateFiltersType = typeof initialStateFilters;
@@ -116,6 +116,8 @@ export const defaultFilters = {
   orgName: 'ООО ОСК ИнфоТранс',
   period: `${new Date().getFullYear()}-${new Date().getMonth() - 1 < 10 ? `0${new Date().getMonth() + 1}` : new Date().getMonth() + 1}`,
   periodType: 'm',
+  selectedKTL: [] as SelectedKTLType,
+  selectedWorkers: [] as SelectedWorkersType,
 };
 
 const initialStateFilters = {
@@ -136,13 +138,19 @@ const initialStateFilters = {
   serviceOid: '0' as string,
   ktl: [] as KTLType[],
   workers: [] as WorkersType[],
-  selectedKTL: [] as number[],
-  selectedWorkers: [] as number[],
+  selectedKTL: [] as SelectedKTLType,
+  selectedWorkers: [] as SelectedWorkersType,
 };
 
 const actionHandlerFilters: any = {
-  [SET_LISTS]: (state: InitialStateFiltersType, action: ActionsFiltersType) =>
-    action.lists ? {...state, ...action.lists, isFetchingFilters: false} : {...state, isFetchingFilters: false},
+  [SET_LISTS]: (state: InitialStateFiltersType, action: ActionsFiltersType) => {
+    defaultFilters.selectedKTL = action.lists.selectedKTL;
+    defaultFilters.selectedWorkers = action.lists.selectedWorkers;
+
+    return action.lists
+      ? {...state, ...action.lists, isFetchingFilters: false}
+      : {...state, isFetchingFilters: false}
+  },
 
   [SET_PERIOD]: (state: InitialStateFiltersType, action: ActionsFiltersType) => {
     const [periodType, period] = action.per.split(':');
@@ -187,12 +195,15 @@ const actionHandlerFilters: any = {
     localStorage.removeItem('period');
     localStorage.removeItem('periodType');
     localStorage.removeItem('orgName');
+
     return {
       ...state,
       orgOid: defaultFilters.orgOid,
       period: defaultFilters.period,
       periodType: defaultFilters.periodType,
       orgName: defaultFilters.orgName,
+      selectedKTL: defaultFilters.selectedKTL,
+      selectedWorkers: defaultFilters.selectedWorkers,
     };
   },
 
@@ -209,20 +220,22 @@ const actionHandlerFilters: any = {
     serviceOid: (action.serviceOid ? action.serviceOid : '0')
   }),
 
-  [SET_SELECTED_KTL]: (state: InitialStateFiltersType, action: ActionsFiltersType) => action.selectedKTL
-    ? {
-      ...state,
-      selectedKTL: action.selectedKTL
-    }
-    : state
+  [SET_SELECTED_KTL]: (state: InitialStateFiltersType, action: ActionsFiltersType) =>
+    action.selectedKTL
+      ? {
+        ...state,
+        selectedKTL: action.selectedKTL
+      }
+      : state
   ,
 
-  [SET_SELECTED_WORKERS]: (state: InitialStateFiltersType, action: ActionsFiltersType) => action.selectedWorkers
-    ? {
-      ...state,
-      selectedWorkers: action.selectedWorkers
-    }
-    : state
+  [SET_SELECTED_WORKERS]: (state: InitialStateFiltersType, action: ActionsFiltersType) =>
+    action.selectedWorkers
+      ? {
+        ...state,
+        selectedWorkers: action.selectedWorkers
+      }
+      : state
   ,
 };
 

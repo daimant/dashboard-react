@@ -4,7 +4,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import TreeItem from '@material-ui/lab/TreeItem';
 import {Checkbox, FormControlLabel, makeStyles} from '@material-ui/core';
-import {KTLType} from '../../../Types/Types';
+import {KTLType, SelectedKTLType} from '../../../Types/Types';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu/Menu';
 
@@ -12,8 +12,10 @@ type PropsType = {
   ktl: KTLType[]
   title: string
   blockedButton: boolean
+  selectedKTL: SelectedKTLType
 
   acceptFilters: (type: string, selected: any) => void
+  setSelectedKTL: (selectedKTL: SelectedKTLType) => void
 }
 
 type RenderTreePropsType = {
@@ -33,12 +35,9 @@ const useStyles = makeStyles({
   },
 });
 
-const MenuKTL = ({ktl, title, acceptFilters, blockedButton}: PropsType) => {
+const MenuKTL = ({ktl, title, acceptFilters, blockedButton, selectedKTL, setSelectedKTL}: PropsType) => {
   const classesMUI = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [selected, setSelected] = useState<string[]>(ktl     // @ts-ignore
-    .map(list => [list.oid, ...list.children.map(child => child.oid)])
-    .flat(1));
   const [expanded, setExpanded] = useState<string[]>(ktl.map(el => el.oid));
 
   function getChildById(node: KTLType, oid: string) {
@@ -78,12 +77,12 @@ const MenuKTL = ({ktl, title, acceptFilters, blockedButton}: PropsType) => {
   function getOnChange(checked: boolean, tree: KTLType) {
     const allNode: string[] = ktl.map(list => getChildById(list, tree.oid)).flat(1);
     let array = checked
-      ? [...selected, ...allNode]
-      : selected.filter(value => !allNode.includes(value));
+      ? [...selectedKTL, ...allNode]
+      : selectedKTL.filter(value => !allNode.includes(value));
 
     array = array.filter((v, i) => array.indexOf(v) === i);
 
-    setSelected(array);
+    setSelectedKTL(array);
     acceptFilters(title, array);
   }
 
@@ -95,7 +94,7 @@ const MenuKTL = ({ktl, title, acceptFilters, blockedButton}: PropsType) => {
                 <FormControlLabel label={<>{tree.name}</>}
                                   key={tree.oid}
                                   control={
-                                    <Checkbox checked={selected.some(item => item === tree.oid)}
+                                    <Checkbox checked={selectedKTL.some(item => item === tree.oid)}
                                               disabled={blockedButton}
                                               onChange={event => getOnChange(event.currentTarget.checked, tree)}
                                               onClick={e => e.stopPropagation()}/>

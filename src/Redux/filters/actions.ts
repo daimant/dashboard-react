@@ -16,7 +16,7 @@ import {
   SET_SERVICE_OID,
   SET_SHOW_FILTERS
 } from './action-types';
-import {RequestWidgetsFromFiltersType} from '../../Types/Types';
+import {RequestWidgetsFromFiltersType, SelectedKTLType, SelectedWorkersType} from '../../Types/Types';
 
 type SetListsACType = { type: typeof SET_LISTS, lists: object };
 type SetPeriodACType = { type: typeof SET_PERIOD, per: string };
@@ -25,8 +25,8 @@ type SetOrgNameACType = { type: typeof SET_ORG_NAME, orgOid: string };
 type SetFiltersDefaultACType = { type: typeof SET_FILTERS_DEFAULT };
 type SetShowFiltersACType = { type: typeof SET_SHOW_FILTERS };
 type SetServiceOidACType = { type: typeof SET_SERVICE_OID, serviceOid?: string };
-type SetSelectedKTLACType = { type: typeof SET_SELECTED_KTL, selectedKTL: number[] };
-type SetSelectedWorkersACType = { type: typeof SET_SELECTED_WORKERS, selectedWorkers: number[] };
+type SetSelectedKTLACType = { type: typeof SET_SELECTED_KTL, selectedKTL: SelectedKTLType };
+type SetSelectedWorkersACType = { type: typeof SET_SELECTED_WORKERS, selectedWorkers: SelectedWorkersType };
 
 const setLists = (lists: object): SetListsACType => ({type: SET_LISTS, lists});
 const setOrgName = (orgOid: string): SetOrgNameACType => ({type: SET_ORG_NAME, orgOid});
@@ -40,9 +40,12 @@ export const setShowFilters = (): SetShowFiltersACType => ({type: SET_SHOW_FILTE
 
 export const setServiceOid = (serviceOid?: string): SetServiceOidACType => ({type: SET_SERVICE_OID, serviceOid});
 
-export const setSelectedKTL = (selectedKTL: number[]): SetSelectedKTLACType => ({type: SET_SELECTED_KTL, selectedKTL});
+export const setSelectedKTL = (selectedKTL: SelectedKTLType): SetSelectedKTLACType => ({
+  type: SET_SELECTED_KTL,
+  selectedKTL
+});
 
-export const setSelectedWorkers = (selectedWorkers: number[]): SetSelectedWorkersACType => ({
+export const setSelectedWorkers = (selectedWorkers: SelectedWorkersType): SetSelectedWorkersACType => ({
   type: SET_SELECTED_WORKERS,
   selectedWorkers
 });
