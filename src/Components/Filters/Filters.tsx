@@ -98,10 +98,6 @@ const Filters = ({
       ? selected.split(':')
       : ['', ''];
 
-    if ((type === 'договор' || type === 'персонал') && !selected.length) {
-      return;
-    }
-
     requestWidgetsFromFilters({
       orgOid: type === 'оргструктура' ? selected : orgOid,
       period: type === 'период' ? newPeriod : period,
