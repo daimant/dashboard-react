@@ -40,10 +40,10 @@ const MenuKTL = ({ktl, title, acceptFilters, blockedButton, selectedKTL, setSele
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [expanded, setExpanded] = useState<string[]>(ktl.map(el => el.oid));
 
-  function getChildById(node: KTLType, oid: string) {
+  const getChildById = (node: KTLType, oid: string) => {
     let array: string[] = [];
 
-    function getAllChild(tree: KTLType | null) {
+    const getAllChild = (tree: KTLType | null) => {
       if (tree === null) return [];
       array.push(tree.oid);
       if (Array.isArray(tree.children)) {
@@ -53,9 +53,9 @@ const MenuKTL = ({ktl, title, acceptFilters, blockedButton, selectedKTL, setSele
         });
       }
       return array;
-    }
+    };
 
-    function getNodeById(tree: KTLType, oid: string) {
+    const getNodeById = (tree: KTLType, oid: string) => {
       if (tree.oid === oid) {
         return tree;
       } else if (Array.isArray(tree.children)) {
@@ -69,12 +69,12 @@ const MenuKTL = ({ktl, title, acceptFilters, blockedButton, selectedKTL, setSele
       }
 
       return null;
-    }
+    };
 
     return getAllChild(getNodeById(node, oid));
-  }
+  };
 
-  function getOnChange(checked: boolean, tree: KTLType) {
+  const getOnChange = (checked: boolean, tree: KTLType) => {
     const allNode: string[] = ktl.map(list => getChildById(list, tree.oid)).flat(1);
     let array = checked
       ? [...selectedKTL, ...allNode]
@@ -83,7 +83,23 @@ const MenuKTL = ({ktl, title, acceptFilters, blockedButton, selectedKTL, setSele
     array = array.filter((v, i) => array.indexOf(v) === i);
 
     setSelectedKTL(array);
-  }
+
+    ktl.forEach(contragent => {
+      let countCheckedChild = 0;
+
+      contragent.children?.forEach(child => {
+        if (array.includes(child.oid)) {
+          countCheckedChild++;
+        }
+      });
+
+      if (!countCheckedChild && array.includes(contragent.oid)) {
+        setSelectedKTL(array.filter(el => el !== contragent.oid));
+      } else if (countCheckedChild && !array.includes(contragent.oid)) {
+        setSelectedKTL([...array, contragent.oid]);
+      }
+    });
+  };
 
   const renderTree = ({tree, handleExpand}: RenderTreePropsType) => (
     <TreeItem key={tree.oid}
