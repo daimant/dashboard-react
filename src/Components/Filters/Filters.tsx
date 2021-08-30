@@ -93,9 +93,6 @@ const Filters = ({
   if (!showFilters) return null;
   if (isFetchingFilters) return <Preloader/>;
 
-  const parentsKTL = new Set(ktl.map(el => el.oid));
-  const removeKTLParents = (data: SelectedKTLType) => data.filter((el: string) => !parentsKTL.has(el));
-
   const acceptFilters = (type: string = 'def', selected: any = '') => {
     const [newPeriodType, newPeriod] = (type === 'период')
       ? selected.split(':')
@@ -109,7 +106,7 @@ const Filters = ({
       orgOid: type === 'оргструктура' ? selected : orgOid,
       period: type === 'период' ? newPeriod : period,
       periodType: type === 'период' ? newPeriodType : periodType,
-      selectedKTL: type === 'договора' ? removeKTLParents(selected) : removeKTLParents(selectedKTL),
+      selectedKTL: type === 'договора' ? selected : selectedKTL,
       selectedWorkers: type === 'персонал' ? selected : selectedWorkers,
     });
   };

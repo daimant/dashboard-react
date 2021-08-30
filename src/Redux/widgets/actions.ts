@@ -60,6 +60,8 @@ export const requestWidgets = ({
     selectedKTL = getState().filters.selectedKTL;
     selectedWorkers = getState().filters.selectedWorkers;
   }
+  const parentsKTL = new Set(getState().filters.ktl.map(el => el.oid));
+  selectedKTL = selectedKTL.filter((el: string) => !parentsKTL.has(el));
 
   const response = await widgetsAPI.getWidgets({
     serviceOid,
@@ -90,6 +92,8 @@ export const requestServicesChild = ({
     selectedKTL = getState().filters.selectedKTL;
     selectedWorkers = getState().filters.selectedWorkers;
   }
+  const parentsKTL = new Set(getState().filters.ktl.map(el => el.oid));
+  selectedKTL = selectedKTL.filter((el: string) => !parentsKTL.has(el));
 
   const response = await widgetsAPI.getWidgets({
     orgOid,
