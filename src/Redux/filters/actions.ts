@@ -66,7 +66,9 @@ export const requestSetFiltersDefault = (): ThunkAction<void, RootStateType, unk
   dispatch(requestWidgets({
     orgOid: defaultFilters.orgOid,
     period: defaultFilters.period,
-    periodType: defaultFilters.periodType
+    periodType: defaultFilters.periodType,
+    selectedKTL: defaultFilters.selectedKTL,
+    selectedWorkers: defaultFilters.selectedWorkers,
   }));
   dispatch(setServiceOid());
   dispatch(removeServicesChild());
