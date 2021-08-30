@@ -112,7 +112,7 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                  interval={data.length < 10 ? 0 : data.length < 25 ? 1 : 2}
                  allowDataOverflow={false}
                  axisLine={false}/>
-          <YAxis style={hiddenVal ? {display: 'none'} : {}}
+          <YAxis style={hiddenVal ? {display: 'none'} : {fontSize: 14}}
                  tickFormatter={tick => tick < 100
                    ? `${Math.round(tick / 10) * 10}`
                    : tick < 1000
@@ -123,7 +123,7 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                  tickCount={3}
                  axisLine={false}
                  stroke='#8884d8'/>
-          <YAxis style={hiddenProc ? {display: 'none'} : {}}
+          <YAxis style={hiddenProc ? {display: 'none'} : {fontSize: 14}}
                  tickFormatter={tick => tick.toFixed(1)}
                  yAxisId='right'
                  domain={['dataMin', 'dataMax']}
