@@ -54,14 +54,18 @@ export const requestWidgets = ({
                                  orgOid, period, periodType, serviceOid = '0', numSC = [1, 2, 3], numTodays = [1, 2, 3],
                                  numTops = [1, 2], selectedKTL = [], selectedWorkers = []
                                }: RequestWidgetsType): ThunkAction<void, RootStateType, unknown, AnyAction> => async (dispatch, getState) => {
-  dispatch(setIsFetchingWidgetsStarted());
-
   if (!selectedKTL.length || !selectedWorkers.length) {
     selectedKTL = getState().filters.selectedKTL;
     selectedWorkers = getState().filters.selectedWorkers;
   }
   const parentsKTL = new Set(getState().filters.ktl.map(el => el.oid));
   selectedKTL = selectedKTL.filter((el: string) => !parentsKTL.has(el));
+
+  if (!selectedKTL.length) {
+    return
+  }
+
+  dispatch(setIsFetchingWidgetsStarted());
 
   const response = await widgetsAPI.getWidgets({
     serviceOid,
@@ -86,14 +90,18 @@ export const requestServicesChild = ({
                                        orgOid, period, periodType, serviceOid, numSC = [1, 2, 3], numTodays = [1, 2, 3],
                                        numTops = [], selectedKTL = [], selectedWorkers = []
                                      }: RequestServicesChildType): ThunkAction<void, RootStateType, unknown, AnyAction> => async (dispatch, getState) => {
-  dispatch(setIsFetchingWidgetsStarted());
-
   if (!selectedKTL.length || !selectedWorkers.length) {
     selectedKTL = getState().filters.selectedKTL;
     selectedWorkers = getState().filters.selectedWorkers;
   }
   const parentsKTL = new Set(getState().filters.ktl.map(el => el.oid));
   selectedKTL = selectedKTL.filter((el: string) => !parentsKTL.has(el));
+
+  if (!selectedKTL.length) {
+    return
+  }
+
+  dispatch(setIsFetchingWidgetsStarted());
 
   const response = await widgetsAPI.getWidgets({
     orgOid,
