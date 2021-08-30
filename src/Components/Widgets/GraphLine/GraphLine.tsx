@@ -41,7 +41,6 @@ const CheckedValueGraph = forwardRef(({description, hidden, hideLineClick, line,
     </p>
   )
 });
-const monthsDict = ['янв', 'фев', 'март', 'апр', 'май', 'июнь', 'июль', 'авг', 'сент', 'окт', 'нояб', 'дек'];
 
 const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
   const {title, data, sumVal, avrProc} = graphLineData;
@@ -108,7 +107,7 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                    if (typeof tick !== 'string') {
                      tick = `${tick}`;
                    }
-                   return tick.indexOf('-') > -1 ? monthsDict[Number(tick.slice(3, 5) - 1)] : tick;
+                   return tick.indexOf('-') > -1 ? `${tick.slice(0, 5)}-${tick.slice(11, 16)}` : tick.slice(0, 5);
                  }}
                  interval={data.length < 10 ? 0 : data.length < 25 ? 1 : 2}
                  allowDataOverflow={false}
