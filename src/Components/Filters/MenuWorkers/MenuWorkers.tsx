@@ -25,18 +25,24 @@ const useStyles = makeStyles({
   },
 });
 
+let selectedWorkersWhenOpenedMenu: string;
+
 const MenuWorkers = ({workersList, title, acceptFilters, blockedButton, selectedWorkers, setSelectedWorkers}: PropsType) => {
   const classesMUI = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
+    selectedWorkersWhenOpenedMenu = JSON.stringify(selectedWorkers.sort());
   };
 
   const handleClose = () => {
     if (selectedWorkers.length) {
       setAnchorEl(null);
-      acceptFilters(title, selectedWorkers);
+
+      if (selectedWorkersWhenOpenedMenu !==  JSON.stringify(selectedWorkers.sort())) {
+        acceptFilters(title, selectedWorkers);
+      }
     }
   };
 

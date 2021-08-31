@@ -35,6 +35,8 @@ const useStyles = makeStyles({
   },
 });
 
+let selectedKTLWhenOpenedMenu: string;
+
 const MenuKTL = ({ktl, title, acceptFilters, blockedButton, selectedKTL, setSelectedKTL}: PropsType) => {
   const classesMUI = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -121,14 +123,19 @@ const MenuKTL = ({ktl, title, acceptFilters, blockedButton, selectedKTL, setSele
     </TreeItem>
   );
 
+
   const handleButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
+    selectedKTLWhenOpenedMenu = JSON.stringify(selectedKTL.sort());
   };
 
   const handleClose = () => {
     if (selectedKTL.length) {
       setAnchorEl(null);
-      acceptFilters(title, selectedKTL);
+
+      if (selectedKTLWhenOpenedMenu !==  JSON.stringify(selectedKTL.sort())) {
+        acceptFilters(title, selectedKTL);
+      }
     }
   };
 
@@ -144,7 +151,7 @@ const MenuKTL = ({ktl, title, acceptFilters, blockedButton, selectedKTL, setSele
     <div>
       <Button aria-controls='menu'
               variant='outlined'
-              onClick={handleButtonClick}
+              onClick={handleButtonClick.bind(this)}
               disabled={blockedButton}
               href=''>
         {title}
