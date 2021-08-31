@@ -159,10 +159,11 @@ export const PipeGraphArea = (graphs: RawGraphAreaType[]) => {
 };
 
 export const PipeTodays = (todays: TodaysType[]) => todays.map(today => {
-  if (!today || today.v1 === null || today.p === null)
-    today = {title: '', v1: 0, p: 0, err: true};
-  else if (today.p <= 1)
+  if (!today || today.v1 === null || today.p === null || !today.v1 || !today.p || !today.title) {
+    today = {title: !today?.title ? 'Ошибка при загрузке' : 'Нет данных', v1: 0, p: 0, err: true};
+  } else if (today.p <= 1) {
     today.p = +(today.p * 100).toFixed(1);
+  }
   return today;
 });
 

@@ -7,9 +7,10 @@ type PropsType = {
   today: number
   diff: number
   err: boolean
+  title: string
 }
 
-const CircularBar = ({today, diff, err}: PropsType) => {
+const CircularBar = ({today, diff, err, title}: PropsType) => {
   return (
     <div className={classes.graphs}>
       <CircularProgressbarWithChildren
@@ -17,8 +18,12 @@ const CircularBar = ({today, diff, err}: PropsType) => {
         styles={buildStyles({
           pathColor: 'rgb(136, 132, 216)'
         })}>
-        {err ? <h5>Ошибка при загрузке</h5> : <h4>{today}</h4>}
-        <strong>{diff}%</strong>
+        {err
+          ? <h5>{title}</h5>
+          : <>
+            <h4>{today}</h4>
+            <strong>{diff}%</strong>
+          </>}
       </CircularProgressbarWithChildren>
     </div>
   )
