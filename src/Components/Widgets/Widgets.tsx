@@ -49,7 +49,7 @@ type MapStatePropsType = {
 }
 
 type MapDispatchPropsType = {
-  requestWidgets: ({orgOid, period, periodType}:RequestWidgetsType) => void
+  requestWidgets: ({orgOid, period, periodType}: RequestWidgetsType) => void
   requestServicesChild: ({orgOid, period, periodType, serviceOid}: RequestServicesChildType) => void
   removeServicesChild: () => void
   setServiceOid: (serviceOid?: string) => void

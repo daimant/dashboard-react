@@ -13,7 +13,7 @@ const GraphArea = ({graphAreaData, extendedStyle = {}}: PropsType) => {
 
   return (
     <div className={classes.graphs} style={extendedStyle}>
-      <h3 className={classes.headGraph}>{title}{!data.length ? ' - Нет данных' : ''}</h3>
+      <h3 className={classes.headGraph}>{title}</h3>
       <ResponsiveContainer>
         <AreaChart data={data}
                    margin={{top: 10, bottom: 30, right: 50}}

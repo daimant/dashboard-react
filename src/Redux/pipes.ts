@@ -85,7 +85,7 @@ const CompressGraph = (graph: GraphLineType) => {
 
 export const PipeGraphLine = (graphs: GraphLineType[]) => {
   return !graphs ? [] : graphs.map(graph => {
-    if (!graph || !graph.data?.length) {
+    if (!graph || !graph.title || !graph.data?.length) {
       graph = {
         title: graph?.title ? `${graph.title} - Нет данных` : 'Ошибка при загрузке',
         data: []
@@ -127,7 +127,7 @@ export const PipeGraphArea = (graphs: RawGraphAreaType[]) => {
   if (!graphs) return [];
 
   return graphs.map((currGraph) => {
-    if (!currGraph) {
+    if (!currGraph || !currGraph.title) {
       return {
         title: 'Ошибка при загрузке',
         percents: {
@@ -148,12 +148,12 @@ export const PipeGraphArea = (graphs: RawGraphAreaType[]) => {
         p2: p2Name,
         p3: p3Name,
       },
-      data: currGraph.data.map((day) => ({
+      data: currGraph.data ? currGraph.data.map((day) => ({
         d: day.d,
         p1: [day.p2 + day.p3, 1, day.p1],
         p2: [day.p3, day.p3 + day.p2, day.p2],
         p3: [0, day.p3, day.p3],
-      })),
+      })) : [],
     }
   })
 };
