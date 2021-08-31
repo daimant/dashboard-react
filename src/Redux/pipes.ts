@@ -86,7 +86,10 @@ const CompressGraph = (graph: GraphLineType) => {
 export const PipeGraphLine = (graphs: GraphLineType[]) => {
   return !graphs ? [] : graphs.map(graph => {
     if (!graph || !graph.data?.length) {
-      graph = {title: `${graph?.title ? `${graph?.title} - ` : ''}Ошибка при загрузке`, data: []};
+      graph = {
+        title: graph?.title ? `${graph.title} - Нет данных` : 'Ошибка при загрузке',
+        data: []
+      };
       return graph;
     }
 
@@ -123,8 +126,8 @@ const getNamesForPipeGraphArea = (key: string) => dictForPipeGraphArea[key] || d
 export const PipeGraphArea = (graphs: RawGraphAreaType[]) => {
   if (!graphs) return [];
 
-  return graphs.map((curGraph) => {
-    if (!curGraph) {
+  return graphs.map((currGraph) => {
+    if (!currGraph) {
       return {
         title: 'Ошибка при загрузке',
         percents: {
@@ -136,16 +139,16 @@ export const PipeGraphArea = (graphs: RawGraphAreaType[]) => {
       }
     }
 
-    const [p1Name, p2Name, p3Name] = getNamesForPipeGraphArea(curGraph.title);
+    const [p1Name, p2Name, p3Name] = getNamesForPipeGraphArea(currGraph.title);
 
     return {
-      title: curGraph.title,
+      title: currGraph.title,
       percents: {
         p1: p1Name,
         p2: p2Name,
         p3: p3Name,
       },
-      data: curGraph.data.map((day) => ({
+      data: currGraph.data.map((day) => ({
         d: day.d,
         p1: [day.p2 + day.p3, 1, day.p1],
         p2: [day.p3, day.p3 + day.p2, day.p2],
