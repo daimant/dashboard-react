@@ -16,6 +16,7 @@ type GetWidgetsType = {
   selectedKTL: SelectedKTLType
   selectedWorkers: SelectedWorkersType
 }
+const catching = () => ({data: null});
 
 const apiWidgetsProd = {
   getWidgets: ({orgOid, period, periodType, serviceOid, numSC, numTodays, numTops, selectedKTL, selectedWorkers}: GetWidgetsType) => {
@@ -28,10 +29,10 @@ const apiWidgetsProd = {
       'workers_type': selectedWorkers,
     };
     return Promise.all<any>([
-      ...numSC.map(num => instance.post(`sc/${num}`, payload).catch(() => ({}))),
-      ...numTodays.map(num => instance.post(`today/${num}`, payload).catch(() => ({}))),
-      ...numTops.map(num => instance.get(`top/${num}`).catch(() => ({}))),
-      instance.post('kpk', payload).catch(() => ({})),
+      ...numSC.map(num => instance.post(`sc/${num}`, payload).catch(catching)),
+      ...numTodays.map(num => instance.post(`today/${num}`, payload).catch(catching)),
+      ...numTops.map(num => instance.get(`top/${num}`).catch(catching)),
+      instance.post('kpk', payload).catch(catching),
     ])
       .then((response: AxiosResponse[]) => response.map(res => res.data));
   }
@@ -39,10 +40,10 @@ const apiWidgetsProd = {
 const apiWidgetsDev = {
   getWidgets: ({numSC, numTodays, numTops}: GetWidgetsType) => {
     return Promise.all<any>([
-      ...numSC.map(num => instance.get(`sc/${num}`).catch(() => ({}))),
-      ...numTodays.map(num => instance.get(`today/${num}`).catch(() => ({}))),
-      ...numTops.map(num => instance.get(`top/${num}`).catch(() => ({}))),
-      instance.get('kpk').catch(() => ({}))
+      ...numSC.map(num => instance.get(`sc/${num}`).catch(catching)),
+      ...numTodays.map(num => instance.get(`today/${num}`).catch(catching)),
+      ...numTops.map(num => instance.get(`top/${num}`).catch(catching)),
+      instance.get('kpk').catch(catching)
     ])
       .then((response: AxiosResponse[]) => response.map(res => res.data));
   }
@@ -58,13 +59,13 @@ const apiWidgetsDev = {
 const apiFiltersProd = {
   getOrg: () => instance
     .get('/sprav/all')
-    .catch(() => ({data: null}))
+    .catch(catching)
     .then((response: AxiosResponse | { data: null }) => response.data)
 };
 const apiFiltersDev = {
   getOrg: () => instance
     .get('sprav_all')
-    .catch(() => ({data: null}))
+    .catch(catching)
     .then((response: AxiosResponse | { data: null }) => response.data)
 };
 

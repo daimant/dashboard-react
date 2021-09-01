@@ -170,8 +170,10 @@ export const PipeTodays = (todays: TodaysType[]) => todays.map(today => {
 
 // filters
 export const PipeLists = (lists: rawList[]) => {
-  const [orgListOSK, orgListRZD, ktlList, workersList] =
-    ['org_osk', 'org_rzd', 'dogovor', 'category'].map(key => lists.find(el => el.key === key));
+  if (!lists?.length) return {};
+
+  const [orgListOSK, orgListRZD, ktlList, workersList] = ['org_osk', 'org_rzd', 'dogovor', 'category']
+    .map(key => lists.find(el => el.key === key));
 
   return { //@ts-ignore
     ...PipeOrgListOSK(ParserArrayToObject(orgListOSK)), //@ts-ignore

@@ -52,7 +52,7 @@ export const setSelectedWorkers = (selectedWorkers: SelectedWorkersType): SetSel
 
 export const requestOrg = (): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
   const response = await filtersAPI.getOrg();
-  dispatch(setLists(PipeLists(response.data)))
+  dispatch(setLists(PipeLists(response?.data)))
 };
 
 export const requestWidgetsFromFilters = ({
