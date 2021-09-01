@@ -87,7 +87,6 @@ const nameColsDetailsCallCentre: any = {
   k5: 'Доля неверно классифицированных обращений',
 };
 
-
 const KPKTable = ({
                     kpk, requestServicesChild, removeServicesChild, orgOid, period, periodType, setServiceOid
                   }: PropsType) => {
@@ -96,12 +95,11 @@ const KPKTable = ({
   if (!kpk?.cols?.length || !kpk?.rows?.length)
     return (
       <div className={cn(classes.kpkTable, classes.cell)}>
-        <FetchError/>
+        <FetchError hasData={Boolean((!kpk?.rows || kpk.rows.length === 0) && kpk?.cols?.length > 2)}/>
       </div>
     );
 
   const {cols, rows} = kpk;
-
   const [id, colsHead, value] = cols;
 
   const requestSetHiddenUnusedKPK = () => {
