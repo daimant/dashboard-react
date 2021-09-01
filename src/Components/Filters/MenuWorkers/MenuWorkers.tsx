@@ -16,8 +16,9 @@ type PropsType = {
 
 const useStyles = makeStyles({
   list: {
-    margin: 10,
-    width: 200,
+    marginLeft: 10,
+    display: 'flex',
+    flexDirection: 'column'
   },
   menu: {
     marginTop: 90,

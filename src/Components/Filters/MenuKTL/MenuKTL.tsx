@@ -23,11 +23,14 @@ type RenderTreePropsType = {
   handleExpand: (event: ChangeEvent<{}>, oid: string) => void
 }
 
+let countSelectedKTLWhenFirstOpenedMenu = 0;
+let selectedKTLWhenOpenedMenu = '';
+
 const useStyles = makeStyles({
   tree: {
-    margin: 10,
-    height: 400,
-    width: 200,
+    marginLeft: 10,
+    marginRight: 10,
+    waxWidth: 200,
   },
   menu: {
     marginTop: 120,
@@ -35,7 +38,6 @@ const useStyles = makeStyles({
   },
 });
 
-let selectedKTLWhenOpenedMenu: string;
 
 const MenuKTL = ({ktl, title, acceptFilters, blockedButton, selectedKTL, setSelectedKTL}: PropsType) => {
   const classesMUI = useStyles();
@@ -127,13 +129,17 @@ const MenuKTL = ({ktl, title, acceptFilters, blockedButton, selectedKTL, setSele
   const handleButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
     selectedKTLWhenOpenedMenu = JSON.stringify(selectedKTL.sort());
+
+    if (!countSelectedKTLWhenFirstOpenedMenu) {
+      countSelectedKTLWhenFirstOpenedMenu = selectedKTL.length;
+    }
   };
 
   const handleClose = () => {
     if (selectedKTL.length) {
       setAnchorEl(null);
 
-      if (selectedKTLWhenOpenedMenu !==  JSON.stringify(selectedKTL.sort())) {
+      if (selectedKTLWhenOpenedMenu !== JSON.stringify(selectedKTL.sort())) {
         acceptFilters(title, selectedKTL);
       }
     }
@@ -163,6 +169,7 @@ const MenuKTL = ({ktl, title, acceptFilters, blockedButton, selectedKTL, setSele
             open={Boolean(anchorEl)}
             onClose={handleClose}>
         <TreeView className={classesMUI.tree}
+                  style={{height: 20 + 40 * countSelectedKTLWhenFirstOpenedMenu}}
                   defaultCollapseIcon={<ExpandMoreIcon component={'svg'}/>}
                   defaultExpandIcon={<ChevronRightIcon component={'svg'}/>}
                   expanded={expanded}>

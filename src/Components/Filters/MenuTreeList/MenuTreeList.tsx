@@ -88,7 +88,7 @@ const MenuTreeList = ({
   const useStyles = makeStyles({
     tree: {
       transform: title === 'оргструктура' && checkedInfotransRZD ? 'translate(0, -10%)' : '',
-      margin: 10,
+      marginLeft: 10,
       height: title === 'оргструктура' ? 400 : 250,
       width: title === 'оргструктура' ? 550 : 200,
       overflow: title === 'оргструктура' && checkedInfotransRZD ? 'none' : 'auto',
