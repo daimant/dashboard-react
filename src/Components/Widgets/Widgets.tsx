@@ -85,7 +85,8 @@ const Widgets = ({
             <CircularBar today={el.v1}
                          diff={el.p}
                          key={`${el.title}${el.v1}`}
-                         err={el.err}/>
+                         err={el.err}
+                         title={el.title}/>
           )}
         </div>
         <div className={classes.graphs}>
