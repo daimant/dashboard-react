@@ -2,9 +2,11 @@ import axios, {AxiosResponse} from 'axios';
 import {SelectedKTLType, SelectedWorkersType} from "../Types/Types";
 
 const modeProd = false;
+
 const instance = axios.create({
   baseURL: modeProd ? 'http://10.248.40.236:7755/api/' : 'http://localhost:4000/',
 });
+
 type GetWidgetsType = {
   orgOid: string
   period: string
@@ -16,6 +18,7 @@ type GetWidgetsType = {
   selectedKTL: SelectedKTLType
   selectedWorkers: SelectedWorkersType
 }
+
 const catching = () => ({data: null});
 
 const apiWidgetsProd = {
@@ -37,6 +40,7 @@ const apiWidgetsProd = {
       .then((response: AxiosResponse[]) => response.map(res => res.data));
   }
 };
+
 const apiWidgetsDev = {
   getWidgets: ({numSC, numTodays, numTops}: GetWidgetsType) => {
     return Promise.all<any>([
@@ -62,6 +66,7 @@ const apiFiltersProd = {
     .catch(catching)
     .then((response: AxiosResponse | { data: null }) => response.data)
 };
+
 const apiFiltersDev = {
   getOrg: () => instance
     .get('sprav_all')

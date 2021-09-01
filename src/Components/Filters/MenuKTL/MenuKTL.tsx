@@ -24,6 +24,7 @@ type RenderTreePropsType = {
 }
 
 let countSelectedKTLWhenFirstOpenedMenu = 0;
+
 let selectedKTLWhenOpenedMenu = '';
 
 const useStyles = makeStyles({
@@ -37,7 +38,6 @@ const useStyles = makeStyles({
     marginLeft: 100,
   },
 });
-
 
 const MenuKTL = ({ktl, title, acceptFilters, blockedButton, selectedKTL, setSelectedKTL}: PropsType) => {
   const classesMUI = useStyles();

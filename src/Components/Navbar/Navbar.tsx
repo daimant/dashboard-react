@@ -9,7 +9,7 @@ import {Preloader} from '../Common/Preloader/Preloader';
 import FilterIcon from '../../Assets/FilterIcon.svg';
 import {connect} from 'react-redux';
 import {RootStateType} from '../../Redux/store';
-import {setShowFilters} from '../../Redux/filters';
+import {requestSetFiltersDefault, setShowFilters} from '../../Redux/filters';
 import {
   selectIsFetchingFilters,
   selectOrgMapListOSK,
@@ -20,12 +20,7 @@ import {
   selectPeriodType,
   selectShowFilters
 } from '../../Redux/selectors';
-
-const options = [
-  'Ключевые показатели эффективности (текущий дашборд)',
-  'Рейтинг сотрудников',
-  'Статистика по объектам обслуживания'
-];
+import cn from 'classnames';
 
 type MapStatePropsType = {
   showFilters: boolean
@@ -40,20 +35,28 @@ type MapStatePropsType = {
 
 type MapDispatchPropsType = {
   setShowFilters: () => void
+  requestSetFiltersDefault: () => void
 }
 
 type PropsType = MapStatePropsType & MapDispatchPropsType;
 
-const GetShortOrgMane = (list: any, oid: string) => list
-  .get(oid)
-  .replace(/Региональный центр сервиса/, 'РЦС')
-  .replace(/Территориальное управление технической поддержки/, 'ТУТП')
-  .replace(/Отдел поддержки пользователей/, 'ОТП')
-  .replace(/Отдел технической поддержки/, 'ОТП');
+const options = [
+  'Ключевые показатели эффективности (текущий дашборд)',
+  'Рейтинг сотрудников',
+  'Статистика по объектам обслуживания'
+];
+
+const GetShortOrgMane = (list: any, oid: string) =>
+  list
+    .get(oid)
+    .replace(/Региональный центр сервиса/, 'РЦС')
+    .replace(/Территориальное управление технической поддержки/, 'ТУТП')
+    .replace(/Отдел поддержки пользователей/, 'ОТП')
+    .replace(/Отдел технической поддержки/, 'ОТП');
 
 const Navbar = ({
                   setShowFilters, orgOid, period, periodType, orgMapListOSK, orgMapListRZD, periodNameMapList,
-                  isFetchingFilters,
+                  isFetchingFilters, requestSetFiltersDefault
                 }: PropsType) => {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -62,21 +65,22 @@ const Navbar = ({
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   const changeShowFilters = () => {
     setShowFilters();
   };
 
-  let  shortNameOrg;
+  let shortNameOrg;
+
   if (orgMapListRZD.has(orgOid)) {
     shortNameOrg = GetShortOrgMane(orgMapListRZD, orgOid)
-  }
-  else if (orgMapListOSK.has(orgOid)) {
+  } else if (orgMapListOSK.has(orgOid)) {
     shortNameOrg = GetShortOrgMane(orgMapListOSK, orgOid)
-  }
-  else {
+  } else {
     shortNameOrg = localStorage.getItem('orgName');
   }
 
@@ -86,11 +90,12 @@ const Navbar = ({
         <img src={Logo}
              loading='lazy'
              alt=''
-             className={classes.logo}/>
+             className={cn(classes.logo, classes.clickable)}
+             onClick={requestSetFiltersDefault}/>
         <img src={FilterIcon}
              loading='lazy'
              alt=''
-             className={classes.filterIcon}
+             className={classes.clickable}
              onClick={changeShowFilters}/>
         {isFetchingFilters
           ? <Preloader/>
@@ -144,7 +149,8 @@ const mapState = (state: RootStateType) => ({
 });
 
 const mapDispatch = {
-  setShowFilters
+  setShowFilters,
+  requestSetFiltersDefault,
 };
 
 export default connect<MapStatePropsType, MapDispatchPropsType, {}, RootStateType>(mapState, mapDispatch)(Navbar);
