@@ -107,10 +107,13 @@ const Filters = ({
     });
   };
 
+  const filtersDownloadError = !orgListOSK || !orgListOSK.oid || !orgListRZD || !orgListRZD.children.length
+    || !ktl || !ktl.length || !workers || !workers.length;
+
   return (
     <div className={classes.filters}>
-      {(!orgListOSK || !orgListOSK.oid)
-        ? <FetchError/>
+      {filtersDownloadError
+        ? <FetchError description={'Ошибка при загрузке фильтров'}/>
         : <>
           <MenuTreeList treeList={orgListOSK}
                         altOrgListOSK={altOrgListOSK}
@@ -139,13 +142,13 @@ const Filters = ({
                        selectedWorkers={selectedWorkers}
                        setSelectedWorkers={setSelectedWorkers}
                        blockedButton={(isFetchingWidgets || serviceOid !== '0')}/>
+          <Button variant='outlined'
+                  onClick={requestSetFiltersDefault}
+                  disabled={isFetchingWidgets}
+                  href=''>
+            сбросить фильтры
+          </Button>
         </>}
-      <Button variant='outlined'
-              onClick={requestSetFiltersDefault}
-              disabled={isFetchingWidgets}
-              href=''>
-        сбросить фильтры
-      </Button>
     </div>
   )
 };

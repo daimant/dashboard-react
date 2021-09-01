@@ -10,6 +10,7 @@ import {
   WorkersType,
   SelectedKTLType,
   SelectedWorkersType,
+  rawList,
 } from '../Types/Types';
 
 // Widgets
@@ -168,13 +169,14 @@ export const PipeTodays = (todays: TodaysType[]) => todays.map(today => {
 });
 
 // filters
-export const PipeLists = (lists: [OrgListOSKType[], OrgListRZDType[], RowListType, RowListType]) => {
-  const [orgListOSK, orgListRZD, ktlList, workersList] = lists;
+export const PipeLists = (lists: rawList[]) => {
+  const [orgListOSK, orgListRZD, ktlList, workersList] =
+    ['org_osk', 'org_rzd', 'dogovor', 'category'].map(key => lists.find(el => el.key === key));
 
   return { //@ts-ignore
     ...PipeOrgListOSK(ParserArrayToObject(orgListOSK)), //@ts-ignore
     ...PipeOrgListRZD(ParserArrayToObject(orgListRZD)), //@ts-ignore
-    ...PipeKTl(ParserArrayToObject(ktlList)),
+    ...PipeKTl(ParserArrayToObject(ktlList)),//@ts-ignore
     ...PipeWorkers(ParserArrayToObject(workersList)),
   }
 };
@@ -184,15 +186,19 @@ type RowListType = {
   data: any[]
 }
 
-const ParserArrayToObject = (arr: RowListType): OrgListOSKType[] => arr.data?.map((row) => {
-  const newRow: any = {};
+const ParserArrayToObject = (arr: RowListType): OrgListOSKType[] => {
+  if (!arr || !arr.data?.length || !arr.name_col?.length) return [];
 
-  arr.name_col?.forEach((colName, i) => {
-    newRow[colName] = row[i];
+  return arr.data.map((row) => {
+    const newRow: any = {};
+
+    arr.name_col.forEach((colName, i) => {
+      newRow[colName] = row[i];
+    });
+
+    return newRow;
   });
-
-  return newRow;
-});
+};
 
 const PipeOrgListOSK = (orgListOSK: OrgListOSKType[]) => {
   if (!orgListOSK || !orgListOSK[0] || orgListOSK[0]?.oid !== 281586771165316) return {};
@@ -266,7 +272,7 @@ const PipeKTl = (rawKTL: KTLChildType[]): { ktl: KTLType[], selectedKTL: Selecte
 };
 
 const PipeWorkers = (workers: WorkersType[]): { workers: WorkersType[], selectedWorkers: SelectedWorkersType } => ({
-  workers, selectedWorkers: workers.map(el => el.oid)
+  workers, selectedWorkers: workers?.map(el => el.oid)
 });
 
 
