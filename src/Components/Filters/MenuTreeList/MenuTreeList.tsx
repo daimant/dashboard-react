@@ -88,14 +88,10 @@ const MenuTreeList = ({
   const useStyles = makeStyles({
     tree: {
       transform: title === 'оргструктура' && checkedInfotransRZD ? 'translate(0, -10%)' : '',
-      marginLeft: 10,
-      height: title === 'оргструктура' ? 400 : 250,
-      width: title === 'оргструктура' ? 550 : 200,
+      margin: '0 15px',
+      height: title === 'оргструктура' ? 400 : '',
+      width: title === 'оргструктура' ? 550 : '',
       overflow: title === 'оргструктура' && checkedInfotransRZD ? 'none' : 'auto',
-    },
-    menu: {
-      marginTop: title === 'оргструктура' ? 75 : 120,
-      marginLeft: title === 'оргструктура' ? 132 : 82,
     },
   });
 
@@ -148,7 +144,15 @@ const MenuTreeList = ({
               href=''>
         {title}
       </Button>
-      <Menu className={classesMUI.menu}
+      <Menu getContentAnchorEl={null}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'left',
+            }}
             id='menu'
             anchorEl={anchorEl}
             keepMounted

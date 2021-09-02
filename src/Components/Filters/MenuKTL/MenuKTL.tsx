@@ -29,13 +29,7 @@ let selectedKTLWhenOpenedMenu = '';
 
 const useStyles = makeStyles({
   tree: {
-    marginLeft: 10,
-    marginRight: 10,
-    waxWidth: 200,
-  },
-  menu: {
-    marginTop: 120,
-    marginLeft: 100,
+    margin: '0 15px',
   },
 });
 
@@ -157,19 +151,26 @@ const MenuKTL = ({ktl, title, acceptFilters, blockedButton, selectedKTL, setSele
     <div>
       <Button aria-controls='menu'
               variant='outlined'
-              onClick={handleButtonClick.bind(this)}
+              onClick={handleButtonClick}
               disabled={blockedButton}
               href=''>
         {title}
       </Button>
-      <Menu className={classesMUI.menu}
+      <Menu getContentAnchorEl={null}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'left',
+            }}
             id='menu'
             anchorEl={anchorEl}
             keepMounted
             open={Boolean(anchorEl)}
             onClose={handleClose}>
         <TreeView className={classesMUI.tree}
-                  style={{height: 20 + 40 * countSelectedKTLWhenFirstOpenedMenu}}
                   defaultCollapseIcon={<ExpandMoreIcon component={'svg'}/>}
                   defaultExpandIcon={<ChevronRightIcon component={'svg'}/>}
                   expanded={expanded}>

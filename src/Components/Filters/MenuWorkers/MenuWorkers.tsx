@@ -16,13 +16,9 @@ type PropsType = {
 
 const useStyles = makeStyles({
   list: {
-    marginLeft: 10,
+    margin: '0 15px',
     display: 'flex',
-    flexDirection: 'column'
-  },
-  menu: {
-    marginTop: 90,
-    marginLeft: 100,
+    flexDirection: 'column',
   },
 });
 
@@ -62,7 +58,15 @@ const MenuWorkers = ({workersList, title, acceptFilters, blockedButton, selected
               href=''>
         {title}
       </Button>
-      <Menu className={classesMUI.menu}
+      <Menu getContentAnchorEl={null}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'left',
+            }}
             id='menu'
             anchorEl={anchorEl}
             keepMounted
