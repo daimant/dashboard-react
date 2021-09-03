@@ -7,6 +7,7 @@ import {Checkbox, FormControlLabel, makeStyles} from '@material-ui/core';
 import {KTLType, SelectedKTLType} from '../../../Types/Types';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu/Menu';
+import {CheckBox, IndeterminateCheckBox} from "@material-ui/icons";
 
 type PropsType = {
   ktl: KTLType[]
@@ -99,6 +100,14 @@ const MenuKTL = ({ktl, title, acceptFilters, blockedButton, selectedKTL, setSele
     });
   };
 
+  const allChildChecked = (id: string): boolean => {
+    const node = ktl.find(el => el.oid === id);
+
+    return node
+      ? node.children?.length === selectedKTL.filter(el => getChildById(node, id).includes(el)).length - 1
+      : true;
+  };
+
   const renderTree = ({tree, handleExpand}: RenderTreePropsType) => (
     <TreeItem key={tree.oid}
               nodeId={tree.oid}
@@ -109,6 +118,10 @@ const MenuKTL = ({ktl, title, acceptFilters, blockedButton, selectedKTL, setSele
                                   control={
                                     <Checkbox checked={selectedKTL.some(item => item === tree.oid)}
                                               disabled={blockedButton}
+                                              size={"small"}
+                                              checkedIcon={allChildChecked(tree.oid)
+                                                ? <CheckBox component={'svg'}/>
+                                                : <IndeterminateCheckBox component={'svg'}/>}
                                               onChange={event => getOnChange(event.currentTarget.checked, tree)}
                                               onClick={e => e.stopPropagation()}/>
                                   }/>
