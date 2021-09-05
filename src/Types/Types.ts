@@ -131,7 +131,7 @@ export type RequestWidgetsFromFiltersType = {
 export type SelectedKTLType = string[];
 export type SelectedWorkersType = number[];
 
-export type rawList = {
+export type RawListType = {
   key: string
   name_col: string[]
   data: [string | number][]

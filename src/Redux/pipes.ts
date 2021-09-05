@@ -10,7 +10,7 @@ import {
   WorkersType,
   SelectedKTLType,
   SelectedWorkersType,
-  rawList,
+  RawListType,
 } from '../Types/Types';
 
 // Widgets
@@ -169,26 +169,21 @@ export const PipeTodays = (todays: TodaysType[]) => todays.map(today => {
 });
 
 // filters
-export const PipeLists = (lists: rawList[]) => {
+export const PipeLists = (lists: RawListType[]) => {
   if (!lists?.length) return {};
 
   const [orgListOSK, orgListRZD, ktlList, workersList] = ['org_osk', 'org_rzd', 'dogovor', 'category']
     .map(key => lists.find(el => el.key === key));
 
-  return { //@ts-ignore
-    ...PipeOrgListOSK(ParserArrayToObject(orgListOSK)), //@ts-ignore
-    ...PipeOrgListRZD(ParserArrayToObject(orgListRZD)), //@ts-ignore
-    ...PipeKTl(ParserArrayToObject(ktlList)),//@ts-ignore
-    ...PipeWorkers(ParserArrayToObject(workersList)),
+  return {
+    ...PipeOrgListOSK(ParserArrayToObject(orgListOSK!)),
+    ...PipeOrgListRZD(ParserArrayToObject(orgListRZD!)),
+    ...PipeKTl(ParserArrayToObject(ktlList!)),
+    ...PipeWorkers(ParserArrayToObject(workersList!)),
   }
 };
 
-type RowListType = {
-  name_col: string[]
-  data: any[]
-}
-
-const ParserArrayToObject = (arr: RowListType): OrgListOSKType[] => {
+const ParserArrayToObject = (arr: RawListType): any => {
   if (!arr || !arr.data?.length || !arr.name_col?.length) return [];
 
   return arr.data.map((row) => {
@@ -255,18 +250,17 @@ const PipeKTl = (rawKTL: KTLChildType[]): { ktl: KTLType[], selectedKTL: Selecte
   if (!rawKTL || !rawKTL[0]) return {ktl: [], selectedKTL: []};
 
   const parentsUniq = new Set(rawKTL.map(doc => doc.contragent));
-  const ktl = Array.from(parentsUniq).map((doc, i) => ({name: doc, oid: `${i}`, children: []}));
-  const parentsPlace = new Map(ktl.map(doc => [doc.name, doc.oid]));
+  const ktl = Array.from(parentsUniq).map((doc: string, i: number) => ({name: doc, oid: `${i}`, children: [] as KTLChildType[]}));
+  const parentsPlace = new Map(ktl.map(doc => [doc.name, Number(doc.oid)]));
 
   rawKTL.forEach(child => {
     const parentOid = parentsPlace.get(child.contragent);
 
     child.oid = `${child.oid}`;
-    // @ts-ignore
-    ktl[parentOid].children = [...ktl[parentOid].children, child];
+    ktl[parentOid!].children = [...ktl[parentOid!].children, child];
   });
 
-  const selectedKTL = ktl  // @ts-ignore
+  const selectedKTL = ktl
     .map(list => [list.oid, ...list.children.map(child => child.oid)])
     .flat(1);
 

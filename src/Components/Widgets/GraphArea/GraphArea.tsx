@@ -23,8 +23,8 @@ const GraphArea = ({graphAreaData, extendedStyle = {}}: PropsType) => {
           <YAxis tickFormatter={tick => `${tick * 100}`}
                  axisLine={false}
                  tickCount={2}/>
-          <Tooltip labelFormatter={(label: string) => `Дата: ${label}`} // @ts-ignore
-                   formatter={(value: number[], name: string) => ([`${percents[name]}: ${Math.trunc(value[2] * 100)} %`])}/>
+          <Tooltip labelFormatter={(label: string) => `Дата: ${label}`}
+                   formatter={(value: number[], name: 'p1' | 'p2' | 'p3') => ([`${percents[name]}: ${Math.trunc(value[2] * 100)} %`])}/>
           <Area dataKey='p1'
                 fillOpacity={1}
                 stroke='#8884d8'
