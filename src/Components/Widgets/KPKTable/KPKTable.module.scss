@@ -9,8 +9,8 @@
   background-color: #FFFFFF;
 
   .cell {
-    padding: .7vh;
-    line-height: 2vh;
+    padding: 5px;
+    line-height: 17px;
     font-size: 1.7vh;
     border-bottom: none;
     background-color: #FFFFFF;
@@ -49,14 +49,6 @@
 
 .clickable {
   cursor: pointer;
-}
-
-.unselectable {
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Chrome/Safari/Opera */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version, currently not supported by any browser */
 }
 
 .iconCheckBox {

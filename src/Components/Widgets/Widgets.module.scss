@@ -14,11 +14,16 @@ main {
   display: flex;
   justify-content: center;
   height: 21.9vh;
-  @media (max-width: 2000px) { margin: 4vh 1vw }
-  @media (min-width: 2000px) { margin: 6vh 2.6vw }
+  @media (max-width: 2000px) {
+    margin: 4vh 1vw
+  }
+  @media (min-width: 2000px) {
+    margin: 6vh 2.6vw
+  }
 }
 
 .headCircularBar {
+  display: flex;
+  justify-content: center;
   margin-top: -9%;
-  text-align: center;
 }

@@ -33,6 +33,7 @@ import {
 } from '../../Redux/widgets';
 import {setServiceOid} from '../../Redux/filters/actions';
 import {RequestServicesChildType, RequestWidgetsType} from '../../Types/Types';
+import AboutWidget from "../Common/AboutWidget/AboutWidget";
 
 type MapStatePropsType = {
   kpk: KPKType
@@ -80,7 +81,12 @@ const Widgets = ({
                   periodType={periodType}
                   setServiceOid={setServiceOid}/>
         <div className={classes.graphs}>
-          <h4 className={classes.headCircularBar}>СЕГОДНЯ</h4>
+          <div className={classes.headCircularBar}>
+            <h4>СЕГОДНЯ</h4>
+            <AboutWidget
+              description={'Отображает показатели за сегодня из таблиц справа, связан с таблицей «услуг» - при клике' +
+              ' на определенную услугу, покажет значения по этой услуге в выбранном подразделении за сегодня.'}/>
+          </div>
           {(todaysChild.length ? todaysChild : todays).map((el: TodaysType) =>
             <CircularBar today={el.v1}
                          diff={el.p}

@@ -2,18 +2,28 @@ import React from 'react';
 import {AreaChart, XAxis, YAxis, Tooltip, ResponsiveContainer, Area} from 'recharts';
 import {GraphAreaType} from '../../../Types/Types';
 import classes from './GraphArea.module.scss';
+import AboutWidget from "../../Common/AboutWidget/AboutWidget";
 
 type PropsType = {
   graphAreaData: GraphAreaType
   extendedStyle?: object
 }
 
+const dictDescriptionAbout: { [key: string]: string } = {
+  'Назначение заявок': 'Отображает динамику назначения заявок, без привязки к фильтрам.',
+  'Установка ПО': 'Отображает динамику по заявкам на «установку ПО», без привязки к фильтрам.',
+};
+
 const GraphArea = ({graphAreaData, extendedStyle = {}}: PropsType) => {
   const {title, data, percents} = graphAreaData;
 
   return (
     <div className={classes.graphs} style={extendedStyle}>
-      <h3 className={classes.headGraph}>{title}</h3>
+      <div className={classes.headGraph}>
+        &nbsp;
+        <h3>{title}</h3>
+        <AboutWidget description={dictDescriptionAbout[title]}/>
+      </div>
       <ResponsiveContainer>
         <AreaChart data={data}
                    margin={{top: 10, bottom: 30, right: 50}}

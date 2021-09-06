@@ -8,6 +8,7 @@ import SettingsIcon from '../../../Assets/SettingsIcon.svg';
 import {IconButton} from '@material-ui/core';
 import Menu from '@material-ui/core/Menu/Menu';
 import cn from 'classnames';
+import AboutWidget from "../../Common/AboutWidget/AboutWidget";
 
 type CheckedValueGraphType = {
   description: string
@@ -42,6 +43,12 @@ const CheckedValueGraph = forwardRef(({description, hidden, hideLineClick, line,
   )
 });
 
+const dictDescriptionAbout: { [key: string]: string } = {
+  'Своевременность': '',
+  'Оперативность': '',
+  'Качество работы': '',
+};
+
 const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
   const {title, data, sumVal, avrProc} = graphLineData;
   const [hiddenVal, setHiddenVal] = useState(localStorage.getItem(`hiddenValGraph-${title}`) === '1' || false);
@@ -71,7 +78,15 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                     onClick={handleClickMenu}>
           <img src={SettingsIcon} alt=''/>
         </IconButton>
-        <Menu className={classes.menu}
+        <Menu getContentAnchorEl={null}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
               id='menu'
               anchorEl={anchorEl}
               keepMounted
@@ -97,6 +112,7 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
           {avrProc && <p className={classes.propertiesGroup}>Средний процент за период: {avrProc} %</p>}
         </Menu>
         <h3 className={classes.title}>{title}</h3>
+        <AboutWidget description={dictDescriptionAbout[title]}/>
       </div>
       <ResponsiveContainer>
         <ComposedChart data={data}

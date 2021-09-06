@@ -10,6 +10,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import {OrgListOSKType, OrgListRZDType} from '../../../Types/Types';
+import AboutWidget from "../../Common/AboutWidget/AboutWidget";
 
 type PropsType = {
   treeList: any
@@ -157,16 +158,19 @@ const MenuTreeList = ({
       >
         {title === 'оргструктура' &&
         <div className={classes.selectParams}>
-          <span>
+          <span className={classes.headOrgTree}>
             <SwitchGroup changer={toggleCheckedInfotransRZD}
                          checked={checkedInfotransRZD}
                          description={`Оргструктура Инфотранс / РЖД`}/>
+            <AboutWidget description={'Фильтр по орстуктуре, позволяет отобрать исполнителя заявки по подразделению. ' +
+            'При переключении в «РЖД» фильтрация происходит по инициатору.'}
+                         styles={{marginRight: '5px'}}/>
           </span>
             <span>
             {!checkedInfotransRZD &&
             <SwitchGroup changer={toggleCheckedOSKZNO}
                          checked={checkedOSKZNO}
-                         description={`Все организации / Организации выполняющие ЗНО`}/>}
+                         description={`Все подразделения / Только подразделения выполняющие ЗНО`}/>}
           </span>
         </div>}
         <TreeView className={classesMUI.tree}

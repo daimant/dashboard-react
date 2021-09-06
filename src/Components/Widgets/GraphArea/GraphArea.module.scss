@@ -10,22 +10,9 @@
   overflow: hidden;
 }
 
-.checkBoxGroup {
-  cursor: pointer;
-  font-weight: normal;
-}
-
-.iconCheckBox {
-  vertical-align: middle;
-}
-
 .headGraph {
   display: flex;
-  justify-content: center;
-  margin-bottom: 2%;
-}
-
-.headGraph {
+  justify-content: space-between;
   margin: 5px;
   height: 10%;
 }

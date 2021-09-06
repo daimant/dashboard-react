@@ -16,6 +16,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import {withStyles, Theme, makeStyles} from '@material-ui/core/styles';
 import cn from 'classnames';
 import {RequestServicesChildType} from '../../../Types/Types';
+import AboutWidget from "../../Common/AboutWidget/AboutWidget";
 
 type PropsType = {
   orgOid: string
@@ -62,12 +63,13 @@ const CheckedValueKPK = ({hidden, requestSetHiddenUnusedKPK}: CheckedValueKPKTyp
   )
 };
 
-const LightTooltip = withStyles((theme: Theme) => ({
+export const LightTooltip = withStyles((theme: Theme) => ({
   tooltip: {
     backgroundColor: theme.palette.common.white,
     boxShadow: theme.shadows[1],
     fontSize: 12,
-    maxWidth: 500
+    maxWidth: 350,
+    color: theme.palette.common.black,
   },
 }))(Tooltip);
 
@@ -142,7 +144,16 @@ const KPKTable = ({
                                    requestSetHiddenUnusedKPK={requestSetHiddenUnusedKPK}/>
                 </div>
               </TableCell>
-              <TableCell className={classes.cell}>{value}</TableCell>
+              <TableCell className={classes.cell}>
+                <div className={classes.tableHead}>
+                  {value}
+                  <AboutWidget
+                    description={'КПК услуг/сервисов за период по выбранному подразделению, позволяет увидеть ' +
+                    'комплексные показатели и его составляющие при наведении. При клике на услугу откроются дочерние ' +
+                    'сервисы с детализацией параметров по ним. Исключение «Контакт-центр» - услуга отображается всегда' +
+                    ' и не привязывается у выбранному подразделению.'}/>
+                </div>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody component={'tbody'}>
