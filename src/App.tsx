@@ -3,11 +3,11 @@ import classes from './App.module.scss';
 import Widgets from './Components/Widgets/Widgets';
 import Filters from './Components/Filters/Filters';
 import Navbar from './Components/Navbar/Navbar';
-import {connect} from "react-redux";
-import {RootStateType} from "./Redux/store";
-import {selectSelectedKTL, selectSelectedWorkers} from "./Redux/selectors";
-import {Preloader} from "./Components/Common/Preloader/Preloader";
-import {SelectedKTLType, SelectedWorkersType} from "./Types/Types";
+import {connect} from 'react-redux';
+import {RootStateType} from './Redux/store';
+import {selectSelectedKTL, selectSelectedWorkers} from './Redux/selectors';
+import {Preloader} from './Components/Common/Preloader/Preloader';
+import {SelectedKTLType, SelectedWorkersType} from './Types/Types';
 
 type MapStatePropsType = {
   selectedKTL: SelectedKTLType

@@ -16,7 +16,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import {withStyles, Theme, makeStyles} from '@material-ui/core/styles';
 import cn from 'classnames';
 import {RequestServicesChildType} from '../../../Types/Types';
-import AboutWidget from "../../Common/AboutWidget/AboutWidget";
+import AboutWidget from '../../Common/AboutWidget/AboutWidget';
 
 type PropsType = {
   orgOid: string

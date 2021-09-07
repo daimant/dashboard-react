@@ -79,7 +79,7 @@ const MenuWorkers = ({workersList, title, acceptFilters, blockedButton, selected
               control={
                 <Checkbox checked={selectedWorkers.some(item => item === el.oid)}
                           disabled={blockedButton}
-                          size={"small"}
+                          size={'small'}
                           onChange={event => getOnChange(event.target.checked, el.oid)}
                           onClick={e => e.stopPropagation()}/>}
               label={<>{el.name}</>}/>

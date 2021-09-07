@@ -33,7 +33,7 @@ import {
 } from '../../Redux/widgets';
 import {setServiceOid} from '../../Redux/filters/actions';
 import {RequestServicesChildType, RequestWidgetsType} from '../../Types/Types';
-import AboutWidget from "../Common/AboutWidget/AboutWidget";
+import AboutWidget from '../Common/AboutWidget/AboutWidget';
 
 type MapStatePropsType = {
   kpk: KPKType

@@ -2,7 +2,7 @@ import React from 'react';
 import {AreaChart, XAxis, YAxis, Tooltip, ResponsiveContainer, Area} from 'recharts';
 import {GraphAreaType} from '../../../Types/Types';
 import classes from './GraphArea.module.scss';
-import AboutWidget from "../../Common/AboutWidget/AboutWidget";
+import AboutWidget from '../../Common/AboutWidget/AboutWidget';
 
 type PropsType = {
   graphAreaData: GraphAreaType

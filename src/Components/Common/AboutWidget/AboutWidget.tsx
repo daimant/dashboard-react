@@ -1,6 +1,6 @@
 import React from 'react';
 import InfoIcon from '@material-ui/icons/Info';
-import {LightTooltip} from "../../Widgets/KPKTable/KPKTable";
+import {LightTooltip} from '../../Widgets/KPKTable/KPKTable';
 import classes from './AboutWidget.module.scss';
 
 const AboutWidget = ({description = '', styles = {}}) => {

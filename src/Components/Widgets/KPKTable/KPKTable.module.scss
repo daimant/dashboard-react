@@ -9,7 +9,10 @@
   background-color: #FFFFFF;
 
   .cell {
-    padding: 5px;
+    padding: 7px;
+    @media (max-width: 1500px) {
+      padding: 2px;
+    }
     line-height: 17px;
     font-size: 1.7vh;
     border-bottom: none;

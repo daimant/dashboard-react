@@ -42,8 +42,8 @@ import {
   setPeriod
 } from '../../Redux/filters';
 import MenuKTL from './MenuKTL/MenuKTL';
-import MenuWorkers from "./MenuWorkers/MenuWorkers";
-import {setSelectedKTL, setSelectedWorkers} from "../../Redux/filters/actions";
+import MenuWorkers from './MenuWorkers/MenuWorkers';
+import {setSelectedKTL, setSelectedWorkers} from '../../Redux/filters/actions';
 
 type MapStatePropsType = {
   orgListOSK: OrgListOSKType

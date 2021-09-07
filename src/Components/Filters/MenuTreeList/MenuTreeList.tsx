@@ -10,7 +10,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import {OrgListOSKType, OrgListRZDType} from '../../../Types/Types';
-import AboutWidget from "../../Common/AboutWidget/AboutWidget";
+import AboutWidget from '../../Common/AboutWidget/AboutWidget';
 
 type PropsType = {
   treeList: any
@@ -164,7 +164,7 @@ const MenuTreeList = ({
                          description={`Оргструктура Инфотранс / РЖД`}/>
             <AboutWidget description={'Фильтр по орстуктуре, позволяет отобрать исполнителя заявки по подразделению. ' +
             'При переключении в «РЖД» фильтрация происходит по инициатору.'}
-                         styles={{marginRight: '5px'}}/>
+                         styles={{marginRight: '7px'}}/>
           </span>
             <span>
             {!checkedInfotransRZD &&

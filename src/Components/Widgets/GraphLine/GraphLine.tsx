@@ -8,7 +8,7 @@ import SettingsIcon from '../../../Assets/SettingsIcon.svg';
 import {IconButton} from '@material-ui/core';
 import Menu from '@material-ui/core/Menu/Menu';
 import cn from 'classnames';
-import AboutWidget from "../../Common/AboutWidget/AboutWidget";
+import AboutWidget from '../../Common/AboutWidget/AboutWidget';
 
 type CheckedValueGraphType = {
   description: string

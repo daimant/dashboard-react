@@ -6,7 +6,9 @@ img {
 .navbar {
   justify-content: space-between;
 
-  * { align-items: center }
+  * {
+    align-items: center;
+  }
 }
 
 .logo {
@@ -17,7 +19,9 @@ img {
 .leftNav {
   width: 35%;
 
-  @media (min-width: 1200px) { width: 25% }
+  @media (min-width: 1200px) {
+    width: 25%;
+  }
 }
 
 .clickable {
@@ -30,5 +34,7 @@ img {
 }
 
 .generalTitle {
-  @media (min-width: 1200px) { margin-left: -12vw }
+  @media (min-width: 1200px) {
+    margin-left: -12vw;
+  }
 }

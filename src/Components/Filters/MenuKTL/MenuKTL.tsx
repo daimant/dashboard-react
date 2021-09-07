@@ -7,7 +7,7 @@ import {Checkbox, FormControlLabel, makeStyles} from '@material-ui/core';
 import {KTLType, SelectedKTLType} from '../../../Types/Types';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu/Menu';
-import {CheckBox, IndeterminateCheckBox} from "@material-ui/icons";
+import {CheckBox, IndeterminateCheckBox} from '@material-ui/icons';
 
 type PropsType = {
   ktl: KTLType[]
@@ -118,7 +118,7 @@ const MenuKTL = ({ktl, title, acceptFilters, blockedButton, selectedKTL, setSele
                                   control={
                                     <Checkbox checked={selectedKTL.some(item => item === tree.oid)}
                                               disabled={blockedButton}
-                                              size={"small"}
+                                              size={'small'}
                                               checkedIcon={allChildChecked(tree.oid)
                                                 ? <CheckBox component={'svg'}/>
                                                 : <IndeterminateCheckBox component={'svg'}/>}

@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from 'axios';
-import {SelectedKTLType, SelectedWorkersType} from "../Types/Types";
+import {SelectedKTLType, SelectedWorkersType} from '../Types/Types';
 
 const modeProd = false;
 
