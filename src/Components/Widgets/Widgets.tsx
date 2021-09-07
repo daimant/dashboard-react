@@ -87,18 +87,18 @@ const Widgets = ({
               description={'Отображает показатели за сегодня из таблиц справа, связан с таблицей «услуг» - при клике' +
               ' на определенную услугу, покажет значения по этой услуге в выбранном подразделении за сегодня.'}/>
           </div>
-          {(todaysChild.length ? todaysChild : todays).map((el: TodaysType) =>
+          {(todaysChild.length ? todaysChild : todays).map((el: TodaysType, i) =>
             <CircularBar today={el.v1}
                          diff={el.p}
-                         key={`${el.title}${el.v1}`}
+                         key={`${el.title}${el.v1}${i}${todaysChild.length ? 'child' : ''}`}
                          err={el.err}
                          title={el.title}/>
           )}
         </div>
         <div className={classes.graphs}>
-          {(scChild.length ? scChild : sc).map((graphLineData: GraphLineType) =>
+          {(scChild.length ? scChild : sc).map((graphLineData: GraphLineType, i) =>
             <GraphLine graphLineData={graphLineData}
-                       key={`${graphLineData.title}${graphLineData.id}`}/>
+                       key={`${graphLineData.title}${graphLineData.id}${i}${scChild.length ? 'child' : ''}`}/>
           )}
         </div>
       </main>
