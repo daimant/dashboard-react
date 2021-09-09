@@ -106,6 +106,7 @@ export type RequestServicesChildType = {
   numTops?: number[]
   selectedKTL?: SelectedKTLType
   selectedWorkers?: SelectedWorkersType
+  numDetailsSHK?: number[]
 };
 
 export type RequestWidgetsType = {
@@ -118,6 +119,7 @@ export type RequestWidgetsType = {
   numTops?: number[]
   selectedKTL?: SelectedKTLType
   selectedWorkers?: SelectedWorkersType
+  numDetailsSHK?: number[]
 };
 
 export type RequestWidgetsFromFiltersType = {

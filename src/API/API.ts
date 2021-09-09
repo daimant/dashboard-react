@@ -17,12 +17,15 @@ type GetWidgetsType = {
   serviceOid: string
   selectedKTL: SelectedKTLType
   selectedWorkers: SelectedWorkersType
+  numDetailsSHK: number[]
 }
 
 const catching = () => ({data: null});
 
 const apiWidgetsProd = {
-  getWidgets: ({orgOid, period, periodType, serviceOid, numSC, numTodays, numTops, selectedKTL, selectedWorkers}: GetWidgetsType) => {
+  getWidgets: ({
+                 orgOid, period, periodType, serviceOid, numSC, numTodays, numTops, selectedKTL, selectedWorkers, numDetailsSHK
+               }: GetWidgetsType) => {
     const payload = {
       'org_oid': Number(orgOid),
       'srv_oid': Number(serviceOid),
@@ -35,6 +38,7 @@ const apiWidgetsProd = {
       ...numSC.map(num => instance.post(`sc/${num}`, payload).catch(catching)),
       ...numTodays.map(num => instance.post(`today/${num}`, payload).catch(catching)),
       ...numTops.map(num => instance.get(`top/${num}`).catch(catching)),
+      ...numDetailsSHK.map(num => instance.get(`sc/${num}`).catch(catching)),
       instance.post('kpk', payload).catch(catching),
     ])
       .then((response: AxiosResponse[]) => response.map(res => res.data));
@@ -42,11 +46,12 @@ const apiWidgetsProd = {
 };
 
 const apiWidgetsDev = {
-  getWidgets: ({numSC, numTodays, numTops}: GetWidgetsType) => {
+  getWidgets: ({numSC, numTodays, numTops, numDetailsSHK}: GetWidgetsType) => {
     return Promise.all<any>([
       ...numSC.map(num => instance.get(`sc/${num}`).catch(catching)),
       ...numTodays.map(num => instance.get(`today/${num}`).catch(catching)),
       ...numTops.map(num => instance.get(`top/${num}`).catch(catching)),
+      ...numDetailsSHK.map(num => instance.get(`sc/${num}`).catch(catching)),
       instance.get('kpk').catch(catching)
     ])
       .then((response: AxiosResponse[]) => response.map(res => res.data));

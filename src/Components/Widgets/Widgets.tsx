@@ -13,6 +13,7 @@ import {
 import GraphArea from './GraphArea/GraphArea';
 import {RootStateType} from '../../Redux/store';
 import {
+  selectDetailsSHK,
   selectIsFetchingWidgets,
   selectKPK,
   selectKPKChild,
@@ -47,6 +48,7 @@ type MapStatePropsType = {
   orgOid: string
   period: string
   periodType: string
+  detailsSHK: GraphLineType[]
 }
 
 type MapDispatchPropsType = {
@@ -60,11 +62,11 @@ type PropsType = MapStatePropsType & MapDispatchPropsType;
 
 const Widgets = ({
                    kpk, kpkChild, sc, scChild, todays, todaysChild, isFetchingWidgets, requestServicesChild,
-                   removeServicesChild, orgOid, period, periodType, tops, requestWidgets, setServiceOid
+                   removeServicesChild, orgOid, period, periodType, tops, requestWidgets, setServiceOid, detailsSHK
                  }: PropsType) => {
 
   useEffect(() => {
-    requestWidgets({orgOid, period, periodType});
+    requestWidgets({orgOid, period, periodType,  numTops: [1, 2], numDetailsSHK: [6, 7, 8]});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -103,16 +105,19 @@ const Widgets = ({
         </div>
       </main>
       <div className={classes.secondMain}>
+        {detailsSHK.map((graphLineData: GraphLineType, i) =>
+          <GraphLine graphLineData={graphLineData}
+                     key={`${graphLineData.title}${graphLineData.id}${i}`}
+                     extendedStyle={{height: '100%'}}/>
+        )}
+      </div>
+      <div className={classes.secondMain}>
         {tops.map((graphAreaData: GraphAreaType) =>
           <GraphArea graphAreaData={graphAreaData}
                      key={graphAreaData.title}
                      extendedStyle={{height: '100%'}}/>
         )}
       </div>
-      {/*      <div className={classes.secondMain}>
-        <GraphArea graphAreaData={tops[0]} extendedStyle={{height: '100%'}}/>
-        <GraphArea graphAreaData={tops[1]} extendedStyle={{height: '100%'}}/>
-      </div>*/}
     </div>
   )
 };
@@ -129,6 +134,7 @@ const mapState = (state: RootStateType): MapStatePropsType => ({
   orgOid: selectOrgOid(state),
   period: selectPeriod(state),
   periodType: selectPeriodType(state),
+  detailsSHK: selectDetailsSHK(state),
   /*
     inf: selectInf(state),
   */

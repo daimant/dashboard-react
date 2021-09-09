@@ -9,6 +9,7 @@ export const selectTodays = (state: RootStateType) => state.widgets.todays;
 export const selectTodaysChild = (state: RootStateType) => state.widgets.todaysChild;
 export const selectTops = (state: RootStateType) => state.widgets.tops;
 export const selectIsFetchingWidgets = (state: RootStateType) => state.widgets.isFetchingWidgets;
+export const selectDetailsSHK = (state: RootStateType) => state.widgets.detailsSHK;
 /*
 export const selectInf = (state: any) => {
   const {inf} = state.widgets;

@@ -9,7 +9,8 @@ import {
   REMOVE_SERVICES_CHILD,
   SET_SC_CHILD,
   SET_TODAYS_CHILD,
-  SET_KPK
+  SET_KPK,
+  SET_DETAILS_SHK,
 } from './action-types'
 
 type InitialStateWidgetsType = typeof initialStateWidgets;
@@ -23,6 +24,7 @@ type ActionsWidgetsType = {
   todays: TodaysType[]
   todaysChild: TodaysType[]
   tops: GraphAreaType[]
+  detailsSHK: GraphLineType[]
 }
 
 const initialStateWidgets = {
@@ -33,6 +35,7 @@ const initialStateWidgets = {
   todays: [] as TodaysType[],
   todaysChild: [] as TodaysType[],
   tops: [] as GraphAreaType[],
+  detailsSHK: [] as GraphLineType[],
   isFetchingWidgets: true as boolean,
   /*inf: [
     [
@@ -115,7 +118,12 @@ const actionHandlerWidgets: any = {
     kpkChild: {cols: [], rows: []},
     scChild: [],
     todaysChild: []
-  })
+  }),
+
+  [SET_DETAILS_SHK]: (state: InitialStateWidgetsType, action: ActionsWidgetsType) => (action.detailsSHK.length ? {
+    ...state,
+    detailsSHK: action.detailsSHK
+  } : state),
 };
 
 const widgetsReducer = (state = initialStateWidgets, action: ActionsWidgetsType): InitialStateWidgetsType => {

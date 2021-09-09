@@ -18,6 +18,7 @@ type CheckedValueGraphType = {
   hideLineClick: (line: string, hidden: boolean, hider: (hidden: boolean) => void) => void
   hider: (hidden: boolean) => void
 }
+
 type PropsType = {
   graphLineData: GraphLineType
   extendedStyle?: object
@@ -47,7 +48,16 @@ const dictDescriptionAbout: { [key: string]: string } = {
   'Своевременность': '',
   'Оперативность': '',
   'Качество работы': '',
+  'ЗНО без ШК или с КЭNULL': '',
+  'ЗНО с не верными ШК': '',
+  'Количество ШК, без заполненной группы сопровождения': '',
 };
+
+const dictTitlesStaticGraphs = [
+  'ЗНО без ШК или с КЭNULL',
+  'ЗНО с не верными ШК',
+  'Количество ШК, без заполненной группы сопровождения',
+];
 
 const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
   const {title, data, sumVal, avrProc} = graphLineData;
@@ -93,23 +103,26 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
               open={Boolean(anchorEl)}
               onClose={handleCloseMenu}
         >
-          <CheckedValueGraph description={'Количество'}
+          {title !== dictTitlesStaticGraphs[2] && <CheckedValueGraph description={'Количество'}
                              hidden={hiddenVal}
                              line={'Val'}
                              hideLineClick={hideLineClick}
-                             hider={setHiddenVal}/>
-          <CheckedValueGraph description={'Значение'}
+                             hider={setHiddenVal}/>}
+          {title !== dictTitlesStaticGraphs[2] && <CheckedValueGraph description={'Значение'}
                              hidden={hiddenProc}
                              line={'Proc'}
                              hideLineClick={hideLineClick}
                              hider={setHiddenProc}/>
-          <CheckedValueGraph description={'Целевое значение'}
+          }
+          {!dictTitlesStaticGraphs.includes(title) && <CheckedValueGraph description={'Целевое значение'}
                              hidden={hiddenTar}
                              line={'Tar'}
                              hideLineClick={hideLineClick}
                              hider={setHiddenTar}/>
+          }
           {sumVal && <p className={classes.propertiesGroup}>Общее количество за период: {sumVal} шт</p>}
-          {avrProc && <p className={classes.propertiesGroup}>Средний процент за период: {avrProc} %</p>}
+          {title !== dictTitlesStaticGraphs[2] && avrProc &&
+          <p className={classes.propertiesGroup}>Средний процент за период: {avrProc} %</p>}
         </Menu>
         <h3 className={classes.title}>{title}</h3>
         <AboutWidget description={dictDescriptionAbout[title]}/>
@@ -139,7 +152,7 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                  tickCount={3}
                  axisLine={false}
                  stroke='#8884d8'/>
-          <YAxis style={hiddenProc ? {display: 'none'} : {fontSize: 14}}
+          <YAxis style={hiddenProc || title === dictTitlesStaticGraphs[2] ? {display: 'none'} : {fontSize: 14}}
                  tickFormatter={tick => tick.toFixed(1)}
                  yAxisId='right'
                  domain={['dataMin', 'dataMax']}
@@ -147,28 +160,29 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                  axisLine={false}
                  orientation='right'
                  stroke='#82ca9d'/>
-          {/*<Tooltip labelFormatter={(label: string, payload: any) => `Период: ${payload[0]?.payload?.description}`}*/}
           <Tooltip
             labelFormatter={label => `${typeof label === 'string' && label.indexOf('-') > 0 ? 'Период' : 'Дата'}: ${label}`}
-            formatter={(value: any, name: any) => ([`${value}${name === 'p' ? ' %' : ' шт'}`])}/>
-          <Line style={hiddenVal ? {display: 'none'} : {}}
+            formatter={(value: any, name: any) => (title === dictTitlesStaticGraphs[2] && name === 'p'
+              ? []
+              : [`${value}${name === 'p' ? ' %' : ' шт'}`])}/>
+          <Line display={hiddenVal ? 'none' : ''}
                 yAxisId='left'
                 type='monotone'
                 dataKey='v1'
                 stroke='#8884d8'
                 strokeWidth={2}/>
-          <Line style={hiddenProc ? {display: 'none'} : {}}
+          <Line display={hiddenProc || title === dictTitlesStaticGraphs[2] ? 'none' : ''}
                 yAxisId='right'
                 type='monotone'
                 dataKey='p'
                 stroke='#82ca9d'
                 strokeWidth={2}/>
-          <ReferenceLine y={98}
+          {!dictTitlesStaticGraphs.includes(title) && <ReferenceLine y={98}
                          stroke='#FF0000'
                          yAxisId='right'
-                         style={hiddenTar ? {display: 'none'} : {}}
+                         display={hiddenTar ? 'none' : ''}
                          strokeDasharray='3 3'
-                         ifOverflow='extendDomain'/>
+                         ifOverflow='extendDomain'/>}
         </ComposedChart>
       </ResponsiveContainer>
     </div>
