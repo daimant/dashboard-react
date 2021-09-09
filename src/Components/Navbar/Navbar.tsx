@@ -1,5 +1,6 @@
 import React, {MouseEvent, useState} from 'react';
-import Logo from '../../Assets/Logo.svg'
+import Logo from '../../Assets/Logo.svg';
+import OwnerAvatar from '../../Assets/281586995103035.jpg';
 import classes from './Navbar.module.scss';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
@@ -9,7 +10,7 @@ import {Preloader} from '../Common/Preloader/Preloader';
 import FilterIcon from '../../Assets/FilterIcon.svg';
 import {connect} from 'react-redux';
 import {RootStateType} from '../../Redux/store';
-import {requestSetFiltersDefault, setShowFilters} from '../../Redux/filters';
+import {setShowFilters} from '../../Redux/filters';
 import {
   selectIsFetchingFilters,
   selectOrgMapListOSK,
@@ -21,6 +22,8 @@ import {
   selectShowFilters
 } from '../../Redux/selectors';
 import cn from 'classnames';
+import {LightTooltip} from '../Widgets/KPKTable/KPKTable';
+import {NavLink} from 'react-router-dom';
 
 type MapStatePropsType = {
   showFilters: boolean
@@ -35,15 +38,16 @@ type MapStatePropsType = {
 
 type MapDispatchPropsType = {
   setShowFilters: () => void
-  requestSetFiltersDefault: () => void
 }
 
 type PropsType = MapStatePropsType & MapDispatchPropsType;
 
+export const defPath = '/kpe';
+
 const options = [
-  'Ключевые показатели эффективности (текущий дашборд)',
-  'Рейтинг сотрудников',
-  'Статистика по объектам обслуживания'
+  {name: 'Ключевые показатели эффективности', path: defPath},
+  {name: 'Рейтинг сотрудников', path: '/reyting-sotrudnikov'},
+  {name: 'Статистика по объектам обслуживания', path: '/statistika-oo'},
 ];
 
 const GetShortOrgMane = (list: any, oid: string) =>
@@ -56,7 +60,7 @@ const GetShortOrgMane = (list: any, oid: string) =>
 
 const Navbar = ({
                   setShowFilters, orgOid, period, periodType, orgMapListOSK, orgMapListRZD, periodNameMapList,
-                  isFetchingFilters, requestSetFiltersDefault
+                  isFetchingFilters
                 }: PropsType) => {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -87,14 +91,15 @@ const Navbar = ({
   return (
     <div className={classes.navbar}>
       <div className={classes.leftNav}>
-        <img src={Logo}
-             loading='lazy'
-             alt=''
-             className={cn(classes.logo, classes.clickable)}
-             onClick={requestSetFiltersDefault}/>
+        <NavLink to={defPath}>
+          <img src={Logo}
+               loading='lazy'
+               alt='логотип оск'
+               className={cn(classes.logo, classes.clickable)}/>
+        </NavLink>
         <img src={FilterIcon}
              loading='lazy'
-             alt=''
+             alt='иконка фильтра'
              className={classes.clickable}
              onClick={changeShowFilters}/>
         {isFetchingFilters
@@ -103,6 +108,22 @@ const Navbar = ({
             <p>Организация: {shortNameOrg}</p>
             <p>Период: {periodNameMapList.get(`${periodType}:${period}`)}</p>
           </div>}
+        <a target='blank' href='http://10.248.40.231:3000/profile?id=281586995103035'>
+          <LightTooltip placement='right'
+                        title={<div className={classes.bigImgContainer}>
+                          <p>
+                          Фролова Екатерина Викторовна
+                          </p>
+                          <img className={classes.bigImg}
+                               src={OwnerAvatar}
+                               alt='фотография руководителя подразделения'/>
+                        </div>}>
+            <img src={OwnerAvatar}
+                 alt=''
+                 loading='lazy'
+                 className={cn(classes.clickable, classes.ownerAvatar)}/>
+          </LightTooltip>
+        </a>
       </div>
       <div className={classes.generalTitle}>
         <h1>Ключевые показатели эффективности</h1>
@@ -123,12 +144,13 @@ const Navbar = ({
               onClose={handleClose}
         >
           {options.map((option) => (
-            <MenuItem key={option}
-                      selected={option === 'Pyxis'}
+            <MenuItem key={option.name}
+                      selected={option.name === 'Pyxis'}
                       onClick={handleClose}
                       button={true}
-                      component={'li'}>
-              {option}
+                      component={NavLink}
+                      to={option.path}>
+              {option.name}
             </MenuItem>
           ))}
         </Menu>
@@ -150,7 +172,6 @@ const mapState = (state: RootStateType) => ({
 
 const mapDispatch = {
   setShowFilters,
-  requestSetFiltersDefault,
 };
 
 export default connect<MapStatePropsType, MapDispatchPropsType, {}, RootStateType>(mapState, mapDispatch)(Navbar);
