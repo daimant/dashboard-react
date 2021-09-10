@@ -16,7 +16,7 @@ const CircularBar = ({today, diff, err, title}: PropsType) => {
       <CircularProgressbarWithChildren
         value={diff}
         styles={buildStyles({
-          pathColor: 'rgb(136, 132, 216)'
+          pathColor: '#2D6AA3'
         })}>
         {err
           ? <h5>{title}</h5>
