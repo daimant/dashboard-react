@@ -11,6 +11,7 @@ import {
   SET_TODAYS_CHILD,
   SET_KPK,
   SET_DETAILS_SHK,
+  SET_DETAILS_ZNO,
 } from './action-types'
 
 type InitialStateWidgetsType = typeof initialStateWidgets;
@@ -25,6 +26,7 @@ type ActionsWidgetsType = {
   todaysChild: TodaysType[]
   tops: GraphAreaType[]
   detailsSHK: GraphLineType[]
+  detailsZNO: GraphLineType[]
 }
 
 const initialStateWidgets = {
@@ -35,8 +37,9 @@ const initialStateWidgets = {
   todays: [] as TodaysType[],
   todaysChild: [] as TodaysType[],
   tops: [] as GraphAreaType[],
-  detailsSHK: [] as GraphLineType[],
   isFetchingWidgets: true as boolean,
+  detailsSHK: [] as GraphLineType[],
+  detailsZNO: [] as GraphLineType[],
   /*inf: [
     [
       'Чистая прибыль',
@@ -123,6 +126,11 @@ const actionHandlerWidgets: any = {
   [SET_DETAILS_SHK]: (state: InitialStateWidgetsType, action: ActionsWidgetsType) => (action.detailsSHK.length ? {
     ...state,
     detailsSHK: action.detailsSHK
+  } : state),
+
+  [SET_DETAILS_ZNO]: (state: InitialStateWidgetsType, action: ActionsWidgetsType) => (action.detailsZNO.length ? {
+    ...state,
+    detailsZNO: action.detailsZNO
   } : state),
 };
 

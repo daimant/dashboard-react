@@ -18,13 +18,15 @@ type GetWidgetsType = {
   selectedKTL: SelectedKTLType
   selectedWorkers: SelectedWorkersType
   numDetailsSHK: number[]
+  numDetailsZNO: number[]
 }
 
 const catching = () => ({data: null});
 
 const apiWidgetsProd = {
   getWidgets: ({
-                 orgOid, period, periodType, serviceOid, numSC, numTodays, numTops, selectedKTL, selectedWorkers, numDetailsSHK
+                 orgOid, period, periodType, serviceOid, numSC, numTodays, numTops, selectedKTL, selectedWorkers,
+                 numDetailsSHK, numDetailsZNO
                }: GetWidgetsType) => {
     const payload = {
       'org_oid': Number(orgOid),
@@ -38,7 +40,8 @@ const apiWidgetsProd = {
       ...numSC.map(num => instance.post(`sc/${num}`, payload).catch(catching)),
       ...numTodays.map(num => instance.post(`today/${num}`, payload).catch(catching)),
       ...numTops.map(num => instance.get(`top/${num}`).catch(catching)),
-      ...numDetailsSHK.map(num => instance.get(`sc/${num}`).catch(catching)),
+      ...numDetailsSHK.map(num => instance.post(`sc/${num}`, payload).catch(catching)),
+      ...numDetailsZNO.map(num => instance.post(`sc/${num}`, payload).catch(catching)),
       instance.post('kpk', payload).catch(catching),
     ])
       .then((response: AxiosResponse[]) => response.map(res => res.data));
@@ -46,12 +49,13 @@ const apiWidgetsProd = {
 };
 
 const apiWidgetsDev = {
-  getWidgets: ({numSC, numTodays, numTops, numDetailsSHK}: GetWidgetsType) => {
+  getWidgets: ({numSC, numTodays, numTops, numDetailsSHK, numDetailsZNO}: GetWidgetsType) => {
     return Promise.all<any>([
       ...numSC.map(num => instance.get(`sc/${num}`).catch(catching)),
       ...numTodays.map(num => instance.get(`today/${num}`).catch(catching)),
       ...numTops.map(num => instance.get(`top/${num}`).catch(catching)),
       ...numDetailsSHK.map(num => instance.get(`sc/${num}`).catch(catching)),
+      ...numDetailsZNO.map(num => instance.get(`sc/${num}`).catch(catching)),
       instance.get('kpk').catch(catching)
     ])
       .then((response: AxiosResponse[]) => response.map(res => res.data));

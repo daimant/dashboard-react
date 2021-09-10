@@ -39,7 +39,7 @@ export type GraphLineType = {
 type GraphLineElementsType = {
   d: string
   v1: number
-  v2: number
+  v2: number | string
   p: number
 };
 
@@ -107,6 +107,7 @@ export type RequestServicesChildType = {
   selectedKTL?: SelectedKTLType
   selectedWorkers?: SelectedWorkersType
   numDetailsSHK?: number[]
+  numDetailsZNO?: number[]
 };
 
 export type RequestWidgetsType = {
@@ -120,6 +121,7 @@ export type RequestWidgetsType = {
   selectedKTL?: SelectedKTLType
   selectedWorkers?: SelectedWorkersType
   numDetailsSHK?: number[]
+  numDetailsZNO?: number[]
 };
 
 export type RequestWidgetsFromFiltersType = {

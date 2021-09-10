@@ -14,6 +14,7 @@ import GraphArea from './GraphArea/GraphArea';
 import {RootStateType} from '../../Redux/store';
 import {
   selectDetailsSHK,
+  selectDetailsZNO,
   selectIsFetchingWidgets,
   selectKPK,
   selectKPKChild,
@@ -49,6 +50,7 @@ type MapStatePropsType = {
   period: string
   periodType: string
   detailsSHK: GraphLineType[]
+  detailsZNO: GraphLineType[]
 }
 
 type MapDispatchPropsType = {
@@ -62,11 +64,11 @@ type PropsType = MapStatePropsType & MapDispatchPropsType;
 
 const Widgets = ({
                    kpk, kpkChild, sc, scChild, todays, todaysChild, isFetchingWidgets, requestServicesChild,
-                   removeServicesChild, orgOid, period, periodType, tops, requestWidgets, setServiceOid, detailsSHK
+                   removeServicesChild, orgOid, period, periodType, tops, requestWidgets, setServiceOid, detailsSHK, detailsZNO
                  }: PropsType) => {
 
   useEffect(() => {
-    requestWidgets({orgOid, period, periodType,  numTops: [1, 2], numDetailsSHK: [6, 7, 8]});
+    requestWidgets({orgOid, period, periodType,  numTops: [1, 2]});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -112,6 +114,13 @@ const Widgets = ({
         )}
       </div>
       <div className={classes.secondMain}>
+        {detailsZNO.map((graphLineData: GraphLineType, i) =>
+          <GraphLine graphLineData={graphLineData}
+                     key={`${graphLineData.title}${graphLineData.id}${i}`}
+                     extendedStyle={{height: '100%'}}/>
+        )}
+      </div>
+      <div className={classes.secondMain}>
         {tops.map((graphAreaData: GraphAreaType) =>
           <GraphArea graphAreaData={graphAreaData}
                      key={graphAreaData.title}
@@ -135,6 +144,7 @@ const mapState = (state: RootStateType): MapStatePropsType => ({
   period: selectPeriod(state),
   periodType: selectPeriodType(state),
   detailsSHK: selectDetailsSHK(state),
+  detailsZNO: selectDetailsZNO(state),
   /*
     inf: selectInf(state),
   */

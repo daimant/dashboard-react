@@ -51,17 +51,46 @@ const dictDescriptionAbout: { [key: string]: string } = {
   'ЗНО без ШК или с КЭNULL': '',
   'ЗНО с не верными ШК': '',
   'Количество ШК, без заполненной группы сопровождения': '',
+  'Доля ЗНО, выполненных в день обращения': '',
+  'Среднее время выполнения запроса': '',
+  'Количество Штрафов/Возвратов/ФРОД': '',
 };
 
-const dictTitlesStaticGraphs = [
+const dictTitlesWithoutGoalLine = [
   'ЗНО без ШК или с КЭNULL',
   'ЗНО с не верными ШК',
   'Количество ШК, без заполненной группы сопровождения',
+  'Доля ЗНО, выполненных в день обращения',
+  'Среднее время выполнения запроса',
+  'Количество Штрафов/Возвратов/ФРОД',
+];
+
+const dictTitlesWithoutProc = [
+  'Количество ШК, без заполненной группы сопровождения',
+  'Среднее время выполнения запроса',
+  'Количество Штрафов/Возвратов/ФРОД',
+];
+
+const dictTitlesWithV2 = [
+  'Доля ЗНО, выполненных в день обращения',
+  'Среднее время выполнения запроса',
+  'Количество Штрафов/Возвратов/ФРОД',
+];
+
+const dictTitlesWithV3 = [
+  'Количество Штрафов/Возвратов/ФРОД',
+];
+
+const dictTitlesWithOnlyV2 = [
+  'ЗНО без ШК или с КЭNULL',
+  'ЗНО с не верными ШК',
 ];
 
 const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
   const {title, data, sumVal, avrProc} = graphLineData;
   const [hiddenVal, setHiddenVal] = useState(localStorage.getItem(`hiddenValGraph-${title}`) === '1' || false);
+  const [hiddenVal2, setHiddenVal2] = useState(localStorage.getItem(`hiddenVal2Graph-${title}`) === '1' || false);
+  const [hiddenVal3, setHiddenVal3] = useState(localStorage.getItem(`hiddenVal3Graph-${title}`) === '1' || false);
   const [hiddenProc, setHiddenProc] = useState(localStorage.getItem(`hiddenProcGraph-${title}`) === '1' || false);
   const [hiddenTar, setHiddenTar] = useState(localStorage.getItem(`hiddenTarGraph-${title}`) === '1' || false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -103,25 +132,37 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
               open={Boolean(anchorEl)}
               onClose={handleCloseMenu}
         >
-          {title !== dictTitlesStaticGraphs[2] && <CheckedValueGraph description={'Количество'}
-                             hidden={hiddenVal}
-                             line={'Val'}
-                             hideLineClick={hideLineClick}
-                             hider={setHiddenVal}/>}
-          {title !== dictTitlesStaticGraphs[2] && <CheckedValueGraph description={'Значение'}
-                             hidden={hiddenProc}
-                             line={'Proc'}
-                             hideLineClick={hideLineClick}
-                             hider={setHiddenProc}/>
+          {title !== dictTitlesWithoutGoalLine[2] && <CheckedValueGraph description={'Количество'}
+                                                                        hidden={hiddenVal}
+                                                                        line={'Val'}
+                                                                        hideLineClick={hideLineClick}
+                                                                        hider={setHiddenVal}/>}
+          {!dictTitlesWithoutProc.includes(title) && <CheckedValueGraph description={'Значение'}
+                                                                        hidden={hiddenProc}
+                                                                        line={'Proc'}
+                                                                        hideLineClick={hideLineClick}
+                                                                        hider={setHiddenProc}/>
           }
-          {!dictTitlesStaticGraphs.includes(title) && <CheckedValueGraph description={'Целевое значение'}
-                             hidden={hiddenTar}
-                             line={'Tar'}
-                             hideLineClick={hideLineClick}
-                             hider={setHiddenTar}/>
+          {!dictTitlesWithoutGoalLine.includes(title) && <CheckedValueGraph description={'Целевое значение'}
+                                                                            hidden={hiddenTar}
+                                                                            line={'Tar'}
+                                                                            hideLineClick={hideLineClick}
+                                                                            hider={setHiddenTar}/>
+          }
+          {dictTitlesWithV2.includes(title) && <CheckedValueGraph description={'Количество 2'}
+                                                                  hidden={hiddenVal2}
+                                                                  line={'Val2'}
+                                                                  hideLineClick={hideLineClick}
+                                                                  hider={setHiddenVal2}/>
+          }
+          {dictTitlesWithV3.includes(title) && <CheckedValueGraph description={'Количество 3'}
+                                                                  hidden={hiddenVal3}
+                                                                  line={'Val3'}
+                                                                  hideLineClick={hideLineClick}
+                                                                  hider={setHiddenVal3}/>
           }
           {sumVal && <p className={classes.propertiesGroup}>Общее количество за период: {sumVal} шт</p>}
-          {title !== dictTitlesStaticGraphs[2] && avrProc &&
+          {!dictTitlesWithoutProc.includes(title) && avrProc &&
           <p className={classes.propertiesGroup}>Средний процент за период: {avrProc} %</p>}
         </Menu>
         <h3 className={classes.title}>{title}</h3>
@@ -151,38 +192,50 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                  domain={['dataMin', 'dataMax']}
                  tickCount={3}
                  axisLine={false}
-                 stroke='#8884d8'/>
-          <YAxis style={hiddenProc || title === dictTitlesStaticGraphs[2] ? {display: 'none'} : {fontSize: 14}}
+                 stroke='#2D6AA3'/>
+          <YAxis style={hiddenProc || dictTitlesWithoutProc.includes(title) ? {display: 'none'} : {fontSize: 14}}
                  tickFormatter={tick => tick.toFixed(1)}
                  yAxisId='right'
                  domain={['dataMin', 'dataMax']}
                  tickCount={3}
                  axisLine={false}
                  orientation='right'
-                 stroke='#82ca9d'/>
+                 stroke='#8CC06D'/>
           <Tooltip
             labelFormatter={label => `${typeof label === 'string' && label.indexOf('-') > 0 ? 'Период' : 'Дата'}: ${label}`}
-            formatter={(value: any, name: any) => (title === dictTitlesStaticGraphs[2] && name === 'p'
+            formatter={(value: any, name: any) => (dictTitlesWithoutProc.includes(title) && name === 'p'
               ? []
-              : [`${value}${name === 'p' ? ' %' : ' шт'}`])}/>
+              : [`${value}${name === 'p' ? ' %' : name === 'v2' && title === dictTitlesWithoutGoalLine[4] ? ' час.' : ' шт'}`])}/>
           <Line display={hiddenVal ? 'none' : ''}
                 yAxisId='left'
                 type='monotone'
-                dataKey='v1'
-                stroke='#8884d8'
+                dataKey={dictTitlesWithOnlyV2.includes(title) ? 'v2' : 'v1'}
+                stroke='#2D6AA3'
                 strokeWidth={2}/>
-          <Line display={hiddenProc || title === dictTitlesStaticGraphs[2] ? 'none' : ''}
+          {dictTitlesWithV2.includes(title) && <Line display={hiddenVal2 ? 'none' : ''}
+                                                     yAxisId='left'
+                                                     type='monotone'
+                                                     dataKey='v2'
+                                                     stroke='#E27F49'
+                                                     strokeWidth={2}/>}
+          {dictTitlesWithV3.includes(title) && <Line display={hiddenVal3 ? 'none' : ''}
+                                                     yAxisId='left'
+                                                     type='monotone'
+                                                     dataKey='v3'
+                                                     stroke='#B1B47D'
+                                                     strokeWidth={2}/>}
+          <Line display={hiddenProc || dictTitlesWithoutProc.includes(title) ? 'none' : ''}
                 yAxisId='right'
                 type='monotone'
                 dataKey='p'
-                stroke='#82ca9d'
+                stroke='#8CC06D'
                 strokeWidth={2}/>
-          {!dictTitlesStaticGraphs.includes(title) && <ReferenceLine y={98}
-                         stroke='#FF0000'
-                         yAxisId='right'
-                         display={hiddenTar ? 'none' : ''}
-                         strokeDasharray='3 3'
-                         ifOverflow='extendDomain'/>}
+          {!dictTitlesWithoutGoalLine.includes(title) && <ReferenceLine y={98}
+                                                                        stroke='#FF0000'
+                                                                        yAxisId='right'
+                                                                        display={hiddenTar ? 'none' : ''}
+                                                                        strokeDasharray='3 3'
+                                                                        ifOverflow='extendDomain'/>}
         </ComposedChart>
       </ResponsiveContainer>
     </div>
