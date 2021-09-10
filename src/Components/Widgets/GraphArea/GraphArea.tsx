@@ -29,7 +29,8 @@ const GraphArea = ({graphAreaData, extendedStyle = {}}: PropsType) => {
                    margin={{top: 10, bottom: 30, right: 50}}
                    style={!data.length ? {display: 'none'} : {}}>
           <XAxis dataKey='d'
-                 axisLine={false}/>
+                 axisLine={false}
+                 tickFormatter={tick => tick.slice(0, 5)}/>
           <YAxis tickFormatter={tick => `${tick * 100}`}
                  axisLine={false}
                  tickCount={2}/>
