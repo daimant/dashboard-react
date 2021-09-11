@@ -42,7 +42,7 @@ type MapDispatchPropsType = {
 
 type PropsType = MapStatePropsType & MapDispatchPropsType;
 
-export const defPath = '/kpe';
+export const defPath = '/';
 
 const options = [
   {name: 'Ключевые показатели эффективности', path: defPath},

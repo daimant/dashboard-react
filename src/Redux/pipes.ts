@@ -102,7 +102,10 @@ export const PipeGraphLine = (graphs: GraphLineType[]) => {
 
     graph.data = graph.data.map(day => {
       if (typeof day.v2 === 'string') {
-        day.v2 = `${day.v2.slice(0,2)}.${day.v2.slice(3,5)}${day.v2.slice(6,8)}`
+        const hours = Number(day.v2.slice(0,2));
+        const minutes = (Number(day.v2.slice(3,5)) / 60 * 100).toFixed(0);
+
+        day.v2 = `${hours}.${minutes}`;
       }
 
       sumVal += day.v1;
