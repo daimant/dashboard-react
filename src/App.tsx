@@ -8,7 +8,7 @@ import {RootStateType} from './Redux/store';
 import {selectSelectedKTL, selectSelectedWorkers} from './Redux/selectors';
 import {Preloader} from './Components/Common/Preloader/Preloader';
 import {SelectedKTLType, SelectedWorkersType} from './Types/Types';
-import {BrowserRouter as Router, Switch, Redirect, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {withRouter} from 'react-router-dom';
 import {compose} from "redux";
 
@@ -32,10 +32,9 @@ const App = ({selectedKTL, selectedWorkers}: PropsType) => {
         {selectedKTL.length || selectedWorkers.length
           ? <Switch>
             <Route exact
-                   path='/'
-                   render={() => <Redirect to={defPath}/>}
+                   path={defPath}
+                   component={Widgets}
             />
-            <Route path={defPath} component={Widgets}/>
             <Route path='*' render={() => <Preloader title={'Страница не нейдена'}/>}/>
           </Switch>
           : <Preloader/>}
