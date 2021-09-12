@@ -67,7 +67,6 @@ const dictTitlesWithoutGoalLine = [
 
 const dictTitlesWithoutProc = [
   'ШК без группы сопровождения',
-  'Среднее время выполнения запроса',
   'Количество Штрафов/Возвратов/ФРОД',
 ];
 
@@ -77,14 +76,14 @@ const dictTitlesWithV2 = [
   'Количество Штрафов/Возвратов/ФРОД',
 ];
 
-const dictTitlesWithV3 = [
-  'Количество Штрафов/Возвратов/ФРОД',
-];
+const dictTitlesWithV3 = ['Количество Штрафов/Возвратов/ФРОД',];
 
 const dictTitlesWithOnlyV2 = [
   'Выполненные ЗНО без ШК или КЭNULL',
   'Выполненные ЗНО с неверными ШК',
 ];
+
+const dictTitlesWhereV2InsteadProc = ['Среднее время выполнения запроса',];
 
 const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
   const {title, data, sumVal, avrProc} = graphLineData;
@@ -137,11 +136,12 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                                                                         line={'Val'}
                                                                         hideLineClick={hideLineClick}
                                                                         hider={setHiddenVal}/>}
-          {!dictTitlesWithoutProc.includes(title) && <CheckedValueGraph description={'Значение'}
-                                                                        hidden={hiddenProc}
-                                                                        line={'Proc'}
-                                                                        hideLineClick={hideLineClick}
-                                                                        hider={setHiddenProc}/>
+          {!dictTitlesWithoutProc.includes(title)
+          && !dictTitlesWhereV2InsteadProc.includes(title) && <CheckedValueGraph description={'Значение'}
+                                                                                 hidden={hiddenProc}
+                                                                                 line={'Proc'}
+                                                                                 hideLineClick={hideLineClick}
+                                                                                 hider={setHiddenProc}/>
           }
           {!dictTitlesWithoutGoalLine.includes(title) && <CheckedValueGraph description={'Целевое значение'}
                                                                             hidden={hiddenTar}
@@ -162,7 +162,7 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                                                                   hider={setHiddenVal3}/>
           }
           {sumVal && <p className={classes.propertiesGroup}>Общее количество за период: {sumVal} шт</p>}
-          {!dictTitlesWithoutProc.includes(title) && avrProc &&
+          {!dictTitlesWithoutProc.includes(title) && !dictTitlesWhereV2InsteadProc.includes(title) && avrProc &&
           <p className={classes.propertiesGroup}>Средний процент за период: {avrProc} %</p>}
         </Menu>
         <h3 className={classes.title}>{title}</h3>
@@ -193,19 +193,23 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                  tickCount={3}
                  axisLine={false}
                  stroke='#2D6AA3'/>
-          <YAxis style={hiddenProc || dictTitlesWithoutProc.includes(title) ? {display: 'none'} : {fontSize: 14}}
+          <YAxis style={
+            (!dictTitlesWhereV2InsteadProc.includes(title) && hiddenProc)
+            || (dictTitlesWhereV2InsteadProc.includes(title) && hiddenVal2)
+            || dictTitlesWithoutProc.includes(title) ? {display: 'none'} : {fontSize: 14}}
                  tickFormatter={tick => tick.toFixed(1)}
                  yAxisId='right'
                  domain={['dataMin', 'dataMax']}
                  tickCount={3}
                  axisLine={false}
                  orientation='right'
-                 stroke='#8CC06D'/>
-          <Tooltip
-            labelFormatter={label => `${typeof label === 'string' && label.indexOf('-') > 0 ? 'Период' : 'Дата'}: ${label}`}
-            formatter={(value: any, name: any) => (dictTitlesWithoutProc.includes(title) && name === 'p'
-              ? []
-              : [`${value}${name === 'p' ? ' %' : name === 'v2' && title === dictTitlesWithoutGoalLine[4] ? ' час.' : ' шт'}`])}/>
+                 stroke={dictTitlesWhereV2InsteadProc.includes(title) ? '#E27F49' : '#8CC06D'}/>
+          <Tooltip labelFormatter={label =>
+            `${typeof label === 'string' && label.indexOf('-') > 0 ? 'Период' : 'Дата'}: ${label}`}
+                   formatter={(value: any, name: any) => (
+                     (dictTitlesWithoutProc.includes(title) || dictTitlesWhereV2InsteadProc.includes(title)) && name === 'p'
+                       ? []
+                       : [`${value}${name === 'p' ? ' %' : name === 'v2' && title === dictTitlesWithoutGoalLine[4] ? ' час.' : ' шт'}`])}/>
           <Line display={hiddenVal ? 'none' : ''}
                 yAxisId='left'
                 type='monotone'
@@ -213,7 +217,7 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                 stroke='#2D6AA3'
                 strokeWidth={2}/>
           {dictTitlesWithV2.includes(title) && <Line display={hiddenVal2 ? 'none' : ''}
-                                                     yAxisId='left'
+                                                     yAxisId={dictTitlesWhereV2InsteadProc.includes(title) ? 'right' : 'left'}
                                                      type='monotone'
                                                      dataKey='v2'
                                                      stroke='#E27F49'
@@ -224,7 +228,9 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                                                      dataKey='v3'
                                                      stroke='#B1B47D'
                                                      strokeWidth={2}/>}
-          <Line display={hiddenProc || dictTitlesWithoutProc.includes(title) ? 'none' : ''}
+          <Line display={hiddenProc
+          || dictTitlesWithoutProc.includes(title)
+          || dictTitlesWhereV2InsteadProc.includes(title) ? 'none' : ''}
                 yAxisId='right'
                 type='monotone'
                 dataKey='p'
