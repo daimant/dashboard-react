@@ -107,6 +107,8 @@ const dictTitlesWithOnlyV2 = [
 
 const dictTitlesWhereV2InsteadProc = ['Среднее время выполнения запроса',];
 
+const dictTitlesWithDirectProcLine = ['Доля ЗНО, выполненных в день обращения',];
+
 const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
   const {title, data, sumVal, avrProc} = graphLineData;
   const [hiddenVal, setHiddenVal] = useState(localStorage.getItem(`hiddenValGraph-${title}`) === '1' || false);
@@ -206,12 +208,12 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                  interval={data.length < 10 ? 0 : data.length < 25 ? 1 : 2}
                  allowDataOverflow={false}
                  axisLine={false}/>
-          <YAxis style={hiddenVal ? {display: 'none'} : {fontSize: 14}}
+          <YAxis style={hiddenVal ? {display: 'none'} : {fontSize: 11}}
                  tickFormatter={tick => tick < 100
-                   ? `${Math.round(tick / 10) * 10}`
+                   ? `${Math.round(tick / 10) * 10}шт`
                    : tick < 1000
-                     ? `${Math.round(tick / 100) * 100}`
-                     : `${Math.round(tick / 1000) * 1000}`}
+                     ? `${Math.round(tick / 100) * 100}шт`
+                     : `${Math.round(tick / 1000) * 1000}шт`}
                  yAxisId='left'
                  domain={['dataMin', 'dataMax']}
                  tickCount={3}
@@ -220,10 +222,14 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
           <YAxis style={
             (!dictTitlesWhereV2InsteadProc.includes(title) && hiddenProc)
             || (dictTitlesWhereV2InsteadProc.includes(title) && hiddenVal2)
-            || dictTitlesWithoutProc.includes(title) ? {display: 'none'} : {fontSize: 14}}
-                 tickFormatter={tick => tick.toFixed(1)}
+            || dictTitlesWithoutProc.includes(title) ? {display: 'none'} : {fontSize: 11}}
+                 tickFormatter={tick => dictTitlesWithDirectProcLine.includes(title)
+                   ? (tick > 0 ? '%' : '')
+                   : `${tick.toFixed(1)}${dictTitlesWhereV2InsteadProc.includes(title) ? 'ч' : '%'}`}
                  yAxisId='right'
-                 domain={['dataMin', 'dataMax']}
+                 domain={dictTitlesWithDirectProcLine.includes(title)
+                   ? ['dataMin - 100000', 'dataMax']
+                   : ['dataMin', 'dataMax']}
                  tickCount={3}
                  axisLine={false}
                  orientation='right'
