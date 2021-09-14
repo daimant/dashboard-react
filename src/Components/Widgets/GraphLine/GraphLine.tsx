@@ -206,10 +206,19 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                  stroke={dictTitlesWhereV2InsteadProc.includes(title) ? '#E27F49' : '#8CC06D'}/>
           <Tooltip labelFormatter={label =>
             `${typeof label === 'string' && label.indexOf('-') > 0 ? 'Период' : 'Дата'}: ${label}`}
-                   formatter={(value: any, name: any) => (
+                   formatter={(value: string, name: any) => (
                      (dictTitlesWithoutProc.includes(title) || dictTitlesWhereV2InsteadProc.includes(title)) && name === 'p'
                        ? []
-                       : [`${value}${name === 'p' ? ' %' : name === 'v2' && title === dictTitlesWithoutGoalLine[4] ? ' час.' : ' шт'}`])}/>
+                       : [
+                         `${name === 'v2' && title === dictTitlesWithoutGoalLine[4]
+                           ? `${value.replace(/[.]/, 'ч')}м`
+                           : value
+                         }${name === 'p'
+                           ? ' %'
+                           : name === 'v2' && title === dictTitlesWithoutGoalLine[4]
+                             ? ''
+                             : ' шт'}`
+                       ])}/>
           <Line display={hiddenVal ? 'none' : ''}
                 yAxisId='left'
                 type='monotone'
