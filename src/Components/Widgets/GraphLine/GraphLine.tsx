@@ -56,6 +56,28 @@ const dictDescriptionAbout: { [key: string]: string } = {
   'Количество Штрафов/Возвратов/ФРОД': '',
 };
 
+const dictDescriptionTooltip: { [key: string]: { v1: string, v2: string, v3: string, p: string } } = {
+    'Своевременность': {v1: 'Количество', v2: 'Количество 2', v3: 'Количество 3', p: 'Значение'},
+    'Оперативность': {v1: 'Количество', v2: 'Количество 2', v3: 'Количество 3', p: 'Значение'},
+    'Качество работы': {v1: 'Количество', v2: 'Количество 2', v3: 'Количество 3', p: 'Значение'},
+    'Выполненные ЗНО без ШК или КЭNULL': {v1: 'ЗНО без ШК', v2: 'Количество 2', v3: 'Количество 3', p: '% ЗНО без ШК'},
+    'Выполненные ЗНО с неверными ШК': {
+      v1: 'ЗНО с не верным ШК', v2: 'Количество 2', v3: 'Количество 3', p: '% ЗНО с не верным ШК'
+    },
+    'ШК без группы сопровождения': {v1: 'Количество', v2: 'Количество 2', v3: 'Количество 3', p: 'Значение'},
+    'Доля ЗНО, выполненных в день обращения': {
+      v1: 'Выполнено ЗНО', v2: 'Выполнено в день обращения', v3: 'Количество 3', p: '% Выполненных в день обращения'
+    },
+    'Среднее время выполнения запроса': {
+      v1: 'Выполнено ЗНО',
+      v2: 'Среднее время выполнения',
+      v3: 'Количество 3',
+      p: 'Значение'
+    },
+    'Количество Штрафов/Возвратов/ФРОД': {v1: 'Штрафов', v2: 'Возвратов', v3: 'ЗНО с ФРОД', p: 'Значение'},
+  }
+;
+
 const dictTitlesWithoutGoalLine = [
   'Выполненные ЗНО без ШК или КЭNULL',
   'Выполненные ЗНО с неверными ШК',
@@ -131,35 +153,37 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
               open={Boolean(anchorEl)}
               onClose={handleCloseMenu}
         >
-          {title !== dictTitlesWithoutGoalLine[2] && <CheckedValueGraph description={'Количество'}
+          {title !== dictTitlesWithoutGoalLine[2] && <CheckedValueGraph description={dictDescriptionTooltip[title].v1}
                                                                         hidden={hiddenVal}
                                                                         line={'Val'}
                                                                         hideLineClick={hideLineClick}
                                                                         hider={setHiddenVal}/>}
+          {dictTitlesWithV2.includes(title) && <CheckedValueGraph description={dictDescriptionTooltip[title].v2}
+                                                                  hidden={hiddenVal2}
+                                                                  line={'Val2'}
+                                                                  hideLineClick={hideLineClick}
+                                                                  hider={setHiddenVal2}/>
+          }
+          {dictTitlesWithV3.includes(title) && <CheckedValueGraph description={dictDescriptionTooltip[title].v3}
+                                                                  hidden={hiddenVal3}
+                                                                  line={'Val3'}
+                                                                  hideLineClick={hideLineClick}
+                                                                  hider={setHiddenVal3}/>
+          }
+
           {!dictTitlesWithoutProc.includes(title)
-          && !dictTitlesWhereV2InsteadProc.includes(title) && <CheckedValueGraph description={'Значение'}
-                                                                                 hidden={hiddenProc}
-                                                                                 line={'Proc'}
-                                                                                 hideLineClick={hideLineClick}
-                                                                                 hider={setHiddenProc}/>
+          && !dictTitlesWhereV2InsteadProc.includes(title) &&
+          <CheckedValueGraph description={dictDescriptionTooltip[title].p}
+                             hidden={hiddenProc}
+                             line={'Proc'}
+                             hideLineClick={hideLineClick}
+                             hider={setHiddenProc}/>
           }
           {!dictTitlesWithoutGoalLine.includes(title) && <CheckedValueGraph description={'Целевое значение'}
                                                                             hidden={hiddenTar}
                                                                             line={'Tar'}
                                                                             hideLineClick={hideLineClick}
                                                                             hider={setHiddenTar}/>
-          }
-          {dictTitlesWithV2.includes(title) && <CheckedValueGraph description={'Количество 2'}
-                                                                  hidden={hiddenVal2}
-                                                                  line={'Val2'}
-                                                                  hideLineClick={hideLineClick}
-                                                                  hider={setHiddenVal2}/>
-          }
-          {dictTitlesWithV3.includes(title) && <CheckedValueGraph description={'Количество 3'}
-                                                                  hidden={hiddenVal3}
-                                                                  line={'Val3'}
-                                                                  hideLineClick={hideLineClick}
-                                                                  hider={setHiddenVal3}/>
           }
           {sumVal && <p className={classes.propertiesGroup}>Общее количество за период: {sumVal} шт</p>}
           {!dictTitlesWithoutProc.includes(title) && !dictTitlesWhereV2InsteadProc.includes(title) && avrProc &&
