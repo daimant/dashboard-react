@@ -229,7 +229,7 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                  stroke={dictTitlesWhereV2InsteadProc.includes(title) ? '#E27F49' : '#8CC06D'}/>
           <Tooltip labelFormatter={label =>
             `${typeof label === 'string' && label.indexOf('-') > 0 ? 'Период' : 'Дата'}: ${label}`}
-                   formatter={(value: string, name: any) => (
+                   formatter={(value: string, name: string) => (
                      (dictTitlesWithoutProc.includes(title) || dictTitlesWhereV2InsteadProc.includes(title)) && name === 'p'
                        ? []
                        : [

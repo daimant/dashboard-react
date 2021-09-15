@@ -7,7 +7,6 @@ import {
   Tooltip,
   ResponsiveContainer,
   Line,
-  CartesianGrid,
   Bar,
 } from 'recharts';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
@@ -157,7 +156,6 @@ const GraphColLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
         <ComposedChart data={data}
                        margin={{top: 10, bottom: 30}}
                        style={!data.length ? {display: 'none'} : {}}>
-          <CartesianGrid strokeDasharray="3 3"/>
           <XAxis dataKey='d'
                  tickFormatter={tick => {
                    if (typeof tick !== 'string') {
@@ -182,7 +180,7 @@ const GraphColLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
           <YAxis style={{fontSize: 11}}
                  tickFormatter={tick => tick > 0 ? `%` : ''}
                  yAxisId='right'
-                 domain={['dataMin - 10000', 'dataMax']}
+                 domain={['dataMin - 100000', 'dataMax']}
                  tickCount={3}
                  axisLine={false}
                  orientation='right'
@@ -205,8 +203,7 @@ const GraphColLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                 strokeWidth={2}/>
           <Tooltip labelFormatter={label =>
             `${typeof label === 'string' && label.indexOf('-') > 0 ? 'Период' : 'Дата'}: ${label}`}
-                   formatter={(value: string, name: any) => (`${value}${name === 'p' ? ' %' : ' шт'}`
-                   )}/>
+                   formatter={(value: string, name: string) => `${value}${name === 'p' ? ' %' : ' шт'}`}/>
         </ComposedChart>
       </ResponsiveContainer>
     </div>
