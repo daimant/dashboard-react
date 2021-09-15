@@ -57,28 +57,27 @@ const dictDescriptionAbout: { [key: string]: string } = {
 };
 
 const dictDescriptionTooltip: { [key: string]: { v1: string, v2: string, v3: string, p: string } } = {
-    'Своевременность': {v1: 'Количество', v2: 'Количество 2', v3: 'Количество 3', p: 'Значение'},
-    'Оперативность': {v1: 'Количество', v2: 'Количество 2', v3: 'Количество 3', p: 'Значение'},
-    'Качество работы': {v1: 'Количество', v2: 'Количество 2', v3: 'Количество 3', p: 'Значение'},
-    'Выполненные ЗНО без ШК или КЭNULL': {v1: 'ЗНО без ШК', v2: 'Количество 2', v3: 'Количество 3', p: '% ЗНО без ШК'},
-    'Выполненные ЗНО с неверными ШК': {
-      v1: 'ЗНО с не верным ШК', v2: 'Количество 2', v3: 'Количество 3', p: '% ЗНО с не верным ШК'
-    },
-    'ШК без группы сопровождения': {v1: 'Количество', v2: 'Количество 2', v3: 'Количество 3', p: 'Значение'},
-    'Доля ЗНО, выполненных в день обращения': {
-      v1: 'Выполнено ЗНО', v2: 'Выполнено в день обращения', v3: 'Количество 3', p: '% Выполненных в день обращения'
-    },
-    'Среднее время выполнения запроса': {
-      v1: 'Выполнено ЗНО',
-      v2: 'Среднее время выполнения',
-      v3: 'Количество 3',
-      p: 'Значение'
-    },
-    'Количество Штрафов/Возвратов/ФРОД': {v1: 'Штрафов', v2: 'Возвратов', v3: 'ЗНО с ФРОД', p: 'Значение'},
-  }
-;
+  'Своевременность': {v1: 'Количество', v2: 'Количество 2', v3: 'Количество 3', p: 'Значение'},
+  'Оперативность': {v1: 'Количество', v2: 'Количество 2', v3: 'Количество 3', p: 'Значение'},
+  'Качество работы': {v1: 'Количество', v2: 'Количество 2', v3: 'Количество 3', p: 'Значение'},
+  'Выполненные ЗНО без ШК или КЭNULL': {v1: 'ЗНО без ШК', v2: 'Количество 2', v3: 'Количество 3', p: '% ЗНО без ШК'},
+  'Выполненные ЗНО с неверными ШК': {
+    v1: 'ЗНО с не верным ШК', v2: 'Количество 2', v3: 'Количество 3', p: '% ЗНО с не верным ШК'
+  },
+  'ШК без группы сопровождения': {v1: 'Количество', v2: 'Количество 2', v3: 'Количество 3', p: 'Значение'},
+  'Доля ЗНО, выполненных в день обращения': {
+    v1: 'Выполнено ЗНО', v2: 'Выполнено в день обращения', v3: 'Количество 3', p: '% Выполненных в день обращения'
+  },
+  'Среднее время выполнения запроса': {
+    v1: 'Выполнено ЗНО',
+    v2: 'Среднее время выполнения',
+    v3: 'Количество 3',
+    p: 'Значение'
+  },
+  'Количество Штрафов/Возвратов/ФРОД': {v1: 'Штрафов', v2: 'Возвратов', v3: 'ЗНО с ФРОД', p: 'Значение'},
+};
 
-const dictTitlesWithoutGoalLine = [
+const dictTitlesWithoutTargetLine = [
   'Выполненные ЗНО без ШК или КЭNULL',
   'Выполненные ЗНО с неверными ШК',
   'ШК без группы сопровождения',
@@ -106,8 +105,6 @@ const dictTitlesWithOnlyV2 = [
 ];
 
 const dictTitlesWhereV2InsteadProc = ['Среднее время выполнения запроса',];
-
-const dictTitlesWithDirectProcLine = ['Доля ЗНО, выполненных в день обращения',];
 
 const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
   const {title, data, sumVal, avrProc} = graphLineData;
@@ -155,11 +152,11 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
               open={Boolean(anchorEl)}
               onClose={handleCloseMenu}
         >
-          {title !== dictTitlesWithoutGoalLine[2] && <CheckedValueGraph description={dictDescriptionTooltip[title].v1}
-                                                                        hidden={hiddenVal}
-                                                                        line={'Val'}
-                                                                        hideLineClick={hideLineClick}
-                                                                        hider={setHiddenVal}/>}
+          {title !== dictTitlesWithoutTargetLine[2] && <CheckedValueGraph description={dictDescriptionTooltip[title].v1}
+                                                                          hidden={hiddenVal}
+                                                                          line={'Val'}
+                                                                          hideLineClick={hideLineClick}
+                                                                          hider={setHiddenVal}/>}
           {dictTitlesWithV2.includes(title) && <CheckedValueGraph description={dictDescriptionTooltip[title].v2}
                                                                   hidden={hiddenVal2}
                                                                   line={'Val2'}
@@ -181,11 +178,11 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                              hideLineClick={hideLineClick}
                              hider={setHiddenProc}/>
           }
-          {!dictTitlesWithoutGoalLine.includes(title) && <CheckedValueGraph description={'Целевое значение'}
-                                                                            hidden={hiddenTar}
-                                                                            line={'Tar'}
-                                                                            hideLineClick={hideLineClick}
-                                                                            hider={setHiddenTar}/>
+          {!dictTitlesWithoutTargetLine.includes(title) && <CheckedValueGraph description={'Целевое значение'}
+                                                                              hidden={hiddenTar}
+                                                                              line={'Tar'}
+                                                                              hideLineClick={hideLineClick}
+                                                                              hider={setHiddenTar}/>
           }
           {sumVal && <p className={classes.propertiesGroup}>Общее количество за период: {sumVal} шт</p>}
           {!dictTitlesWithoutProc.includes(title) && !dictTitlesWhereV2InsteadProc.includes(title) && avrProc &&
@@ -223,13 +220,9 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
             (!dictTitlesWhereV2InsteadProc.includes(title) && hiddenProc)
             || (dictTitlesWhereV2InsteadProc.includes(title) && hiddenVal2)
             || dictTitlesWithoutProc.includes(title) ? {display: 'none'} : {fontSize: 11}}
-                 tickFormatter={tick => dictTitlesWithDirectProcLine.includes(title)
-                   ? (tick > 0 ? '%' : '')
-                   : `${tick.toFixed(1)}${dictTitlesWhereV2InsteadProc.includes(title) ? 'ч' : '%'}`}
+                 tickFormatter={tick => `${tick.toFixed(1)}${dictTitlesWhereV2InsteadProc.includes(title) ? 'ч' : '%'}`}
                  yAxisId='right'
-                 domain={dictTitlesWithDirectProcLine.includes(title)
-                   ? ['dataMin - 100000', 'dataMax']
-                   : ['dataMin', 'dataMax']}
+                 domain={['dataMin', 'dataMax']}
                  tickCount={3}
                  axisLine={false}
                  orientation='right'
@@ -240,12 +233,12 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                      (dictTitlesWithoutProc.includes(title) || dictTitlesWhereV2InsteadProc.includes(title)) && name === 'p'
                        ? []
                        : [
-                         `${name === 'v2' && title === dictTitlesWithoutGoalLine[4]
+                         `${name === 'v2' && title === dictTitlesWithoutTargetLine[4]
                            ? `${value.replace(/[.]/, 'ч')}м`
                            : value
                          }${name === 'p'
                            ? ' %'
-                           : name === 'v2' && title === dictTitlesWithoutGoalLine[4]
+                           : name === 'v2' && title === dictTitlesWithoutTargetLine[4]
                              ? ''
                              : ' шт'}`
                        ])}/>
@@ -275,12 +268,12 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                 dataKey='p'
                 stroke='#8CC06D'
                 strokeWidth={2}/>
-          {!dictTitlesWithoutGoalLine.includes(title) && <ReferenceLine y={98}
-                                                                        stroke='#FF0000'
-                                                                        yAxisId='right'
-                                                                        display={hiddenTar ? 'none' : ''}
-                                                                        strokeDasharray='3 3'
-                                                                        ifOverflow='extendDomain'/>}
+          {!dictTitlesWithoutTargetLine.includes(title) && <ReferenceLine y={98}
+                                                                          stroke='#FF0000'
+                                                                          yAxisId='right'
+                                                                          display={hiddenTar ? 'none' : ''}
+                                                                          strokeDasharray='3 3'
+                                                                          ifOverflow='extendDomain'/>}
         </ComposedChart>
       </ResponsiveContainer>
     </div>
