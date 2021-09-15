@@ -163,7 +163,7 @@ const GraphColLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                    }
                    return tick.indexOf('-') > -1 ? `${tick.slice(0, 5)}-${tick.slice(11, 16)}` : tick.slice(0, 5);
                  }}
-                 interval={data.length < 10 ? 0 : data.length < 25 ? 1 : 2}
+                 interval={data.length < 10 ? 1 : data.length < 25 ? 2 : 3}
                  allowDataOverflow={false}
                  axisLine={false}/>
           <YAxis style={hiddenVal && hiddenVal2 ? {display: 'none'} : {fontSize: 11}}
