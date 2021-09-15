@@ -47,6 +47,7 @@ const CompressGraph = (graph: GraphLineType) => {
   if (graph.data.length <= 31) return graph;
 
   const currCompressType = graph.data.length < 6 * 30 ? 'week' : 'month';
+  const title = graph.title;
 
   let stPeriod = null;
   let numberOfPeriod = null;
@@ -70,6 +71,10 @@ const CompressGraph = (graph: GraphLineType) => {
 
       if (numberOfPeriod) {
         currDate.p /= numberOfPeriod - iOfDays + 1;
+        // if (title === 'Среднее время выполнения запроса') {
+        //   console.log(currDate.v2)
+        //   currDate.v2 /= numberOfPeriod - iOfDays + 1;
+        // }
       }
 
       stPeriod = null;
@@ -77,6 +82,8 @@ const CompressGraph = (graph: GraphLineType) => {
     } else {
       graph.data[iOfDays - 1].p += currDate.p;
       graph.data[iOfDays - 1].v1 += currDate.v1;
+      // @ts-ignore
+      graph.data[iOfDays - 1].v2 += currDate.v2;
       graph.data.splice(iOfDays, 1);
     }
   }
@@ -101,9 +108,9 @@ export const PipeGraphLine = (graphs: GraphLineType[]) => {
     let sumProc = 0;
 
     graph.data = graph.data.map(day => {
-      if (typeof day.v2 === 'string') {
-        const hours = Number(day.v2.slice(0,2));
-        const minutes = Number(day.v2.slice(3,5));
+      if (typeof day.v2 === 'string' && day.v2.includes(':')) {
+        const hours = day.v2.slice(0, 2);
+        const minutes = day.v2.slice(3, 5);
 
         day.v2 = `${hours}.${minutes}`;
       }
@@ -257,7 +264,11 @@ const PipeKTl = (rawKTL: KTLChildType[]): { ktl: KTLType[], selectedKTL: Selecte
   if (!rawKTL || !rawKTL[0]) return {ktl: [], selectedKTL: []};
 
   const parentsUniq = new Set(rawKTL.map(doc => doc.contragent));
-  const ktl = Array.from(parentsUniq).map((doc: string, i: number) => ({name: doc, oid: `${i}`, children: [] as KTLChildType[]}));
+  const ktl = Array.from(parentsUniq).map((doc: string, i: number) => ({
+    name: doc,
+    oid: `${i}`,
+    children: [] as KTLChildType[]
+  }));
   const parentsPlace = new Map(ktl.map(doc => [doc.name, Number(doc.oid)]));
 
   rawKTL.forEach(child => {
