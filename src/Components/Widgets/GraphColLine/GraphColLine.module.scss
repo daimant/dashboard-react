@@ -1,0 +1,56 @@
+.graphs {
+  box-shadow: 0 0 1.6rem rgba(0, 0, 0, 0.1);
+  border-radius: .4rem;
+  width: 55vw;
+
+  @media (max-width: 2000px) {
+    height: 31.3%
+  }
+  @media (min-width: 2000px) {
+    height: 30.4%
+  }
+
+  background: #FFFFFF;
+  margin: 0 .6vw 2%;
+  font-size: 1.7vh;
+  overflow: hidden;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.propertiesGroup {
+  margin: .5rem;
+}
+
+.iconCheckBox {
+  vertical-align: middle;
+}
+
+.headGraph {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px;
+  height: 10%;
+}
+
+.colorVal {
+  color: #2D6AA3;
+}
+
+.colorVal2 {
+  color: #E27F49;
+}
+
+.colorVal3 {
+  color: #B1B47D;
+}
+
+.colorProc {
+  color: #8CC06D;
+}
+
+.colorTar {
+  color: #e21a1a;
+}

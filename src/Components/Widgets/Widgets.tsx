@@ -36,6 +36,7 @@ import {
 import {setServiceOid} from '../../Redux/filters/actions';
 import {RequestServicesChildType, RequestWidgetsType} from '../../Types/Types';
 import AboutWidget from '../Common/AboutWidget/AboutWidget';
+import GraphColLine from "./GraphColLine/GraphColLine";
 
 type MapStatePropsType = {
   kpk: KPKType
@@ -68,7 +69,7 @@ const Widgets = ({
                  }: PropsType) => {
 
   useEffect(() => {
-    requestWidgets({orgOid, period, periodType,  numTops: [1, 2]});
+    requestWidgets({orgOid, period, periodType, numTops: [1, 2]});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -114,10 +115,15 @@ const Widgets = ({
         )}
       </div>
       <div className={classes.secondMain}>
-        {detailsZNO.map((graphLineData: GraphLineType, i) =>
-          <GraphLine graphLineData={graphLineData}
-                     key={`${graphLineData.title}${graphLineData.id}${i}`}
-                     extendedStyle={{height: '100%'}}/>
+        {detailsZNO.map((graphLineData: GraphLineType, i) => {
+            if (i === 0) {
+              return <GraphColLine graphLineData={graphLineData}
+                                   key={`${graphLineData.title}${graphLineData.id}${i}`}
+                                   extendedStyle={{height: '100%'}}/>
+            } else return <GraphLine graphLineData={graphLineData}
+                                     key={`${graphLineData.title}${graphLineData.id}${i}`}
+                                     extendedStyle={{height: '100%'}}/>
+          }
         )}
       </div>
       <div className={classes.secondMain}>
