@@ -57,6 +57,7 @@ const dictDescriptionAbout: { [key: string]: string } = {
 };
 
 const dictDescriptionTooltip: { [key: string]: { v1: string, v2: string, v3: string, p: string } } = {
+  'Ошибка при загрузке': {v1: '', v2: '', v3: '', p: ''},
   'Своевременность': {v1: 'Количество', v2: 'Количество 2', v3: 'Количество 3', p: 'Значение'},
   'Оперативность': {v1: 'Количество', v2: 'Количество 2', v3: 'Количество 3', p: 'Значение'},
   'Качество работы': {v1: 'Количество', v2: 'Количество 2', v3: 'Количество 3', p: 'Значение'},
@@ -170,8 +171,7 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                                                                   hider={setHiddenVal3}/>
           }
 
-          {!dictTitlesWithoutProc.includes(title)
-          && !dictTitlesWhereV2InsteadProc.includes(title) &&
+          {!dictTitlesWithoutProc.includes(title) && !dictTitlesWhereV2InsteadProc.includes(title) &&
           <CheckedValueGraph description={dictDescriptionTooltip[title].p}
                              hidden={hiddenProc}
                              line={'Proc'}
@@ -188,7 +188,7 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
           {!dictTitlesWithoutProc.includes(title) && !dictTitlesWhereV2InsteadProc.includes(title) && avrProc &&
           <p className={classes.propertiesGroup}>Средний процент за период: {avrProc} %</p>}
         </Menu>
-        <h3 className={classes.title}>{title}</h3>
+        <h3 className={classes.title}>{!data?.length && title !== 'Ошибка при загрузке' ? `${title} - Нет данных` : title}</h3>
         <AboutWidget description={dictDescriptionAbout[title]}/>
       </div>
       <ResponsiveContainer>

@@ -21,7 +21,7 @@ const GraphArea = ({graphAreaData, extendedStyle = {}}: PropsType) => {
     <div className={classes.graphs} style={extendedStyle}>
       <div className={classes.headGraph}>
         &nbsp;
-        <h3>{title}</h3>
+        <h3>{!data?.length && title !== 'Ошибка при загрузке' ? `${title} - Нет данных` : title}</h3>
         <AboutWidget description={dictDescriptionAbout[title]}/>
       </div>
       <ResponsiveContainer>
@@ -30,7 +30,7 @@ const GraphArea = ({graphAreaData, extendedStyle = {}}: PropsType) => {
                    style={!data.length ? {display: 'none'} : {}}>
           <XAxis dataKey='d'
                  axisLine={false}
-                 tickFormatter={tick => tick.slice(0, 5)}/>
+                 tickFormatter={tick => {if (tick) return tick.slice(0, 5)}}/>
           <YAxis tickFormatter={tick => `${tick * 100}`}
                  axisLine={false}
                  tickCount={2}/>
