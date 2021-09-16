@@ -108,13 +108,6 @@ const Widgets = ({
         </div>
       </main>
       <div className={classes.secondMain}>
-        {detailsSHK.map((graphLineData: GraphLineType, i) =>
-          <GraphLine graphLineData={graphLineData}
-                     key={`${graphLineData.title}${graphLineData.id}${i}`}
-                     extendedStyle={{height: '100%'}}/>
-        )}
-      </div>
-      <div className={classes.secondMain}>
         {detailsZNO.map((graphLineData: GraphLineType, i) => {
             if (i === 0) {
               return <GraphColLine graphLineData={graphLineData}
@@ -124,6 +117,13 @@ const Widgets = ({
                                      key={`${graphLineData.title}${graphLineData.id}${i}`}
                                      extendedStyle={{height: '100%'}}/>
           }
+        )}
+      </div>
+      <div className={classes.secondMain}>
+        {detailsSHK.map((graphLineData: GraphLineType, i) =>
+          <GraphLine graphLineData={graphLineData}
+                     key={`${graphLineData.title}${graphLineData.id}${i}`}
+                     extendedStyle={{height: '100%'}}/>
         )}
       </div>
       <div className={classes.secondMain}>
