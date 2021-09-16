@@ -206,7 +206,8 @@ const GraphColLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                 strokeWidth={2}/>
           <Tooltip labelFormatter={label =>
             `${typeof label === 'string' && label.indexOf('-') > 0 ? 'Период' : 'Дата'}: ${label}`}
-                   formatter={(value: string, name: string) => `${value}${name === 'p' ? ' %' : ' шт'}`}/>
+                   formatter={(value: string, name: 'v1' | 'v2' | 'v3' | 'p') =>
+                     [`${dictDescriptionTooltip[title][name]}: ${value}${name === 'p' ? ' %' : ' шт'}`]}/>
         </ComposedChart>
       </ResponsiveContainer>
     </div>

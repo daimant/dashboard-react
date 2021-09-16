@@ -231,21 +231,6 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                  axisLine={false}
                  orientation='right'
                  stroke={dictTitlesWhereV2InsteadProc.includes(title) ? '#E27F49' : '#8CC06D'}/>
-          <Tooltip labelFormatter={label =>
-            `${typeof label === 'string' && label.indexOf('-') > 0 ? 'Период' : 'Дата'}: ${label}`}
-                   formatter={(value: string, name: string) => (
-                     (dictTitlesWithoutProc.includes(title) || dictTitlesWhereV2InsteadProc.includes(title)) && name === 'p'
-                       ? []
-                       : [
-                         `${name === 'v2' && title === dictTitlesWithoutTargetLine[4]
-                           ? `${value.replace(/[.]/, 'ч')}м`
-                           : value
-                         }${name === 'p'
-                           ? ' %'
-                           : name === 'v2' && title === dictTitlesWithoutTargetLine[4]
-                             ? ''
-                             : ' шт'}`
-                       ])}/>
           <Line display={hiddenVal ? 'none' : ''}
                 yAxisId='left'
                 type='monotone'
@@ -278,6 +263,21 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                                                                           display={hiddenTar ? 'none' : ''}
                                                                           strokeDasharray='3 3'
                                                                           ifOverflow='extendDomain'/>}
+          <Tooltip labelFormatter={label =>
+            `${typeof label === 'string' && label.indexOf('-') > 0 ? 'Период' : 'Дата'}: ${label}`}
+                   formatter={(value: string, name: 'v1' | 'v2' | 'v3' | 'p') => (
+                     (dictTitlesWithoutProc.includes(title) || dictTitlesWhereV2InsteadProc.includes(title)) && name === 'p'
+                       ? []
+                       : [
+                         `${dictDescriptionTooltip[title][name]}: ${name === 'v2' && title === dictTitlesWithoutTargetLine[4]
+                           ? `${value.replace(/[.]/, 'ч')}м`
+                           : value
+                         }${name === 'p'
+                           ? ' %'
+                           : name === 'v2' && title === dictTitlesWithoutTargetLine[4]
+                             ? ''
+                             : ' шт'}`
+                       ])}/>
         </ComposedChart>
       </ResponsiveContainer>
     </div>
