@@ -178,9 +178,9 @@ const GraphColLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                  axisLine={false}
                  stroke='#2D6AA3'/>
           <YAxis style={{fontSize: 11}}
-                 tickFormatter={tick => tick > 0 ? `%` : ''}
+                 tickFormatter={tick => `${tick.toFixed(0)}%`}
                  yAxisId='right'
-                 domain={['dataMin - 100000', 'dataMax']}
+                 domain={['dataMin', 'dataMax']}
                  tickCount={3}
                  axisLine={false}
                  orientation='right'
