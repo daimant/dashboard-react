@@ -112,7 +112,8 @@ const GraphColLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
         <IconButton aria-controls='menu'
                     className={classes.clickable}
                     href=''
-                    onClick={handleClickMenu}>
+                    onClick={handleClickMenu}
+                    disabled={!data?.length || title === 'Ошибка при загрузке'}>
           <img src={SettingsIcon} alt=''/>
         </IconButton>
         <Menu getContentAnchorEl={null}
@@ -150,7 +151,8 @@ const GraphColLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
           {avrProc &&
           <p className={classes.propertiesGroup}>Средний процент за период: {avrProc} %</p>}
         </Menu>
-        <h3 className={classes.title}>{!data?.length && title !== 'Ошибка при загрузке' ? `${title} - Нет данных` : title}</h3>
+        <h3
+          className={classes.title}>{!data?.length && title !== 'Ошибка при загрузке' ? `${title} - Нет данных` : title}</h3>
         <AboutWidget description={dictDescriptionAbout[title]}/>
       </div>
       <ResponsiveContainer>
