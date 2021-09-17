@@ -1,8 +1,11 @@
 main {
   display: flex;
   justify-content: center;
-  margin: 4vh 1vw;
-  height: 70vh;
+  margin: 30px 10px;
+  height: 650px;
+  @media (max-width: 1500px) {
+    height: 550px;
+  }
 }
 
 .graphs {
@@ -13,12 +16,15 @@ main {
 .secondMain {
   display: flex;
   justify-content: center;
-  height: 21.9vh;
-  @media (max-width: 2000px) {
-    margin: 4vh 1vw
+  height: 210px;
+  margin: 25px 10px;
+
+  @media (max-width: 1500px) {
+    height: 150px;
+    margin: 15px 10px;
   }
   @media (min-width: 2000px) {
-    margin: 6vh 2.6vw
+    margin: 30px 55px;
   }
 }
 
