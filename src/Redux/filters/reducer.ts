@@ -115,7 +115,9 @@ const createPeriodTree = (st: Date, end: number): PeriodListType[] => {
 
 export const defaultFilters = {
   orgOid: '281586771165316',
+  orgOidRZD: '0',
   orgName: 'ООО ОСК ИнфоТранс',
+  orgNameRZD: 'ОАО РЖД',
   period: `${new Date().getFullYear()}-${new Date().getMonth() - 1 < 10 ? `0${new Date().getMonth() + 1}` : new Date().getMonth() + 1}`,
   periodType: 'm',
   selectedKTL: [] as SelectedKTLType,
@@ -201,10 +203,10 @@ const actionHandlerFilters: any = {
 
     return {
       ...state,
-      orgOid: defaultFilters.orgOid,
+      orgOid: state.switchSDAWHIT ? defaultFilters.orgOidRZD : defaultFilters.orgOid,
       period: defaultFilters.period,
       periodType: defaultFilters.periodType,
-      orgName: defaultFilters.orgName,
+      orgName: state.switchSDAWHIT ? defaultFilters.orgNameRZD : defaultFilters.orgName,
       selectedKTL: defaultFilters.selectedKTL,
       selectedWorkers: defaultFilters.selectedWorkers,
     };
