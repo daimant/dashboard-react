@@ -72,7 +72,7 @@ const Widgets = ({
                  }: PropsType) => {
 
   useEffect(() => {
-      requestWidgets({orgOid, period, periodType, numTops: switchSDAWHIT ? [] : [1, 2]});
+      requestWidgets({orgOid, period, periodType, numTops: [1, 2]});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
