@@ -16,7 +16,8 @@ import {
   SET_SELECTED_KTL,
   SET_SELECTED_WORKERS,
   SET_SERVICE_OID,
-  SET_SHOW_FILTERS
+  SET_SHOW_FILTERS,
+  SET_SWITCH_SD_AWHIT,
 } from './action-types';
 
 type ActionsFiltersType = {
@@ -37,6 +38,7 @@ type ActionsFiltersType = {
   serviceOid?: string
   selectedKTL: SelectedKTLType
   selectedWorkers: SelectedWorkersType
+  switchSDAWHIT: boolean
 };
 
 type InitialStateFiltersType = typeof initialStateFilters;
@@ -140,6 +142,7 @@ const initialStateFilters = {
   workers: [] as WorkersType[],
   selectedKTL: [] as SelectedKTLType,
   selectedWorkers: [] as SelectedWorkersType,
+  switchSDAWHIT: localStorage.getItem('switchSDAWHIT') === 'true' || false as boolean,
 };
 
 const actionHandlerFilters: any = {
@@ -226,8 +229,7 @@ const actionHandlerFilters: any = {
         ...state,
         selectedKTL: action.selectedKTL
       }
-      : state
-  ,
+      : state,
 
   [SET_SELECTED_WORKERS]: (state: InitialStateFiltersType, action: ActionsFiltersType) =>
     action.selectedWorkers
@@ -235,8 +237,12 @@ const actionHandlerFilters: any = {
         ...state,
         selectedWorkers: action.selectedWorkers
       }
-      : state
-  ,
+      : state,
+
+  [SET_SWITCH_SD_AWHIT]: (state: InitialStateFiltersType, action: ActionsFiltersType) => ({
+    ...state,
+    switchSDAWHIT: action.switchSDAWHIT
+  }),
 };
 
 const filtersReducer = (state = initialStateFilters, action: ActionsFiltersType): InitialStateFiltersType => {

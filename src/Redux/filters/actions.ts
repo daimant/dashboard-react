@@ -14,7 +14,8 @@ import {
   SET_SELECTED_KTL,
   SET_SELECTED_WORKERS,
   SET_SERVICE_OID,
-  SET_SHOW_FILTERS
+  SET_SHOW_FILTERS,
+  SET_SWITCH_SD_AWHIT,
 } from './action-types';
 import {RequestWidgetsFromFiltersType, SelectedKTLType, SelectedWorkersType} from '../../Types/Types';
 
@@ -27,6 +28,7 @@ type SetShowFiltersACType = { type: typeof SET_SHOW_FILTERS };
 type SetServiceOidACType = { type: typeof SET_SERVICE_OID, serviceOid?: string };
 type SetSelectedKTLACType = { type: typeof SET_SELECTED_KTL, selectedKTL: SelectedKTLType };
 type SetSelectedWorkersACType = { type: typeof SET_SELECTED_WORKERS, selectedWorkers: SelectedWorkersType };
+type SetSwitchSDAWHITACType = { type: typeof SET_SWITCH_SD_AWHIT, switchSDAWHIT: boolean };
 
 const setLists = (lists: object): SetListsACType => ({type: SET_LISTS, lists});
 const setOrgName = (orgOid: string): SetOrgNameACType => ({type: SET_ORG_NAME, orgOid});
@@ -48,6 +50,11 @@ export const setSelectedKTL = (selectedKTL: SelectedKTLType): SetSelectedKTLACTy
 export const setSelectedWorkers = (selectedWorkers: SelectedWorkersType): SetSelectedWorkersACType => ({
   type: SET_SELECTED_WORKERS,
   selectedWorkers
+});
+
+export const setSwitchSDAWHIT = (switchSDAWHIT: boolean): SetSwitchSDAWHITACType => ({
+  type: SET_SWITCH_SD_AWHIT,
+  switchSDAWHIT
 });
 
 export const requestOrg = (): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {

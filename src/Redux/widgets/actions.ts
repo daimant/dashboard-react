@@ -66,6 +66,7 @@ export const requestWidgets = ({
   }
   const parentsKTL = new Set(getState().filters.ktl.map(el => el.oid));
   selectedKTL = selectedKTL.filter((el: string) => !parentsKTL.has(el));
+  const switchSDAWHIT = getState().filters.switchSDAWHIT;
 
   dispatch(setIsFetchingWidgetsStarted());
 
@@ -81,6 +82,7 @@ export const requestWidgets = ({
     selectedWorkers,
     numDetailsSHK,
     numDetailsZNO,
+    switchSDAWHIT,
   });
   dispatch(setSC(PipeGraphLine(response.splice(0, numSC.length))));
   dispatch(setTodays(PipeTodays(response.splice(0, numTodays.length))));
@@ -102,6 +104,7 @@ export const requestServicesChild = ({
   }
   const parentsKTL = new Set(getState().filters.ktl.map(el => el.oid));
   selectedKTL = selectedKTL.filter((el: string) => !parentsKTL.has(el));
+  const switchSDAWHIT = getState().filters.switchSDAWHIT;
 
   dispatch(setIsFetchingWidgetsStarted());
 
@@ -117,6 +120,7 @@ export const requestServicesChild = ({
     selectedWorkers,
     numDetailsSHK,
     numDetailsZNO,
+    switchSDAWHIT,
   });
   dispatch(setSCChild(PipeGraphLine(response.splice(0, numSC.length))));
   dispatch(setTodaysChild(PipeTodays(response.splice(0, numTodays.length))));

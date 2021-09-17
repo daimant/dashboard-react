@@ -43,3 +43,4 @@ export const selectKTL = (state: RootStateType) => state.filters.ktl;
 export const selectWorkers = (state: RootStateType) => state.filters.workers;
 export const selectSelectedKTL = (state: RootStateType) => state.filters.selectedKTL;
 export const selectSelectedWorkers = (state: RootStateType) => state.filters.selectedWorkers;
+export const selectSwitchSDAWHIT = (state: RootStateType) => state.filters.switchSDAWHIT;

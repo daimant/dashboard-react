@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import classes from './Filters.module.scss';
 import {Preloader} from '../Common/Preloader/Preloader';
 import MenuTreeList from './MenuTreeList/MenuTreeList';
-import {Button} from '@material-ui/core';
+import {Button, makeStyles} from '@material-ui/core';
 import {FetchError} from '../Common/FetchError/FetchError';
 import {
   KTLType,
@@ -32,6 +32,7 @@ import {
   selectServiceOid,
   selectShowFilters,
   selectWorkers,
+  selectSwitchSDAWHIT,
 } from '../../Redux/selectors';
 import {connect} from 'react-redux';
 import {
@@ -43,7 +44,10 @@ import {
 } from '../../Redux/filters';
 import MenuKTL from './MenuKTL/MenuKTL';
 import MenuWorkers from './MenuWorkers/MenuWorkers';
-import {setSelectedKTL, setSelectedWorkers} from '../../Redux/filters/actions';
+import {setSelectedKTL, setSelectedWorkers, setSwitchSDAWHIT} from '../../Redux/filters/actions';
+import cn from 'classnames';
+import FormControlLabel from '@material-ui/core/FormControlLabel/FormControlLabel';
+import Switch from '@material-ui/core/Switch/Switch';
 
 type MapStatePropsType = {
   orgListOSK: OrgListOSKType
@@ -62,6 +66,7 @@ type MapStatePropsType = {
   workers: WorkersType[]
   selectedKTL: SelectedKTLType
   selectedWorkers: SelectedWorkersType
+  switchSDAWHIT: boolean
 };
 
 type MapDispatchPropsType = {
@@ -72,26 +77,39 @@ type MapDispatchPropsType = {
   requestSetFiltersDefault: () => void
   setSelectedKTL: (selectedKTL: SelectedKTLType) => void
   setSelectedWorkers: (selectedWorkers: SelectedWorkersType) => void
+  setSwitchSDAWHIT: (switchSDAWHIT: boolean) => void
 };
 
 type PropsType = MapStatePropsType & MapDispatchPropsType;
+
+const useStyles = makeStyles(() => ({
+    toggle: {
+      '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+        opacity: 1,
+        backgroundColor: '#e21a1a',
+      },
+    },
+  })
+);
 
 const Filters = ({
                    orgListOSK, altOrgListOSK, orgListRZD, isFetchingFilters, isFetchingWidgets, orgOid,
                    requestWidgetsFromFilters, setPeriod, setOrgOid, perList, period, periodType,
                    requestSetFiltersDefault, showFilters, requestOrg, serviceOid, ktl, workers, selectedKTL,
-                   selectedWorkers, setSelectedKTL, setSelectedWorkers
+                   selectedWorkers, setSelectedKTL, setSelectedWorkers, switchSDAWHIT, setSwitchSDAWHIT
                  }: PropsType) => {
 
   useEffect(() => {
     if (!orgListOSK.oid) {
-      requestOrg()
+      requestOrg();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const classesMUI = useStyles();
 
   if (!showFilters) return null;
   if (isFetchingFilters) return <Preloader/>;
+
 
   const acceptFilters = (type: string = 'def', selected: any = '') => {
     const [newPeriodType, newPeriod] = (type === 'период')
@@ -115,6 +133,27 @@ const Filters = ({
       {filtersDownloadError
         ? <FetchError description={'Ошибка при загрузке фильтров'}/>
         : <>
+          <div className={cn(classes.clickable, classes.unselectable)}>{
+            <FormControlLabel control={<Switch size='medium'
+                                               checked={switchSDAWHIT}
+                                               onChange={() => {
+                                                 localStorage.setItem('switchSDAWHIT', `${!switchSDAWHIT}`);
+                                                 setSwitchSDAWHIT(!switchSDAWHIT);
+                                                 if (switchSDAWHIT) {
+                                                   setOrgOid('281586771165316');
+                                                 } else {
+                                                   requestSetFiltersDefault();
+                                                   setOrgOid('0');
+                                                 }
+                                               }}
+                                               color='default'
+                                               className={classesMUI.toggle}/>}
+                              labelPlacement='start'
+                              label={<span className={cn(classes.textAroundSwitcher, classes.tableHead)}>
+                          SD / AWHIT
+                        </span>}
+            />
+          }</div>
           <MenuTreeList treeList={orgListOSK}
                         altOrgListOSK={altOrgListOSK}
                         orgListRZD={orgListRZD}
@@ -122,32 +161,36 @@ const Filters = ({
                         setter={setOrgOid}
                         orgOid={orgOid}
                         acceptFilters={acceptFilters}
-                        blockedButton={(isFetchingWidgets || serviceOid !== '0')}/>
+                        blockedButton={(isFetchingWidgets || serviceOid !== '0')}
+                        switchSDAWHIT={switchSDAWHIT}/>
           <MenuTreeList treeList={perList}
                         title={'период'}
                         setter={setPeriod}
                         period={period}
                         periodType={periodType}
                         acceptFilters={acceptFilters}
-                        blockedButton={(isFetchingWidgets || serviceOid !== '0')}/>
+                        blockedButton={(isFetchingWidgets || serviceOid !== '0')}
+                        switchSDAWHIT={switchSDAWHIT}/>
           <MenuKTL ktl={ktl}
                    title={'договор'}
                    acceptFilters={acceptFilters}
                    selectedKTL={selectedKTL}
                    setSelectedKTL={setSelectedKTL}
-                   blockedButton={(isFetchingWidgets || serviceOid !== '0')}/>
+                   blockedButton={(isFetchingWidgets || serviceOid !== '0' || switchSDAWHIT)}/>
           <MenuWorkers workersList={workers}
                        title={'персонал'}
                        acceptFilters={acceptFilters}
                        selectedWorkers={selectedWorkers}
                        setSelectedWorkers={setSelectedWorkers}
-                       blockedButton={(isFetchingWidgets || serviceOid !== '0')}/>
-          <Button variant='outlined'
-                  onClick={requestSetFiltersDefault}
-                  disabled={isFetchingWidgets}
-                  href=''>
-            сбросить фильтры
-          </Button>
+                       blockedButton={(isFetchingWidgets || serviceOid !== '0' || switchSDAWHIT)}/>
+          <div>
+            <Button variant='outlined'
+                    onClick={requestSetFiltersDefault}
+                    disabled={isFetchingWidgets}
+                    href=''>
+              сбросить фильтры
+            </Button>
+          </div>
         </>}
     </div>
   )
@@ -170,6 +213,7 @@ const mapState = (state: RootStateType) => ({
   workers: selectWorkers(state),
   selectedKTL: selectSelectedKTL(state),
   selectedWorkers: selectSelectedWorkers(state),
+  switchSDAWHIT: selectSwitchSDAWHIT(state),
 });
 
 const mapDispatch = {
@@ -179,7 +223,8 @@ const mapDispatch = {
   setOrgOid,
   requestSetFiltersDefault,
   setSelectedKTL,
-  setSelectedWorkers
+  setSelectedWorkers,
+  setSwitchSDAWHIT,
 };
 
 export default connect<MapStatePropsType, MapDispatchPropsType, {}, RootStateType>(mapState, mapDispatch)(Filters);

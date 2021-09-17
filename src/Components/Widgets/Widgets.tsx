@@ -23,6 +23,7 @@ import {
   selectPeriodType,
   selectSC,
   selectSCChild,
+  selectSwitchSDAWHIT,
   selectTodays,
   selectTodaysChild,
   selectTops
@@ -52,6 +53,7 @@ type MapStatePropsType = {
   periodType: string
   detailsSHK: GraphLineType[]
   detailsZNO: GraphLineType[]
+  switchSDAWHIT: boolean
 }
 
 type MapDispatchPropsType = {
@@ -65,13 +67,21 @@ type PropsType = MapStatePropsType & MapDispatchPropsType;
 
 const Widgets = ({
                    kpk, kpkChild, sc, scChild, todays, todaysChild, isFetchingWidgets, requestServicesChild,
-                   removeServicesChild, orgOid, period, periodType, tops, requestWidgets, setServiceOid, detailsSHK, detailsZNO
+                   removeServicesChild, orgOid, period, periodType, tops, requestWidgets, setServiceOid, detailsSHK,
+                   detailsZNO, switchSDAWHIT
                  }: PropsType) => {
 
   useEffect(() => {
-    requestWidgets({orgOid, period, periodType, numTops: [1, 2]});
+      requestWidgets({orgOid, period, periodType, numTops: switchSDAWHIT ? [] : [1, 2]});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (!switchSDAWHIT) {
+      requestWidgets({orgOid, period, periodType, numTops: [1, 2]});
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [switchSDAWHIT]);
 
   if (isFetchingWidgets) return <Preloader/>;
 
@@ -151,6 +161,7 @@ const mapState = (state: RootStateType): MapStatePropsType => ({
   periodType: selectPeriodType(state),
   detailsSHK: selectDetailsSHK(state),
   detailsZNO: selectDetailsZNO(state),
+  switchSDAWHIT: selectSwitchSDAWHIT(state),
   /*
     inf: selectInf(state),
   */

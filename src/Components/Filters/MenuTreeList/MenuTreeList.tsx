@@ -1,4 +1,4 @@
-import React, {ChangeEvent, MouseEvent, useState} from 'react';
+import React, {ChangeEvent, MouseEvent, useEffect, useState} from 'react';
 import classes from './MenuTreeList.module.scss';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
@@ -21,6 +21,7 @@ type PropsType = {
   period?: string
   periodType?: string
   blockedButton: boolean
+  switchSDAWHIT: boolean
 
   setter?: (oid: string) => void
   acceptFilters: (type: string, selected: any) => void
@@ -28,19 +29,23 @@ type PropsType = {
 
 type RenderTreePropsType = {
   tree: any
+  switchSDAWHIT: boolean
+
   handleSelect: (event: ChangeEvent<{}>, oid: string) => void
   handleExpand: (event: ChangeEvent<{}>, oid: string) => void
 }
 
-const renderTree = ({tree, handleSelect, handleExpand}: RenderTreePropsType) => (
+const renderTree = ({tree, handleSelect, handleExpand, switchSDAWHIT}: RenderTreePropsType) => (
   <TreeItem key={`${tree.oid}${tree.name}`}
             nodeId={tree.oid}
             label={tree.name}
-            onLabelClick={(event) => handleSelect(event, tree.oid)}
+            onLabelClick={(event) => {
+              if (!switchSDAWHIT || (!tree.oid.includes('q') && !tree.oid.includes('y'))) return handleSelect(event, tree.oid)
+            }}
             onIconClick={(event) => handleExpand(event, tree.oid)}>
     {
       Array.isArray(tree.children)
-        ? tree.children.map((nextNode: any) => renderTree({tree: nextNode, handleSelect, handleExpand}))
+        ? tree.children.map((nextNode: any) => renderTree({tree: nextNode, handleSelect, handleExpand, switchSDAWHIT}))
         : null
     }
   </TreeItem>
@@ -72,33 +77,42 @@ const SwitchGroup = ({changer, checked, description}: { changer: () => void, che
 
 const MenuTreeList = ({
                         treeList, altOrgListOSK, orgListRZD, title, orgOid, period, periodType, setter, acceptFilters,
-                        blockedButton
+                        blockedButton, switchSDAWHIT
                       }: PropsType) => {
+
+  useEffect(() => {
+    if (switchSDAWHIT) {
+      setCheckedOSKRZD(true);
+    } else {
+      setCheckedOSKRZD(false);
+    }
+  }, [switchSDAWHIT]);
+
   const [expanded, setExpanded] = useState<string[]>(title === 'период' && Array.isArray(treeList)
     ? treeList.map((el: any) => el.oid)
     : [treeList.oid, '0']
   );
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [checkedInfotransRZD, setCheckedInfotransRZD] = useState(localStorage.getItem('checkedInfotransRZD') === '1' || false);
-  const [checkedOSKZNO, setCheckedOSKZNO] = useState(localStorage.getItem('checkedOrgZNO') === '1' || false);
+  const [checkedOSKRZD, setCheckedOSKRZD] = useState(localStorage.getItem('checkedOSKRZD') === 'true');
+  const [checkedOSKZNO, setCheckedOSKZNO] = useState(localStorage.getItem('checkedOrgZNO') === 'true');
 
   const useStyles = makeStyles({
     tree: {
-      transform: title === 'оргструктура' && checkedInfotransRZD ? 'translate(0, -10%)' : '',
+      transform: title === 'оргструктура' && checkedOSKRZD && !switchSDAWHIT ? 'translate(0, -10%)' : '',
       margin: '0 15px',
       height: title === 'оргструктура' ? 400 : '',
       width: title === 'оргструктура' ? 550 : '',
-      overflow: title === 'оргструктура' && checkedInfotransRZD ? 'none' : 'auto',
+      overflow: title === 'оргструктура' && checkedOSKRZD ? 'none' : 'auto',
     },
   });
 
-  const toggleCheckedInfotransRZD = () => {
-    localStorage.setItem('checkedInfotransRZD', checkedInfotransRZD ? '0' : '1');
-    setCheckedInfotransRZD(!checkedInfotransRZD);
+  const toggleCheckedOSKRZD = () => {
+    localStorage.setItem('checkedOSKRZD', `${!checkedOSKRZD}`);
+    setCheckedOSKRZD(!checkedOSKRZD);
   };
 
   const toggleCheckedOSKZNO = () => {
-    localStorage.setItem('checkedOrgZNO', checkedOSKZNO ? '0' : '1');
+    localStorage.setItem('checkedOrgZNO', `${checkedOSKZNO}`);
     setCheckedOSKZNO(!checkedOSKZNO);
   };
 
@@ -156,18 +170,18 @@ const MenuTreeList = ({
             open={Boolean(anchorEl)}
             onClose={handleClose}
       >
-        {title === 'оргструктура' &&
+        {!switchSDAWHIT && title === 'оргструктура' &&
         <div className={classes.selectParams}>
           <span className={classes.headOrgTree}>
-            <SwitchGroup changer={toggleCheckedInfotransRZD}
-                         checked={checkedInfotransRZD}
+            <SwitchGroup changer={toggleCheckedOSKRZD}
+                         checked={checkedOSKRZD}
                          description={`Оргструктура Инфотранс / РЖД`}/>
             <AboutWidget description={'Фильтр по орстуктуре, позволяет отобрать исполнителя заявки по подразделению. ' +
             'При переключении в «РЖД» фильтрация происходит по инициатору.'}
                          styles={{marginRight: '7px'}}/>
           </span>
             <span>
-            {!checkedInfotransRZD &&
+            {!checkedOSKRZD &&
             <SwitchGroup changer={toggleCheckedOSKZNO}
                          checked={checkedOSKZNO}
                          description={`Все подразделения / Только подразделения выполняющие ЗНО`}/>}
@@ -179,13 +193,18 @@ const MenuTreeList = ({
                   expanded={expanded}
         >
           {title === 'оргструктура'
-            ? (checkedInfotransRZD
-                ? renderTree({tree: orgListRZD, handleSelect, handleExpand})
-                : renderTree({tree: (checkedOSKZNO ? altOrgListOSK : treeList), handleSelect, handleExpand})
+            ? (checkedOSKRZD
+                ? renderTree({tree: orgListRZD, handleSelect, handleExpand, switchSDAWHIT})
+                : renderTree({
+                  tree: (checkedOSKZNO ? altOrgListOSK : treeList),
+                  handleSelect,
+                  handleExpand,
+                  switchSDAWHIT
+                })
             )
             : Array.isArray(treeList)
-              ? treeList.map(list => renderTree({tree: list, handleSelect, handleExpand}))
-              : renderTree({tree: treeList, handleSelect, handleExpand})}
+              ? treeList.map(list => renderTree({tree: list, handleSelect, handleExpand, switchSDAWHIT}))
+              : renderTree({tree: treeList, handleSelect, handleExpand, switchSDAWHIT})}
         </TreeView>
       </Menu>
     </div>
