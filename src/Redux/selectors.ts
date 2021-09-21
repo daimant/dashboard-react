@@ -28,9 +28,9 @@ export const selectInf = (state: any) => {
 //filters
 export const selectOrgListOSK = (state: RootStateType) => state.filters.orgListOSK;
 export const selectAltOrgListOSK = (state: RootStateType) => state.filters.altOrgListOSK;
-export const selectOrgMapListOSK = (state: RootStateType) => state.filters.orgMapListOSK;
+export const selectOrgMapListOSK = (state: RootStateType) => state.filters.namesListOSK;
 export const selectOrgListRZD = (state: RootStateType) => state.filters.orgListRZD;
-export const selectOrgMapListRZD = (state: RootStateType) => state.filters.orgMapListRZD;
+export const selectOrgMapListRZD = (state: RootStateType) => state.filters.namesListRZD;
 export const selectIsFetchingFilters = (state: RootStateType) => state.filters.isFetchingFilters;
 export const selectOrgOid = (state: RootStateType) => state.filters.orgOid;
 export const selectPerList = (state: RootStateType) => state.filters.perList;

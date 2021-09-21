@@ -221,7 +221,7 @@ const PipeOrgListOSK = (orgListOSK: OrgListOSKType[]) => {
     org.oid = `${org.oid}`;
     return [`${org.oid}`, i];
   }));
-  const orgMapListOSK = new Map([['281586771165316', 'ООО ОСК ИнфоТранс']]);
+  const namesListOSK = new Map([['281586771165316', 'ООО ОСК ИнфоТранс']]);
 
   orgListOSK = orgListOSK.map(org => {
     if (!org.parent) {
@@ -230,7 +230,7 @@ const PipeOrgListOSK = (orgListOSK: OrgListOSKType[]) => {
 
     org.parent = `${org.parent}`;
 
-    orgMapListOSK.set(org.oid, org.name);
+    namesListOSK.set(org.oid, org.name);
 
     return {...org, children: []}
   });
@@ -251,7 +251,7 @@ const PipeOrgListOSK = (orgListOSK: OrgListOSKType[]) => {
   const altOrgListOSK = JSON.parse(JSON.stringify(orgListOSK[0]));
   altOrgListOSK.children = altOrgListOSK.children.filter((el: { zno: number }) => el.zno);
 
-  return {orgListOSK: orgListOSK[0], altOrgListOSK, orgMapListOSK};
+  return {orgListOSK: orgListOSK[0], altOrgListOSK, namesListOSK};
 };
 
 const PipeOrgListRZD = (orgListRZD: OrgListRZDType[]) => ({
@@ -260,7 +260,7 @@ const PipeOrgListRZD = (orgListRZD: OrgListRZDType[]) => ({
     name: 'ОАО РЖД',
     children: orgListRZD ? orgListRZD.map(org => ({name: org.name, oid: `${org.oid}`, children: []})) : []
   },
-  orgMapListRZD: new Map(orgListRZD ? orgListRZD.map(org => [`${org.oid}`, org.name]) : []).set('0', 'ОАО РЖД')
+  namesListRZD: new Map(orgListRZD ? orgListRZD.map(org => [`${org.oid}`, org.name]) : []).set('0', 'ОАО РЖД')
 });
 
 const PipeKTl = (rawKTL: KTLChildType[]): { ktl: KTLType[], selectedKTL: SelectedKTLType } => {

@@ -130,7 +130,7 @@ export type RequestWidgetsFromFiltersType = {
   periodType: string
   selectedKTL: SelectedKTLType
   selectedWorkers: SelectedWorkersType
-}
+};
 
 export type SelectedKTLType = string[];
 export type SelectedWorkersType = number[];
@@ -139,4 +139,6 @@ export type RawListType = {
   key: string
   name_col: string[]
   data: [string | number][]
-}
+};
+
+export type MapListType = Map<string, string>;

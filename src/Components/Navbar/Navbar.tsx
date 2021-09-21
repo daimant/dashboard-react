@@ -24,15 +24,16 @@ import {
 import cn from 'classnames';
 import {LightTooltip} from '../Widgets/KPKTable/KPKTable';
 import {NavLink} from 'react-router-dom';
+import {MapListType} from "../../Types/Types";
 
 type MapStatePropsType = {
   showFilters: boolean
   orgOid: string
   period: string
   periodType: string
-  orgMapListOSK: Map<string, string>
-  orgMapListRZD: Map<string, string>
-  periodNameMapList: Map<string, string>
+  namesListOSK: MapListType
+  namesListRZD: MapListType
+  periodNameMapList: MapListType
   isFetchingFilters: boolean
 }
 
@@ -59,7 +60,7 @@ const GetShortOrgMane = (list: any, oid: string) =>
     .replace(/Отдел технической поддержки/, 'ОТП');
 
 const Navbar = ({
-                  setShowFilters, orgOid, period, periodType, orgMapListOSK, orgMapListRZD, periodNameMapList,
+                  setShowFilters, orgOid, period, periodType, namesListOSK, namesListRZD, periodNameMapList,
                   isFetchingFilters
                 }: PropsType) => {
 
@@ -80,10 +81,10 @@ const Navbar = ({
 
   let shortNameOrg;
 
-  if (orgMapListRZD.has(orgOid)) {
-    shortNameOrg = GetShortOrgMane(orgMapListRZD, orgOid)
-  } else if (orgMapListOSK.has(orgOid)) {
-    shortNameOrg = GetShortOrgMane(orgMapListOSK, orgOid)
+  if (namesListRZD.has(orgOid)) {
+    shortNameOrg = GetShortOrgMane(namesListRZD, orgOid)
+  } else if (namesListOSK.has(orgOid)) {
+    shortNameOrg = GetShortOrgMane(namesListOSK, orgOid)
   } else {
     shortNameOrg = localStorage.getItem('orgName');
   }
@@ -112,7 +113,7 @@ const Navbar = ({
           <LightTooltip placement='right'
                         title={<div className={classes.bigImgContainer}>
                           <p>
-                          Фролова Екатерина Викторовна
+                            Фролова Екатерина Викторовна
                           </p>
                           <img className={classes.bigImg}
                                src={OwnerAvatar}
@@ -164,8 +165,8 @@ const mapState = (state: RootStateType) => ({
   orgOid: selectOrgOid(state),
   period: selectPeriod(state),
   periodType: selectPeriodType(state),
-  orgMapListOSK: selectOrgMapListOSK(state),
-  orgMapListRZD: selectOrgMapListRZD(state),
+  namesListOSK: selectOrgMapListOSK(state),
+  namesListRZD: selectOrgMapListRZD(state),
   periodNameMapList: selectPeriodNameMapList(state),
   isFetchingFilters: selectIsFetchingFilters(state),
 });

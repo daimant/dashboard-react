@@ -1,13 +1,15 @@
 import {
   KTLType,
+  MapListType,
   OrgListOSKType,
   OrgListRZDType,
   PeriodListType,
   SelectedKTLType,
   SelectedWorkersType,
-  WorkersType
+  WorkersType,
 } from '../../Types/Types';
 import {
+  SET_DEF_PERIOD,
   SET_FILTERS_DEFAULT,
   SET_LISTS,
   SET_ORG_NAME,
@@ -25,9 +27,9 @@ type ActionsFiltersType = {
   lists: {
     orgListOSK: OrgListOSKType[]
     altOrgListOSK: OrgListOSKType
-    orgMapListOSK: Map<string, string>
+    namesListOSK: MapListType
     orgListRZD: OrgListRZDType
-    orgMapListRZD: Map<string, string>
+    namesListRZD: MapListType
     ktl: KTLType
     workers: WorkersType
     selectedKTL: SelectedKTLType
@@ -127,10 +129,10 @@ export const defaultFilters = {
 const initialStateFilters = {
   orgListOSK: {} as OrgListOSKType,
   altOrgListOSK: {} as OrgListOSKType,
-  orgMapListOSK: new Map() as Map<string, string>,
+  namesListOSK: new Map() as MapListType,
   orgListRZD: {} as OrgListRZDType,
-  orgMapListRZD: new Map() as Map<string, string>,
-  periodNameMapList: periodNameMapList as Map<string, string>,
+  namesListRZD: new Map() as MapListType,
+  periodNameMapList: periodNameMapList as MapListType,
   perList: createPeriodTree(new Date(2020, 0, 1), Date.now()) as PeriodListType[],
   isFetchingFilters: true as boolean,
   orgOid: localStorage.getItem('orgOid') || defaultFilters.orgOid as string,
@@ -181,9 +183,9 @@ const actionHandlerFilters: any = {
 
   [SET_ORG_NAME]: (state: InitialStateFiltersType, action: ActionsFiltersType) => {
     const newName = state[
-      state.orgMapListOSK.has(action.orgOid)
-        ? 'orgMapListOSK'
-        : 'orgMapListRZD'
+      state.namesListOSK.has(action.orgOid)
+        ? 'namesListOSK'
+        : 'namesListRZD'
       ].get(action.orgOid);
     if (newName !== undefined) {
       localStorage.setItem('orgName', newName);
@@ -245,6 +247,16 @@ const actionHandlerFilters: any = {
     ...state,
     switchSDAWHIT: action.switchSDAWHIT
   }),
+
+  [SET_DEF_PERIOD]: (state: InitialStateFiltersType) => {
+    localStorage.removeItem('period');
+    localStorage.removeItem('periodType');
+    return {
+      ...state,
+      period: defaultFilters.period,
+      periodType: defaultFilters.periodType,
+    }
+  }
 };
 
 const filtersReducer = (state = initialStateFilters, action: ActionsFiltersType): InitialStateFiltersType => {

@@ -6,6 +6,7 @@ import {Button, makeStyles} from '@material-ui/core';
 import {FetchError} from '../Common/FetchError/FetchError';
 import {
   KTLType,
+  MapListType,
   OrgListOSKType,
   OrgListRZDType,
   PeriodListType,
@@ -33,6 +34,7 @@ import {
   selectShowFilters,
   selectWorkers,
   selectSwitchSDAWHIT,
+  selectOrgMapListRZD,
 } from '../../Redux/selectors';
 import {connect} from 'react-redux';
 import {
@@ -40,11 +42,11 @@ import {
   requestSetFiltersDefault,
   requestWidgetsFromFilters,
   setOrgOid,
-  setPeriod
+  setPeriod,
 } from '../../Redux/filters';
 import MenuKTL from './MenuKTL/MenuKTL';
 import MenuWorkers from './MenuWorkers/MenuWorkers';
-import {setSelectedKTL, setSelectedWorkers, setSwitchSDAWHIT} from '../../Redux/filters/actions';
+import {setDefPeriod, setSelectedKTL, setSelectedWorkers, setSwitchSDAWHIT} from '../../Redux/filters/actions';
 import cn from 'classnames';
 import FormControlLabel from '@material-ui/core/FormControlLabel/FormControlLabel';
 import Switch from '@material-ui/core/Switch/Switch';
@@ -52,7 +54,7 @@ import Switch from '@material-ui/core/Switch/Switch';
 type MapStatePropsType = {
   orgListOSK: OrgListOSKType
   altOrgListOSK: OrgListOSKType
-  orgMapListOSK: Map<string, string>
+  namesListOSK: MapListType
   orgListRZD: OrgListRZDType
   isFetchingFilters: boolean
   isFetchingWidgets: boolean
@@ -67,6 +69,7 @@ type MapStatePropsType = {
   selectedKTL: SelectedKTLType
   selectedWorkers: SelectedWorkersType
   switchSDAWHIT: boolean
+  namesListRZD: MapListType
 };
 
 type MapDispatchPropsType = {
@@ -78,6 +81,7 @@ type MapDispatchPropsType = {
   setSelectedKTL: (selectedKTL: SelectedKTLType) => void
   setSelectedWorkers: (selectedWorkers: SelectedWorkersType) => void
   setSwitchSDAWHIT: (switchSDAWHIT: boolean) => void
+  setDefPeriod: () => void
 };
 
 type PropsType = MapStatePropsType & MapDispatchPropsType;
@@ -96,7 +100,8 @@ const Filters = ({
                    orgListOSK, altOrgListOSK, orgListRZD, isFetchingFilters, isFetchingWidgets, orgOid,
                    requestWidgetsFromFilters, setPeriod, setOrgOid, perList, period, periodType,
                    requestSetFiltersDefault, showFilters, requestOrg, serviceOid, ktl, workers, selectedKTL,
-                   selectedWorkers, setSelectedKTL, setSelectedWorkers, switchSDAWHIT, setSwitchSDAWHIT
+                   selectedWorkers, setSelectedKTL, setSelectedWorkers, switchSDAWHIT, setSwitchSDAWHIT, namesListRZD,
+                   setDefPeriod
                  }: PropsType) => {
 
   useEffect(() => {
@@ -139,11 +144,11 @@ const Filters = ({
                                                onChange={() => {
                                                  localStorage.setItem('switchSDAWHIT', `${!switchSDAWHIT}`);
                                                  setSwitchSDAWHIT(!switchSDAWHIT);
-                                                 if (switchSDAWHIT) {
-                                                   setOrgOid('281586771165316');
-                                                 } else {
-                                                   requestSetFiltersDefault();
+                                                 if (!switchSDAWHIT && !namesListRZD.has(orgOid)) {
                                                    setOrgOid('0');
+                                                 }
+                                                 if (!switchSDAWHIT && periodType !== 'm') {
+                                                   setDefPeriod();
                                                  }
                                                }}
                                                color='default'
@@ -199,7 +204,7 @@ const Filters = ({
 const mapState = (state: RootStateType) => ({
   orgListOSK: selectOrgListOSK(state),
   altOrgListOSK: selectAltOrgListOSK(state),
-  orgMapListOSK: selectOrgMapListOSK(state),
+  namesListOSK: selectOrgMapListOSK(state),
   orgListRZD: selectOrgListRZD(state),
   isFetchingFilters: selectIsFetchingFilters(state),
   isFetchingWidgets: selectIsFetchingWidgets(state),
@@ -214,6 +219,7 @@ const mapState = (state: RootStateType) => ({
   selectedKTL: selectSelectedKTL(state),
   selectedWorkers: selectSelectedWorkers(state),
   switchSDAWHIT: selectSwitchSDAWHIT(state),
+  namesListRZD: selectOrgMapListRZD(state),
 });
 
 const mapDispatch = {
@@ -225,6 +231,7 @@ const mapDispatch = {
   setSelectedKTL,
   setSelectedWorkers,
   setSwitchSDAWHIT,
+  setDefPeriod,
 };
 
 export default connect<MapStatePropsType, MapDispatchPropsType, {}, RootStateType>(mapState, mapDispatch)(Filters);

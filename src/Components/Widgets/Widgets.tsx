@@ -70,16 +70,8 @@ const Widgets = ({
                    removeServicesChild, orgOid, period, periodType, tops, requestWidgets, setServiceOid, detailsSHK,
                    detailsZNO, switchSDAWHIT
                  }: PropsType) => {
-
   useEffect(() => {
-      requestWidgets({orgOid, period, periodType, numTops: [1, 2]});
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (!switchSDAWHIT) {
-      requestWidgets({orgOid, period, periodType, numTops: [1, 2]});
-    }
+    requestWidgets({orgOid, period, periodType, numTops: [1, 2]});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [switchSDAWHIT]);
 
