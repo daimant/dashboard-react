@@ -63,7 +63,7 @@ export const setDefPeriod = (): SetDefPeriodACType => ({type: SET_DEF_PERIOD});
 
 export const requestOrg = (): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
   const response = await filtersAPI.getOrg();
-  dispatch(setLists(PipeLists(response?.data)))
+  dispatch(setLists(PipeLists(response?.data)));
 };
 
 export const requestWidgetsFromFilters = ({
@@ -73,9 +73,10 @@ export const requestWidgetsFromFilters = ({
   dispatch(setOrgName(orgOid));
 };
 
-export const requestSetFiltersDefault = (): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
+export const requestSetFiltersDefault = (): ThunkAction<void, RootStateType, unknown, AnyAction> => async (dispatch, getState) => {
+  const filtersState = getState().filters;
   dispatch(requestWidgets({
-    orgOid: defaultFilters.orgOid,
+    orgOid: filtersState.switchSDAWHIT ? defaultFilters.orgOidRZD : defaultFilters.orgOid,
     period: defaultFilters.period,
     periodType: defaultFilters.periodType,
     selectedKTL: defaultFilters.selectedKTL,
