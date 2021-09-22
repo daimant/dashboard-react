@@ -70,8 +70,12 @@ export const requestWidgetsFromFilters = ({
   dispatch(setOrgName(orgOid));
 };
 
-export const requestSetFiltersDefault = (): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
-  dispatch(setSwitchSDAWHIT());
+export const requestSetFiltersDefault = (): ThunkAction<void, RootStateType, unknown, AnyAction> => async (dispatch, getState) => {
+  const switchSDAWHIT = getState().filters.switchSDAWHIT;
+  if (switchSDAWHIT) {
+    dispatch(setSwitchSDAWHIT());
+  }
+
   dispatch(requestWidgets({
     orgOid: defaultFilters.orgOid,
     period: defaultFilters.period,
