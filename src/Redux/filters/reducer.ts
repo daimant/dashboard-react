@@ -40,7 +40,6 @@ type ActionsFiltersType = {
   serviceOid?: string
   selectedKTL: SelectedKTLType
   selectedWorkers: SelectedWorkersType
-  switchSDAWHIT: boolean
 };
 
 type InitialStateFiltersType = typeof initialStateFilters;
@@ -202,6 +201,7 @@ const actionHandlerFilters: any = {
     localStorage.removeItem('period');
     localStorage.removeItem('periodType');
     localStorage.removeItem('orgName');
+    localStorage.removeItem('switchSDAWHIT');
 
     return {
       ...state,
@@ -243,9 +243,9 @@ const actionHandlerFilters: any = {
       }
       : state,
 
-  [SET_SWITCH_SD_AWHIT]: (state: InitialStateFiltersType, action: ActionsFiltersType) => ({
+  [SET_SWITCH_SD_AWHIT]: (state: InitialStateFiltersType) => ({
     ...state,
-    switchSDAWHIT: action.switchSDAWHIT
+    switchSDAWHIT: !state.switchSDAWHIT
   }),
 
   [SET_DEF_PERIOD]: (state: InitialStateFiltersType) => {

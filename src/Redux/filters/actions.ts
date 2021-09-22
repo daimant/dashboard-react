@@ -29,7 +29,7 @@ type SetShowFiltersACType = { type: typeof SET_SHOW_FILTERS };
 type SetServiceOidACType = { type: typeof SET_SERVICE_OID, serviceOid?: string };
 type SetSelectedKTLACType = { type: typeof SET_SELECTED_KTL, selectedKTL: SelectedKTLType };
 type SetSelectedWorkersACType = { type: typeof SET_SELECTED_WORKERS, selectedWorkers: SelectedWorkersType };
-type SetSwitchSDAWHITACType = { type: typeof SET_SWITCH_SD_AWHIT, switchSDAWHIT: boolean };
+type SetSwitchSDAWHITACType = { type: typeof SET_SWITCH_SD_AWHIT };
 type SetDefPeriodACType = { type: typeof SET_DEF_PERIOD };
 
 const setLists = (lists: object): SetListsACType => ({type: SET_LISTS, lists});
@@ -54,10 +54,7 @@ export const setSelectedWorkers = (selectedWorkers: SelectedWorkersType): SetSel
   selectedWorkers
 });
 
-export const setSwitchSDAWHIT = (switchSDAWHIT: boolean): SetSwitchSDAWHITACType => ({
-  type: SET_SWITCH_SD_AWHIT,
-  switchSDAWHIT
-});
+export const setSwitchSDAWHIT = (): SetSwitchSDAWHITACType => ({type: SET_SWITCH_SD_AWHIT});
 
 export const setDefPeriod = (): SetDefPeriodACType => ({type: SET_DEF_PERIOD});
 
@@ -73,10 +70,10 @@ export const requestWidgetsFromFilters = ({
   dispatch(setOrgName(orgOid));
 };
 
-export const requestSetFiltersDefault = (): ThunkAction<void, RootStateType, unknown, AnyAction> => async (dispatch, getState) => {
-  const filtersState = getState().filters;
+export const requestSetFiltersDefault = (): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
+  dispatch(setSwitchSDAWHIT());
   dispatch(requestWidgets({
-    orgOid: filtersState.switchSDAWHIT ? defaultFilters.orgOidRZD : defaultFilters.orgOid,
+    orgOid: defaultFilters.orgOid,
     period: defaultFilters.period,
     periodType: defaultFilters.periodType,
     selectedKTL: defaultFilters.selectedKTL,

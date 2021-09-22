@@ -80,7 +80,7 @@ type MapDispatchPropsType = {
   requestSetFiltersDefault: () => void
   setSelectedKTL: (selectedKTL: SelectedKTLType) => void
   setSelectedWorkers: (selectedWorkers: SelectedWorkersType) => void
-  setSwitchSDAWHIT: (switchSDAWHIT: boolean) => void
+  setSwitchSDAWHIT: () => void
   setDefPeriod: () => void
 };
 
@@ -143,7 +143,7 @@ const Filters = ({
                                                checked={switchSDAWHIT}
                                                onChange={() => {
                                                  localStorage.setItem('switchSDAWHIT', `${!switchSDAWHIT}`);
-                                                 setSwitchSDAWHIT(!switchSDAWHIT);
+                                                 setSwitchSDAWHIT();
                                                  if (!switchSDAWHIT && !namesListRZD.has(orgOid)) {
                                                    setOrgOid('0');
                                                  }
