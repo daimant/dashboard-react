@@ -103,6 +103,9 @@ export const PipeGraphLine = (graphs: GraphLineType[]) => {
     if (!graph?.data) {
       graph.data = [];
     }
+    if (graph.title === 'Доля ЗНО, выполненных в день обращения') {
+      graph.data.forEach(day => day.v1 -= Number(day.v2));
+    }
 
     CompressGraph(graph);
 
