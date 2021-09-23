@@ -145,7 +145,7 @@ const KPKTable = ({
                 </div>
               </TableCell>
               <TableCell className={classes.cell}>
-                <div className={classes.tableHead}>
+                <div className={switchSDAWHIT ? classes.tableHeadWhenSwitchedSHAWHIT : classes.tableHead}>
                   {value}
                   <AboutWidget
                     description={'КПК услуг/сервисов за период по выбранному подразделению, позволяет увидеть ' +
