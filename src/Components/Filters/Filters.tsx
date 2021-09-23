@@ -141,6 +141,7 @@ const Filters = ({
           <div className={cn(classes.clickable, classes.unselectable)}>{
             <FormControlLabel control={<Switch size='medium'
                                                checked={switchSDAWHIT}
+                                               disabled={(isFetchingWidgets || serviceOid !== '0')}
                                                onChange={() => {
                                                  localStorage.setItem('switchSDAWHIT', `${!switchSDAWHIT}`);
                                                  setSwitchSDAWHIT();
@@ -181,7 +182,7 @@ const Filters = ({
                    acceptFilters={acceptFilters}
                    selectedKTL={selectedKTL}
                    setSelectedKTL={setSelectedKTL}
-                   blockedButton={(isFetchingWidgets || serviceOid !== '0' || switchSDAWHIT)}/>
+                   blockedButton={(isFetchingWidgets || serviceOid !== '0')}/>
           <MenuWorkers workersList={workers}
                        title={'персонал'}
                        acceptFilters={acceptFilters}

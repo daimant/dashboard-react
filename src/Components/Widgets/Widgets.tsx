@@ -86,7 +86,8 @@ const Widgets = ({
                   orgOid={orgOid}
                   period={period}
                   periodType={periodType}
-                  setServiceOid={setServiceOid}/>
+                  setServiceOid={setServiceOid}
+                  switchSDAWHIT={switchSDAWHIT}/>
         <div className={classes.graphs}>
           <div className={classes.headCircularBar}>
             <h4>СЕГОДНЯ</h4>

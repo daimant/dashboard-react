@@ -22,7 +22,8 @@ type PropsType = {
   orgOid: string
   period: string
   periodType: string
-  kpk: KPKType
+  kpk: KPKType,
+  switchSDAWHIT: boolean
 
   requestServicesChild: ({orgOid, period, periodType, serviceOid}: RequestServicesChildType) => void
   removeServicesChild: () => void
@@ -90,7 +91,7 @@ const nameColsDetailsCallCentre: any = {
 };
 
 const KPKTable = ({
-                    kpk, requestServicesChild, removeServicesChild, orgOid, period, periodType, setServiceOid
+                    kpk, requestServicesChild, removeServicesChild, orgOid, period, periodType, setServiceOid, switchSDAWHIT
                   }: PropsType) => {
   const [hiddenUnusedKPK, setHiddenUnusedKPK] = useState(localStorage.getItem('KPKRowHidden') === '1' || false);
 
@@ -100,7 +101,6 @@ const KPKTable = ({
         <FetchError hasData={Boolean((!kpk?.rows || kpk.rows.length === 0) && kpk?.cols?.length > 2)}/>
       </div>
     );
-
   const {cols, rows} = kpk;
   const [id, colsHead, value] = cols;
 
@@ -130,8 +130,8 @@ const KPKTable = ({
           <TableHead component={'thead'}>
             <TableRow component={'tr'}>
               <TableCell className={classes.cell}>
-                <div className={classes.tableHead}>
-                  {colsHead === 'Услуга' || colsHead === 'Ошибка при загрузке'
+                <div className={cn(classes.tableHead, classes.heightTableHead)}>
+                  {colsHead === 'Услуга' || colsHead === 'Показатель' || colsHead === 'Ошибка при загрузке'
                     ? <span>{colsHead}</span>
                     : <span className={classes.tableHead}>
                         <CloseIcon fontSize='small'
@@ -140,8 +140,8 @@ const KPKTable = ({
                       {colsHead}
                       </span>
                   }
-                  <CheckedValueKPK hidden={hiddenUnusedKPK}
-                                   requestSetHiddenUnusedKPK={requestSetHiddenUnusedKPK}/>
+                  {!switchSDAWHIT && <CheckedValueKPK hidden={hiddenUnusedKPK}
+                                   requestSetHiddenUnusedKPK={requestSetHiddenUnusedKPK}/>}
                 </div>
               </TableCell>
               <TableCell className={classes.cell}>
@@ -161,9 +161,9 @@ const KPKTable = ({
               <TableRow key={row[id]}
                         component={'tr'}
                         style={row[value] === '-' && hiddenUnusedKPK ? {display: 'none'} : {}}
-                        className={cn({[classes.clickable]: row[value] !== '-' && colsHead === 'Услуга'})}
+                        className={cn({[classes.clickable]: row[value] !== '-' && colsHead === 'Услуга' && id === 'Сервис_oid'})}
                         onClick={() => {
-                          if (row[value] !== '-' && colsHead === 'Услуга') {
+                          if (row[value] !== '-' && colsHead === 'Услуга' && id === 'Сервис_oid') {
                             clickRequestServicesChild(row[id]);
                           }
                         }}>
@@ -176,7 +176,8 @@ const KPKTable = ({
                               title={row[value] !== '-'
                                 ? <div className={classes.blackColor}>
                                   {`${row[value]} состоит из:`}
-                                  {cols.slice(3, 8).map((key: any) => (
+                                  {!switchSDAWHIT &&
+                                    cols?.slice(3, 8)?.map((key: any) => (
                                     <span className={classes.tableHead}
                                       // className={cn(classes[row[`${key}_good`] ? 'greenColor' : 'redColor'], classes.tableHead)}
                                           key={key}>
@@ -187,6 +188,11 @@ const KPKTable = ({
                                       {/*? `(отклонение: ${(row[key + '_l'] - row[key]).toFixed(2)})`*/}
                                       {/*: ''}*/}
                                       </span>
+                                  ))}
+                                  {switchSDAWHIT && row?.children?.map((currRow: any) => (
+                                    <span className={classes.tableHead}>
+                                      {currRow.Показатель} : {currRow.Значение}
+                                    </span>
                                   ))}
                                 </div>
                                 : ''}>

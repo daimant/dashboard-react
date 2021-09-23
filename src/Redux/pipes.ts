@@ -41,18 +41,18 @@ export const PipeKPK = (kpk: RawKPKType) => {
     return newRow;
   });
 
-  if (kpk.name_col[0] === 'Сервис') {
+  if (kpk.name_col[0] === 'Показатель') {
     const parents = new Map();
 
     parsedKPK.forEach((el, i) => {
       if (el.Показатель === 'Комплексный показатель') {
-        parents.set(el.Сервис, i);
+        parents.set(el.Услуга, i);
       }
     });
 
     parsedKPK.forEach(el => {
       if (el.Показатель !== 'Комплексный показатель') {
-        const currParent = parents.get(el.Сервис);
+        const currParent = parents.get(el.Услуга);
 
         if (!parsedKPK[currParent].children) {
           parsedKPK[currParent].children = [];
