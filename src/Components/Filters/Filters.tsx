@@ -155,7 +155,7 @@ const Filters = ({
                                                className={classesMUI.toggle}/>}
                               labelPlacement='start'
                               label={<span className={cn(classes.textAroundSwitcher, classes.tableHead)}>
-                          SD / AWHIT
+                          SD / АИХ
                         </span>}
             />
           }</div>
