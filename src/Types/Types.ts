@@ -25,8 +25,10 @@ export type RawKPKType = {
 
 export type KPKType = {
   cols: string[]
-  rows: { [key: string]: string | number }[]
+  rows: KPKRowsType[]
 };
+
+export type KPKRowsType = { [key: string]: string | number | KPKRowsType[]};
 
 export type GraphLineType = {
   id?: number

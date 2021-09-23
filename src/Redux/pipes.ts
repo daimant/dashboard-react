@@ -11,14 +11,15 @@ import {
   SelectedKTLType,
   SelectedWorkersType,
   RawListType,
+  KPKRowsType,
 } from '../Types/Types';
 
 // Widgets
 export const PipeKPK = (kpk: RawKPKType) => {
   if (!kpk) return kpk;
 
-  const parsedKPK = kpk.data?.map((row) => {
-    const newRow: { [key: string]: string | number } = {};
+  let parsedKPK = kpk.data?.map((row) => {
+    const newRow: KPKRowsType = {};
 
     kpk.name_col?.forEach((colName, i) => {
       let currColVal = row[i];
@@ -39,6 +40,31 @@ export const PipeKPK = (kpk: RawKPKType) => {
 
     return newRow;
   });
+
+  if (kpk.name_col[0] === 'Сервис') {
+    const parents = new Map();
+
+    parsedKPK.forEach((el, i) => {
+      if (el.Показатель === 'Комплексный показатель') {
+        parents.set(el.Сервис, i);
+      }
+    });
+
+    parsedKPK.forEach(el => {
+      if (el.Показатель !== 'Комплексный показатель') {
+        const currParent = parents.get(el.Сервис);
+
+        if (!parsedKPK[currParent].children) {
+          parsedKPK[currParent].children = [];
+        }
+
+        // @ts-ignore
+        parsedKPK[currParent].children = [...parsedKPK[currParent].children, el];
+      }
+
+    });
+    parsedKPK = parsedKPK.filter(el => el.Показатель === 'Комплексный показатель')
+  }
 
   return {cols: kpk.name_col, rows: parsedKPK};
 };
@@ -71,10 +97,11 @@ const CompressGraph = (graph: GraphLineType) => {
 
       if (numberOfPeriod) {
         currDate.p /= numberOfPeriod - iOfDays + 1;
-        // if (title === 'Среднее время выполнения запроса') {
-        //   console.log(currDate.v2)
-        //   currDate.v2 /= numberOfPeriod - iOfDays + 1;
-        // }
+
+        if (title === 'Среднее время выполнения запроса') {
+          // console.log(currDate.v2)
+          // currDate.v2 /= numberOfPeriod - iOfDays + 1;
+        }
       }
 
       stPeriod = null;
@@ -82,8 +109,15 @@ const CompressGraph = (graph: GraphLineType) => {
     } else {
       graph.data[iOfDays - 1].p += currDate.p;
       graph.data[iOfDays - 1].v1 += currDate.v1;
-      // @ts-ignore
-      graph.data[iOfDays - 1].v2 += currDate.v2;
+
+      if (title === 'Среднее время выполнения запроса') {
+        // @ts-ignore
+        // const hour = graph.data[iOfDays - 1].v2.slice()
+        // graph.data[iOfDays - 1].v2 += currDate.v2;
+      } else {
+        // @ts-ignore
+        graph.data[iOfDays - 1].v2 += currDate.v2;
+      }
       graph.data.splice(iOfDays, 1);
     }
   }
@@ -106,6 +140,9 @@ export const PipeGraphLine = (graphs: GraphLineType[]) => {
     if (graph.title === 'Доля ЗНО, выполненных в день обращения') {
       graph.data.forEach(day => day.v1 -= Number(day.v2));
     }
+    // else if (graph.title === 'Среднее время выполнения запроса') {
+    //   graph.data.forEach(day => day.v2 = day.v2.slice(0,2))
+    // }
 
     CompressGraph(graph);
 
