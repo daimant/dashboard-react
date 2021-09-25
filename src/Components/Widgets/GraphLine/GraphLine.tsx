@@ -52,7 +52,6 @@ const dictDescriptionAbout: { [key: string]: string } = {
   'Выполненные ЗНО без ШК или КЭNULL': '',
   'Выполненные ЗНО с неверными ШК': '',
   'ШК без группы сопровождения': '',
-  'Доля ЗНО, выполненных в день обращения': '',
   'Среднее время выполнения запроса': '',
   'Количество Штрафов/Возвратов/ФРОД': '',
 };
@@ -68,12 +67,6 @@ const dictDescriptionTooltip: { [key: string]: { v1: string, v2: string, v3: str
   'Своевременность': defaultDescriptionTooltipValues,
   'Оперативность': defaultDescriptionTooltipValues,
   'Качество работы': defaultDescriptionTooltipValues,
-  'Доля ЗНО, выполненных в день обращения': {
-    v1: defaultDescriptionTooltipValues.v1,
-    v2: 'Выполнено в день обращения',
-    v3: defaultDescriptionTooltipValues.v3,
-    p: '% Выполненных в день обращения',
-  },
   'Среднее время выполнения запроса': {
     v1: 'Выполнено ЗНО',
     v2: 'Среднее время выполнения',
@@ -103,7 +96,6 @@ const dictDescriptionTooltip: { [key: string]: { v1: string, v2: string, v3: str
 };
 
 const dictTitlesWithoutTargetLine = [
-  'Доля ЗНО, выполненных в день обращения',
   'Среднее время выполнения запроса',
   'Количество Штрафов/Возвратов/ФРОД',
   'Выполненные ЗНО без ШК или КЭNULL',
@@ -117,7 +109,6 @@ const dictTitlesWithoutProc = [
 ];
 
 const dictTitlesWithV2 = [
-  'Доля ЗНО, выполненных в день обращения',
   'Среднее время выполнения запроса',
   'Количество Штрафов/Возвратов/ФРОД',
 ];
@@ -143,6 +134,27 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
   const [hiddenProc, setHiddenProc] = useState(localStorage.getItem(`hiddenProcGraph-${title}`) === '1' || false);
   const [hiddenTar, setHiddenTar] = useState(localStorage.getItem(`hiddenTarGraph-${title}`) === '1' || false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+
+  let valuesYAxisLeft: number[] = [];
+  let valuesYAxisRight: number[] = [];
+
+  if (!dictTitlesWithV2InsteadV1.includes(title)) {
+    valuesYAxisLeft = valuesYAxisLeft.concat(data.map(el => el.v1));
+  }
+  if (dictTitlesWithV2InsteadV1.includes(title)
+    || (dictTitlesWithV2.includes(title) && !dictTitlesWithV2InsteadProc.includes(title))) {
+    valuesYAxisLeft = valuesYAxisLeft.concat(data.map(el => Number(el.v2)));
+  }
+  if (dictTitlesWithV3.includes(title)) {
+    valuesYAxisLeft = valuesYAxisLeft.concat(data.map(el => el.v3!));
+  }
+  if (!dictTitlesWithoutProc.includes(title) || !dictTitlesWithV2InsteadProc.includes(title)) {
+    valuesYAxisRight = valuesYAxisRight.concat(data.map(el => Number(el.p)));
+  }
+  if (dictTitlesWithV2InsteadProc.includes(title)) {
+    valuesYAxisRight = valuesYAxisRight.concat(data.map(el => Number(el.v2)));
+  }
 
   const hideLineClick = (line: string, hidden: boolean, hider: (hidden: boolean) => void) => {
     localStorage.setItem(`hidden${line}Graph-${title}`, hidden ? '0' : '1');
@@ -238,14 +250,14 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                  allowDataOverflow={false}
                  axisLine={false}/>
           <YAxis style={hiddenVal ? {display: 'none'} : {fontSize: 11}}
-                 tickFormatter={tick => tick < 100
-                   ? `${Math.round(tick / 10) * 10}шт`
-                   : tick < 1000
-                     ? `${Math.round(tick / 100) * 100}шт`
-                     : `${Math.round(tick / 1000) * 1000}шт`}
+                 tickFormatter={(tick, i) => {
+                   const currCut = tick < 1000 ? 10 : tick < 10000 ? 100 : 1000;
+                   return i ? `${Math.ceil(tick / currCut) * currCut}шт` : `${Math.floor(tick / currCut) * currCut}шт`;
+                 }}
                  yAxisId='left'
-                 domain={['dataMin', 'dataMax']}
+                 domain={[Math.min(...valuesYAxisLeft), Math.max(...valuesYAxisLeft)]}
                  tickCount={3}
+                 minTickGap={100}
                  axisLine={false}
                  stroke='#2D6AA3'/>
           <YAxis style={
@@ -254,8 +266,9 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
             || dictTitlesWithoutProc.includes(title) ? {display: 'none'} : {fontSize: 11}}
                  tickFormatter={tick => `${tick.toFixed(1)}${dictTitlesWithV2InsteadProc.includes(title) ? 'ч' : '%'}`}
                  yAxisId='right'
-                 domain={['dataMin', 'dataMax']}
+                 domain={[Math.min(...valuesYAxisRight), Math.max(...valuesYAxisRight)]}
                  tickCount={3}
+                 minTickGap={100}
                  axisLine={false}
                  orientation='right'
                  stroke={dictTitlesWithV2InsteadProc.includes(title) ? '#E27F49' : '#8CC06D'}/>
