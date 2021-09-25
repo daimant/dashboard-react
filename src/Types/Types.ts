@@ -21,14 +21,23 @@ export type PeriodListType = {
 export type RawKPKType = {
   name_col: [string, string, string, string]
   data: [number, string, any, number][]
+  staff?: OrgOwnerType
 };
 
 export type KPKType = {
   cols: string[]
   rows: KPKRowsType[]
+  orgOwner?: OrgOwnerType
 };
 
-export type KPKRowsType = { [key: string]: string | number | KPKRowsType[]};
+export type OrgOwnerType = {
+  "fio": string
+  "link_card": string
+  "ico": string
+  "avatar": string
+}
+
+export type KPKRowsType = { [key: string]: string | number | KPKRowsType[] };
 
 export type GraphLineType = {
   id?: number

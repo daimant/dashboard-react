@@ -13,7 +13,6 @@ import {
   RawListType,
   KPKRowsType,
 } from '../Types/Types';
-import {getHourNumbers} from "@material-ui/pickers/views/Clock/ClockNumbers";
 
 // Widgets
 export const PipeKPK = (kpk: RawKPKType) => {
@@ -67,7 +66,7 @@ export const PipeKPK = (kpk: RawKPKType) => {
     parsedKPK = parsedKPK.filter(el => el.Показатель === 'Комплексный показатель')
   }
 
-  return {cols: kpk.name_col, rows: parsedKPK};
+  return {cols: kpk.name_col, rows: parsedKPK, orgOwner: kpk.staff};
 };
 
 const CompressGraph = (graph: GraphLineType) => {

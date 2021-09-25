@@ -1,6 +1,5 @@
 import React, {MouseEvent, useState} from 'react';
 import Logo from '../../Assets/Logo.svg';
-import OwnerAvatar from '../../Assets/281586995103035.jpg';
 import classes from './Navbar.module.scss';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
@@ -16,6 +15,7 @@ import {
   selectOrgMapListOSK,
   selectOrgMapListRZD,
   selectOrgOid,
+  selectOrgOwner,
   selectPeriod,
   selectPeriodNameMapList,
   selectPeriodType,
@@ -24,7 +24,7 @@ import {
 import cn from 'classnames';
 import {LightTooltip} from '../Widgets/KPKTable/KPKTable';
 import {NavLink} from 'react-router-dom';
-import {MapListType} from "../../Types/Types";
+import {MapListType, OrgOwnerType} from '../../Types/Types';
 
 type MapStatePropsType = {
   showFilters: boolean
@@ -35,6 +35,7 @@ type MapStatePropsType = {
   namesListRZD: MapListType
   periodNameMapList: MapListType
   isFetchingFilters: boolean
+  orgOwner: OrgOwnerType
 }
 
 type MapDispatchPropsType = {
@@ -61,7 +62,7 @@ const GetShortOrgMane = (list: any, oid: string) =>
 
 const Navbar = ({
                   setShowFilters, orgOid, period, periodType, namesListOSK, namesListRZD, periodNameMapList,
-                  isFetchingFilters
+                  isFetchingFilters, orgOwner
                 }: PropsType) => {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -109,22 +110,22 @@ const Navbar = ({
             <p>Организация: {shortNameOrg}</p>
             <p>Период: {periodNameMapList.get(`${periodType}:${period}`)}</p>
           </div>}
-        <a target='blank' href='http://10.248.40.231:3000/profile?id=281586995103035'>
-          <LightTooltip placement='right'
-                        title={<div className={classes.bigImgContainer}>
-                          <p>
-                            Фролова Екатерина Викторовна
-                          </p>
-                          <img className={classes.bigImg}
-                               src={OwnerAvatar}
-                               alt='фотография руководителя подразделения'/>
-                        </div>}>
-            <img src={OwnerAvatar}
-                 alt=''
-                 loading='lazy'
-                 className={cn(classes.clickable, classes.ownerAvatar)}/>
-          </LightTooltip>
-        </a>
+        {orgOwner.fio && <a target='blank' href={orgOwner.link_card}>
+            <LightTooltip placement='right'
+                          title={<div className={classes.bigImgContainer}>
+                            <p>
+                              {orgOwner.fio}
+                            </p>
+                            <img className={classes.bigImg}
+                                 src={orgOwner.avatar}
+                                 alt='фотография руководителя подразделения'/>
+                          </div>}>
+                <img src={orgOwner.ico}
+                     alt='иконка руководителя подразделения'
+                     loading='lazy'
+                     className={cn(classes.clickable, classes.ownerAvatar)}/>
+            </LightTooltip>
+        </a>}
       </div>
       <div className={classes.generalTitle}>
         <h1>Ключевые показатели эффективности</h1>
@@ -169,6 +170,7 @@ const mapState = (state: RootStateType) => ({
   namesListRZD: selectOrgMapListRZD(state),
   periodNameMapList: selectPeriodNameMapList(state),
   isFetchingFilters: selectIsFetchingFilters(state),
+  orgOwner: selectOrgOwner(state),
 });
 
 const mapDispatch = {

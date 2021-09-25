@@ -40,6 +40,12 @@ const initialStateWidgets = {
   isFetchingWidgets: true as boolean,
   detailsSHK: [] as GraphLineType[],
   detailsZNO: [] as GraphLineType[],
+  orgOwner: {
+    'fio': '' as string,
+    'link_card': '' as string,
+    'ico': '' as string,
+    'avatar': '' as string,
+  }
   /*inf: [
     [
       'Чистая прибыль',
@@ -75,9 +81,9 @@ const initialStateWidgets = {
 const actionHandlerWidgets: any = {
   [SET_KPK]: (state: InitialStateWidgetsType, action: ActionsWidgetsType) => {
     const kpk = (action.kpk)
-      ? action.kpk
+      ? {cols: action.kpk.cols, rows: action.kpk.rows}
       : {cols: ['Сервис-oid', 'Ошибка при загрузке'], rows: []};
-    return {...state, kpk};
+    return action.kpk.orgOwner ? {...state, kpk, orgOwner: action.kpk.orgOwner} : {...state, kpk};
   },
 
   [SET_KPK_CHILD]: (state: InitialStateWidgetsType, action: ActionsWidgetsType) => {

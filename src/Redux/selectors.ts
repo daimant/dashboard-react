@@ -11,6 +11,7 @@ export const selectTops = (state: RootStateType) => state.widgets.tops;
 export const selectIsFetchingWidgets = (state: RootStateType) => state.widgets.isFetchingWidgets;
 export const selectDetailsSHK = (state: RootStateType) => state.widgets.detailsSHK;
 export const selectDetailsZNO = (state: RootStateType) => state.widgets.detailsZNO;
+export const selectOrgOwner = (state: RootStateType) => state.widgets.orgOwner;
 /*
 export const selectInf = (state: any) => {
   const {inf} = state.widgets;
