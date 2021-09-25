@@ -38,11 +38,13 @@ export type GraphLineType = {
   avrProc?: number
 };
 
-type GraphLineElementsType = {
+export type GraphLineElementsType = {
   d: string
   v1: number
   v2: number | string
+  v3?: number
   p: number
+  sumV1V2?: number
 };
 
 export type RawGraphAreaType = {

@@ -10,7 +10,7 @@ import {Preloader} from './Components/Common/Preloader/Preloader';
 import {SelectedKTLType, SelectedWorkersType} from './Types/Types';
 import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
 import {withRouter} from 'react-router-dom';
-import {compose} from "redux";
+import {compose} from 'redux';
 
 type MapStatePropsType = {
   selectedKTL: SelectedKTLType

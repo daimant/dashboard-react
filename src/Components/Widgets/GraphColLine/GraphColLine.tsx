@@ -11,7 +11,7 @@ import {
 } from 'recharts';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import {GraphLineType} from '../../../Types/Types';
+import {GraphLineElementsType, GraphLineType} from '../../../Types/Types';
 import SettingsIcon from '../../../Assets/SettingsIcon.svg';
 import {IconButton} from '@material-ui/core';
 import Menu from '@material-ui/core/Menu/Menu';
@@ -53,37 +53,13 @@ const CheckedValueGraph = forwardRef(({description, hidden, hideLineClick, line,
 });
 
 const dictDescriptionAbout: { [key: string]: string } = {
-  'Своевременность': '',
-  'Оперативность': '',
-  'Качество работы': '',
-  'Выполненные ЗНО без ШК или КЭNULL': '',
-  'Выполненные ЗНО с неверными ШК': '',
-  'ШК без группы сопровождения': '',
   'Доля ЗНО, выполненных в день обращения': '',
-  'Среднее время выполнения запроса': '',
-  'Количество Штрафов/Возвратов/ФРОД': '',
 };
 
 const dictDescriptionTooltip: { [key: string]: { v1: string, v2: string, v3: string, p: string } } = {
-  'Ошибка при загрузке': {v1: '', v2: '', v3: '', p: ''},
-  'Своевременность': {v1: 'Количество', v2: 'Количество 2', v3: 'Количество 3', p: 'Значение'},
-  'Оперативность': {v1: 'Количество', v2: 'Количество 2', v3: 'Количество 3', p: 'Значение'},
-  'Качество работы': {v1: 'Количество', v2: 'Количество 2', v3: 'Количество 3', p: 'Значение'},
-  'Выполненные ЗНО без ШК или КЭNULL': {v1: 'ЗНО без ШК', v2: 'Количество 2', v3: 'Количество 3', p: '% ЗНО без ШК'},
-  'Выполненные ЗНО с неверными ШК': {
-    v1: 'ЗНО с не верным ШК', v2: 'Количество 2', v3: 'Количество 3', p: '% ЗНО с не верным ШК'
-  },
-  'ШК без группы сопровождения': {v1: 'Количество', v2: 'Количество 2', v3: 'Количество 3', p: 'Значение'},
   'Доля ЗНО, выполненных в день обращения': {
     v1: 'Выполнено ЗНО', v2: 'Выполнено в день обращения', v3: 'Количество 3', p: '% Выполненных в день обращения'
   },
-  'Среднее время выполнения запроса': {
-    v1: 'Выполнено ЗНО',
-    v2: 'Среднее время выполнения',
-    v3: 'Количество 3',
-    p: 'Значение'
-  },
-  'Количество Штрафов/Возвратов/ФРОД': {v1: 'Штрафов', v2: 'Возвратов', v3: 'ЗНО с ФРОД', p: 'Значение'},
 };
 
 const GraphColLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
@@ -188,16 +164,16 @@ const GraphColLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                  axisLine={false}
                  orientation='right'
                  stroke={'#8CC06D'}/>
-          <Bar display={hiddenVal ? 'none' : ''}
-               dataKey="v1"
-               yAxisId='left'
-               stackId="a"
-               fill="#2D6AA3"/>
           <Bar display={hiddenVal2 ? 'none' : ''}
-               dataKey="v2"
+               dataKey='v2'
                yAxisId='left'
-               stackId="a"
-               fill="#E27F49"/>
+               stackId='a'
+               fill='#E27F49'/>
+          <Bar display={hiddenVal ? 'none' : ''}
+               dataKey='v1'
+               yAxisId='left'
+               stackId='a'
+               fill='#2D6AA3'/>
           <Line display={hiddenProc ? 'none' : ''}
                 yAxisId='right'
                 type='monotone'
@@ -206,8 +182,9 @@ const GraphColLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                 strokeWidth={2}/>
           <Tooltip labelFormatter={label =>
             `${typeof label === 'string' && label.indexOf('-') > 0 ? 'Период' : 'Дата'}: ${label}`}
-                   formatter={(value: string, name: 'v1' | 'v2' | 'v3' | 'p') =>
-                     [`${dictDescriptionTooltip[title][name]}: ${value}${name === 'p' ? ' %' : ' шт'}`]}/>
+                   formatter={(value: string, name: 'v1' | 'v2' | 'v3' | 'p', obj: { payload: GraphLineElementsType }) => name === 'v1'
+                     ? [`${dictDescriptionTooltip[title][name]}: ${obj.payload.sumV1V2} шт`]
+                     : [`${dictDescriptionTooltip[title][name]}: ${value}${name === 'p' ? ' %' : ' шт'}`]}/>
         </ComposedChart>
       </ResponsiveContainer>
     </div>

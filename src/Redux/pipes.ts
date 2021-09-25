@@ -13,6 +13,7 @@ import {
   RawListType,
   KPKRowsType,
 } from '../Types/Types';
+import {getHourNumbers} from "@material-ui/pickers/views/Clock/ClockNumbers";
 
 // Widgets
 export const PipeKPK = (kpk: RawKPKType) => {
@@ -109,6 +110,7 @@ const CompressGraph = (graph: GraphLineType) => {
     } else {
       graph.data[iOfDays - 1].p += currDate.p;
       graph.data[iOfDays - 1].v1 += currDate.v1;
+      graph.data[iOfDays - 1].sumV1V2! += currDate.sumV1V2!;
 
       if (title === 'Среднее время выполнения запроса') {
         // @ts-ignore
@@ -138,7 +140,10 @@ export const PipeGraphLine = (graphs: GraphLineType[]) => {
       graph.data = [];
     }
     if (graph.title === 'Доля ЗНО, выполненных в день обращения') {
-      graph.data.forEach(day => day.v1 -= Number(day.v2));
+      graph.data.forEach(day => {
+        day.sumV1V2 = day.v1;
+        day.v1 -= Number(day.v2);
+      });
     }
     // else if (graph.title === 'Среднее время выполнения запроса') {
     //   graph.data.forEach(day => day.v2 = day.v2.slice(0,2))
@@ -158,7 +163,7 @@ export const PipeGraphLine = (graphs: GraphLineType[]) => {
         day.v2 = `${hours}.${minutes}`;
       }
 
-      sumVal += day.v1;
+      sumVal += graph.title === 'Доля ЗНО, выполненных в день обращения' ? day.sumV1V2! : day.v1;
       sumProc += day.p;
       countProc++;
 
