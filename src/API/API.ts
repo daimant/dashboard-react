@@ -36,7 +36,7 @@ const apiWidgetsProd = {
       'period_type': periodType,
       'ktl': selectedKTL.map((el: string) => Number(el)),
       'workers_type': selectedWorkers,
-      'src': switchSDAWHIT ? 'SD' : 'АИХ',
+      'src': switchSDAWHIT ? 'АИХ' : 'SD',
     };
     return Promise.all<any>([
       ...numSC.map(num => instance.post(`sc/${num}`, payload).catch(catching)),
