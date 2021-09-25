@@ -141,7 +141,7 @@ const KPKTable = ({
                       </span>
                   }
                   {!switchSDAWHIT && <CheckedValueKPK hidden={hiddenUnusedKPK}
-                                   requestSetHiddenUnusedKPK={requestSetHiddenUnusedKPK}/>}
+                                                      requestSetHiddenUnusedKPK={requestSetHiddenUnusedKPK}/>}
                 </div>
               </TableCell>
               <TableCell className={classes.cell}>
@@ -157,8 +157,8 @@ const KPKTable = ({
             </TableRow>
           </TableHead>
           <TableBody component={'tbody'}>
-            {rows.map((row: any) => (
-              <TableRow key={row[id]}
+            {rows.map((row: any, i) => (
+              <TableRow key={`${i}${row[colsHead]}`}
                         component={'tr'}
                         style={row[value] === '-' && hiddenUnusedKPK ? {display: 'none'} : {}}
                         className={cn({[classes.clickable]: row[value] !== '-' && colsHead === 'Услуга' && id === 'Сервис_oid'})}
@@ -177,7 +177,7 @@ const KPKTable = ({
                                 ? <div className={classes.blackColor}>
                                   {`${row[value]} состоит из:`}
                                   {!switchSDAWHIT &&
-                                    cols?.slice(3, 8)?.map((key: any) => (
+                                  cols?.slice(3, 8)?.map((key: any) => (
                                     <span className={classes.tableHead}
                                       // className={cn(classes[row[`${key}_good`] ? 'greenColor' : 'redColor'], classes.tableHead)}
                                           key={key}>
@@ -190,7 +190,8 @@ const KPKTable = ({
                                       </span>
                                   ))}
                                   {switchSDAWHIT && row?.children?.map((currRow: any) => (
-                                    <span className={classes.tableHead}>
+                                    <span className={classes.tableHead}
+                                          key={currRow.Показатель}>
                                       {currRow.Показатель} : {currRow.Значение}
                                     </span>
                                   ))}
