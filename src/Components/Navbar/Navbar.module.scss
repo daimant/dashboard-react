@@ -15,6 +15,7 @@
 }
 
 .leftNav {
+  height: 65px;
   width: 35%;
 
   @media (min-width: 1200px) {
@@ -27,6 +28,7 @@
 }
 
 .aboutFilters {
+  width: 300px;
   font-size: .7vw;
   display: block;
 }
