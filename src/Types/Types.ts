@@ -31,10 +31,10 @@ export type KPKType = {
 };
 
 export type OrgOwnerType = {
-  "fio": string
-  "link_card": string
-  "ico": string
-  "avatar": string
+  'fio': string
+  'link_card': string
+  'ico': string
+  'avatar': string
 }
 
 export type KPKRowsType = { [key: string]: string | number | KPKRowsType[] };

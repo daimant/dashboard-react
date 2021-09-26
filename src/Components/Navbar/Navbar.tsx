@@ -1,4 +1,4 @@
-import React, {MouseEvent, useState} from 'react';
+import React, {MouseEvent, SyntheticEvent, useState} from 'react';
 import Logo from '../../Assets/Logo.svg';
 import classes from './Navbar.module.scss';
 import IconButton from '@material-ui/core/IconButton';
@@ -7,6 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
 import {Preloader} from '../Common/Preloader/Preloader';
 import FilterIcon from '../../Assets/FilterIcon.svg';
+import UndefinedAccIcon from '../../Assets/UndefinedAccIcon.svg';
 import {connect} from 'react-redux';
 import {RootStateType} from '../../Redux/store';
 import {setShowFilters} from '../../Redux/filters';
@@ -90,19 +91,25 @@ const Navbar = ({
     shortNameOrg = localStorage.getItem('orgName');
   }
 
+  const errorHandler = (e: SyntheticEvent<HTMLImageElement>) => {
+    const target = e.target as HTMLImageElement;
+    target.onerror = null;
+    target.src = UndefinedAccIcon;
+  };
+
   return (
     <div className={classes.navbar}>
       <div className={classes.leftNav}>
         <NavLink to={defPath}>
-          <img src={Logo}
-               loading='lazy'
-               alt='логотип оск'
-               className={cn(classes.logo, classes.clickable)}/>
+          <img className={cn(classes.logo, classes.clickable)}
+               src={Logo}
+               alt=''
+               loading='lazy'/>
         </NavLink>
-        <img src={FilterIcon}
+        <img className={classes.clickable}
+             src={FilterIcon}
+             alt=''
              loading='lazy'
-             alt='иконка фильтра'
-             className={classes.clickable}
              onClick={changeShowFilters}/>
         {isFetchingFilters
           ? <Preloader/>
@@ -110,7 +117,8 @@ const Navbar = ({
             <p>Организация: {shortNameOrg}</p>
             <p>Период: {periodNameMapList.get(`${periodType}:${period}`)}</p>
           </div>}
-        {orgOwner.fio && <a target='blank' href={orgOwner.link_card}>
+        {orgOwner.fio && <a target='blank'
+                            href={orgOwner.link_card}>
             <LightTooltip placement='right'
                           title={<div className={classes.bigImgContainer}>
                             <p>
@@ -118,12 +126,15 @@ const Navbar = ({
                             </p>
                             <img className={classes.bigImg}
                                  src={orgOwner.avatar}
-                                 alt='фотография руководителя подразделения'/>
+                                 alt=''
+                                 loading='lazy'
+                                 onError={errorHandler}/>
                           </div>}>
-                <img src={orgOwner.ico}
-                     alt='иконка руководителя подразделения'
+                <img className={cn(classes.clickable, classes.ownerAvatar)}
+                     src={orgOwner.ico}
+                     alt=''
                      loading='lazy'
-                     className={cn(classes.clickable, classes.ownerAvatar)}/>
+                     onError={errorHandler}/>
             </LightTooltip>
         </a>}
       </div>
