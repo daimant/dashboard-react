@@ -18,10 +18,12 @@ import {
 export const PipeKPK = (kpk: RawKPKType) => {
   if (!kpk) return kpk;
 
-  let parsedKPK = kpk.data?.map((row) => {
+  const cols = kpk.name_col;
+
+  let rows = kpk.data?.map((row) => {
     const newRow: KPKRowsType = {};
 
-    kpk.name_col?.forEach((colName, i) => {
+    cols?.forEach((colName, i) => {
       let currColVal = row[i];
 
       if ((colName === 'Значение' || colName[0] === 'k') && currColVal !== '-') {
@@ -41,32 +43,34 @@ export const PipeKPK = (kpk: RawKPKType) => {
     return newRow;
   });
 
-  if (kpk.name_col[0] === 'Показатель') {
+  if (cols[0] === 'Показатель') {
     const parents = new Map();
 
-    parsedKPK.forEach((el, i) => {
+    rows.forEach((el, i) => {
       if (el.Показатель === 'Комплексный показатель') {
         parents.set(el.Услуга, i);
       }
     });
 
-    parsedKPK.forEach(el => {
+    rows.forEach(el => {
       if (el.Показатель !== 'Комплексный показатель') {
         const currParent = parents.get(el.Услуга);
 
-        if (!parsedKPK[currParent].children) {
-          parsedKPK[currParent].children = [];
+        if (!rows[currParent].children) {
+          rows[currParent].children = [];
         }
 
         // @ts-ignore
-        parsedKPK[currParent].children = [...parsedKPK[currParent].children, el];
+        rows[currParent].children = [...rows[currParent].children, el];
       }
 
     });
-    parsedKPK = parsedKPK.filter(el => el.Показатель === 'Комплексный показатель')
+    rows = rows.filter(el => el.Показатель === 'Комплексный показатель')
   }
 
-  return {cols: kpk.name_col, rows: parsedKPK, orgOwner: kpk.staff};
+  const orgOwner = kpk.staff ? kpk.staff : {'fio': '', 'link_card': '', 'ico': '', 'avatar': ''};
+
+  return {cols, rows, orgOwner};
 };
 
 const CompressGraph = (graph: GraphLineType) => {

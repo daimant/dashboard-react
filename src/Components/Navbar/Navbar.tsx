@@ -91,7 +91,7 @@ const Navbar = ({
     shortNameOrg = localStorage.getItem('orgName');
   }
 
-  const errorHandler = (e: SyntheticEvent<HTMLImageElement>) => {
+  const handleError = (e: SyntheticEvent<HTMLImageElement>) => {
     const target = e.target as HTMLImageElement;
     target.onerror = null;
     target.src = UndefinedAccIcon;
@@ -128,13 +128,13 @@ const Navbar = ({
                                  src={orgOwner.avatar}
                                  alt=''
                                  loading='lazy'
-                                 onError={errorHandler}/>
+                                 onError={handleError}/>
                           </div>}>
                 <img className={cn(classes.clickable, classes.ownerAvatar)}
-                     src={orgOwner.ico}
+                     src={orgOwner.ico || UndefinedAccIcon}
                      alt=''
                      loading='lazy'
-                     onError={errorHandler}/>
+                     onError={handleError}/>
             </LightTooltip>
         </a>}
       </div>

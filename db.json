@@ -565,7 +565,7 @@
     "staff": {
       "fio": "Ветряк Иван Викторович",
       "link_card": "http://10.248.40.231:3000/profile?id=281586995102797",
-      "ico": "",
+      "ico": "http://10.248.40.231:3000/uploads/avatars/140/281586995102797.jpg",
       "avatar": "http://10.248.40.231:3000/uploads/avatars/orig/281586995102797.jpg"
     }
   },
