@@ -175,7 +175,7 @@ const MenuTreeList = ({
           <span className={classes.headOrgTree}>
             <SwitchGroup changer={toggleCheckedOSKRZD}
                          checked={checkedOSKRZD}
-                         description={`Оргструктура Инфотранс / РЖД`}/>
+                         description={`Оргструктура Инфотранс / Полигон ЖД`}/>
             <AboutWidget description={'Фильтр по орстуктуре, позволяет отобрать исполнителя заявки по подразделению. ' +
             'При переключении в «РЖД» фильтрация происходит по инициатору.'}
                          styles={{marginRight: '7px'}}/>

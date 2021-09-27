@@ -305,7 +305,7 @@ const PipeOrgListOSK = (orgListOSK: OrgListOSKType[]) => {
 const PipeOrgListRZD = (orgListRZD: OrgListRZDType[]) => ({
   orgListRZD: {
     oid: '0',
-    name: 'ОАО РЖД',
+    name: 'ВСЕ ПОЛИГОНЫ',
     children: orgListRZD ? orgListRZD.map(org => ({name: org.name, oid: `${org.oid}`, children: []})) : []
   },
   namesListRZD: new Map(orgListRZD ? orgListRZD.map(org => [`${org.oid}`, org.name]) : []).set('0', 'ОАО РЖД')
