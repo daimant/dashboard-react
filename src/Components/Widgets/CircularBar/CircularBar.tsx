@@ -22,7 +22,7 @@ const CircularBar = ({today, diff, err, title}: PropsType) => {
           ? <h5>{title}</h5>
           : <>
             <h4>{today}</h4>
-            <strong>{diff}%</strong>
+            <h1>{diff}%</h1>
           </>}
       </CircularProgressbarWithChildren>
     </div>
