@@ -58,7 +58,10 @@ const dictDescriptionAbout: { [key: string]: string } = {
 
 const dictDescriptionTooltip: { [key: string]: { v1: string, v2: string, v3: string, p: string } } = {
   'Доля ЗНО, выполненных в день обращения': {
-    v1: 'Общее количество', v2: 'Из них выполнено в день обращения', v3: 'Количество 3', p: '% Выполненных в день обращения'
+    v1: 'Общее количество',
+    v2: 'Из них выполнено в день обращения',
+    v3: 'Количество 3',
+    p: '% Выполненных в день обращения'
   },
 };
 
@@ -159,8 +162,9 @@ const GraphColLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
           <YAxis style={{fontSize: 11}}
                  tickFormatter={tick => `${Number(tick.toFixed(2))}%`}
                  yAxisId='right'
-                 domain={['dataMin', 'dataMax']}
+                 domain={[0, 100]}
                  tickCount={3}
+                 minTickGap={100}
                  axisLine={false}
                  orientation='right'
                  stroke={'#8CC06D'}/>
@@ -184,7 +188,8 @@ const GraphColLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
             `${typeof label === 'string' && label.indexOf('-') > 0 ? 'Период' : 'Дата'}: ${label}`}
                    formatter={(value: string, name: 'v1' | 'v2' | 'v3' | 'p', obj: { payload: GraphLineElementsType }) => name === 'v1'
                      ? [`${dictDescriptionTooltip[title][name]}: ${obj.payload.sumV1V2} шт`]
-                     : [`${dictDescriptionTooltip[title][name]}: ${value}${name === 'p' ? ' %' : ' шт'}`]}/>
+                     : [`${dictDescriptionTooltip[title][name]}: ${value}${name === 'p' ? ' %' : ' шт'}`]}
+                   itemSorter={(obj) => obj.dataKey === 'v1' ? -1 : 1}/>
         </ComposedChart>
       </ResponsiveContainer>
     </div>
