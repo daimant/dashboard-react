@@ -37,15 +37,12 @@ const GraphArea = ({graphAreaData, extendedStyle = {}}: PropsType) => {
           <Tooltip labelFormatter={(label: string) => `Дата: ${label}`}
                    formatter={(value: number[], name: 'p1' | 'p2' | 'p3') => ([`${percents[name]}: ${Math.trunc(value[2] * 100)} %`])}/>
           <Area dataKey='p1'
-                fillOpacity={1}
                 stroke='#2D6AA3'
                 fill='#2D6AA3'/>
           <Area dataKey='p2'
-                fillOpacity={1}
                 stroke='#8CC06D'
                 fill='#8CC06D'/>
           <Area dataKey='p3'
-                fillOpacity={1}
                 stroke='#e21a1a'
                 fill='#e21a1a'/>
         </AreaChart>
