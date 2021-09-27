@@ -57,7 +57,7 @@ const CheckedValueKPK = ({hidden, requestSetHiddenUnusedKPK}: CheckedValueKPKTyp
                                          className={classesMUI.toggle}/>}
                         labelPlacement='start'
                         label={<span className={cn(classes.textAroundSwitcher, classes.tableHead)}>
-                          Все услуги / Услуги с ЗНО
+                          Все услуги / Услуги с запросами
                         </span>}
       />
     }</span>

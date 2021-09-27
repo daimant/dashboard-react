@@ -101,7 +101,7 @@ const MenuTreeList = ({
       transform: title === 'оргструктура' && checkedOSKRZD && !switchSDAWHIT ? 'translate(0, -10%)' : '',
       margin: '0 15px',
       height: title === 'оргструктура' ? 400 : '',
-      width: title === 'оргструктура' ? 550 : '',
+      width: title === 'оргструктура' ? 570 : '',
       overflow: title === 'оргструктура' && checkedOSKRZD ? 'none' : 'auto',
     },
   });
@@ -184,7 +184,7 @@ const MenuTreeList = ({
             {!checkedOSKRZD &&
             <SwitchGroup changer={toggleCheckedOSKZNO}
                          checked={checkedOSKZNO}
-                         description={`Все подразделения / Только подразделения выполняющие ЗНО`}/>}
+                         description={`Все подразделения / Только подразделения выполняющие запросы`}/>}
           </span>
         </div>}
         <TreeView className={classesMUI.tree}
