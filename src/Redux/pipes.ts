@@ -226,9 +226,9 @@ export const PipeGraphArea = (graphs: RawGraphAreaType[]) => {
 
 export const PipeTodays = (todays: TodaysType[]) => todays.map(today => {
   if (!today || today.v1 === null || today.p === null || !today.v1 || !today.p || !today.title) {
-    today = {title: !today?.title ? 'Ошибка при загрузке' : 'Нет данных', v1: 0, p: '0', err: true};
+    today = {title: !today?.title ? 'Ошибка при загрузке' : 'Нет данных', v1: 0, p: 0, err: true};
   } else {
-    today.p = (Number(today.p) * 100).toFixed(2);
+    today.p = Number((today.p * 100).toFixed(2));
   }
   return today;
 });

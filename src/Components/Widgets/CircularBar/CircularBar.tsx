@@ -5,7 +5,7 @@ import 'react-circular-progressbar/dist/styles.css';
 
 type PropsType = {
   today: number
-  diff: string
+  diff: number
   err: boolean
   title: string
 }

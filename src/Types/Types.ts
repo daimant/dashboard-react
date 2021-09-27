@@ -88,7 +88,7 @@ type GraphAreaTypeElements = {
 export type TodaysType = {
   title: string
   v1: number
-  p: string
+  p: number
   err: boolean
 };
 

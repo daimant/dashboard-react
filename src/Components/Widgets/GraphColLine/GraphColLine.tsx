@@ -157,7 +157,7 @@ const GraphColLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                  axisLine={false}
                  stroke='#2D6AA3'/>
           <YAxis style={{fontSize: 11}}
-                 tickFormatter={tick => `${tick.toFixed(0)}%`}
+                 tickFormatter={tick => `${Number(tick.toFixed(2))}%`}
                  yAxisId='right'
                  domain={['dataMin', 'dataMax']}
                  tickCount={3}
