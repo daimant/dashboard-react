@@ -142,7 +142,7 @@ const Navbar = ({
         <h1>Ключевые показатели эффективности</h1>
       </div>
       <div>
-        <span>Пользователь</span>
+        <span style={{opacity: 0}}>Пользователь</span>
         <IconButton aria-label='more'
                     aria-controls='long-menu'
                     aria-haspopup='true'
