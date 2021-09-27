@@ -126,7 +126,7 @@ const dictTitlesWithV2InsteadProc = [
   'Среднее время выполнения запроса',
 ];
 
-const dictTargetValues: {[key: string]: number} = {
+const dictTargetValues: { [key: string]: number } = {
   'Своевременность': 98,
   'Оперативность': 65,
   'Качество работы': 99.5,
@@ -255,7 +255,7 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                    : data.length < 10 ? 0 : data.length < 25 ? 1 : 2}
                  allowDataOverflow={false}
                  axisLine={false}/>
-          <YAxis style={hiddenVal ? {display: 'none'} : {fontSize: 11}}
+          <YAxis display={hiddenVal ? 'none' : ''}
                  tickFormatter={(tick, i) => {
                    const currCut = tick < 1000 ? 10 : tick < 10000 ? 100 : 1000;
                    return i ? `${Math.ceil(tick / currCut) * currCut}шт` : `${Math.floor(tick / currCut) * currCut}шт`;
@@ -265,11 +265,11 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                  tickCount={3}
                  minTickGap={100}
                  axisLine={false}
-                 stroke='#2D6AA3'/>
-          <YAxis style={
-            (!dictTitlesWithV2InsteadProc.includes(title) && hiddenProc)
-            || (dictTitlesWithV2InsteadProc.includes(title) && hiddenVal2)
-            || dictTitlesWithoutProc.includes(title) ? {display: 'none'} : {fontSize: 11}}
+                 stroke='#2D6AA3'
+                 fontSize={11}/>
+          <YAxis display={(!dictTitlesWithV2InsteadProc.includes(title) && hiddenProc)
+          || (dictTitlesWithV2InsteadProc.includes(title) && hiddenVal2)
+          || dictTitlesWithoutProc.includes(title) ? 'none' : ''}
                  tickFormatter={tick => `${Number(tick.toFixed(2))}${dictTitlesWithV2InsteadProc.includes(title) ? 'ч' : '%'}`}
                  yAxisId='right'
                  domain={[Math.min(...valuesYAxisRight), Math.max(...valuesYAxisRight)]}
@@ -277,7 +277,8 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                  minTickGap={100}
                  axisLine={false}
                  orientation='right'
-                 stroke={dictTitlesWithV2InsteadProc.includes(title) ? '#E27F49' : '#8CC06D'}/>
+                 stroke={dictTitlesWithV2InsteadProc.includes(title) ? '#E27F49' : '#8CC06D'}
+                 fontSize={11}/>
           <Line display={hiddenVal ? 'none' : ''}
                 yAxisId='left'
                 type='monotone'

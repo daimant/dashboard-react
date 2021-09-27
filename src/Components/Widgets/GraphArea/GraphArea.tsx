@@ -30,10 +30,13 @@ const GraphArea = ({graphAreaData, extendedStyle = {}}: PropsType) => {
                    style={!data.length ? {display: 'none'} : {}}>
           <XAxis dataKey='d'
                  axisLine={false}
-                 tickFormatter={tick => {if (tick) return tick.slice(0, 5)}}/>
+                 tickFormatter={tick => {
+                   if (tick) return tick.slice(0, 5)
+                 }}/>
           <YAxis tickFormatter={tick => `${tick * 100}`}
                  axisLine={false}
-                 tickCount={2}/>
+                 tickCount={2}
+                 fontSize={11}/>
           <Tooltip labelFormatter={(label: string) => `Дата: ${label}`}
                    formatter={(value: number[], name: 'p1' | 'p2' | 'p3') => ([`${percents[name]}: ${Math.trunc(value[2] * 100)} %`])}/>
           <Area dataKey='p1'
