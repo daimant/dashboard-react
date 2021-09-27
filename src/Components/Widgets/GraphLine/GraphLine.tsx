@@ -126,6 +126,12 @@ const dictTitlesWithV2InsteadProc = [
   'Среднее время выполнения запроса',
 ];
 
+const dictTargetValues: {[key: string]: number} = {
+  'Своевременность': 98,
+  'Оперативность': 65,
+  'Качество работы': 99.5,
+};
+
 const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
   const {title, data, sumVal, avrProc} = graphLineData;
   const [hiddenVal, setHiddenVal] = useState(localStorage.getItem(`hiddenValGraph-${title}`) === '1' || false);
@@ -298,7 +304,7 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                 dataKey='p'
                 stroke='#8CC06D'
                 strokeWidth={2}/>
-          {!dictTitlesWithoutTargetLine.includes(title) && <ReferenceLine y={98}
+          {!dictTitlesWithoutTargetLine.includes(title) && <ReferenceLine y={dictTargetValues[title]}
                                                                           stroke='#FF0000'
                                                                           yAxisId='right'
                                                                           display={hiddenTar ? 'none' : ''}
