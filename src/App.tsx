@@ -38,7 +38,7 @@ const App = ({selectedKTL, selectedWorkers}: PropsType) => {
               <Route path={defPath} component={Widgets}/>
               <Route path='/reyting-sotrudnikov' render={() => <Preloader title={'Здесь скоро будет рейтинг сотрудников'}/>}/>
               <Route path='/statistika-oo' render={() => <Preloader title={'Здесь скоро будет статистика по объектам обслуживания'}/>}/>
-              <Route path='*' render={() => <Preloader title={'Страница не нейдена'}/>}/>
+              <Route path='*' render={() => <Preloader title={'Страница не найдена'}/>}/>
           </Switch>
           : <Preloader/>}
       </div>
