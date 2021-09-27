@@ -200,18 +200,18 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
               open={Boolean(anchorEl)}
               onClose={handleCloseMenu}
         >
-          {title !== 'ШК без группы сопровождения' && <CheckedValueGraph description={dictDescriptionTooltip[title].v1}
+          {title !== 'ШК без группы сопровождения' && <CheckedValueGraph description={dictDescriptionTooltip[title]?.v1}
                                                                          hidden={hiddenVal}
                                                                          line={'Val'}
                                                                          hideLineClick={hideLineClick}
                                                                          hider={setHiddenVal}/>}
-          {dictTitlesWithV2.includes(title) && <CheckedValueGraph description={dictDescriptionTooltip[title].v2}
+          {dictTitlesWithV2.includes(title) && <CheckedValueGraph description={dictDescriptionTooltip[title]?.v2}
                                                                   hidden={hiddenVal2}
                                                                   line={'Val2'}
                                                                   hideLineClick={hideLineClick}
                                                                   hider={setHiddenVal2}/>
           }
-          {dictTitlesWithV3.includes(title) && <CheckedValueGraph description={dictDescriptionTooltip[title].v3}
+          {dictTitlesWithV3.includes(title) && <CheckedValueGraph description={dictDescriptionTooltip[title]?.v3}
                                                                   hidden={hiddenVal3}
                                                                   line={'Val3'}
                                                                   hideLineClick={hideLineClick}
@@ -219,7 +219,7 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
           }
 
           {!dictTitlesWithoutProc.includes(title) && !dictTitlesWithV2InsteadProc.includes(title) &&
-          <CheckedValueGraph description={dictDescriptionTooltip[title].p}
+          <CheckedValueGraph description={dictDescriptionTooltip[title]?.p}
                              hidden={hiddenProc}
                              line={'Proc'}
                              hideLineClick={hideLineClick}
@@ -315,10 +315,11 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
             `${typeof label === 'string' && label.indexOf('-') > 0 ? 'Период' : 'Дата'}: ${label}`}
                    formatter={(value: string, name: 'v1' | 'v2' | 'v3' | 'p') => (
                      (dictTitlesWithoutProc.includes(title) || dictTitlesWithV2InsteadProc.includes(title)) && name === 'p'
+                     || (!dictDescriptionTooltip[title])
                        ? []
                        : [
                          `${dictTitlesWithV2InsteadV1.includes(title) && name === 'v2'
-                           ? dictDescriptionTooltip[title]['v1']
+                           ? dictDescriptionTooltip[title].v1
                            : dictDescriptionTooltip[title][name]}: 
                          ${name === 'v2' && title === 'Среднее время выполнения запроса'
                            ? `${value.replace(/[.]/, 'ч')}м`

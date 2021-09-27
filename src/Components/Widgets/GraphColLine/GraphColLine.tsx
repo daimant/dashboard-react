@@ -110,17 +110,17 @@ const GraphColLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
               open={Boolean(anchorEl)}
               onClose={handleCloseMenu}
         >
-          <CheckedValueGraph description={dictDescriptionTooltip[title].v1}
+          <CheckedValueGraph description={dictDescriptionTooltip[title]?.v1}
                              hidden={hiddenVal}
                              line={'Val'}
                              hideLineClick={hideLineClick}
                              hider={setHiddenVal}/>
-          <CheckedValueGraph description={dictDescriptionTooltip[title].v2}
+          <CheckedValueGraph description={dictDescriptionTooltip[title]?.v2}
                              hidden={hiddenVal2}
                              line={'Val2'}
                              hideLineClick={hideLineClick}
                              hider={setHiddenVal2}/>
-          <CheckedValueGraph description={dictDescriptionTooltip[title].p}
+          <CheckedValueGraph description={dictDescriptionTooltip[title]?.p}
                              hidden={hiddenProc}
                              line={'Proc'}
                              hideLineClick={hideLineClick}
@@ -186,9 +186,13 @@ const GraphColLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                 strokeWidth={2}/>
           <Tooltip labelFormatter={label =>
             `${typeof label === 'string' && label.indexOf('-') > 0 ? 'Период' : 'Дата'}: ${label}`}
-                   formatter={(value: string, name: 'v1' | 'v2' | 'v3' | 'p', obj: { payload: GraphLineElementsType }) => name === 'v1'
-                     ? [`${dictDescriptionTooltip[title][name]}: ${obj.payload.sumV1V2} шт`]
-                     : [`${dictDescriptionTooltip[title][name]}: ${value}${name === 'p' ? ' %' : ' шт'}`]}
+                   formatter={(value: string, name: 'v1' | 'v2' | 'v3' | 'p', obj: { payload: GraphLineElementsType }) => {
+                     const neededDescription = dictDescriptionTooltip[title];
+                     if (!neededDescription)
+                       return [];
+                     return name === 'v1'
+                     ? [`${neededDescription[name]}: ${obj.payload.sumV1V2} шт`]
+                     : [`${neededDescription[name]}: ${value}${name === 'p' ? ' %' : ' шт'}`]}}
                    itemSorter={(obj) => obj.dataKey === 'v1' ? -1 : 1}/>
         </ComposedChart>
       </ResponsiveContainer>
