@@ -5,7 +5,7 @@ import 'react-circular-progressbar/dist/styles.css';
 
 type PropsType = {
   today: number
-  diff: number
+  diff: string
   err: boolean
   title: string
 }
@@ -14,7 +14,7 @@ const CircularBar = ({today, diff, err, title}: PropsType) => {
   return (
     <div className={classes.graphs}>
       <CircularProgressbarWithChildren
-        value={diff}
+        value={Number(diff)}
         styles={buildStyles({
           pathColor: '#2D6AA3'
         })}>

@@ -270,7 +270,7 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
             (!dictTitlesWithV2InsteadProc.includes(title) && hiddenProc)
             || (dictTitlesWithV2InsteadProc.includes(title) && hiddenVal2)
             || dictTitlesWithoutProc.includes(title) ? {display: 'none'} : {fontSize: 11}}
-                 tickFormatter={tick => `${tick.toFixed(1)}${dictTitlesWithV2InsteadProc.includes(title) ? 'ч' : '%'}`}
+                 tickFormatter={tick => `${tick.toFixed(2)}${dictTitlesWithV2InsteadProc.includes(title) ? 'ч' : '%'}`}
                  yAxisId='right'
                  domain={[Math.min(...valuesYAxisRight), Math.max(...valuesYAxisRight)]}
                  tickCount={3}
