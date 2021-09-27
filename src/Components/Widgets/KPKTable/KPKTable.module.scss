@@ -1,12 +1,11 @@
 .kpkTable {
-  box-shadow: 0 0 1.6rem rgba(0, 0, 0, 0.1);
-  border-radius: .4rem;
+  border: var(--main-border);
+  border-radius: var(--main-border-radius);
   max-width: 30%;
   min-width: 30%;
   max-height: 100%;
   margin: 0 .6vw;
   overflow: hidden;
-  background-color: #FFFFFF;
 
   .cell {
     padding: 7px;
@@ -14,7 +13,7 @@
       padding: 2px;
     }
     line-height: 17px;
-    font-size: 1.7vh;
+    font-size: var(--main-font-size);
     border-bottom: none;
     background-color: #FFFFFF;
   }
@@ -71,7 +70,7 @@
 
 .textAroundSwitcher {
   line-height: 2vh;
-  font-size: 1.7vh;
+  font-size: var(--main-font-size);
 }
 
 .greenColor {

@@ -1,6 +1,6 @@
 .graphs {
-  box-shadow: 0 0 1.6rem rgba(0, 0, 0, 0.1);
-  border-radius: .4rem;
+  border: var(--main-border);
+  border-radius: var(--main-border-radius);
   width: 55vw;
 
   @media (max-width: 2000px) {

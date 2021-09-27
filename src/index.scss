@@ -7,14 +7,12 @@
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently not supported by any browser */
-
 }
 
 html {
-  @media screen and (max-width: 995px),
-  screen and (max-height: 595px) {
+  @media screen and (max-width: 995px), screen and (max-height: 595px) {
     display: none;
   }
 
-  background-color: #E5E5E5;
+  background-color: #fff;
 }
