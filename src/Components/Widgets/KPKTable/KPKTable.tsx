@@ -93,7 +93,7 @@ const nameColsDetailsCallCentre: any = {
 const KPKTable = ({
                     kpk, requestServicesChild, removeServicesChild, orgOid, period, periodType, setServiceOid, switchSDAWHIT
                   }: PropsType) => {
-  const [hiddenUnusedKPK, setHiddenUnusedKPK] = useState(localStorage.getItem('KPKRowHidden') === '1' || false);
+  const [hiddenUnusedKPK, setHiddenUnusedKPK] = useState<boolean>(localStorage.getItem('KPKRowHidden') !== 'false');
 
   if (!kpk?.cols?.length || !kpk?.rows?.length)
     return (
@@ -105,7 +105,7 @@ const KPKTable = ({
   const [id, colsHead, value] = cols;
 
   const requestSetHiddenUnusedKPK = () => {
-    localStorage.setItem('KPKRowHidden', hiddenUnusedKPK ? '0' : '1');
+    localStorage.setItem('KPKRowHidden', `${!hiddenUnusedKPK}`);
     setHiddenUnusedKPK(!hiddenUnusedKPK);
   };
 
