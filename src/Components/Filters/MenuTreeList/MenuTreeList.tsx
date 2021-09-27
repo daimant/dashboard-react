@@ -38,7 +38,7 @@ type RenderTreePropsType = {
 const renderTree = ({tree, handleSelect, handleExpand, switchSDAWHIT}: RenderTreePropsType) => (
   <TreeItem key={`${tree.oid}${tree.name}`}
             nodeId={tree.oid}
-            label={tree.name}
+            label={tree.name === 'ОАО РЖД' && switchSDAWHIT ? 'ВСЕ ПОЛИГОНЫ' : tree.name}
             onLabelClick={(event) => {
               if (!switchSDAWHIT || (!tree.oid.includes('q') && !tree.oid.includes('y'))) return handleSelect(event, tree.oid)
             }}
@@ -153,7 +153,7 @@ const MenuTreeList = ({
               onClick={handleClick}
               disabled={blockedButton}
               href=''>
-        {title}
+        {title === 'оргструктура' && switchSDAWHIT ? 'Полигон ЖД' : title}
       </Button>
       <Menu getContentAnchorEl={null}
             anchorOrigin={{
