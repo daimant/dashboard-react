@@ -94,7 +94,7 @@ const MenuTreeList = ({
   );
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [checkedOSKRZD, setCheckedOSKRZD] = useState(localStorage.getItem('checkedOSKRZD') === 'true');
-  const [checkedOSKZNO, setCheckedOSKZNO] = useState(localStorage.getItem('checkedOrgZNO') === 'true');
+  const [checkedOSKZNO, setCheckedOSKZNO] = useState(localStorage.getItem('checkedOSKZNO') !== 'false');
 
   const useStyles = makeStyles({
     tree: {
@@ -112,7 +112,7 @@ const MenuTreeList = ({
   };
 
   const toggleCheckedOSKZNO = () => {
-    localStorage.setItem('checkedOrgZNO', `${checkedOSKZNO}`);
+    localStorage.setItem('checkedOSKZNO', `${!checkedOSKZNO}`);
     setCheckedOSKZNO(!checkedOSKZNO);
   };
 
