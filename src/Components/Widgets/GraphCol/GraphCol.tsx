@@ -17,6 +17,7 @@ import {IconButton} from '@material-ui/core';
 import Menu from '@material-ui/core/Menu/Menu';
 import cn from 'classnames';
 import AboutWidget from '../../Common/AboutWidget/AboutWidget';
+import {defaultDescriptionTooltipValues} from "../GraphLine/GraphLine";
 
 type CheckedValueGraphType = {
   description: string
@@ -63,6 +64,7 @@ const dictDescriptionTooltip: { [key: string]: { v1: string, v2: string, v3: str
     v3: 'Количество 3',
     p: '% Выполненных в день обращения'
   },
+  idundefined: defaultDescriptionTooltipValues,
 };
 
 const GraphCol = ({graphColData, extendedStyle = {}}: PropsType) => {

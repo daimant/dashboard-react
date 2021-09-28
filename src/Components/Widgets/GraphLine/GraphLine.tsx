@@ -56,7 +56,7 @@ const dictDescriptionAbout: { [key: string]: string } = {
   id11: '',
 };
 
-const defaultDescriptionTooltipValues = {
+export const defaultDescriptionTooltipValues = {
   v1: 'Количество',
   v2: 'Количество 2',
   v3: 'Количество 3',
@@ -92,7 +92,7 @@ const dictDescriptionTooltip: { [key: string]: { v1: string, v2: string, v3: str
     v3: 'ЗНО с ФРОД',
     p: defaultDescriptionTooltipValues.p,
   },
-  'Ошибка при загрузке': defaultDescriptionTooltipValues,
+  idundefined: defaultDescriptionTooltipValues,
 };
 
 const dictTitlesWithoutTargetLine = [
