@@ -111,13 +111,13 @@ const Widgets = ({
         </div>
       </main>
       <div className={classes.secondMain}>
-        {detailsZNO.map((graphLineData: GraphLineType, i) => {
+        {detailsZNO.map((graphData: GraphLineType, i) => {
             if (i === 0) {
-              return <GraphColLine graphLineData={graphLineData}
-                                   key={`${graphLineData.title}${graphLineData.id}${i}`}
-                                   extendedStyle={{height: '100%'}}/>
-            } else return <GraphLine graphLineData={graphLineData}
-                                     key={`${graphLineData.title}${graphLineData.id}${i}`}
+              return <GraphCol graphColData={graphData}
+                               key={`${graphData.title}${graphData.id}${i}`}
+                               extendedStyle={{height: '100%'}}/>
+            } else return <GraphLine graphLineData={graphData}
+                                     key={`${graphData.title}${graphData.id}${i}`}
                                      extendedStyle={{height: '100%'}}/>
           }
         )}
