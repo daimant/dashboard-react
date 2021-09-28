@@ -37,7 +37,7 @@ import {
 import {setServiceOid} from '../../Redux/filters/actions';
 import {RequestServicesChildType, RequestWidgetsType} from '../../Types/Types';
 import AboutWidget from '../Common/AboutWidget/AboutWidget';
-import GraphColLine from "./GraphColLine/GraphColLine";
+import GraphCol from './GraphCol/GraphCol';
 
 type MapStatePropsType = {
   kpk: KPKType
