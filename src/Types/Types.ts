@@ -57,6 +57,7 @@ export type GraphLineElementsType = {
 };
 
 export type RawGraphAreaType = {
+  id: string
   title: string
   data: RawGraphAreaElementsType[]
 };

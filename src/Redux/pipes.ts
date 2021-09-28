@@ -142,7 +142,7 @@ export const PipeGraphLine = (graphs: GraphLineType[]) => {
     if (!graph?.data) {
       graph.data = [];
     }
-    if (graph.title === 'Доля ЗНО, выполненных в день обращения') {
+    if (graph.id === 9) {
       graph.data.forEach(day => {
         day.sumV1V2 = day.v1;
         day.v1 -= Number(day.v2);
@@ -166,7 +166,7 @@ export const PipeGraphLine = (graphs: GraphLineType[]) => {
         day.v2 = `${hours}.${minutes}`;
       }
 
-      sumVal += graph.title === 'Доля ЗНО, выполненных в день обращения' ? day.sumV1V2! : day.v1;
+      sumVal += graph.id === 9 ? day.sumV1V2! : day.v1;
       sumProc += day.p;
       countProc++;
 

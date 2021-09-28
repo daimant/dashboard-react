@@ -1,5 +1,5 @@
 import React, {forwardRef, MouseEvent, useState} from 'react';
-import classes from './GraphColLine.module.scss';
+import classes from './GraphCol.module.scss';
 import {
   ComposedChart,
   XAxis,
@@ -28,7 +28,7 @@ type CheckedValueGraphType = {
 }
 
 type PropsType = {
-  graphLineData: GraphLineType
+  graphColData: GraphLineType
   extendedStyle?: object
 }
 
@@ -53,11 +53,11 @@ const CheckedValueGraph = forwardRef(({description, hidden, hideLineClick, line,
 });
 
 const dictDescriptionAbout: { [key: string]: string } = {
-  'Доля ЗНО, выполненных в день обращения': '',
+  id9: '',
 };
 
 const dictDescriptionTooltip: { [key: string]: { v1: string, v2: string, v3: string, p: string } } = {
-  'Доля ЗНО, выполненных в день обращения': {
+  id9: {
     v1: 'Общее количество',
     v2: 'Из них выполнено в день обращения',
     v3: 'Количество 3',
@@ -65,15 +65,15 @@ const dictDescriptionTooltip: { [key: string]: { v1: string, v2: string, v3: str
   },
 };
 
-const GraphColLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
-  const {title, data, sumVal, avrProc} = graphLineData;
-  const [hiddenVal, setHiddenVal] = useState(localStorage.getItem(`hiddenValGraph-${title}`) === '1' || false);
-  const [hiddenVal2, setHiddenVal2] = useState(localStorage.getItem(`hiddenVal2Graph-${title}`) === '1' || false);
-  const [hiddenProc, setHiddenProc] = useState(localStorage.getItem(`hiddenProcGraph-${title}`) === '1' || false);
+const GraphCol = ({graphColData, extendedStyle = {}}: PropsType) => {
+  const {id, title, data, sumVal, avrProc} = graphColData;
+  const [hiddenVal, setHiddenVal] = useState(localStorage.getItem(`hiddenValGraph-${id}`) === 'true');
+  const [hiddenVal2, setHiddenVal2] = useState(localStorage.getItem(`hiddenVal2Graph-${id}`) === 'true');
+  const [hiddenProc, setHiddenProc] = useState(localStorage.getItem(`hiddenProcGraph-${id}`) === 'true');
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const hideLineClick = (line: string, hidden: boolean, hider: (hidden: boolean) => void) => {
-    localStorage.setItem(`hidden${line}Graph-${title}`, hidden ? '0' : '1');
+    localStorage.setItem(`hidden${line}Graph-${id}`, `${!hidden}`);
     hider(!hidden);
   };
 
@@ -110,17 +110,17 @@ const GraphColLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
               open={Boolean(anchorEl)}
               onClose={handleCloseMenu}
         >
-          <CheckedValueGraph description={dictDescriptionTooltip[title]?.v1}
+          <CheckedValueGraph description={dictDescriptionTooltip[`id${id}`]?.v1}
                              hidden={hiddenVal}
                              line={'Val'}
                              hideLineClick={hideLineClick}
                              hider={setHiddenVal}/>
-          <CheckedValueGraph description={dictDescriptionTooltip[title]?.v2}
+          <CheckedValueGraph description={dictDescriptionTooltip[`id${id}`]?.v2}
                              hidden={hiddenVal2}
                              line={'Val2'}
                              hideLineClick={hideLineClick}
                              hider={setHiddenVal2}/>
-          <CheckedValueGraph description={dictDescriptionTooltip[title]?.p}
+          <CheckedValueGraph description={dictDescriptionTooltip[`id${id}`]?.p}
                              hidden={hiddenProc}
                              line={'Proc'}
                              hideLineClick={hideLineClick}
@@ -132,7 +132,7 @@ const GraphColLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
         </Menu>
         <h3
           className={classes.title}>{!data?.length && title !== 'Ошибка при загрузке' ? `${title} - Нет данных` : title}</h3>
-        <AboutWidget description={dictDescriptionAbout[title]}/>
+        <AboutWidget description={dictDescriptionAbout[`id${id}`]}/>
       </div>
       <ResponsiveContainer>
         <ComposedChart data={data}
@@ -186,13 +186,10 @@ const GraphColLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
                 strokeWidth={2}/>
           <Tooltip labelFormatter={label =>
             `${typeof label === 'string' && label.indexOf('-') > 0 ? 'Период' : 'Дата'}: ${label}`}
-                   formatter={(value: string, name: 'v1' | 'v2' | 'v3' | 'p', obj: { payload: GraphLineElementsType }) => {
-                     const neededDescription = dictDescriptionTooltip[title];
-                     if (!neededDescription)
-                       return [];
-                     return name === 'v1'
-                     ? [`${neededDescription[name]}: ${obj.payload.sumV1V2} шт`]
-                     : [`${neededDescription[name]}: ${value}${name === 'p' ? ' %' : ' шт'}`]}}
+                   formatter={(value: string, name: 'v1' | 'v2' | 'v3' | 'p', obj: { payload: GraphLineElementsType }) =>
+                     name === 'v1'
+                       ? [`${dictDescriptionTooltip[`id${id}`][name]}: ${obj.payload.sumV1V2} шт`]
+                       : [`${dictDescriptionTooltip[`id${id}`][name]}: ${value}${name === 'p' ? ' %' : ' шт'}`]}
                    itemSorter={(obj) => obj.dataKey === 'v1' ? -1 : 1}/>
         </ComposedChart>
       </ResponsiveContainer>
@@ -200,4 +197,4 @@ const GraphColLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
   );
 };
 
-export default GraphColLine;
+export default GraphCol;
