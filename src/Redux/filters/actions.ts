@@ -65,8 +65,10 @@ export const requestOrg = (): ThunkAction<void, RootStateType, unknown, AnyActio
 
 export const requestWidgetsFromFilters = ({
                                             orgOid, period, periodType, selectedKTL, selectedWorkers
-                                          }: RequestWidgetsFromFiltersType): ThunkAction<void, RootStateType, unknown, AnyAction> => async dispatch => {
-  dispatch(requestWidgets({orgOid, period, periodType, selectedKTL, selectedWorkers}));
+                                          }: RequestWidgetsFromFiltersType): ThunkAction<void, RootStateType, unknown, AnyAction> => async (dispatch, getState) => {
+  const serviceOid = getState().filters.serviceOid;
+
+  dispatch(requestWidgets({orgOid, period, periodType, selectedKTL, selectedWorkers, serviceOid}));
   dispatch(setOrgName(orgOid));
 };
 

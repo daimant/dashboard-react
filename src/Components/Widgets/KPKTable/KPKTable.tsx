@@ -133,12 +133,12 @@ const KPKTable = ({
             <TableRow component={'tr'}>
               <TableCell className={classes.cell}>
                 <div className={cn(classes.tableHead, classes.heightTableHead)}>
-                  {colsHead === 'Услуга' || colsHead === 'Показатель' || colsHead === 'Ошибка при загрузке'
+                  {colsHead === 'Показатель' || colsHead === 'Ошибка при загрузке'
                     ? <span>{colsHead}</span>
                     : <span className={classes.tableHead}>
-                        {/*<CloseIcon fontSize='small'*/}
-                      {/*           onClick={clickRemoveServicesChild}*/}
-                      {/*           component={'svg'}/>*/}
+                    {serviceOid !== '0' && <CloseIcon fontSize='small'
+                                                          onClick={clickRemoveServicesChild}
+                                                          component={'svg'}/>}
                       {colsHead}
                       </span>
                   }
