@@ -68,7 +68,7 @@ type MapDispatchPropsType = {
 type PropsType = MapStatePropsType & MapDispatchPropsType;
 
 const Widgets = ({
-                   kpk, kpkChild, sc, scChild, todays, todaysChild, isFetchingWidgets, /*requestServicesChild,*/
+                   kpk, /*kpkChild,*/ sc, /*scChild,*/ todays, /*todaysChild,*/ isFetchingWidgets, /*requestServicesChild,*/
                    removeServicesChild, orgOid, period, periodType, tops, requestWidgets, setServiceOid, detailsSHK,
                    detailsZNO, switchSDAWHIT, serviceOid
                  }: PropsType) => {
@@ -82,7 +82,7 @@ const Widgets = ({
   return (
     <div>
       <main>
-        <KPKTable kpk={kpkChild.rows?.length ? kpkChild : kpk}
+        <KPKTable kpk={kpk}
                   requestWidgets={requestWidgets}
                   removeServicesChild={removeServicesChild}
                   orgOid={orgOid}
@@ -98,18 +98,18 @@ const Widgets = ({
               description={'Отображает показатели за сегодня из таблиц справа, связан с таблицей «услуг» - при клике' +
               ' на определенную услугу, покажет значения по этой услуге в выбранном подразделении за сегодня.'}/>
           </div>
-          {(todaysChild.length ? todaysChild : todays).map((el: TodaysType, i) =>
+          {todays.map((el: TodaysType, i) =>
             <CircularBar today={el.v1}
                          diff={el.p}
-                         key={`${el.title}${el.v1}${i}${todaysChild.length ? 'child' : ''}`}
+                         key={`${el.title}${el.v1}${i}`}
                          err={el.err}
                          title={el.title}/>
           )}
         </div>
         <div className={classes.graphs}>
-          {(scChild.length ? scChild : sc).map((graphLineData: GraphLineType, i) =>
+          {sc.map((graphLineData: GraphLineType, i) =>
             <GraphLine graphLineData={graphLineData}
-                       key={`${graphLineData.title}${graphLineData.id}${i}${scChild.length ? 'child' : ''}`}/>
+                       key={`${graphLineData.title}${graphLineData.id}${i}`}/>
           )}
         </div>
       </main>

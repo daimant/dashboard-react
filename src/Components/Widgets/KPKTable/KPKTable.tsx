@@ -92,7 +92,7 @@ const nameColsDetailsCallCentre: any = {
 };
 
 const KPKTable = ({
-                    kpk, requestWidgets, removeServicesChild, orgOid, period, periodType, setServiceOid,
+                    kpk, requestWidgets, /*removeServicesChild,*/ orgOid, period, periodType, setServiceOid,
                     switchSDAWHIT, serviceOid
                   }: PropsType) => {
   const [hiddenUnusedKPK, setHiddenUnusedKPK] = useState(localStorage.getItem('KPKRowHidden') !== 'false');
@@ -118,7 +118,7 @@ const KPKTable = ({
 
   const clickRemoveServicesChild = () => {
     setServiceOid();
-    removeServicesChild();
+    requestWidgets({orgOid, period, periodType, serviceOid: '0', numTops: []});
   };
 
   return (
@@ -137,8 +137,8 @@ const KPKTable = ({
                     ? <span>{colsHead}</span>
                     : <span className={classes.tableHead}>
                         {/*<CloseIcon fontSize='small'*/}
-                        {/*           onClick={clickRemoveServicesChild}*/}
-                        {/*           component={'svg'}/>*/}
+                      {/*           onClick={clickRemoveServicesChild}*/}
+                      {/*           component={'svg'}/>*/}
                       {colsHead}
                       </span>
                   }
@@ -174,9 +174,9 @@ const KPKTable = ({
                            className={cn(classes.cell)}>
                   <span className={cn(classes.tableHead, {[classes.selectedKPK]: row[id] === serviceOid})}>
                   {row[colsHead]}
-                  {row[id] === serviceOid && <CloseIcon fontSize='small'
-                             onClick={clickRemoveServicesChild}
-                             component={'svg'}/>}
+                    {row[id] === serviceOid && <CloseIcon fontSize='small'
+                                                          onClick={clickRemoveServicesChild}
+                                                          component={'svg'}/>}
                   </span>
                 </TableCell>
                 <LightTooltip placement='right'
