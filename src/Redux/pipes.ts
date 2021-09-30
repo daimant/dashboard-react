@@ -308,7 +308,7 @@ const PipeOrgListRZD = (orgListRZD: OrgListRZDType[]) => ({
     name: 'ВСЕ ПОЛИГОНЫ',
     children: orgListRZD ? orgListRZD.map(org => ({name: org.name, oid: `${org.oid}`, children: []})) : []
   },
-  namesListRZD: new Map(orgListRZD ? orgListRZD.map(org => [`${org.oid}`, org.name]) : []).set('0', 'ОАО РЖД')
+  namesListRZD: new Map(orgListRZD ? orgListRZD.map(org => [`${org.oid}`, org.name]) : []).set('0', 'ВСЕ ПОЛИГОНЫ')
 });
 
 const PipeKTl = (rawKTL: KTLChildType[]): { ktl: KTLType[], selectedKTL: SelectedKTLType } => {
