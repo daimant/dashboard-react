@@ -19,6 +19,12 @@ import cn from 'classnames';
 import AboutWidget from '../../Common/AboutWidget/AboutWidget';
 import {defaultDescriptionTooltipValues} from "../GraphLine/GraphLine";
 
+type PropsType = {
+  graphColData: GraphLineType
+  extendedStyle?: object
+  serviceOid: string
+}
+
 type CheckedValueGraphType = {
   description: string
   hidden: boolean
@@ -26,11 +32,6 @@ type CheckedValueGraphType = {
 
   hideLineClick: (line: string, hidden: boolean, hider: (hidden: boolean) => void) => void
   hider: (hidden: boolean) => void
-}
-
-type PropsType = {
-  graphColData: GraphLineType
-  extendedStyle?: object
 }
 
 const CheckedValueGraph = forwardRef(({description, hidden, hideLineClick, line, hider}: CheckedValueGraphType, ref: any) => {
@@ -67,12 +68,16 @@ const dictDescriptionTooltip: { [key: string]: { v1: string, v2: string, v3: str
   idundefined: defaultDescriptionTooltipValues,
 };
 
-const GraphCol = ({graphColData, extendedStyle = {}}: PropsType) => {
+const GraphCol = ({graphColData, extendedStyle = {}, serviceOid}: PropsType) => {
   const {id, title, data, sumVal, avrProc} = graphColData;
   const [hiddenVal, setHiddenVal] = useState(localStorage.getItem(`hiddenValGraph-${id}`) === 'true');
   const [hiddenVal2, setHiddenVal2] = useState(localStorage.getItem(`hiddenVal2Graph-${id}`) === 'true');
   const [hiddenProc, setHiddenProc] = useState(localStorage.getItem(`hiddenProcGraph-${id}`) === 'true');
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  if (serviceOid === '0') {
+    data.length = 0;
+  }
 
   const hideLineClick = (line: string, hidden: boolean, hider: (hidden: boolean) => void) => {
     localStorage.setItem(`hidden${line}Graph-${id}`, `${!hidden}`);
@@ -132,8 +137,12 @@ const GraphCol = ({graphColData, extendedStyle = {}}: PropsType) => {
           {avrProc &&
           <p className={classes.propertiesGroup}>Средний процент за период: {avrProc} %</p>}
         </Menu>
-        <h3
-          className={classes.title}>{!data?.length && title !== 'Ошибка при загрузке' ? `${title} - Нет данных` : title}</h3>
+        <h3 className={classes.title}>{!data?.length && serviceOid === '0'
+          ? `${title} - Выберете услугу`
+          : !data?.length && title !== 'Ошибка при загрузке'
+            ? `${title} - Нет данных`
+            : title
+        }</h3>
         <AboutWidget description={dictDescriptionAbout[`id${id}`]}/>
       </div>
       <ResponsiveContainer>

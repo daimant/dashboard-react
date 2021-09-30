@@ -109,7 +109,8 @@ const Widgets = ({
         <div className={classes.graphs}>
           {sc.map((graphLineData: GraphLineType, i) =>
             <GraphLine graphLineData={graphLineData}
-                       key={`${graphLineData.title}${graphLineData.id}${i}`}/>
+                       key={`${graphLineData.title}${graphLineData.id}${i}`}
+                       serviceOid={serviceOid}/>
           )}
         </div>
       </main>
@@ -118,10 +119,12 @@ const Widgets = ({
             if (i === 0) {
               return <GraphCol graphColData={graphData}
                                key={`${graphData.title}${graphData.id}${i}`}
-                               extendedStyle={{height: '100%'}}/>
+                               extendedStyle={{height: '100%'}}
+                               serviceOid={serviceOid}/>
             } else return <GraphLine graphLineData={graphData}
                                      key={`${graphData.title}${graphData.id}${i}`}
-                                     extendedStyle={{height: '100%'}}/>
+                                     extendedStyle={{height: '100%'}}
+                                     serviceOid={serviceOid}/>
           }
         )}
       </div>
@@ -129,7 +132,8 @@ const Widgets = ({
         {detailsSHK.map((graphLineData: GraphLineType, i) =>
           <GraphLine graphLineData={graphLineData}
                      key={`${graphLineData.title}${graphLineData.id}${i}`}
-                     extendedStyle={{height: '100%'}}/>
+                     extendedStyle={{height: '100%'}}
+                     serviceOid={serviceOid}/>
         )}
       </div>
       <div className={classes.secondMain}>

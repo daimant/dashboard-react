@@ -22,6 +22,7 @@ type CheckedValueGraphType = {
 type PropsType = {
   graphLineData: GraphLineType
   extendedStyle?: object
+  serviceOid: string
 }
 
 const CheckedValueGraph = forwardRef(({description, hidden, hideLineClick, line, hider}: CheckedValueGraphType, ref: any) => {
@@ -132,7 +133,7 @@ const dictTargetValues: { [key: string]: number } = {
   id3: 99.5,
 };
 
-const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
+const GraphLine = ({graphLineData, extendedStyle = {}, serviceOid}: PropsType) => {
   const {id, title, data, sumVal, avrProc} = graphLineData;
   const [hiddenVal, setHiddenVal] = useState(localStorage.getItem(`hiddenValGraph-${id}`) === 'true');
   const [hiddenVal2, setHiddenVal2] = useState(localStorage.getItem(`hiddenVal2Graph-${id}`) === 'true');
@@ -140,6 +141,10 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
   const [hiddenProc, setHiddenProc] = useState(localStorage.getItem(`hiddenProcGraph-${id}`) === 'true');
   const [hiddenTar, setHiddenTar] = useState(localStorage.getItem(`hiddenTarGraph-${id}`) === 'true');
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  if (serviceOid === '0') {
+    data.length = 0
+  }
 
   let valuesYAxisLeft: number[] = [];
   let valuesYAxisRight: number[] = [];
@@ -236,8 +241,12 @@ const GraphLine = ({graphLineData, extendedStyle = {}}: PropsType) => {
           {!dictTitlesWithoutProc.includes(`id${id}`) && !dictTitlesWithV2InsteadProc.includes(`id${id}`) && avrProc &&
           <p className={classes.propertiesGroup}>Средний процент за период: {avrProc} %</p>}
         </Menu>
-        <h3
-          className={classes.title}>{!data?.length && title !== 'Ошибка при загрузке' ? `${title} - Нет данных` : title}</h3>
+        <h3 className={classes.title}>{!data?.length && serviceOid === '0'
+          ? `${title} - Выберете услугу`
+          : !data?.length && title !== 'Ошибка при загрузке'
+            ? `${title} - Нет данных`
+            : title
+        }</h3>
         <AboutWidget description={dictDescriptionAbout[`id${id}`]}/>
       </div>
       <ResponsiveContainer>
