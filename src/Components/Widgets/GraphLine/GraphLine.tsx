@@ -142,8 +142,8 @@ const GraphLine = ({graphLineData, extendedStyle = {}, serviceOid}: PropsType) =
   const [hiddenTar, setHiddenTar] = useState(localStorage.getItem(`hiddenTarGraph-${id}`) === 'true');
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  if (serviceOid === '0') {
-    data.length = 0
+  if (serviceOid === '0' && id! <= 3) {
+    data.length = 0;
   }
 
   let valuesYAxisLeft: number[] = [];
@@ -241,7 +241,7 @@ const GraphLine = ({graphLineData, extendedStyle = {}, serviceOid}: PropsType) =
           {!dictTitlesWithoutProc.includes(`id${id}`) && !dictTitlesWithV2InsteadProc.includes(`id${id}`) && avrProc &&
           <p className={classes.propertiesGroup}>Средний процент за период: {avrProc} %</p>}
         </Menu>
-        <h3 className={classes.title}>{!data?.length && serviceOid === '0'
+        <h3 className={classes.title}>{!data?.length && serviceOid === '0' && id! <= 3
           ? `${title} - Выберете услугу`
           : !data?.length && title !== 'Ошибка при загрузке'
             ? `${title} - Нет данных`

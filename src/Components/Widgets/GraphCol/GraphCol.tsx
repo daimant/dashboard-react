@@ -75,7 +75,7 @@ const GraphCol = ({graphColData, extendedStyle = {}, serviceOid}: PropsType) => 
   const [hiddenProc, setHiddenProc] = useState(localStorage.getItem(`hiddenProcGraph-${id}`) === 'true');
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  if (serviceOid === '0') {
+  if (serviceOid === '0' && id! <= 3) {
     data.length = 0;
   }
 
@@ -137,7 +137,7 @@ const GraphCol = ({graphColData, extendedStyle = {}, serviceOid}: PropsType) => 
           {avrProc &&
           <p className={classes.propertiesGroup}>Средний процент за период: {avrProc} %</p>}
         </Menu>
-        <h3 className={classes.title}>{!data?.length && serviceOid === '0'
+        <h3 className={classes.title}>{!data?.length && serviceOid === '0' && id! <= 3
           ? `${title} - Выберете услугу`
           : !data?.length && title !== 'Ошибка при загрузке'
             ? `${title} - Нет данных`
