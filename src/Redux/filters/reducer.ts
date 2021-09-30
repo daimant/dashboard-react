@@ -119,7 +119,7 @@ export const defaultFilters = {
   orgOidRZD: '0',
   orgName: 'ООО ОСК ИнфоТранс',
   orgNameRZD: 'ОАО РЖД',
-  period: `${new Date().getFullYear()}-${new Date().getMonth() - 1 < 10 ? `0${new Date().getMonth() + 1}` : new Date().getMonth() + 1}`,
+  period: `${new Date().getFullYear()}-${new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : new Date().getMonth() + 1}`,
   periodType: 'm',
   selectedKTL: [] as SelectedKTLType,
   selectedWorkers: [] as SelectedWorkersType,
