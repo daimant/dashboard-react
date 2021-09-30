@@ -140,7 +140,7 @@ const initialStateFilters = {
   periodType: localStorage.getItem('periodType') || defaultFilters.periodType as string,
   showFilters: localStorage.getItem('showFilters') === 'true'
   || localStorage.getItem('showFilters') === null ? true : false as boolean,
-  serviceOid: '0' as string,
+  serviceOid: localStorage.getItem('serviceOid') || '0' as string,
   ktl: [] as KTLType[],
   workers: [] as WorkersType[],
   selectedKTL: [] as SelectedKTLType, // JSON.parse(localStorage.getItem('selectedKTL') || '[]')

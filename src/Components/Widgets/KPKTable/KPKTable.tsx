@@ -112,11 +112,13 @@ const KPKTable = ({
   };
 
   const clickRequestServicesChild = (newServiceOid: string) => {
+    localStorage.setItem('serviceOid', newServiceOid);
     setServiceOid(newServiceOid);
     requestWidgets({orgOid, period, periodType, serviceOid: newServiceOid, numTops: []});
   };
 
   const clickRemoveServicesChild = () => {
+    localStorage.removeItem('serviceOid');
     setServiceOid();
     requestWidgets({orgOid, period, periodType, serviceOid: '0', numTops: []});
   };
