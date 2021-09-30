@@ -143,8 +143,8 @@ const initialStateFilters = {
   serviceOid: '0' as string,
   ktl: [] as KTLType[],
   workers: [] as WorkersType[],
-  selectedKTL: [] as SelectedKTLType,
-  selectedWorkers: [] as SelectedWorkersType,
+  selectedKTL: [] as SelectedKTLType, // JSON.parse(localStorage.getItem('selectedKTL') || '[]')
+  selectedWorkers: [] as SelectedWorkersType, // JSON.parse(localStorage.getItem('selectedKTL') || '[]')
   switchSDAWHIT: localStorage.getItem('switchSDAWHIT') === 'true' || false as boolean,
 };
 

@@ -23,6 +23,7 @@ import {
   selectPeriodType,
   selectSC,
   selectSCChild,
+  selectServiceOid,
   selectSwitchSDAWHIT,
   selectTodays,
   selectTodaysChild,
@@ -54,6 +55,7 @@ type MapStatePropsType = {
   detailsSHK: GraphLineType[]
   detailsZNO: GraphLineType[]
   switchSDAWHIT: boolean
+  serviceOid: string
 }
 
 type MapDispatchPropsType = {
@@ -66,9 +68,9 @@ type MapDispatchPropsType = {
 type PropsType = MapStatePropsType & MapDispatchPropsType;
 
 const Widgets = ({
-                   kpk, kpkChild, sc, scChild, todays, todaysChild, isFetchingWidgets, requestServicesChild,
+                   kpk, kpkChild, sc, scChild, todays, todaysChild, isFetchingWidgets, /*requestServicesChild,*/
                    removeServicesChild, orgOid, period, periodType, tops, requestWidgets, setServiceOid, detailsSHK,
-                   detailsZNO, switchSDAWHIT
+                   detailsZNO, switchSDAWHIT, serviceOid
                  }: PropsType) => {
   useEffect(() => {
     requestWidgets({orgOid, period, periodType, numTops: [1, 2]});
@@ -81,13 +83,14 @@ const Widgets = ({
     <div>
       <main>
         <KPKTable kpk={kpkChild.rows?.length ? kpkChild : kpk}
-                  requestServicesChild={requestServicesChild}
+                  requestWidgets={requestWidgets}
                   removeServicesChild={removeServicesChild}
                   orgOid={orgOid}
                   period={period}
                   periodType={periodType}
                   setServiceOid={setServiceOid}
-                  switchSDAWHIT={switchSDAWHIT}/>
+                  switchSDAWHIT={switchSDAWHIT}
+                  serviceOid={serviceOid}/>
         <div className={classes.graphs}>
           <div className={classes.headCircularBar}>
             <h4>СЕГОДНЯ</h4>
@@ -155,6 +158,7 @@ const mapState = (state: RootStateType): MapStatePropsType => ({
   detailsSHK: selectDetailsSHK(state),
   detailsZNO: selectDetailsZNO(state),
   switchSDAWHIT: selectSwitchSDAWHIT(state),
+  serviceOid: selectServiceOid(state),
   /*
     inf: selectInf(state),
   */

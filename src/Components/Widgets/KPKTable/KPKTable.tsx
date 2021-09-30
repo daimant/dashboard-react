@@ -24,8 +24,9 @@ type PropsType = {
   periodType: string
   kpk: KPKType,
   switchSDAWHIT: boolean
+  serviceOid: string
 
-  requestServicesChild: ({orgOid, period, periodType, serviceOid}: RequestServicesChildType) => void
+  requestWidgets: ({orgOid, period, periodType, serviceOid, numTops}: RequestServicesChildType) => void
   removeServicesChild: () => void
   setServiceOid: (serviceOid?: string) => void
 }
@@ -91,7 +92,8 @@ const nameColsDetailsCallCentre: any = {
 };
 
 const KPKTable = ({
-                    kpk, requestServicesChild, removeServicesChild, orgOid, period, periodType, setServiceOid, switchSDAWHIT
+                    kpk, requestWidgets, removeServicesChild, orgOid, period, periodType, setServiceOid,
+                    switchSDAWHIT, serviceOid
                   }: PropsType) => {
   const [hiddenUnusedKPK, setHiddenUnusedKPK] = useState(localStorage.getItem('KPKRowHidden') !== 'false');
 
@@ -111,7 +113,7 @@ const KPKTable = ({
 
   const clickRequestServicesChild = (newServiceOid: string) => {
     setServiceOid(newServiceOid);
-    requestServicesChild({orgOid, period, periodType, serviceOid: newServiceOid});
+    requestWidgets({orgOid, period, periodType, serviceOid: newServiceOid, numTops: []});
   };
 
   const clickRemoveServicesChild = () => {
@@ -134,9 +136,9 @@ const KPKTable = ({
                   {colsHead === 'Услуга' || colsHead === 'Показатель' || colsHead === 'Ошибка при загрузке'
                     ? <span>{colsHead}</span>
                     : <span className={classes.tableHead}>
-                        <CloseIcon fontSize='small'
-                                   onClick={clickRemoveServicesChild}
-                                   component={'svg'}/>
+                        {/*<CloseIcon fontSize='small'*/}
+                        {/*           onClick={clickRemoveServicesChild}*/}
+                        {/*           component={'svg'}/>*/}
                       {colsHead}
                       </span>
                   }
@@ -163,15 +165,20 @@ const KPKTable = ({
                         style={row[value] === '-' && hiddenUnusedKPK ? {display: 'none'} : {}}
                         className={cn({[classes.clickable]: row[value] !== '-' && colsHead === 'Услуга' && id === 'Сервис_oid'})}
                         onClick={() => {
-                          if (row[value] !== '-' && colsHead === 'Услуга' && id === 'Сервис_oid') {
+                          if (row[value] !== '-' && colsHead === 'Услуга' && id === 'Сервис_oid' && row[id] !== serviceOid) {
                             clickRequestServicesChild(row[id]);
                           }
                         }}>
                 <TableCell component='th'
                            scope='row'
-                           className={classes.cell}>{
-                  row[colsHead]
-                }</TableCell>
+                           className={cn(classes.cell)}>
+                  <span className={cn(classes.tableHead, {[classes.selectedKPK]: row[id] === serviceOid})}>
+                  {row[colsHead]}
+                  {row[id] === serviceOid && <CloseIcon fontSize='small'
+                             onClick={clickRemoveServicesChild}
+                             component={'svg'}/>}
+                  </span>
+                </TableCell>
                 <LightTooltip placement='right'
                               title={row[value] !== '-'
                                 ? <div className={classes.blackColor}>
