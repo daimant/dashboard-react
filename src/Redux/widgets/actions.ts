@@ -96,7 +96,7 @@ export const requestWidgets = ({
 
 export const requestServicesChild = ({
                                        orgOid, period, periodType, serviceOid, numSC = [1, 2, 3], numTodays = [1, 2, 3],
-                                       numTops = [], selectedKTL = [], selectedWorkers = [], numDetailsSHK = [], numDetailsZNO = [],
+                                       numTops = [], selectedKTL = [], selectedWorkers = [], numDetailsSHK = [6, 7, 8], numDetailsZNO = [9, 10, 11],
                                      }: RequestServicesChildType): ThunkAction<void, RootStateType, unknown, AnyAction> => async (dispatch, getState) => {
   if (!selectedKTL.length || !selectedWorkers.length) {
     selectedKTL = getState().filters.selectedKTL;
