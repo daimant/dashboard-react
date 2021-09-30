@@ -165,7 +165,7 @@ const KPKTable = ({
                         style={row[value] === '-' && hiddenUnusedKPK ? {display: 'none'} : {}}
                         className={cn({[classes.clickable]: row[value] !== '-' && colsHead === 'Услуга' && id === 'Сервис_oid'})}
                         onClick={() => {
-                          if (row[value] !== '-' && colsHead === 'Услуга' && id === 'Сервис_oid' && row[id] !== serviceOid) {
+                          if (row[value] !== '-' && id === 'Сервис_oid' && row[id] !== serviceOid) {
                             clickRequestServicesChild(row[id]);
                           }
                         }}>
