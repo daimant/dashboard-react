@@ -5,7 +5,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
-import FilterIcon from '../../Assets/FilterIcon.svg';
+// import FilterIcon from '../../Assets/FilterIcon.svg';
 import {connect} from 'react-redux';
 import {RootStateType} from '../../Redux/store';
 import {setShowFilters} from '../../Redux/filters';
@@ -28,7 +28,7 @@ const options = [
   {name: 'Статистика по объектам обслуживания', path: '/statistika-oo'},
 ];
 
-const Navbar = ({setShowFilters}: PropsType) => {
+const Navbar = ({/*setShowFilters*/}: PropsType) => {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -41,9 +41,9 @@ const Navbar = ({setShowFilters}: PropsType) => {
     setAnchorEl(null);
   };
 
-  const changeShowFilters = () => {
-    setShowFilters();
-  };
+  // const changeShowFilters = () => {
+  //   setShowFilters();
+  // };
 
   return (
     <div className={classes.navbar}>
@@ -54,11 +54,11 @@ const Navbar = ({setShowFilters}: PropsType) => {
                alt=''
                loading='lazy'/>
         </NavLink>
-        <img className={classes.clickable}
-             src={FilterIcon}
-             alt=''
-             loading='lazy'
-             onClick={changeShowFilters}/>
+        {/*<img className={classes.clickable}*/}
+        {/*     src={FilterIcon}*/}
+        {/*     alt=''*/}
+        {/*     loading='lazy'*/}
+        {/*     onClick={changeShowFilters}/>*/}
       </div>
       <div className={classes.generalTitle}>
         <h1>Ключевые показатели эффективности</h1>
