@@ -1,4 +1,4 @@
-import React, {/*SyntheticEvent, */useEffect} from 'react';
+import React, {useEffect, /*SyntheticEvent*/} from 'react';
 import classes from './Filters.module.scss';
 import {Preloader} from '../Common/Preloader/Preloader';
 import MenuTreeList from './MenuTreeList/MenuTreeList';
@@ -35,6 +35,7 @@ import {
   selectWorkers,
   selectSwitchSDAWHIT,
   selectOrgMapListRZD,
+  selectPeriodNameMapList,
 } from '../../Redux/selectors';
 import {connect} from 'react-redux';
 import {
@@ -71,6 +72,7 @@ type MapStatePropsType = {
   selectedWorkers: SelectedWorkersType
   switchSDAWHIT: boolean
   namesListRZD: MapListType
+  periodNameMapList: MapListType
 };
 
 type MapDispatchPropsType = {
@@ -97,20 +99,20 @@ type PropsType = MapStatePropsType & MapDispatchPropsType;
 //   })
 // );
 
-// const GetShortOrgMane = (list: any, oid: string) =>
-//   list
-//     .get(oid)
-//     .replace(/Региональный центр сервиса/, 'РЦС')
-//     .replace(/Территориальное управление технической поддержки/, 'ТУТП')
-//     .replace(/Отдел поддержки пользователей/, 'ОТП')
-//     .replace(/Отдел технической поддержки/, 'ОТП');
+const GetShortOrgMane = (list: any, oid: string) =>
+  list
+    .get(oid)
+    .replace(/Региональный центр сервиса/, 'РЦС')
+    .replace(/Территориальное управление технической поддержки/, 'ТУТП')
+    .replace(/Отдел поддержки пользователей/, 'ОТП')
+    .replace(/Отдел технической поддержки/, 'ОТП');
 
 const Filters = ({
                    orgListOSK, altOrgListOSK, orgListRZD, isFetchingFilters, isFetchingWidgets, orgOid,
                    requestWidgetsFromFilters, setPeriod, setOrgOid, perList, period, periodType,
-                   requestSetFiltersDefault, showFilters, requestOrg, serviceOid, ktl, workers, selectedKTL,
-                   selectedWorkers, setSelectedKTL, setSelectedWorkers, switchSDAWHIT, /*setSwitchSDAWHIT, namesListRZD,
-                   setDefPeriod, namesListOSK*/
+                   requestSetFiltersDefault, showFilters, requestOrg, /*serviceOid,*/ ktl, workers, selectedKTL,
+                   selectedWorkers, setSelectedKTL, setSelectedWorkers, switchSDAWHIT, /*setSwitchSDAWHIT,*/ namesListRZD,
+                   /*setDefPeriod,*/ namesListOSK, periodNameMapList
                  }: PropsType) => {
 
   useEffect(() => {
@@ -142,16 +144,16 @@ const Filters = ({
   const filtersDownloadError = !orgListOSK || !orgListOSK.oid || !orgListRZD || !orgListRZD.children.length
     || !ktl || !ktl.length || !workers || !workers.length;
 
-  // let shortNameOrg;
-  //
-  // if (namesListRZD.has(orgOid)) {
-  //   shortNameOrg = GetShortOrgMane(namesListRZD, orgOid)
-  // } else if (namesListOSK.has(orgOid)) {
-  //   shortNameOrg = GetShortOrgMane(namesListOSK, orgOid)
-  // } else {
-  //   shortNameOrg = localStorage.getItem('orgName');
-  // }
-  //
+  let shortNameOrg;
+
+  if (namesListRZD.has(orgOid)) {
+    shortNameOrg = GetShortOrgMane(namesListRZD, orgOid)
+  } else if (namesListOSK.has(orgOid)) {
+    shortNameOrg = GetShortOrgMane(namesListOSK, orgOid)
+  } else {
+    shortNameOrg = localStorage.getItem('orgName');
+  }
+
   // const handleError = (e: SyntheticEvent<HTMLImageElement>) => {
   //   const target = e.target as HTMLImageElement;
   //   target.onerror = null;
@@ -192,28 +194,30 @@ const Filters = ({
                         setter={setOrgOid}
                         orgOid={orgOid}
                         acceptFilters={acceptFilters}
-                        blockedButton={(isFetchingWidgets || serviceOid !== '0')}
-                        switchSDAWHIT={switchSDAWHIT}/>
+                        blockedButton={(isFetchingWidgets)}
+                        switchSDAWHIT={switchSDAWHIT}
+                        selectedFilter={shortNameOrg}/>
           <MenuTreeList treeList={perList}
                         title={'период'}
                         setter={setPeriod}
                         period={period}
                         periodType={periodType}
                         acceptFilters={acceptFilters}
-                        blockedButton={(isFetchingWidgets || serviceOid !== '0')}
-                        switchSDAWHIT={switchSDAWHIT}/>
+                        blockedButton={(isFetchingWidgets)}
+                        switchSDAWHIT={switchSDAWHIT}
+                        selectedFilter={periodNameMapList.get(`${periodType}:${period}`)!}/>
           <MenuKTL ktl={ktl}
                    title={'договор'}
                    acceptFilters={acceptFilters}
                    selectedKTL={selectedKTL}
                    setSelectedKTL={setSelectedKTL}
-                   blockedButton={(isFetchingWidgets || serviceOid !== '0')}/>
+                   blockedButton={(isFetchingWidgets)}/>
           <MenuWorkers workersList={workers}
                        title={'первая линия / разъездной персонал'}
                        acceptFilters={acceptFilters}
                        selectedWorkers={selectedWorkers}
                        setSelectedWorkers={setSelectedWorkers}
-                       blockedButton={(isFetchingWidgets || serviceOid !== '0' || switchSDAWHIT)}/>
+                       blockedButton={(isFetchingWidgets)}/>
           <div>
             <Button variant='outlined'
                     onClick={requestSetFiltersDefault}
@@ -272,6 +276,7 @@ const mapState = (state: RootStateType) => ({
   selectedWorkers: selectSelectedWorkers(state),
   switchSDAWHIT: selectSwitchSDAWHIT(state),
   namesListRZD: selectOrgMapListRZD(state),
+  periodNameMapList: selectPeriodNameMapList(state)
 });
 
 const mapDispatch = {

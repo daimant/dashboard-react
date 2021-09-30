@@ -22,6 +22,7 @@ type PropsType = {
   periodType?: string
   blockedButton: boolean
   switchSDAWHIT: boolean
+  selectedFilter: string
 
   setter?: (oid: string) => void
   acceptFilters: (type: string, selected: any) => void
@@ -77,7 +78,7 @@ const SwitchGroup = ({changer, checked, description}: { changer: () => void, che
 
 const MenuTreeList = ({
                         treeList, altOrgListOSK, orgListRZD, title, orgOid, period, periodType, setter, acceptFilters,
-                        blockedButton, switchSDAWHIT
+                        blockedButton, switchSDAWHIT, selectedFilter
                       }: PropsType) => {
 
   useEffect(() => {
@@ -152,8 +153,9 @@ const MenuTreeList = ({
               variant='outlined'
               onClick={handleClick}
               disabled={blockedButton}
-              href=''>
-        {title}
+              href=''
+              size='small'>
+        {title}: {selectedFilter.length <= 30 ? selectedFilter : `${selectedFilter.slice(0, 30)}...`}
       </Button>
       <Menu getContentAnchorEl={null}
             anchorOrigin={{
