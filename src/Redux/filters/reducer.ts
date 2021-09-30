@@ -143,8 +143,8 @@ const initialStateFilters = {
   serviceOid: localStorage.getItem('serviceOid') || '0' as string,
   ktl: [] as KTLType[],
   workers: [] as WorkersType[],
-  selectedKTL: [] as SelectedKTLType, // JSON.parse(localStorage.getItem('selectedKTL') || '[]')
-  selectedWorkers: [] as SelectedWorkersType, // JSON.parse(localStorage.getItem('selectedKTL') || '[]')
+  selectedKTL: [] as SelectedKTLType,
+  selectedWorkers: [] as SelectedWorkersType,
   switchSDAWHIT: localStorage.getItem('switchSDAWHIT') === 'true' || false as boolean,
 };
 
@@ -152,6 +152,13 @@ const actionHandlerFilters: any = {
   [SET_LISTS]: (state: InitialStateFiltersType, action: ActionsFiltersType) => {
     defaultFilters.selectedKTL = action.lists.selectedKTL;
     defaultFilters.selectedWorkers = action.lists.selectedWorkers;
+
+    if (localStorage.getItem('selectedKTL')) {
+      action.lists.selectedKTL = JSON.parse(localStorage.getItem('selectedKTL')!)
+    }
+    if (localStorage.getItem('selectedWorkers')) {
+      action.lists.selectedWorkers = JSON.parse(localStorage.getItem('selectedWorkers')!)
+    }
 
     return action.lists
       ? {...state, ...action.lists, isFetchingFilters: false}

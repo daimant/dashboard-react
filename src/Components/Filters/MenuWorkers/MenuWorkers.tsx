@@ -39,13 +39,13 @@ const MenuWorkers = ({workersList, title, acceptFilters, blockedButton, selected
 
       if (selectedWorkersWhenOpenedMenu !==  JSON.stringify(selectedWorkers.sort())) {
         acceptFilters(title, selectedWorkers);
+        localStorage.setItem('selectedWorkers', JSON.stringify(selectedWorkers));
       }
     }
   };
 
   const getOnChange = (event: boolean, oid: number) => {
     const newSelected = event ? selectedWorkers.concat(oid) : selectedWorkers.filter(el => el !== oid);
-
     setSelectedWorkers(newSelected);
   };
 

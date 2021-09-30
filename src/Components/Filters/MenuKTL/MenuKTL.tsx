@@ -148,6 +148,7 @@ const MenuKTL = ({ktl, title, acceptFilters, blockedButton, selectedKTL, setSele
 
       if (selectedKTLWhenOpenedMenu !== JSON.stringify(selectedKTL.sort())) {
         acceptFilters(title, selectedKTL);
+        localStorage.setItem('selectedKTL', JSON.stringify(selectedKTL));
       }
     }
   };
