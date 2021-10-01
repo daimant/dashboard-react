@@ -59,7 +59,7 @@ type MapStatePropsType = {
 }
 
 type MapDispatchPropsType = {
-  requestWidgets: ({orgOid, period, periodType}: RequestWidgetsType) => void
+  requestWidgets: ({orgOid, period, periodType, serviceOid}: RequestWidgetsType) => void
   requestServicesChild: ({orgOid, period, periodType, serviceOid}: RequestServicesChildType) => void
   removeServicesChild: () => void
   setServiceOid: (serviceOid?: string) => void
@@ -73,7 +73,7 @@ const Widgets = ({
                    detailsZNO, switchSDAWHIT, serviceOid
                  }: PropsType) => {
   useEffect(() => {
-    requestWidgets({orgOid, period, periodType, numTops: [1, 2]});
+    requestWidgets({orgOid, period, periodType, numTops: [1, 2], serviceOid});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [switchSDAWHIT]);
 
