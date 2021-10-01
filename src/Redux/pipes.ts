@@ -160,10 +160,14 @@ export const PipeGraphLine = (graphs: GraphLineType[]) => {
 
     graph.data = graph.data.map(day => {
       if (typeof day.v2 === 'string' && day.v2.includes(':')) {
-        const hours = day.v2.slice(0, 2);
-        const minutes = day.v2.slice(3, 5);
+        if (day.v2.includes('.')) {
+          day.v2 = '00ч00';
+        } else {
+          const hours = day.v2.slice(0, 2);
+          const minutes = day.v2.slice(3, 5);
 
-        day.v2 = `${hours}.${minutes}`;
+          day.v2 = `${hours}.${minutes}`;
+        }
       }
 
       sumVal += graph.id === 9 ? day.sumV1V2! : day.v1;
