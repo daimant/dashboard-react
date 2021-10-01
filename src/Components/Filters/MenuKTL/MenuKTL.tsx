@@ -38,6 +38,7 @@ const MenuKTL = ({ktl, title, acceptFilters, blockedButton, selectedKTL, setSele
   const classesMUI = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [expanded, setExpanded] = useState<string[]>(ktl.map(el => el.oid));
+  const namesListKTL = new Map(ktl.map(parent => parent.children).flat(1).map(child => [child!.oid, child!.name]));
 
   const getChildById = (node: KTLType, oid: string) => {
     let array: string[] = [];
@@ -161,6 +162,11 @@ const MenuKTL = ({ktl, title, acceptFilters, blockedButton, selectedKTL, setSele
     setExpanded(newExpanded);
   };
 
+  const selectedNamesKTL = JSON.stringify(selectedKTL.filter(oid => !ktl
+    .map(elKTL => elKTL.oid).includes(oid))
+    .map(oid => namesListKTL.get(oid)))
+    .replace(/["\]\[]/g, ''); // remove ", [, ]
+
   return (
     <div>
       <Button aria-controls='menu'
@@ -168,7 +174,7 @@ const MenuKTL = ({ktl, title, acceptFilters, blockedButton, selectedKTL, setSele
               onClick={handleButtonClick}
               disabled={blockedButton}
               href=''>
-        {title}
+        {title}: {selectedNamesKTL.length <= 20 ? selectedNamesKTL : `${selectedNamesKTL.slice(0, 20)}...`}
       </Button>
       <Menu getContentAnchorEl={null}
             anchorOrigin={{

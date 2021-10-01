@@ -27,6 +27,7 @@ let selectedWorkersWhenOpenedMenu: string;
 const MenuWorkers = ({workersList, title, acceptFilters, blockedButton, selectedWorkers, setSelectedWorkers}: PropsType) => {
   const classesMUI = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const namesListWorkers = new Map(workersList.map(el => [el.oid, el.name]));
 
   const handleButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -37,7 +38,7 @@ const MenuWorkers = ({workersList, title, acceptFilters, blockedButton, selected
     if (selectedWorkers.length) {
       setAnchorEl(null);
 
-      if (selectedWorkersWhenOpenedMenu !==  JSON.stringify(selectedWorkers.sort())) {
+      if (selectedWorkersWhenOpenedMenu !== JSON.stringify(selectedWorkers.sort())) {
         acceptFilters(title, selectedWorkers);
         localStorage.setItem('selectedWorkers', JSON.stringify(selectedWorkers));
       }
@@ -49,6 +50,9 @@ const MenuWorkers = ({workersList, title, acceptFilters, blockedButton, selected
     setSelectedWorkers(newSelected);
   };
 
+  const selectedNamesWorkers = JSON.stringify(selectedWorkers.map(oid => namesListWorkers.get(oid)))
+    .replace(/["\]\[]/g, ''); // remove ", [, ]
+
   return (
     <div>
       <Button aria-controls='menu'
@@ -56,7 +60,7 @@ const MenuWorkers = ({workersList, title, acceptFilters, blockedButton, selected
               onClick={handleButtonClick}
               disabled={blockedButton}
               href=''>
-        {title}
+        {title}: {selectedNamesWorkers.length <= 20 ? selectedNamesWorkers : `${selectedNamesWorkers.slice(0, 20)}...`}
       </Button>
       <Menu getContentAnchorEl={null}
             anchorOrigin={{
