@@ -90,7 +90,7 @@ const dictDescriptionTooltip: { [key: string]: { v1: string, v2: string, v3: str
   id11: {
     v1: 'Штрафов',
     v2: 'Возвратов',
-    v3: 'ЗНО с ФРОД',
+    v3: 'Фродов',
     p: defaultDescriptionTooltipValues.p,
   },
   idundefined: defaultDescriptionTooltipValues,
