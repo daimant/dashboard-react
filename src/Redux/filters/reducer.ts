@@ -204,8 +204,7 @@ const actionHandlerFilters: any = {
   },
 
   [SET_FILTERS_DEFAULT]: (state: InitialStateFiltersType) => {
-    ['orgOid', 'period', 'periodType', 'orgName', 'switchSDAWHIT', 'selectedKTL', 'selectedWorkers', 'serviceOid']
-      .forEach(el => localStorage.removeItem(el));
+    localStorage.clear();
 
     return {
       ...state,
