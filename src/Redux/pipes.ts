@@ -161,7 +161,7 @@ export const PipeGraphLine = (graphs: GraphLineType[]) => {
     graph.data = graph.data.map(day => {
       if (typeof day.v2 === 'string' && day.v2.includes(':')) {
         if (day.v2.includes('.')) {
-          day.v2 = '00ч00';
+          day.v2 = '00.00';
         } else {
           const hours = day.v2.slice(0, 2);
           const minutes = day.v2.slice(3, 5);
