@@ -47,7 +47,13 @@ import {
 } from '../../Redux/filters';
 import MenuKTL from './MenuKTL/MenuKTL';
 import MenuWorkers from './MenuWorkers/MenuWorkers';
-import {setDefPeriod, setSelectedKTL, setSelectedWorkers, setSwitchSDAWHIT} from '../../Redux/filters/actions';
+import {
+  setDefPeriod,
+  setSelectedKTL,
+  setSelectedWorkers,
+  setServiceOid,
+  setSwitchSDAWHIT
+} from '../../Redux/filters/actions';
 // import cn from 'classnames';
 // import FormControlLabel from '@material-ui/core/FormControlLabel/FormControlLabel';
 // import Switch from '@material-ui/core/Switch/Switch';
@@ -85,6 +91,7 @@ type MapDispatchPropsType = {
   setSelectedWorkers: (selectedWorkers: SelectedWorkersType) => void
   setSwitchSDAWHIT: () => void
   setDefPeriod: () => void
+  setServiceOid: () => void
 };
 
 type PropsType = MapStatePropsType & MapDispatchPropsType;
@@ -112,7 +119,7 @@ const Filters = ({
                    requestWidgetsFromFilters, setPeriod, setOrgOid, perList, period, periodType,
                    requestSetFiltersDefault, showFilters, requestOrg, /*serviceOid,*/ ktl, workers, selectedKTL,
                    selectedWorkers, setSelectedKTL, setSelectedWorkers, switchSDAWHIT, /*setSwitchSDAWHIT,*/ namesListRZD,
-                   /*setDefPeriod,*/ namesListOSK, periodNameMapList
+                   /*setDefPeriod,*/ namesListOSK, periodNameMapList, setServiceOid
                  }: PropsType) => {
 
   useEffect(() => {
@@ -131,6 +138,10 @@ const Filters = ({
     const [newPeriodType, newPeriod] = (type === 'период')
       ? selected.split(':')
       : ['', ''];
+
+    if (type === 'договор') {
+      setServiceOid();
+    }
 
     requestWidgetsFromFilters({
       orgOid: type === 'оргструктура' ? selected : orgOid,
@@ -289,6 +300,7 @@ const mapDispatch = {
   setSelectedWorkers,
   setSwitchSDAWHIT,
   setDefPeriod,
+  setServiceOid,
 };
 
 export default connect<MapStatePropsType, MapDispatchPropsType, {}, RootStateType>(mapState, mapDispatch)(Filters);
