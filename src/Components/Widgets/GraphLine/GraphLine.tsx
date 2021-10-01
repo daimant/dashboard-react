@@ -1,6 +1,6 @@
 import React, {forwardRef, MouseEvent, useState} from 'react';
 import classes from './GraphLine.module.scss';
-import {ComposedChart, XAxis, YAxis, Tooltip, ResponsiveContainer, Line, ReferenceLine} from 'recharts';
+import {ComposedChart, XAxis, YAxis, Tooltip, ResponsiveContainer, Line, ReferenceLine, Bar} from 'recharts';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import {GraphLineType} from '../../../Types/Types';
@@ -96,7 +96,7 @@ const dictDescriptionTooltip: { [key: string]: { v1: string, v2: string, v3: str
   idundefined: defaultDescriptionTooltipValues,
 };
 
-const dictTitlesWithoutTargetLine = [
+const dictIdWithoutTargetLine = [
   'id10',
   'id11',
   'id6',
@@ -104,26 +104,26 @@ const dictTitlesWithoutTargetLine = [
   'id8',
 ];
 
-const dictTitlesWithoutProc = [
+const dictIdWithoutProc = [
   'id11',
   'id8',
 ];
 
-const dictTitlesWithV2 = [
+const dictIdWithV2 = [
   'id10',
   'id11',
 ];
 
-const dictTitlesWithV3 = [
+const dictIdWithV3 = [
   'id11',
 ];
 
-const dictTitlesWithV2InsteadV1 = [
+const dictIdWithV2InsteadV1 = [
   'id6',
   'id7',
 ];
 
-const dictTitlesWithV2InsteadProc = [
+const dictIdV2InsteadProc = [
   'id10',
 ];
 
@@ -132,6 +132,21 @@ const dictTargetValues: { [key: string]: number } = {
   id2: 65,
   id3: 99.5,
 };
+
+const dictIdWithV1Col = [
+  'id1',
+  'id2',
+  'id3',
+  'id6',
+  'id7',
+  'id10',
+];
+
+const dictIdWithV1Line = [
+  'id8',
+  'id11',
+];
+
 
 const GraphLine = ({graphLineData, extendedStyle = {}, serviceOid}: PropsType) => {
   const {id, title, data, sumVal, avrProc} = graphLineData;
@@ -149,20 +164,20 @@ const GraphLine = ({graphLineData, extendedStyle = {}, serviceOid}: PropsType) =
   let valuesYAxisLeft: number[] = [];
   let valuesYAxisRight: number[] = [];
 
-  if (!dictTitlesWithV2InsteadV1.includes(`id${id}`)) {
+  if (!dictIdWithV2InsteadV1.includes(`id${id}`)) {
     valuesYAxisLeft = valuesYAxisLeft.concat(data.map(el => el.v1));
   }
-  if (dictTitlesWithV2InsteadV1.includes(`id${id}`)
-    || (dictTitlesWithV2.includes(`id${id}`) && !dictTitlesWithV2InsteadProc.includes(`id${id}`))) {
+  if (dictIdWithV2InsteadV1.includes(`id${id}`)
+    || (dictIdWithV2.includes(`id${id}`) && !dictIdV2InsteadProc.includes(`id${id}`))) {
     valuesYAxisLeft = valuesYAxisLeft.concat(data.map(el => Number(el.v2)));
   }
-  if (dictTitlesWithV3.includes(`id${id}`)) {
+  if (dictIdWithV3.includes(`id${id}`)) {
     valuesYAxisLeft = valuesYAxisLeft.concat(data.map(el => el.v3!));
   }
-  if (!dictTitlesWithoutProc.includes(`id${id}`) || !dictTitlesWithV2InsteadProc.includes(`id${id}`)) {
+  if (!dictIdWithoutProc.includes(`id${id}`) || !dictIdV2InsteadProc.includes(`id${id}`)) {
     valuesYAxisRight = valuesYAxisRight.concat(data.map(el => Number(el.p)));
   }
-  if (dictTitlesWithV2InsteadProc.includes(`id${id}`)) {
+  if (dictIdV2InsteadProc.includes(`id${id}`)) {
     valuesYAxisRight = valuesYAxisRight.concat(data.map(el => Number(el.v2)));
   }
 
@@ -209,14 +224,14 @@ const GraphLine = ({graphLineData, extendedStyle = {}, serviceOid}: PropsType) =
                                           line={'Val'}
                                           hideLineClick={hideLineClick}
                                           hider={setHiddenVal}/>}
-          {dictTitlesWithV2.includes(`id${id}`) &&
+          {dictIdWithV2.includes(`id${id}`) &&
           <CheckedValueGraph description={dictDescriptionTooltip[`id${id}`]?.v2}
                              hidden={hiddenVal2}
                              line={'Val2'}
                              hideLineClick={hideLineClick}
                              hider={setHiddenVal2}/>
           }
-          {dictTitlesWithV3.includes(`id${id}`) &&
+          {dictIdWithV3.includes(`id${id}`) &&
           <CheckedValueGraph description={dictDescriptionTooltip[`id${id}`]?.v3}
                              hidden={hiddenVal3}
                              line={'Val3'}
@@ -224,21 +239,21 @@ const GraphLine = ({graphLineData, extendedStyle = {}, serviceOid}: PropsType) =
                              hider={setHiddenVal3}/>
           }
 
-          {!dictTitlesWithoutProc.includes(`id${id}`) && !dictTitlesWithV2InsteadProc.includes(`id${id}`) &&
+          {!dictIdWithoutProc.includes(`id${id}`) && !dictIdV2InsteadProc.includes(`id${id}`) &&
           <CheckedValueGraph description={dictDescriptionTooltip[`id${id}`]?.p}
                              hidden={hiddenProc}
                              line={'Proc'}
                              hideLineClick={hideLineClick}
                              hider={setHiddenProc}/>
           }
-          {!dictTitlesWithoutTargetLine.includes(`id${id}`) && <CheckedValueGraph description={'Целевое значение'}
-                                                                                  hidden={hiddenTar}
-                                                                                  line={'Tar'}
-                                                                                  hideLineClick={hideLineClick}
-                                                                                  hider={setHiddenTar}/>
+          {!dictIdWithoutTargetLine.includes(`id${id}`) && <CheckedValueGraph description={'Целевое значение'}
+                                                                              hidden={hiddenTar}
+                                                                              line={'Tar'}
+                                                                              hideLineClick={hideLineClick}
+                                                                              hider={setHiddenTar}/>
           }
           {sumVal && <p className={classes.propertiesGroup}>Общее количество за период: {sumVal} шт</p>}
-          {!dictTitlesWithoutProc.includes(`id${id}`) && !dictTitlesWithV2InsteadProc.includes(`id${id}`) && avrProc &&
+          {!dictIdWithoutProc.includes(`id${id}`) && !dictIdV2InsteadProc.includes(`id${id}`) && avrProc &&
           <p className={classes.propertiesGroup}>Средний процент за период: {avrProc} %</p>}
         </Menu>
         <h3 className={classes.title}>{!data?.length && serviceOid === '0' && id! <= 3
@@ -260,7 +275,7 @@ const GraphLine = ({graphLineData, extendedStyle = {}, serviceOid}: PropsType) =
                    }
                    return tick.indexOf('-') > -1 ? `${tick.slice(0, 5)}-${tick.slice(11, 16)}` : tick.slice(0, 5);
                  }}
-                 interval={dictTitlesWithoutTargetLine.includes(`id${id}`)
+                 interval={dictIdWithoutTargetLine.includes(`id${id}`)
                    ? data.length < 10 ? 1 : data.length < 25 ? 2 : 3
                    : data.length < 10 ? 0 : data.length < 25 ? 1 : 2}
                  allowDataOverflow={false}
@@ -277,57 +292,64 @@ const GraphLine = ({graphLineData, extendedStyle = {}, serviceOid}: PropsType) =
                  axisLine={false}
                  stroke='#2D6AA3'
                  fontSize={11}/>
-          <YAxis display={(!dictTitlesWithV2InsteadProc.includes(`id${id}`) && hiddenProc)
-          || (dictTitlesWithV2InsteadProc.includes(`id${id}`) && hiddenVal2)
-          || dictTitlesWithoutProc.includes(`id${id}`) ? 'none' : ''}
-                 tickFormatter={tick => `${Number(tick.toFixed(2))}${dictTitlesWithV2InsteadProc.includes(`id${id}`) ? 'ч' : '%'}`}
+          <YAxis display={(!dictIdV2InsteadProc.includes(`id${id}`) && hiddenProc)
+          || (dictIdV2InsteadProc.includes(`id${id}`) && hiddenVal2)
+          || dictIdWithoutProc.includes(`id${id}`) ? 'none' : ''}
+                 tickFormatter={tick => `${Number(tick.toFixed(2))}${dictIdV2InsteadProc.includes(`id${id}`) ? 'ч' : '%'}`}
                  yAxisId='right'
-                 domain={[Math.min(...valuesYAxisRight), Math.max(...valuesYAxisRight)]}
+                 domain={dictIdV2InsteadProc.includes(`id${id}`)
+                   ? [Math.min(...valuesYAxisRight), Math.max(...valuesYAxisRight)]
+                   : [0, 100]}
                  tickCount={3}
                  minTickGap={100}
                  axisLine={false}
                  orientation='right'
-                 stroke={dictTitlesWithV2InsteadProc.includes(`id${id}`) ? '#E27F49' : '#8CC06D'}
+                 stroke={dictIdV2InsteadProc.includes(`id${id}`) ? '#E27F49' : '#8CC06D'}
                  fontSize={11}/>
-          <Line display={hiddenVal ? 'none' : ''}
-                yAxisId='left'
-                type='monotone'
-                dataKey={dictTitlesWithV2InsteadV1.includes(`id${id}`) ? 'v2' : 'v1'}
-                stroke='#2D6AA3'
-                strokeWidth={2}/>
-          {dictTitlesWithV2.includes(`id${id}`) && <Line display={hiddenVal2 ? 'none' : ''}
-                                                         yAxisId={dictTitlesWithV2InsteadProc.includes(`id${id}`) ? 'right' : 'left'}
-                                                         type='monotone'
-                                                         dataKey='v2'
-                                                         stroke='#E27F49'
-                                                         strokeWidth={2}/>}
-          {dictTitlesWithV3.includes(`id${id}`) && <Line display={hiddenVal3 ? 'none' : ''}
+          {dictIdWithV1Col.includes(`id${id}`) && <Bar display={hiddenVal ? 'none' : ''}
+                                                       dataKey={dictIdWithV2InsteadV1.includes(`id${id}`) ? 'v2' : 'v1'}
+                                                       yAxisId='left'
+                                                       stackId='a'
+                                                       fill='#2D6AA3'/>}
+          {dictIdWithV1Line.includes(`id${id}`) && <Line display={hiddenVal ? 'none' : ''}
                                                          yAxisId='left'
                                                          type='monotone'
-                                                         dataKey='v3'
-                                                         stroke='#B1B47D'
+                                                         dataKey={dictIdWithV2InsteadV1.includes(`id${id}`) ? 'v2' : 'v1'}
+                                                         stroke='#2D6AA3'
                                                          strokeWidth={2}/>}
+          {dictIdWithV2.includes(`id${id}`) && <Line display={hiddenVal2 ? 'none' : ''}
+                                                     yAxisId={dictIdV2InsteadProc.includes(`id${id}`) ? 'right' : 'left'}
+                                                     type='monotone'
+                                                     dataKey='v2'
+                                                     stroke='#E27F49'
+                                                     strokeWidth={2}/>}
+          {dictIdWithV3.includes(`id${id}`) && <Line display={hiddenVal3 ? 'none' : ''}
+                                                     yAxisId='left'
+                                                     type='monotone'
+                                                     dataKey='v3'
+                                                     stroke='#B1B47D'
+                                                     strokeWidth={2}/>}
           <Line display={hiddenProc
-          || dictTitlesWithoutProc.includes(`id${id}`)
-          || dictTitlesWithV2InsteadProc.includes(`id${id}`) ? 'none' : ''}
+          || dictIdWithoutProc.includes(`id${id}`)
+          || dictIdV2InsteadProc.includes(`id${id}`) ? 'none' : ''}
                 yAxisId='right'
                 type='monotone'
                 dataKey='p'
                 stroke='#8CC06D'
                 strokeWidth={2}/>
-          {!dictTitlesWithoutTargetLine.includes(`id${id}`) && <ReferenceLine y={dictTargetValues[`id${id}`]}
-                                                                              stroke='#FF0000'
-                                                                              yAxisId='right'
-                                                                              display={hiddenTar ? 'none' : ''}
-                                                                              strokeDasharray='3 3'
-                                                                              ifOverflow='extendDomain'/>}
+          {!dictIdWithoutTargetLine.includes(`id${id}`) && <ReferenceLine y={dictTargetValues[`id${id}`]}
+                                                                          stroke='#FF0000'
+                                                                          yAxisId='right'
+                                                                          display={hiddenTar ? 'none' : ''}
+                                                                          strokeDasharray='3 3'
+                                                                          ifOverflow='extendDomain'/>}
           <Tooltip labelFormatter={label =>
             `${typeof label === 'string' && label.indexOf('-') > 0 ? 'Период' : 'Дата'}: ${label}`}
                    formatter={(value: string, name: 'v1' | 'v2' | 'v3' | 'p') => (
-                     (dictTitlesWithoutProc.includes(`id${id}`) || dictTitlesWithV2InsteadProc.includes(`id${id}`)) && name === 'p'
+                     (dictIdWithoutProc.includes(`id${id}`) || dictIdV2InsteadProc.includes(`id${id}`)) && name === 'p'
                        ? []
                        : [
-                         `${dictTitlesWithV2InsteadV1.includes(`id${id}`) && name === 'v2'
+                         `${dictIdWithV2InsteadV1.includes(`id${id}`) && name === 'v2'
                            ? dictDescriptionTooltip[`id${id}`].v1
                            : dictDescriptionTooltip[`id${id}`][name]}: 
                          ${name === 'v2' && id === 10
