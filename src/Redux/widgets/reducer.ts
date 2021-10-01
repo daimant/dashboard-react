@@ -83,7 +83,7 @@ const actionHandlerWidgets: any = {
     const kpk = (action.kpk)
       ? {cols: action.kpk.cols, rows: action.kpk.rows}
       : {cols: ['Сервис-oid', 'Ошибка при загрузке'], rows: []};
-    return action.kpk.orgOwner ? {...state, kpk, orgOwner: action.kpk.orgOwner} : {...state, kpk};
+    return action.kpk?.orgOwner ? {...state, kpk, orgOwner: action.kpk.orgOwner} : {...state, kpk};
   },
 
   [SET_KPK_CHILD]: (state: InitialStateWidgetsType, action: ActionsWidgetsType) => {

@@ -20,6 +20,7 @@ type GetWidgetsType = {
   numDetailsSHK: number[]
   numDetailsZNO: number[]
   switchSDAWHIT: boolean
+  kpk: boolean
 }
 
 const catching = () => ({data: null});
@@ -27,7 +28,7 @@ const catching = () => ({data: null});
 const apiWidgetsProd = {
   getWidgets: ({
                  orgOid, period, periodType, serviceOid, numSC, numTodays, numTops, selectedKTL, selectedWorkers,
-                 numDetailsSHK, numDetailsZNO, switchSDAWHIT
+                 numDetailsSHK, numDetailsZNO, switchSDAWHIT, kpk
                }: GetWidgetsType) => {
     const payload = {
       'org_oid': Number(orgOid),
@@ -44,21 +45,21 @@ const apiWidgetsProd = {
       ...numTops.map(num => instance.get(`top/${num}`).catch(catching)),
       ...numDetailsSHK.map(num => instance.post(`sc/${num}`, payload).catch(catching)),
       ...numDetailsZNO.map(num => instance.post(`sc/${num}`, payload).catch(catching)),
-      instance.post(switchSDAWHIT ? 'rzd_kpk' : 'kpk', payload).catch(catching),
+      kpk ? instance.post(/*switchSDAWHIT ? 'rzd_kpk' : */'kpk', payload).catch(catching) : {},
     ])
       .then((response: AxiosResponse[]) => response.map(res => res.data));
   }
 };
 
 const apiWidgetsDev = {
-  getWidgets: ({numSC, numTodays, numTops, numDetailsSHK, numDetailsZNO, switchSDAWHIT}: GetWidgetsType) => {
+  getWidgets: ({numSC, numTodays, numTops, numDetailsSHK, numDetailsZNO, switchSDAWHIT, kpk}: GetWidgetsType) => {
     return Promise.all<any>([
       ...numSC.map(num => instance.get(`sc/${num}`).catch(catching)),
       ...numTodays.map(num => instance.get(`today/${num}`).catch(catching)),
       ...numTops.map(num => instance.get(`top/${num}`).catch(catching)),
       ...numDetailsSHK.map(num => instance.get(`sc/${num}`).catch(catching)),
       ...numDetailsZNO.map(num => instance.get(`sc/${num}`).catch(catching)),
-      instance.get(switchSDAWHIT ? 'rzd_kpk' : 'kpk').catch(catching)
+      kpk ? instance.get(/*switchSDAWHIT ? 'rzd_kpk' :*/ 'kpk').catch(catching) : {},
     ])
       .then((response: AxiosResponse[]) => response.map(res => res.data));
   }

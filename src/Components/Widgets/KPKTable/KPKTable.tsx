@@ -114,13 +114,13 @@ const KPKTable = ({
   const clickRequestServicesChild = (newServiceOid: string) => {
     localStorage.setItem('serviceOid', newServiceOid);
     setServiceOid(newServiceOid);
-    requestWidgets({orgOid, period, periodType, serviceOid: newServiceOid, numTops: []});
+    requestWidgets({orgOid, period, periodType, serviceOid: newServiceOid, numTops: [], kpk: false});
   };
 
   const clickRemoveServicesChild = () => {
     localStorage.removeItem('serviceOid');
     setServiceOid();
-    requestWidgets({orgOid, period, periodType, serviceOid: '0', numTops: []});
+    requestWidgets({orgOid, period, periodType, serviceOid: '0', numTops: [], kpk: false});
   };
 
   return (
@@ -139,8 +139,8 @@ const KPKTable = ({
                     ? <span>{colsHead}</span>
                     : <span className={classes.tableHead}>
                     {serviceOid !== '0' && <CloseIcon fontSize='small'
-                                                          onClick={clickRemoveServicesChild}
-                                                          component={'svg'}/>}
+                                                      onClick={clickRemoveServicesChild}
+                                                      component={'svg'}/>}
                       {colsHead}
                       </span>
                   }

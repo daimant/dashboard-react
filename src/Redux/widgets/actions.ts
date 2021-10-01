@@ -58,7 +58,8 @@ export const removeServicesChild = (): RemoveServicesChildACType => ({type: REMO
 
 export const requestWidgets = ({
                                  orgOid, period, periodType, serviceOid = '0', numSC = [1, 2, 3], numTodays = [1, 2, 3],
-                                 numTops = [], selectedKTL = [], selectedWorkers = [], numDetailsSHK = [6, 7, 8], numDetailsZNO = [9, 10, 11],
+                                 numTops = [], selectedKTL = [], selectedWorkers = [], numDetailsSHK = [6, 7, 8],
+                                 numDetailsZNO = [9, 10, 11], kpk = true
                                }: RequestWidgetsType): ThunkAction<void, RootStateType, unknown, AnyAction> => async (dispatch, getState) => {
   if (!selectedKTL.length || !selectedWorkers.length) {
     selectedKTL = getState().filters.selectedKTL;
@@ -83,20 +84,24 @@ export const requestWidgets = ({
     numDetailsSHK,
     numDetailsZNO,
     switchSDAWHIT,
+    kpk,
   });
   dispatch(setSC(PipeGraphLine(response.splice(0, numSC.length))));
   dispatch(setTodays(PipeTodays(response.splice(0, numTodays.length))));
   dispatch(setTops(PipeGraphArea(response.splice(0, numTops.length))));
   dispatch(setDetailsSHK(PipeGraphLine(response.splice(0, numDetailsSHK.length))));
   dispatch(setDetailsZNO(PipeGraphLine(response.splice(0, numDetailsZNO.length))));
-  dispatch(setKPK(PipeKPK(response.pop())));
+  if (kpk) {
+    dispatch(setKPK(PipeKPK(response.pop())));
+  }
 
   dispatch(setIsFetchingWidgetsEnded());
 };
 
 export const requestServicesChild = ({
                                        orgOid, period, periodType, serviceOid, numSC = [1, 2, 3], numTodays = [1, 2, 3],
-                                       numTops = [], selectedKTL = [], selectedWorkers = [], numDetailsSHK = [6, 7, 8], numDetailsZNO = [9, 10, 11],
+                                       numTops = [], selectedKTL = [], selectedWorkers = [], numDetailsSHK = [6, 7, 8],
+                                       numDetailsZNO = [9, 10, 11], kpk = true
                                      }: RequestServicesChildType): ThunkAction<void, RootStateType, unknown, AnyAction> => async (dispatch, getState) => {
   if (!selectedKTL.length || !selectedWorkers.length) {
     selectedKTL = getState().filters.selectedKTL;
@@ -121,6 +126,7 @@ export const requestServicesChild = ({
     numDetailsSHK,
     numDetailsZNO,
     switchSDAWHIT,
+    kpk,
   });
   dispatch(setSCChild(PipeGraphLine(response.splice(0, numSC.length))));
   dispatch(setTodaysChild(PipeTodays(response.splice(0, numTodays.length))));

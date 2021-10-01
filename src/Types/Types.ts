@@ -122,6 +122,7 @@ export type RequestServicesChildType = {
   selectedWorkers?: SelectedWorkersType
   numDetailsSHK?: number[]
   numDetailsZNO?: number[]
+  kpk?: boolean
 };
 
 export type RequestWidgetsType = {
@@ -136,6 +137,7 @@ export type RequestWidgetsType = {
   selectedWorkers?: SelectedWorkersType
   numDetailsSHK?: number[]
   numDetailsZNO?: number[]
+  kpk?: boolean
 };
 
 export type RequestWidgetsFromFiltersType = {
