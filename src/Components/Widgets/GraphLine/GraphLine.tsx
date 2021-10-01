@@ -242,7 +242,7 @@ const GraphLine = ({graphLineData, extendedStyle = {}, serviceOid}: PropsType) =
           <p className={classes.propertiesGroup}>Средний процент за период: {avrProc} %</p>}
         </Menu>
         <h3 className={classes.title}>{!data?.length && serviceOid === '0' && id! <= 3
-          ? `${title} - Выберете услугу`
+          ? `${title} - Выберите услугу`
           : !data?.length && title !== 'Ошибка при загрузке'
             ? `${title} - Нет данных`
             : title
