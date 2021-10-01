@@ -31,7 +31,7 @@ const CheckedValueGraph = forwardRef(({description, hidden, hideLineClick, line,
       className={cn(classes.propertiesGroup, classes.clickable, classes.unselectable, classes[`color${line}`])}
       ref={ref}
       onClick={() => hideLineClick(line, hidden, hider)}>
-      {!hidden
+      {hidden
         ? <CheckBoxIcon className={classes.iconCheckBox}
                         color='action'
                         component={'svg'}
@@ -147,14 +147,20 @@ const dictIdWithV1Line = [
   'id11',
 ];
 
+const dictIdHiddenV1FromStart = [
+  'id1',
+  'id2',
+  'id3',
+];
 
 const GraphLine = ({graphLineData, extendedStyle = {}, serviceOid}: PropsType) => {
   const {id, title, data, sumVal, avrProc} = graphLineData;
-  const [hiddenVal, setHiddenVal] = useState(localStorage.getItem(`hiddenValGraph-${id}`) === 'true');
-  const [hiddenVal2, setHiddenVal2] = useState(localStorage.getItem(`hiddenVal2Graph-${id}`) === 'true');
-  const [hiddenVal3, setHiddenVal3] = useState(localStorage.getItem(`hiddenVal3Graph-${id}`) === 'true');
-  const [hiddenProc, setHiddenProc] = useState(localStorage.getItem(`hiddenProcGraph-${id}`) === 'true');
-  const [hiddenTar, setHiddenTar] = useState(localStorage.getItem(`hiddenTarGraph-${id}`) === 'true');
+  const [hiddenVal, setHiddenVal] = useState(JSON.parse(localStorage.getItem(`hiddenValGraph-${id}`)
+    || (dictIdHiddenV1FromStart.includes(`id${id}`) ? 'false' : 'true')));
+  const [hiddenVal2, setHiddenVal2] = useState(JSON.parse(localStorage.getItem(`hiddenVal2Graph-${id}`) || 'true'));
+  const [hiddenVal3, setHiddenVal3] = useState(JSON.parse(localStorage.getItem(`hiddenVal3Graph-${id}`) || 'true'));
+  const [hiddenProc, setHiddenProc] = useState(JSON.parse(localStorage.getItem(`hiddenProcGraph-${id}`) || 'true'));
+  const [hiddenTar, setHiddenTar] = useState(JSON.parse(localStorage.getItem(`hiddenTarGraph-${id}`) || 'true'));
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   if (serviceOid === '0' && id! <= 3) {
@@ -280,7 +286,7 @@ const GraphLine = ({graphLineData, extendedStyle = {}, serviceOid}: PropsType) =
                    : data.length < 10 ? 0 : data.length < 25 ? 1 : 2}
                  allowDataOverflow={false}
                  axisLine={false}/>
-          <YAxis display={hiddenVal ? 'none' : ''}
+          <YAxis display={hiddenVal ? '' : 'none'}
                  tickFormatter={(tick, i) => {
                    const currCut = tick < 1000 ? 10 : tick < 10000 ? 100 : 1000;
                    return i ? `${Math.ceil(tick / currCut) * currCut}шт` : `${Math.floor(tick / currCut) * currCut}шт`;
@@ -292,8 +298,8 @@ const GraphLine = ({graphLineData, extendedStyle = {}, serviceOid}: PropsType) =
                  axisLine={false}
                  stroke='#2D6AA3'
                  fontSize={11}/>
-          <YAxis display={(!dictIdV2InsteadProc.includes(`id${id}`) && hiddenProc)
-          || (dictIdV2InsteadProc.includes(`id${id}`) && hiddenVal2)
+          <YAxis display={(!dictIdV2InsteadProc.includes(`id${id}`) && !hiddenProc)
+          || (dictIdV2InsteadProc.includes(`id${id}`) && !hiddenVal2)
           || dictIdWithoutProc.includes(`id${id}`) ? 'none' : ''}
                  tickFormatter={tick => `${Number(tick.toFixed(2))}${dictIdV2InsteadProc.includes(`id${id}`) ? 'ч' : '%'}`}
                  yAxisId='right'
@@ -306,30 +312,30 @@ const GraphLine = ({graphLineData, extendedStyle = {}, serviceOid}: PropsType) =
                  orientation='right'
                  stroke={dictIdV2InsteadProc.includes(`id${id}`) ? '#E27F49' : '#8CC06D'}
                  fontSize={11}/>
-          {dictIdWithV1Col.includes(`id${id}`) && <Bar display={hiddenVal ? 'none' : ''}
+          {dictIdWithV1Col.includes(`id${id}`) && <Bar display={hiddenVal ? '' : 'none'}
                                                        dataKey={dictIdWithV2InsteadV1.includes(`id${id}`) ? 'v2' : 'v1'}
                                                        yAxisId='left'
                                                        stackId='a'
                                                        fill='#2D6AA3'/>}
-          {dictIdWithV1Line.includes(`id${id}`) && <Line display={hiddenVal ? 'none' : ''}
+          {dictIdWithV1Line.includes(`id${id}`) && <Line display={hiddenVal ? '' : 'none'}
                                                          yAxisId='left'
                                                          type='monotone'
                                                          dataKey={dictIdWithV2InsteadV1.includes(`id${id}`) ? 'v2' : 'v1'}
                                                          stroke='#2D6AA3'
                                                          strokeWidth={2}/>}
-          {dictIdWithV2.includes(`id${id}`) && <Line display={hiddenVal2 ? 'none' : ''}
+          {dictIdWithV2.includes(`id${id}`) && <Line display={hiddenVal2 ? '' : 'none'}
                                                      yAxisId={dictIdV2InsteadProc.includes(`id${id}`) ? 'right' : 'left'}
                                                      type='monotone'
                                                      dataKey='v2'
                                                      stroke='#E27F49'
                                                      strokeWidth={2}/>}
-          {dictIdWithV3.includes(`id${id}`) && <Line display={hiddenVal3 ? 'none' : ''}
+          {dictIdWithV3.includes(`id${id}`) && <Line display={hiddenVal3 ? '' : 'none'}
                                                      yAxisId='left'
                                                      type='monotone'
                                                      dataKey='v3'
                                                      stroke='#B1B47D'
                                                      strokeWidth={2}/>}
-          <Line display={hiddenProc
+          <Line display={!hiddenProc
           || dictIdWithoutProc.includes(`id${id}`)
           || dictIdV2InsteadProc.includes(`id${id}`) ? 'none' : ''}
                 yAxisId='right'
@@ -340,7 +346,7 @@ const GraphLine = ({graphLineData, extendedStyle = {}, serviceOid}: PropsType) =
           {!dictIdWithoutTargetLine.includes(`id${id}`) && <ReferenceLine y={dictTargetValues[`id${id}`]}
                                                                           stroke='#FF0000'
                                                                           yAxisId='right'
-                                                                          display={hiddenTar ? 'none' : ''}
+                                                                          display={hiddenTar ? '' : 'none'}
                                                                           strokeDasharray='3 3'
                                                                           ifOverflow='extendDomain'/>}
           <Tooltip labelFormatter={label =>

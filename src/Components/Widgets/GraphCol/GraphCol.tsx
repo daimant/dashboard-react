@@ -40,7 +40,7 @@ const CheckedValueGraph = forwardRef(({description, hidden, hideLineClick, line,
       className={cn(classes.propertiesGroup, classes.clickable, classes.unselectable, classes[`color${line}`])}
       ref={ref}
       onClick={() => hideLineClick(line, hidden, hider)}>
-      {!hidden
+      {hidden
         ? <CheckBoxIcon className={classes.iconCheckBox}
                         color='action'
                         component={'svg'}
@@ -70,9 +70,9 @@ const dictDescriptionTooltip: { [key: string]: { v1: string, v2: string, v3: str
 
 const GraphCol = ({graphColData, extendedStyle = {}, serviceOid}: PropsType) => {
   const {id, title, data, sumVal, avrProc} = graphColData;
-  const [hiddenVal, setHiddenVal] = useState(localStorage.getItem(`hiddenValGraph-${id}`) === 'true');
-  const [hiddenVal2, setHiddenVal2] = useState(localStorage.getItem(`hiddenVal2Graph-${id}`) === 'true');
-  const [hiddenProc, setHiddenProc] = useState(localStorage.getItem(`hiddenProcGraph-${id}`) === 'true');
+  const [hiddenVal, setHiddenVal] = useState(JSON.parse(localStorage.getItem(`hiddenValGraph-${id}`) || 'true'));
+  const [hiddenVal2, setHiddenVal2] = useState(JSON.parse(localStorage.getItem(`hiddenVal2Graph-${id}`) || 'true'));
+  const [hiddenProc, setHiddenProc] = useState(JSON.parse(localStorage.getItem(`hiddenProcGraph-${id}`) || 'true'));
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   if (serviceOid === '0' && id! <= 3) {
@@ -159,7 +159,7 @@ const GraphCol = ({graphColData, extendedStyle = {}, serviceOid}: PropsType) => 
                  interval={data.length < 10 ? 1 : data.length < 25 ? 2 : 3}
                  allowDataOverflow={false}
                  axisLine={false}/>
-          <YAxis style={hiddenVal && hiddenVal2 ? {display: 'none'} : {fontSize: 11}}
+          <YAxis display={hiddenVal || hiddenVal2 ? '' : 'none'}
                  tickFormatter={tick => tick < 100
                    ? `${Math.round(tick / 10) * 10}шт`
                    : tick < 1000
@@ -169,8 +169,9 @@ const GraphCol = ({graphColData, extendedStyle = {}, serviceOid}: PropsType) => 
                  domain={['dataMin', 'dataMax']}
                  tickCount={3}
                  axisLine={false}
-                 stroke='#2D6AA3'/>
-          <YAxis style={{fontSize: 11}}
+                 stroke='#2D6AA3'
+                 fontSize={11}/>
+          <YAxis display={hiddenProc ? '' : 'none'}
                  tickFormatter={tick => `${Number(tick.toFixed(2))}%`}
                  yAxisId='right'
                  domain={[0, 100]}
@@ -178,18 +179,19 @@ const GraphCol = ({graphColData, extendedStyle = {}, serviceOid}: PropsType) => 
                  minTickGap={100}
                  axisLine={false}
                  orientation='right'
-                 stroke={'#8CC06D'}/>
-          <Bar display={hiddenVal2 ? 'none' : ''}
+                 stroke={'#8CC06D'}
+                 fontSize={11}/>
+          <Bar display={hiddenVal2 ? '' : 'none'}
                dataKey='v2'
                yAxisId='left'
                stackId='a'
                fill='#E27F49'/>
-          <Bar display={hiddenVal ? 'none' : ''}
+          <Bar display={hiddenVal ? '' : 'none'}
                dataKey='v1'
                yAxisId='left'
                stackId='a'
                fill='#2D6AA3'/>
-          <Line display={hiddenProc ? 'none' : ''}
+          <Line display={hiddenProc ? '' : 'none'}
                 yAxisId='right'
                 type='monotone'
                 dataKey='p'
