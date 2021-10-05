@@ -55,7 +55,7 @@ const CheckedValueGraph = forwardRef(({description, hidden, hideLineClick, line,
 });
 
 const dictDescriptionAbout: { [key: string]: string } = {
-  id9: '',
+  id9: 'Динамика по запросам, выполненным в день обращения.',
 };
 
 const dictDescriptionTooltip: { [key: string]: { v1: string, v2: string, v3: string, p: string } } = {
