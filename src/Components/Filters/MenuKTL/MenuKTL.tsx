@@ -8,6 +8,7 @@ import {KTLType, SelectedKTLType} from '../../../Types/Types';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu/Menu';
 import {CheckBox, IndeterminateCheckBox} from '@material-ui/icons';
+import {LightTooltip} from '../../Widgets/KPKTable/KPKTable';
 
 type PropsType = {
   ktl: KTLType[]
@@ -33,6 +34,13 @@ const useStyles = makeStyles({
     margin: '0 15px',
   },
 });
+
+const dictDescTooltip = {
+  '№ТИ-51': 'Сопровождение рабочих мест',
+  '№ТИ-53': 'Сопровождение периферийных устройств',
+  '№ТИ-60': 'Сопровождение пользователей и оборудования',
+  '№ТИ-107': 'Сопровождение сетей передачи данных',
+};
 
 const MenuKTL = ({ktl, title, acceptFilters, blockedButton, selectedKTL, setSelectedKTL}: PropsType) => {
   const classesMUI = useStyles();
@@ -114,18 +122,22 @@ const MenuKTL = ({ktl, title, acceptFilters, blockedButton, selectedKTL, setSele
               nodeId={tree.oid}
               onIconClick={(event) => handleExpand(event, tree.oid)}
               label={
-                <FormControlLabel label={<>{tree.name}</>}
-                                  key={tree.oid}
-                                  control={
-                                    <Checkbox checked={selectedKTL.some(item => item === tree.oid)}
-                                              disabled={blockedButton}
-                                              size={'small'}
-                                              checkedIcon={allChildChecked(tree.oid)
-                                                ? <CheckBox component={'svg'}/>
-                                                : <IndeterminateCheckBox component={'svg'}/>}
-                                              onChange={event => getOnChange(event.currentTarget.checked, tree)}
-                                              onClick={e => e.stopPropagation()}/>
-                                  }/>
+                <LightTooltip placement='right'
+                              title={dictDescTooltip[tree.name] ? dictDescTooltip[tree.name] : ''}>
+                  <FormControlLabel label={<>{tree.name}</>}
+                                    key={tree.oid}
+                                    control={
+                                      <Checkbox checked={selectedKTL.some(item => item === tree.oid)}
+                                                disabled={blockedButton}
+                                                size={'small'}
+                                                checkedIcon={allChildChecked(tree.oid)
+                                                  ? <CheckBox component={'svg'}/>
+                                                  : <IndeterminateCheckBox component={'svg'}/>}
+                                                onChange={event => getOnChange(event.currentTarget.checked, tree)}
+                                                onClick={e => e.stopPropagation()}/>
+                                    }/>
+                </LightTooltip>
+
               }>
       {Array.isArray(tree.children)
         ? tree.children.map(nextNode => renderTree({tree: nextNode, handleExpand}))
