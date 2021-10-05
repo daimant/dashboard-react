@@ -122,7 +122,7 @@ const MenuKTL = ({ktl, title, acceptFilters, blockedButton, selectedKTL, setSele
               nodeId={tree.oid}
               onIconClick={(event) => handleExpand(event, tree.oid)}
               label={
-                <LightTooltip placement='right'
+                <LightTooltip placement='right'   // @ts-ignore
                               title={dictDescTooltip[tree.name] ? dictDescTooltip[tree.name] : ''}>
                   <FormControlLabel label={<>{tree.name}</>}
                                     key={tree.oid}
