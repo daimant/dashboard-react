@@ -8,10 +8,7 @@ main {
   display: flex;
   justify-content: center;
   margin: 30px 10px;
-  height: 650px;
-  @media (max-width: 1500px) {
-    height: 550px;
-  }
+  height: 65vh;
 }
 
 .graphs {

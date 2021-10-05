@@ -5,12 +5,9 @@
     max-width: 8vw;
   }
 
-  strong {
-    font-size: 5vh;
+  h1 {
+    font-size: 3.5vh;
 
-    @media (max-width: 2000px) {
-      font-size: 4vh;
-    }
     @media (max-width: 1200px) {
       font-size: 3vh;
     }

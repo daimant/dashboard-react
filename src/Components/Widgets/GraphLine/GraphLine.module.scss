@@ -11,6 +11,9 @@
     height: 30.4%;
     margin: 0 .6vw 3vh;
   }
+  @media (max-width: 1500px) {
+    width: 54.7vw;
+  }
 
   font-size: var(--main-font-size);
   overflow: hidden;
